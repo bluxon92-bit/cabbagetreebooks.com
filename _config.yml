@@ -2,7 +2,7 @@ title: Cabbage Tree Books
 tagline: Find Your Next Great Read
 description: Book recommendations, reviews, and genre guides for lovers of sci-fi, fantasy, and horror fiction.
 url: "https://cabbagetreebooks.com"
-baseurl: "/cabbagetreebooks.com"
+baseurl: ""
 
 author:
   name: Ben Luxon
@@ -14,11 +14,17 @@ sister_site:
   description: "Sci-fi fiction by Ben Luxon"
 
 mailerlite:
-  form_url: "YOUR_MAILERLITE_FORM_URL_HERE"
+  form_url: "YOUR_MAILERLITE_NEWSLETTER_FORM_URL_HERE"
+  scifi_form_url: "YOUR_MAILERLITE_SCIFI_DOWNLOAD_FORM_URL_HERE"
+  horror_form_url: "YOUR_MAILERLITE_HORROR_DOWNLOAD_FORM_URL_HERE"
+
+# Download file URLs — replace with actual hosted PDF/EPUB links
+scifi_download_url: "YOUR_SCIFI_PDF_URL_HERE"
+horror_download_url: "YOUR_HORROR_PDF_URL_HERE"
 
 markdown: kramdown
 highlighter: rouge
-permalink: /blog/:title/
+permalink: /blog/:slug/
 
 plugins:
   - jekyll-feed

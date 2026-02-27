@@ -4,6 +4,7 @@ title: "11 of the Best Books by Brandon Sanderson"
 date: 2023-08-03
 category: Author Profiles
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ae224f8b-7541-4b74-9eef-31ba7890db78/Brandon+sanderson+books+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ae224f8b-7541-4b74-9eef-31ba7890db78/Brandon+sanderson+books+%281%29.jpeg)

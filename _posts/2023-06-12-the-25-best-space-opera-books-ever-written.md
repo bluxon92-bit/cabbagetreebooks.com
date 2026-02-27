@@ -4,6 +4,7 @@ title: "The 25 Best Space Opera Books Ever Written"
 date: 2023-06-12
 category: Book Recommendations
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4886e400-0a61-47cb-8fae-a6554d2ec07f/space+opera+%281%29.jpg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4886e400-0a61-47cb-8fae-a6554d2ec07f/space+opera+%281%29.jpg)

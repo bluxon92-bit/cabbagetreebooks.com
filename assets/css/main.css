@@ -200,21 +200,33 @@ a:hover { color: var(--teal-light); }
   background: var(--white);
   z-index: 99;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
+  padding: 4.5rem 0 2rem;
+  overflow-y: auto;
 }
 
 .nav-mobile.open { display: flex; }
 
 .nav-mobile a {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 400;
   color: var(--ink);
+  padding: 0.75rem 2rem;
+  border-bottom: 1px solid var(--border);
+  display: block;
 }
 
-.nav-mobile a:hover { color: var(--teal); }
+.nav-mobile a:hover { color: var(--teal); background: var(--paper); }
+
+.nav-mobile-section {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding: 1rem 2rem 0.25rem;
+  margin-top: 0.25rem;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+}
 
 /* ==============================================
    HERO — editorial magazine style
@@ -1900,4 +1912,219 @@ a:hover { color: var(--teal-light); }
 @media (max-width: 640px) {
   .download-card { flex-direction: column; padding: 1.75rem; }
   .free-download-content { flex-direction: column; }
+}
+
+/* ==============================================
+   LEAD GEN DOWNLOAD PAGES
+   ============================================== */
+.lead-gen-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+}
+
+.lead-gen-card--horror {
+  border-color: rgba(139,0,0,0.2);
+}
+
+/* Book preview header strip */
+.lead-gen-book-preview {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  margin-bottom: 1.75rem;
+}
+
+.lead-gen-book-preview--scifi {
+  background: #0d1b2a;
+  border-color: #0077b6;
+}
+
+.lead-gen-book-preview--horror {
+  background: #1a0a0a;
+  border-color: rgba(139,0,0,0.4);
+}
+
+.book-preview-icon {
+  font-size: 2rem;
+  color: rgba(255,255,255,0.5);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.lead-gen-book-preview--scifi .book-preview-icon { color: #0096c7; }
+
+.book-preview-meta h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.book-preview-meta p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* Form area */
+.lead-gen-form-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.lead-gen-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.lead-gen-form {
+  display: flex;
+  gap: 0;
+  border: 2px solid var(--teal);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.lead-gen-card--horror .lead-gen-form {
+  border-color: #8b0000;
+}
+
+.lead-gen-input {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  padding: 0.85rem 1rem;
+  border: none;
+  outline: none;
+  background: var(--white);
+  color: var(--ink);
+  min-width: 0;
+}
+
+.lead-gen-input::placeholder { color: var(--ink-muted); }
+
+.lead-gen-btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 1.4rem;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background var(--t-fast) var(--ease);
+  flex-shrink: 0;
+}
+
+.lead-gen-btn--scifi {
+  background: var(--teal);
+  color: white;
+}
+.lead-gen-btn--scifi:hover { background: var(--teal-light); }
+
+.lead-gen-btn--horror {
+  background: #8b0000;
+  color: white;
+}
+.lead-gen-btn--horror:hover { background: #a00000; }
+
+.lead-gen-btn-arrow {
+  font-size: 1rem;
+  transition: transform var(--t-fast) var(--ease);
+}
+.lead-gen-btn:hover .lead-gen-btn-arrow { transform: translateX(3px); }
+
+.lead-gen-small {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  margin-top: 0.65rem;
+  line-height: 1.6;
+}
+
+/* Divider */
+.lead-gen-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+}
+.lead-gen-divider::before,
+.lead-gen-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.lead-gen-direct-link {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.btn-text-link {
+  background: none;
+  border: none;
+  color: var(--teal);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  text-decoration: underline;
+  padding: 0;
+}
+.btn-text-link:hover { color: var(--teal-light); }
+
+/* Thank you state */
+.lead-gen-thankyou {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.thankyou-icon {
+  font-size: 2.5rem;
+  color: var(--teal);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.lead-gen-thankyou h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.lead-gen-thankyou p {
+  color: var(--ink-soft);
+  max-width: 440px;
+  margin: 0 auto 1.75rem;
+  line-height: 1.75;
+}
+
+/* Mobile */
+@media (max-width: 540px) {
+  .lead-gen-form {
+    flex-direction: column;
+    border-radius: 4px;
+  }
+  .lead-gen-input {
+    border-bottom: 1px solid var(--border);
+  }
+  .lead-gen-btn {
+    justify-content: center;
+    padding: 1rem;
+  }
+  .lead-gen-card { padding: 1.5rem; }
+  .lead-gen-book-preview { flex-direction: column; text-align: center; }
 }

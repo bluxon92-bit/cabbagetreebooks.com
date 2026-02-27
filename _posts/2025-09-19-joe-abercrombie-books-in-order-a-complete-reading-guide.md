@@ -4,6 +4,7 @@ title: "Joe Abercrombie Books in Order: A Complete Reading Guide"
 date: 2025-09-19
 category: Author Profiles
 excerpt: "No one writes fantasy quite like Joe Abercrombie. Brutal, brilliant, and laugh-out-loud cruel. His books hit so hard you almost want to cry."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f15aca2e-b22a-47d0-8540-aed42dc6bbf3/joe+abercrombie+%281%29.png"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f15aca2e-b22a-47d0-8540-aed42dc6bbf3/joe+abercrombie+%281%29.png)

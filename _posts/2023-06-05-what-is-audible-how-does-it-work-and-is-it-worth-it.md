@@ -4,6 +4,7 @@ title: "What is Audible, How Does it Work, And Is It Worth it?"
 date: 2023-06-05
 category: Reading Tips
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8482a809-b838-45b6-ada9-2cb2706ab8da/audiobook+2+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8482a809-b838-45b6-ada9-2cb2706ab8da/audiobook+2+%281%29.jpeg)

@@ -4,6 +4,7 @@ title: "5 Bone-Chilling Horror Short Story Collections By Stephen King"
 date: 2023-06-07
 category: Book Recommendations
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ed5100c-a827-4ec2-b475-52abc3170792/scary+short+story+2+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ed5100c-a827-4ec2-b475-52abc3170792/scary+short+story+2+%281%29.jpeg)

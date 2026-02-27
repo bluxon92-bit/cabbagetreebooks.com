@@ -15,6 +15,7 @@ excerpt: "-
   Where to Start: The Works of Ursula K Le Guin
 -
   Ha"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b51d0317-0e1b-4e8d-ae8e-d157623965ed/le+guin+sci+fi+%281%29+%281%29+%281%29.jpg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b51d0317-0e1b-4e8d-ae8e-d157623965ed/le+guin+sci+fi+%281%29+%281%29+%281%29.jpg)

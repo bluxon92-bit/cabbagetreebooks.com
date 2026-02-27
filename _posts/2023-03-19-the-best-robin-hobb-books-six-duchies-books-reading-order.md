@@ -4,6 +4,7 @@ title: "The Best Robin Hobb Books: Six Duchies Books Reading Order"
 date: 2023-03-19
 category: Author Profiles
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5023a299-de4c-4e82-87f7-5c9c3515a8c5/farseer-trilogy+%281%29.jpg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5023a299-de4c-4e82-87f7-5c9c3515a8c5/farseer-trilogy+%281%29.jpg)

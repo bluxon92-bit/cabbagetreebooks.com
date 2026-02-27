@@ -4,6 +4,7 @@ title: "Best Books by China Miéville: Perdido Street Station and More"
 date: 2023-05-11
 category: Author Profiles
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7f902300-1583-45f9-863d-9404f53b2172/china+mieville+%282%29.png"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7f902300-1583-45f9-863d-9404f53b2172/china+mieville+%282%29.png)

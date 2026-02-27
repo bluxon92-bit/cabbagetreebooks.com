@@ -4,6 +4,7 @@ title: "Review: The City and The Stars by Arthur C Clarke"
 date: 2022-04-19
 category: Book Reviews
 excerpt: "The City and The Stars by Arthur C Clarke, published in 1956, was the first novel by Arthur C Clarke I read. It was the reason I went on to read many more, a few of my favourites include: 2001: A Space Odyssey, The Fount"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7c291cf3-4105-4b39-b7ad-b96adaff14e3/city+and+the+stars+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7c291cf3-4105-4b39-b7ad-b96adaff14e3/city+and+the+stars+%281%29.jpeg)

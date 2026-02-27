@@ -9,15 +9,7 @@
     <ul class="nav-links" role="list">
 
       <li><a href="{{ '/' | relative_url }}">Home</a></li>
-
-      <li class="nav-dropdown">
-        <a href="{{ '/blog/' | relative_url }}" aria-haspopup="true">Blog</a>
-        <div class="dropdown-menu" role="menu">
-          <a href="{{ '/blog/?category=Book+Recommendations' | relative_url }}" role="menuitem">Book Recommendations</a>
-          <a href="{{ '/blog/?category=Book+Reviews' | relative_url }}" role="menuitem">Reviews</a>
-          <a href="{{ '/blog/?category=Author+Profiles' | relative_url }}" role="menuitem">Author Profiles</a>
-        </div>
-      </li>
+      <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
 
       <li class="nav-dropdown">
         <a href="{{ '/genres/' | relative_url }}" aria-haspopup="true">Explore</a>
@@ -41,7 +33,7 @@
         </div>
       </li>
 
-      <li><a href="{{ '/about/' | relative_url }}" >About</a></li>
+      <li><a href="{{ '/about/' | relative_url }}">About</a></li>
       <li class="nav-cta">
         <a href="{{ site.sister_site.url }}" target="_blank" rel="noopener">Ben Luxon ↗</a>
       </li>
@@ -58,12 +50,21 @@
 <nav class="nav-mobile" aria-label="Mobile navigation">
   <a href="{{ '/' | relative_url }}">Home</a>
   <a href="{{ '/blog/' | relative_url }}">Blog</a>
-  <a href="{{ '/genres/' | relative_url }}">Explore Genres</a>
+
+  <div class="nav-mobile-section">Explore by Genre</div>
+  <a href="{{ '/genres/sci-fi/' | relative_url }}">Science Fiction</a>
+  <a href="{{ '/genres/fantasy/' | relative_url }}">Fantasy</a>
+  <a href="{{ '/genres/horror/' | relative_url }}">Horror</a>
+  <a href="{{ '/genres/dystopian/' | relative_url }}">Dystopian</a>
+
+  <div class="nav-mobile-section">Tools &amp; Downloads</div>
   <a href="{{ '/tools/name-generator/' | relative_url }}">Name Generator</a>
   <a href="{{ '/tools/fantasy-prompts/' | relative_url }}">Fantasy Prompts</a>
   <a href="{{ '/tools/scifi-prompts/' | relative_url }}">Sci-Fi Prompts</a>
-  <a href="{{ '/free-downloads/' | relative_url }}">Free Sci-Fi Stories</a>
-  <a href="{{ '/free-downloads/horror/' | relative_url }}">Free Horror Stories</a>
+  <a href="{{ '/free-downloads/' | relative_url }}">Free Sci-Fi Stories ↓</a>
+  <a href="{{ '/free-downloads/horror/' | relative_url }}">Free Horror Stories ↓</a>
+
+  <div class="nav-mobile-section">More</div>
   <a href="{{ '/about/' | relative_url }}">About</a>
   <a href="{{ site.sister_site.url }}" target="_blank" rel="noopener" style="color:var(--teal);">Ben Luxon Author ↗</a>
 </nav>

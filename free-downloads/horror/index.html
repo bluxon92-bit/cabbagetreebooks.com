@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Free Horror Short Story Collection — Download
-description: Free horror short stories from Ben Luxon. Atmospheric, unsettling original fiction — free to download.
+description: Get Ben Luxon's original horror short stories free. Enter your email and get instant access to atmospheric, unsettling fiction.
 permalink: /free-downloads/horror/
 ---
 
@@ -12,34 +12,73 @@ permalink: /free-downloads/horror/
       <span>Free Download</span>
     </div>
     <h1>Free Horror<br><em>Short Stories</em></h1>
-    <p>Original horror short fiction from Ben Luxon — atmospheric, unsettling, and free to download. No email required.</p>
+    <p>Original horror short fiction from Ben Luxon — gothic atmosphere, psychological dread, and the quietly uncanny. Enter your email and get instant access.</p>
   </div>
 </div>
 
 <section class="section" style="background:var(--paper);">
-  <div class="section-inner" style="max-width:720px;">
+  <div class="section-inner" style="max-width:680px;">
 
-    <div class="download-card">
-      <div class="download-card-icon" style="color:#8b0000;">🕯</div>
-      <div class="download-card-content">
-        <h2>Horror Short Story Collection</h2>
-        <p>A collection of original horror short stories spanning gothic atmosphere, psychological dread, and the quietly uncanny. Written by Ben Luxon.</p>
-        <ul class="download-features">
+    <div class="lead-gen-card lead-gen-card--horror">
+
+      <!-- STEP 1: Email form -->
+      <div class="lead-gen-step" id="lg-horror-step1">
+
+        <div class="lead-gen-book-preview lead-gen-book-preview--horror">
+          <div class="book-preview-icon" style="color:#8b0000;">🕯</div>
+          <div class="book-preview-meta">
+            <h2>Horror Short Story Collection</h2>
+            <p>Original dark fiction by <strong>Ben Luxon</strong></p>
+          </div>
+        </div>
+
+        <ul class="download-features" style="margin-bottom:2rem;">
           <li>Multiple original stories</li>
-          <li>Gothic, psychological, and dark fiction</li>
-          <li>Free — no account needed</li>
+          <li>Gothic, psychological &amp; quietly uncanny fiction</li>
+          <li>Instant access — sent straight to your inbox</li>
         </ul>
-        <!-- Replace href with actual PDF/EPUB link when ready -->
-        <a href="#" class="btn-download btn-download--large btn-download--dark">
-          <span class="btn-download-icon">↓</span>
-          Download Free (PDF)
-        </a>
-        <p class="download-note">Also available at <a href="{{ site.sister_site.url }}" target="_blank" rel="noopener">benluxonauthor.com</a></p>
+
+        <div class="lead-gen-form-wrap">
+          <p class="lead-gen-label">Enter your email to get instant access:</p>
+          <!-- MailerLite embedded form — replace action URL with your actual MailerLite form action -->
+          <!-- Get it from: MailerLite → Forms → Embedded Forms → copy the form action URL -->
+          <form class="lead-gen-form" id="lg-horror-form" action="{{ site.mailerlite.horror_form_url }}" method="POST" target="_blank">
+            <input type="email" name="fields[email]" placeholder="your@email.com" required aria-label="Email address" class="lead-gen-input">
+            <button type="submit" class="lead-gen-btn lead-gen-btn--horror">
+              Get Free Stories
+              <span class="lead-gen-btn-arrow">→</span>
+            </button>
+          </form>
+          <p class="lead-gen-small">No spam. You'll also receive occasional book recommendations from Cabbage Tree Books. Unsubscribe any time.</p>
+        </div>
+
+        <div class="lead-gen-divider">
+          <span>or</span>
+        </div>
+
+        <p class="lead-gen-direct-link">
+          Already subscribed? <button class="btn-text-link" id="lg-horror-show-direct">Click here to go straight to the download →</button>
+        </p>
+
       </div>
+
+      <!-- STEP 2: Thank you + download -->
+      <div class="lead-gen-step lead-gen-thankyou" id="lg-horror-step2" style="display:none;">
+        <div class="thankyou-icon" style="color:#8b0000;">🕯</div>
+        <h2>You're all set!</h2>
+        <p>Check your inbox — the stories are on their way. While you wait, you can also download directly below.</p>
+        <!-- Replace href with actual PDF URL when ready -->
+        <a href="{{ site.horror_download_url | default: '#' }}" class="btn-download btn-download--large btn-download--dark" download>
+          <span class="btn-download-icon">↓</span>
+          Download Now (PDF)
+        </a>
+        <p class="lead-gen-small" style="margin-top:1rem;">Also available at <a href="{{ site.sister_site.url }}" target="_blank" rel="noopener">benluxonauthor.com</a></p>
+      </div>
+
     </div>
 
     <div style="margin-top:3rem;">
-      <h3 style="font-family:var(--font-display); font-size:1.3rem; margin-bottom:1rem;">You might also enjoy</h3>
+      <h3 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:1rem;">You might also enjoy</h3>
       <div style="display:flex; gap:1rem; flex-wrap:wrap;">
         <a href="{{ '/genres/horror/' | relative_url }}" class="btn btn-outline">Horror Reading Guide →</a>
         <a href="{{ '/free-downloads/' | relative_url }}" class="btn btn-outline">Free Sci-Fi Stories →</a>
@@ -49,3 +88,17 @@ permalink: /free-downloads/horror/
 
   </div>
 </section>
+
+<script>
+document.getElementById('lg-horror-show-direct')?.addEventListener('click', function() {
+  document.getElementById('lg-horror-step1').style.display = 'none';
+  document.getElementById('lg-horror-step2').style.display = 'block';
+});
+
+document.getElementById('lg-horror-form')?.addEventListener('submit', function() {
+  setTimeout(function() {
+    document.getElementById('lg-horror-step1').style.display = 'none';
+    document.getElementById('lg-horror-step2').style.display = 'block';
+  }, 400);
+});
+</script>

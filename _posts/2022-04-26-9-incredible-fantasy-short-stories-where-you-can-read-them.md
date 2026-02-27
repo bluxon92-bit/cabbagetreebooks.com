@@ -4,6 +4,7 @@ title: "9 Incredible Fantasy Short Stories & Where You Can Read Them"
 date: 2022-04-26
 category: Book Recommendations
 excerpt: "Among all the famous book genres, fantasy fiction is one of the most loved. Whichever genre you love, and whichever style, it can be hard to find time to read amongst the hustle and bustle of everyday life."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1650494876460-T6NB6HESWVKQTA7D07Q9/Fantasy+stories+book"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1650494876460-T6NB6HESWVKQTA7D07Q9/Fantasy+stories+book)

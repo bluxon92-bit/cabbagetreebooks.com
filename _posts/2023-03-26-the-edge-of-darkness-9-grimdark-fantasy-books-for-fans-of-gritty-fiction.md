@@ -4,6 +4,7 @@ title: "The Edge of Darkness: 9 Grimdark Fantasy Books for Fans of Gritty Fictio
 date: 2023-03-26
 category: Book Recommendations
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/e2944594-b5db-429c-ab53-f65f3ba2938b/the+broken+empire+trilogy+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/e2944594-b5db-429c-ab53-f65f3ba2938b/the+broken+empire+trilogy+%281%29.jpeg)

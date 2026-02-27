@@ -4,6 +4,7 @@ title: "6 Books Like The Alchemist You're Sure To Love"
 date: 2023-05-23
 category: Book Recommendations
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ff6a339e-0b36-482b-878d-4a1d27c5e5a8/the+alchemist+%281%29.jpg"
 ---
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*

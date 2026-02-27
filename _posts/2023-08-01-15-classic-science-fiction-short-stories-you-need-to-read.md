@@ -4,6 +4,7 @@ title: "15+ Classic Science Fiction Short Stories You Need To Read"
 date: 2023-08-01
 category: Book Recommendations
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/09df17e8-a5db-456a-be75-56addc2d9889/space-travel-sci+fi+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/09df17e8-a5db-456a-be75-56addc2d9889/space-travel-sci+fi+%281%29.jpeg)

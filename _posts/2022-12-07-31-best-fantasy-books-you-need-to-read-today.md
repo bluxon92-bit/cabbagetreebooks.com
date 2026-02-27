@@ -11,6 +11,7 @@ excerpt: "-
   12 Of The Best Fantasy Books You Haven’t Heard Of
 -
   The Best Fantasy Books: Wrapping Up"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/bc791b24-6a9b-49b6-a807-810ff85b56f8/fantasy+book+overflowing+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/bc791b24-6a9b-49b6-a807-810ff85b56f8/fantasy+book+overflowing+%281%29.jpeg)

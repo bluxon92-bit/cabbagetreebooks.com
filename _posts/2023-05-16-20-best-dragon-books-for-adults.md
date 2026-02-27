@@ -4,6 +4,7 @@ title: "20 Best Dragon Books For Adults"
 date: 2023-05-16
 category: Book Recommendations
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4873bf13-dcb0-44c4-949e-d0707fbd6c9e/Best+Dragon+Books+%281%29.png"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4873bf13-dcb0-44c4-949e-d0707fbd6c9e/Best+Dragon+Books+%281%29.png)

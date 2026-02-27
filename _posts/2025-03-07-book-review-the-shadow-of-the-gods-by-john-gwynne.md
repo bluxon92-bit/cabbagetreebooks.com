@@ -4,6 +4,7 @@ title: "Book Review: The Shadow of The Gods by John Gwynne"
 date: 2025-03-07
 category: Book Reviews
 excerpt: "The Shadow of the Gods by John Gwynne immediately caught my attention after coming across a YouTube review. Intrigued by the premise, I stopped the video to avoid spoilers. Soon after, I discovered John Gwynne's name amo"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6b12c76c-f2bd-48eb-ae8a-c3f12bf6c9a6/ShadowOfTheGodsbloodsworn+saga+%281%29+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6b12c76c-f2bd-48eb-ae8a-c3f12bf6c9a6/ShadowOfTheGodsbloodsworn+saga+%281%29+%281%29.jpeg)

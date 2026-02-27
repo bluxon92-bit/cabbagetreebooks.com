@@ -4,6 +4,7 @@ title: "40+ Spine-Tingling Horror Short Stories"
 date: 2023-05-29
 category: Book Recommendations
 excerpt: "Horror stories have always held a special place in my heart. As a writer, I'm constantly seeking out new sources of inspiration, and there's something about the genre that never fails to captivate me. Horror short storie"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/22b0104e-9d54-4710-b4f6-a39ff97080bc/horror+story+%281%29.jpeg"
 ---
 
 ![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/22b0104e-9d54-4710-b4f6-a39ff97080bc/horror+story+%281%29.jpeg)
