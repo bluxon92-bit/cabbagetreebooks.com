@@ -16,21 +16,19 @@ permalink: /genres/horror/
   </div>
 </div>
 
-<!-- ESSENTIAL READING -->
 <section class="section" style="background:var(--paper);">
   <div class="section-inner" style="max-width:860px;">
     <div class="section-label" style="margin-bottom:1rem;">Start here</div>
     <h2 class="section-title" style="margin-bottom:2rem;">Essential <em>Horror</em></h2>
     <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;">Horror at its best does something no other genre can: it makes the familiar terrifying. Whether it's the creeping dread of Shirley Jackson or the cosmic indifference of Lovecraft, the best horror books leave you changed.</p>
-    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For psychological horror:</strong> Shirley Jackson's <em>The Haunting of Hill House</em> is the definitive text. It's a novel about how perception distorts reality — and it's genuinely frightening.</p>
-    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For cosmic horror:</strong> Start with H.P. Lovecraft's <em>The Call of Cthulhu</em>, then move to modern cosmic horror: Paul Tremblay's <em>A Head Full of Ghosts</em> or Jeff VanderMeer's <em>Annihilation</em>.</p>
+    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For psychological horror:</strong> Shirley Jackson's <em>The Haunting of Hill House</em> is the definitive text — a novel about how perception distorts reality, and it's genuinely frightening.</p>
+    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For cosmic horror:</strong> Start with Lovecraft's <em>The Call of Cthulhu</em>, then move to modern cosmic horror: Paul Tremblay's <em>A Head Full of Ghosts</em> or Jeff VanderMeer's <em>Annihilation</em>.</p>
     <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For Stephen King:</strong> <em>The Shining</em> remains his finest novel. <em>Pet Sematary</em> is his darkest. <em>It</em> is the most ambitious. Start with <em>The Shining</em>.</p>
     <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:2.5rem;"><strong>For short horror:</strong> King's <em>Night Shift</em> is the best horror short story collection in the language. Shirley Jackson's <em>The Lottery and Other Stories</em> is quieter and more devastating.</p>
-    <a href="{{ '/blog/?category=Book+Recommendations' | relative_url }}" class="btn btn-primary">Browse all horror posts →</a>
+    <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">Browse all posts →</a>
   </div>
 </section>
 
-<!-- FREE DOWNLOAD STRIP — Horror collection -->
 <section class="free-download-strip free-download-strip--horror">
   <div class="section-inner">
     <div class="free-download-content">
@@ -49,15 +47,29 @@ permalink: /genres/horror/
   </div>
 </section>
 
-<!-- BLOG POSTS: Horror relevant -->
-{% assign horror_posts = site.posts %}
-{% assign horror_filtered = "" | split: "" %}
-{% for post in horror_posts %}
-  {% if post.title contains 'Horror' or post.title contains 'horror' or post.title contains 'Stephen King' or post.title contains 'Dark' or post.title contains 'Spine' or post.title contains 'Bone-Chilling' or post.title contains 'Scary' or post.title contains 'Creepy' or post.title contains 'Gothic' or post.title contains 'Short Stories' %}
-    {% assign horror_filtered = horror_filtered | push: post %}
-  {% endif %}
+{% assign all_posts = site.posts %}
+{% assign hr_bucket = "" | split: "" %}
+{% for post in all_posts %}
+  {% if post.title contains 'Horror' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
 {% endfor %}
-{% if horror_filtered.size > 0 %}
+{% for post in all_posts %}
+  {% if post.title contains 'horror' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
+{% endfor %}
+{% for post in all_posts %}
+  {% if post.title contains 'Stephen King' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
+{% endfor %}
+{% for post in all_posts %}
+  {% if post.title contains 'Spine' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
+{% endfor %}
+{% for post in all_posts %}
+  {% if post.title contains 'Bone-Chilling' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
+{% endfor %}
+{% for post in all_posts %}
+  {% if post.title contains 'Short Stories' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
+{% endfor %}
+{% assign hr_bucket = hr_bucket | uniq %}
+
+{% if hr_bucket.size > 0 %}
 <section class="section" style="background:var(--white); border-top:1px solid var(--border);">
   <div class="section-inner">
     <div class="section-header">
@@ -68,7 +80,7 @@ permalink: /genres/horror/
       <a href="{{ '/blog/' | relative_url }}" class="section-link">All posts →</a>
     </div>
     <div class="posts-grid">
-      {% for post in horror_filtered limit:6 %}
+      {% for post in hr_bucket limit:6 %}
       <article class="blog-card-ct">
         <div class="blog-card-image" style="background:linear-gradient(135deg, #1a0a0a 0%, #3d1111 100%); display:flex; align-items:center; justify-content:center;">
           <span style="font-family:var(--font-display); font-size:2rem; color:rgba(255,255,255,0.1);">🕯</span>
@@ -89,7 +101,6 @@ permalink: /genres/horror/
 </section>
 {% endif %}
 
-<!-- ALSO ON CABBAGE TREE -->
 <section class="section" style="background:var(--paper); padding:3rem 2rem;">
   <div class="section-inner" style="max-width:600px; text-align:center;">
     <h3 style="font-family:var(--font-display); font-size:1.5rem; margin-bottom:0.75rem;">Enjoy writing as much as reading?</h3>
