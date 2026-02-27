@@ -2753,7 +2753,7 @@ a:hover { color: var(--teal-light); }
 
 .rt-add-fields {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 0.85rem;
   margin-bottom: 0.85rem;
   align-items: end;
@@ -3014,7 +3014,6 @@ a:hover { color: var(--teal-light); }
   .rt-stats-row { grid-template-columns: 1fr 1fr; }
   .rt-stat-goal { grid-column: 1 / -1; }
   .rt-add-fields { grid-template-columns: 1fr 1fr; }
-  .rt-field--date, .rt-field--rating { grid-column: auto; }
 }
 
 @media (max-width: 540px) {
@@ -3029,4 +3028,117 @@ a:hover { color: var(--teal-light); }
   .rt-ai-header { flex-direction: column; }
   .quiz-card { padding: 1.5rem; }
   .quiz-opt { font-size: 0.85rem; padding: 0.8rem 1rem; }
+}
+
+/* ==============================================
+   READING TRACKER — ONBOARDING & PWA
+   ============================================== */
+.rt-onboarding {
+  background: var(--teal);
+  padding: 1.5rem 2rem 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.rt-onboarding-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 1.3rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  transition: color var(--t-fast) var(--ease);
+}
+.rt-onboarding-close:hover { color: #fff; }
+
+.rt-onboarding-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 2rem;
+}
+
+.rt-onboarding-step {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.rt-onboarding-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+.rt-onboarding-step strong {
+  display: block;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.rt-onboarding-step p {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.rt-onboarding-step--highlight {
+  background: rgba(255,255,255,0.08);
+  padding: 0.75rem;
+  margin: -0.75rem;
+}
+
+.rt-install-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background: #fff;
+  color: var(--teal);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35rem 0.9rem;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease);
+}
+.rt-install-btn:hover { background: var(--paper); }
+
+.rt-ios-hint {
+  display: block;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.55);
+  margin-top: 0.35rem;
+  font-style: normal;
+}
+
+.rt-optional {
+  font-weight: 300;
+  color: var(--ink-muted);
+  font-size: 0.85em;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Form layout fix — 3-col then notes full width */
+.rt-add-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+  align-items: end;
+}
+
+.rt-field--notes {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .rt-onboarding-grid { grid-template-columns: 1fr; }
+  .rt-onboarding { padding: 1.25rem; }
 }
