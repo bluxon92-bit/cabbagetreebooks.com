@@ -1,0 +1,460 @@
+---
+layout: default
+title: What Should I Read Next? Quiz
+description: Answer 6 quick questions and get a personalised book recommendation matched to your mood, taste, and reading style.
+permalink: /tools/quiz/
+---
+
+<div class="tool-hero">
+  <div class="tool-hero-inner">
+    <div class="tool-label">
+      <span class="tool-label-line"></span>
+      <span>Reader's Tool</span>
+    </div>
+    <h1>What Should I<br><em>Read Next?</em></h1>
+    <p>Six quick questions. A personalised recommendation matched to your mood, taste, and what you're in the mood for right now.</p>
+  </div>
+</div>
+
+<section class="tool-body">
+  <div class="tool-body-inner" style="max-width:760px;">
+
+    <!-- QUIZ CONTAINER -->
+    <div class="quiz-card" id="quiz-container">
+
+      <!-- Progress bar -->
+      <div class="quiz-progress-wrap">
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="quiz-progress" style="width:0%"></div>
+        </div>
+        <span class="quiz-progress-label" id="quiz-progress-label">Question 1 of 6</span>
+      </div>
+
+      <!-- Questions -->
+      <div id="quiz-questions">
+
+        <!-- Q1: Mood -->
+        <div class="quiz-step" data-step="1">
+          <div class="quiz-q-label">Question 1</div>
+          <h2 class="quiz-question">What kind of reading mood are you in?</h2>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-tags="epic,scope,immersive">I want to disappear into another world entirely</button>
+            <button class="quiz-opt" data-tags="fast,tense,gripping">I want something I can't put down</button>
+            <button class="quiz-opt" data-tags="cosy,warm,comforting">I want something cosy and comforting</button>
+            <button class="quiz-opt" data-tags="dark,unsettling,atmospheric">I want something dark and unsettling</button>
+            <button class="quiz-opt" data-tags="thoughtful,ideas,philosophical">I want something that makes me think</button>
+          </div>
+        </div>
+
+        <!-- Q2: Genre -->
+        <div class="quiz-step" data-step="2" style="display:none;">
+          <div class="quiz-q-label">Question 2</div>
+          <h2 class="quiz-question">Which world appeals most right now?</h2>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-tags="fantasy,magic,secondary-world">Swords, magic, and secondary worlds</button>
+            <button class="quiz-opt" data-tags="scifi,technology,space">Space, technology, and the future</button>
+            <button class="quiz-opt" data-tags="horror,dread,supernatural">Horror, dread, and the supernatural</button>
+            <button class="quiz-opt" data-tags="dystopian,political,speculative">Dystopian futures and political fiction</button>
+            <button class="quiz-opt" data-tags="literary,character,emotional">Literary fiction — any setting, deep characters</button>
+          </div>
+        </div>
+
+        <!-- Q3: Length / Commitment -->
+        <div class="quiz-step" data-step="3" style="display:none;">
+          <div class="quiz-q-label">Question 3</div>
+          <h2 class="quiz-question">How much of a commitment do you want?</h2>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-tags="short,quick,standalone">Short — I want something I can finish this week</button>
+            <button class="quiz-opt" data-tags="standalone,complete,satisfying">A complete standalone novel</button>
+            <button class="quiz-opt" data-tags="series,longform,epic">A long series I can live in for months</button>
+            <button class="quiz-opt" data-tags="short-stories,anthology,varied">Short stories — variety over length</button>
+          </div>
+        </div>
+
+        <!-- Q4: Tone -->
+        <div class="quiz-step" data-step="4" style="display:none;">
+          <div class="quiz-q-label">Question 4</div>
+          <h2 class="quiz-question">How dark do you want it to go?</h2>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-tags="cosy,hopeful,warm">Keep it light — I want hope and warmth</button>
+            <button class="quiz-opt" data-tags="balanced,adventure,tension">Balanced — some darkness, but not relentless</button>
+            <button class="quiz-opt" data-tags="dark,grimdark,brutal">Bring the darkness — gritty and uncompromising</button>
+            <button class="quiz-opt" data-tags="horror,dread,unsettling">As dark as it gets — horror and genuine dread</button>
+          </div>
+        </div>
+
+        <!-- Q5: What matters most -->
+        <div class="quiz-step" data-step="5" style="display:none;">
+          <div class="quiz-q-label">Question 5</div>
+          <h2 class="quiz-question">What matters most to you in a book?</h2>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-tags="character,emotional,relationships">Characters I fall in love with</button>
+            <button class="quiz-opt" data-tags="worldbuilding,immersive,scope">A world I can get completely lost in</button>
+            <button class="quiz-opt" data-tags="plot,fast,gripping">A plot that won't let me stop turning pages</button>
+            <button class="quiz-opt" data-tags="prose,literary,beautiful">Beautiful, distinctive writing</button>
+            <button class="quiz-opt" data-tags="ideas,thoughtful,philosophical">Big ideas that stay with me after I finish</button>
+          </div>
+        </div>
+
+        <!-- Q6: Reading history / vibe -->
+        <div class="quiz-step" data-step="6" style="display:none;">
+          <div class="quiz-q-label">Question 6</div>
+          <h2 class="quiz-question">Which of these have you loved?</h2>
+          <p class="quiz-sub">Pick the closest match even if you haven't read them.</p>
+          <div class="quiz-options">
+            <button class="quiz-opt" data-tags="epic,fantasy,series,worldbuilding">Lord of the Rings / Wheel of Time</button>
+            <button class="quiz-opt" data-tags="grimdark,dark,brutal,character">The First Law / Prince of Thorns</button>
+            <button class="quiz-opt" data-tags="character,emotional,literary,fantasy">Assassin's Apprentice / The Name of the Wind</button>
+            <button class="quiz-opt" data-tags="scifi,ideas,thoughtful,standalone">Dune / The Left Hand of Darkness</button>
+            <button class="quiz-opt" data-tags="horror,atmospheric,dread,literary">The Haunting of Hill House / It</button>
+            <button class="quiz-opt" data-tags="dystopian,political,ideas,speculative">1984 / The Handmaid's Tale</button>
+            <button class="quiz-opt" data-tags="short,varied,short-stories,ideas">Short story collections — Ted Chiang / Shirley Jackson</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation -->
+      <div class="quiz-nav" id="quiz-nav" style="display:none;">
+        <button class="quiz-back" id="quiz-back">← Back</button>
+      </div>
+
+    </div>
+
+    <!-- RESULTS -->
+    <div class="quiz-results" id="quiz-results" style="display:none;">
+
+      <div class="quiz-results-header">
+        <div class="section-label">Your matches</div>
+        <h2>Here's what to read <em>next</em></h2>
+        <p id="quiz-results-summary"></p>
+      </div>
+
+      <div class="quiz-results-grid" id="quiz-results-grid"></div>
+
+      <div class="quiz-restart-wrap">
+        <button class="quiz-restart" id="quiz-restart">Take the quiz again</button>
+        <a href="{{ '/blog/' | relative_url }}" class="btn btn-outline">Browse all posts →</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+// ============================================================
+// RECOMMENDATION POOL
+// Each book has: title, description, url (relative), tags[]
+// Tags must overlap with quiz answer tags for matching
+// ============================================================
+const BOOKS = [
+  {
+    title: "31 Best Fantasy Books",
+    desc: "The definitive list for anyone who wants to dive into fantasy — from Tolkien to Sanderson, with something for every kind of reader.",
+    url: "/blog/31-best-fantasy-books-you-need-to-read-today/",
+    tags: ["fantasy","epic","series","worldbuilding","magic","secondary-world","immersive"],
+    icon: "⚔"
+  },
+  {
+    title: "Joe Abercrombie Reading Guide",
+    desc: "The master of grimdark. Where to start with The First Law trilogy and how to read everything in order.",
+    url: "/blog/joe-abercrombie-books-in-order-a-complete-reading-guide/",
+    tags: ["grimdark","dark","brutal","fantasy","series","character","fast"],
+    icon: "🗡"
+  },
+  {
+    title: "Robin Hobb Reading Order",
+    desc: "The Realm of the Elderlings is one of fantasy's great character studies. Here's the full reading order for the Six Duchies books.",
+    url: "/blog/the-best-robin-hobb-books-six-duchies-books-reading-order/",
+    tags: ["character","emotional","literary","fantasy","series","beautiful","relationships"],
+    icon: "📖"
+  },
+  {
+    title: "Assassin's Apprentice — Review",
+    desc: "Robin Hobb's masterwork. A rare fantasy that prioritises character above all else — quietly devastating.",
+    url: "/blog/book-review-assassins-apprentice-by-robin-hobb/",
+    tags: ["character","emotional","literary","fantasy","standalone","beautiful","relationships"],
+    icon: "📖"
+  },
+  {
+    title: "Brandon Sanderson: Best Books",
+    desc: "The most ambitious worldbuilder in modern fantasy. Where to start with the Cosmere and beyond.",
+    url: "/blog/11-of-the-best-books-by-brandon-sanderson/",
+    tags: ["fantasy","epic","worldbuilding","series","magic","scope","immersive"],
+    icon: "✨"
+  },
+  {
+    title: "Books Like The Name of the Wind",
+    desc: "If you loved Rothfuss's prose and character-driven magic, these are your next reads.",
+    url: "/blog/10-books-like-the-name-of-the-wind/",
+    tags: ["character","prose","literary","beautiful","fantasy","magic","standalone"],
+    icon: "🎵"
+  },
+  {
+    title: "Books Like Eragon",
+    desc: "Dragon riders, coming-of-age epic fantasy, and sweeping adventure — the best reads if Eragon was your gateway into the genre.",
+    url: "/blog/10-books-like-eragon-perfect-for-fantasy-fans/",
+    tags: ["fantasy","epic","adventure","magic","series","cosy","warm"],
+    icon: "🐉"
+  },
+  {
+    title: "20 Best Dragon Books for Adults",
+    desc: "From Anne McCaffrey to Naomi Novik — every shade of dragon fiction from cosy to epic.",
+    url: "/blog/20-best-dragon-books-for-adults/",
+    tags: ["fantasy","epic","adventure","magic","series","scope","immersive"],
+    icon: "🐉"
+  },
+  {
+    title: "Grimdark Fantasy — 9 Essential Reads",
+    desc: "The darkness of the genre at its most uncompromising. Nine books that don't flinch.",
+    url: "/blog/the-edge-of-darkness-9-grimdark-fantasy-books-for-fans-of-gritty-fiction/",
+    tags: ["grimdark","dark","brutal","fantasy","character","atmospheric"],
+    icon: "⚔"
+  },
+  {
+    title: "Malazan Reading Order Guide",
+    desc: "The most ambitious fantasy series ever written. This guide breaks down exactly how to tackle it.",
+    url: "/blog/the-ultimate-guide-to-the-malazan-reading-order/",
+    tags: ["fantasy","epic","scope","series","worldbuilding","dark","ideas"],
+    icon: "🗺"
+  },
+  {
+    title: "John Gwynne — Shadow of the Gods",
+    desc: "Norse mythology meets brutal, character-driven epic fantasy. A review of one of the best recent fantasy debuts.",
+    url: "/blog/book-review-the-shadow-of-the-gods-by-john-gwynne/",
+    tags: ["grimdark","fantasy","epic","character","dark","series"],
+    icon: "⚔"
+  },
+  {
+    title: "Best Space Opera Books",
+    desc: "The 25 greatest space operas ever written — from Dune to Iain M. Banks, the essential list.",
+    url: "/blog/the-25-best-space-opera-books-ever-written/",
+    tags: ["scifi","space","epic","scope","series","adventure","immersive"],
+    icon: "🚀"
+  },
+  {
+    title: "Best Science Fiction Authors",
+    desc: "The writers who defined and continue to push the genre — essential names every sci-fi reader should know.",
+    url: "/blog/11-of-the-best-science-fiction-authors-that-everyone-should-read/",
+    tags: ["scifi","ideas","thoughtful","philosophical","scope","technology"],
+    icon: "◈"
+  },
+  {
+    title: "Ursula K. Le Guin: Best Books",
+    desc: "The most humane writer science fiction ever produced. Where to start and what to read next.",
+    url: "/blog/the-best-sci-fi-books-by-ursula-k-le-guin/",
+    tags: ["scifi","literary","ideas","thoughtful","philosophical","beautiful","standalone"],
+    icon: "◈"
+  },
+  {
+    title: "Classic Sci-Fi Short Stories",
+    desc: "15 short stories that defined the genre — Asimov, Clarke, Dick, Le Guin. The perfect introduction.",
+    url: "/blog/15-classic-science-fiction-short-stories-you-need-to-read/",
+    tags: ["scifi","short-stories","short","ideas","thoughtful","varied","quick"],
+    icon: "◈"
+  },
+  {
+    title: "The Man in the High Castle — Review",
+    desc: "Philip K. Dick's alternative history masterpiece — reality as a construct, and what we choose to believe.",
+    url: "/blog/book-review-the-man-in-the-high-castle-by-philip-k-dick/",
+    tags: ["scifi","dystopian","ideas","thoughtful","philosophical","standalone","literary"],
+    icon: "◈"
+  },
+  {
+    title: "9 Dystopian Novels That Will Change How You See the World",
+    desc: "The best dystopian fiction — not just 1984 and Brave New World. Books that genuinely reframe how you see the present.",
+    url: "/blog/9-dystopian-novels-that-will-change-how-you-view-the-world/",
+    tags: ["dystopian","political","ideas","speculative","thoughtful","philosophical","standalone"],
+    icon: "🌆"
+  },
+  {
+    title: "Horror Short Story Collections — Stephen King",
+    desc: "The five best Stephen King short story collections, ranked. The master of horror at his most concentrated.",
+    url: "/blog/5-bone-chilling-horror-short-story-collections-by-stephen-king/",
+    tags: ["horror","dread","short-stories","short","atmospheric","unsettling","dark"],
+    icon: "🕯"
+  },
+  {
+    title: "40+ Spine-Tingling Horror Short Stories",
+    desc: "The greatest horror short stories ever written — from classic ghost stories to modern psychological terror.",
+    url: "/blog/40-spine-tingling-horror-short-stories/",
+    tags: ["horror","dread","short-stories","short","atmospheric","unsettling","varied"],
+    icon: "🕯"
+  },
+  {
+    title: "Fantasy Horror Books — Ranked",
+    desc: "The best books that blend fantasy and horror — for readers who want magic and dread in equal measure.",
+    url: "/blog/10-best-fantasy-horror-books-ranked/",
+    tags: ["horror","fantasy","dark","atmospheric","dread","unsettling","supernatural"],
+    icon: "🕯"
+  },
+  {
+    title: "Books About Greek Mythology",
+    desc: "Ancient stories retold for modern readers — the 14 best books drawing on the myths that started everything.",
+    url: "/blog/the-ancient-stories-14-of-the-best-books-about-greek-mythology/",
+    tags: ["fantasy","literary","beautiful","standalone","emotional","character","ideas"],
+    icon: "⚡"
+  },
+  {
+    title: "Song of Achilles — Review",
+    desc: "Madeline Miller's retelling of the Trojan War is one of the most emotionally devastating books in recent memory.",
+    url: "/blog/book-review-the-song-of-achilles-by-madeline-miller/",
+    tags: ["literary","emotional","beautiful","character","relationships","standalone","prose"],
+    icon: "⚡"
+  },
+  {
+    title: "Fantasy Short Stories — 9 Essential Reads",
+    desc: "Short fantasy fiction at its finest — complete worlds in miniature. Perfect if you want variety over commitment.",
+    url: "/blog/9-incredible-fantasy-short-stories-where-you-can-read-them/",
+    tags: ["fantasy","short-stories","short","quick","varied","magic","standalone"],
+    icon: "✨"
+  },
+  {
+    title: "32 Best Short Books",
+    desc: "Great reads you can finish in a sitting or a weekend. Every genre, no filler.",
+    url: "/blog/32-best-short-books-you-can-read-in-a-day/",
+    tags: ["short","quick","standalone","varied","fast"],
+    icon: "📚"
+  },
+  {
+    title: "Harry Potter — What to Read Next",
+    desc: "Loved Harry Potter? These are your next books — from cosy magical academia to darker coming-of-age fantasy.",
+    url: "/blog/top-10-books-like-harry-potter-for-lovers-of-magical-fiction/",
+    tags: ["fantasy","magic","cosy","warm","series","adventure","standalone"],
+    icon: "✨"
+  }
+];
+
+// ============================================================
+// QUIZ STATE
+// ============================================================
+let currentStep = 1;
+const totalSteps = 6;
+const tagScores = {};
+
+function addTags(tagStr) {
+  tagStr.split(',').forEach(tag => {
+    tag = tag.trim();
+    tagScores[tag] = (tagScores[tag] || 0) + 1;
+  });
+}
+
+function scoreBook(book) {
+  return book.tags.reduce((score, tag) => score + (tagScores[tag] || 0), 0);
+}
+
+function getTopMatches(n) {
+  return [...BOOKS]
+    .map(b => ({ ...b, score: scoreBook(b) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, n);
+}
+
+// ============================================================
+// QUIZ UI
+// ============================================================
+function showStep(step) {
+  document.querySelectorAll('.quiz-step').forEach(s => s.style.display = 'none');
+  const el = document.querySelector(`.quiz-step[data-step="${step}"]`);
+  if (el) el.style.display = 'block';
+
+  // Progress
+  const pct = ((step - 1) / totalSteps) * 100;
+  document.getElementById('quiz-progress').style.width = pct + '%';
+  document.getElementById('quiz-progress-label').textContent = `Question ${step} of ${totalSteps}`;
+
+  // Back button
+  document.getElementById('quiz-nav').style.display = step > 1 ? 'flex' : 'none';
+}
+
+function nextStep() {
+  currentStep++;
+  if (currentStep > totalSteps) {
+    showResults();
+  } else {
+    showStep(currentStep);
+    window.scrollTo({ top: document.getElementById('quiz-container').offsetTop - 80, behavior: 'smooth' });
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    showStep(currentStep);
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz-progress').style.width = '100%';
+  document.getElementById('quiz-progress-label').textContent = 'Complete!';
+
+  const matches = getTopMatches(3);
+
+  // Summary text based on top tags
+  const topTags = Object.entries(tagScores).sort((a,b) => b[1]-a[1]).slice(0,3).map(([t]) => t);
+  const summaryMap = {
+    grimdark: "You're after something dark and unflinching — fiction that doesn't look away.",
+    cosy: "You're in the mood for something warm and comforting with a sense of wonder.",
+    epic: "You want scope and scale — worlds vast enough to disappear into.",
+    horror: "You want to be genuinely unsettled. The darker the better.",
+    character: "Characters are everything for you — you read for the people, not the plot.",
+    ideas: "You want fiction that changes how you think about the world.",
+    short: "You want something you can finish quickly without the commitment of a doorstop.",
+    scifi: "You're in a science fiction mood — technology, futures, and big questions.",
+    dystopian: "Dark futures and political fiction are calling.",
+    fantasy: "You want magic, secondary worlds, and the full sweep of the genre.",
+  };
+  const summary = summaryMap[topTags[0]] || "Based on your answers, here are your three best matches.";
+  document.getElementById('quiz-results-summary').textContent = summary;
+
+  // Render results
+  const grid = document.getElementById('quiz-results-grid');
+  grid.innerHTML = matches.map((book, i) => `
+    <a href="${book.url}" class="quiz-result-card ${i === 0 ? 'quiz-result-card--top' : ''}">
+      ${i === 0 ? '<div class="quiz-result-badge">Best match</div>' : ''}
+      <div class="quiz-result-icon">${book.icon}</div>
+      <div class="quiz-result-body">
+        <h3>${book.title}</h3>
+        <p>${book.desc}</p>
+        <span class="quiz-result-link">Read the guide →</span>
+      </div>
+    </a>
+  `).join('');
+
+  document.getElementById('quiz-container').style.display = 'none';
+  document.getElementById('quiz-results').style.display = 'block';
+  window.scrollTo({ top: document.getElementById('quiz-results').offsetTop - 80, behavior: 'smooth' });
+}
+
+// Event delegation for option clicks
+document.getElementById('quiz-questions').addEventListener('click', function(e) {
+  const btn = e.target.closest('.quiz-opt');
+  if (!btn) return;
+
+  // Highlight selection briefly
+  const step = btn.closest('.quiz-step');
+  step.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  addTags(btn.dataset.tags);
+
+  setTimeout(nextStep, 280);
+});
+
+document.getElementById('quiz-back').addEventListener('click', prevStep);
+
+document.getElementById('quiz-restart').addEventListener('click', function() {
+  // Reset state
+  currentStep = 1;
+  Object.keys(tagScores).forEach(k => delete tagScores[k]);
+  document.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-container').style.display = 'block';
+  showStep(1);
+  window.scrollTo({ top: document.getElementById('quiz-container').offsetTop - 80, behavior: 'smooth' });
+});
+
+// Init
+showStep(1);
+</script>

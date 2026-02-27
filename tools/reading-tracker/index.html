@@ -1,0 +1,469 @@
+---
+layout: default
+title: Reading Tracker
+description: Track your reading progress, set yearly goals, and get AI-powered recommendations based on what you've loved.
+permalink: /tools/reading-tracker/
+---
+
+<div class="tool-hero">
+  <div class="tool-hero-inner">
+    <div class="tool-label">
+      <span class="tool-label-line"></span>
+      <span>Reader's Tool</span>
+    </div>
+    <h1>Reading <em>Tracker</em></h1>
+    <p>Log your books, track your yearly goal, and get personalised recommendations based on what you've actually read.</p>
+  </div>
+</div>
+
+<section class="tool-body">
+  <div class="tool-body-inner" style="max-width:900px;">
+
+    <!-- GOAL + STATS ROW -->
+    <div class="rt-stats-row">
+
+      <div class="rt-stat-card rt-stat-goal">
+        <div class="rt-stat-label">Reading goal</div>
+        <div class="rt-goal-display">
+          <span class="rt-goal-current" id="rt-goal-count">0</span>
+          <span class="rt-goal-sep">/</span>
+          <input type="number" class="rt-goal-input" id="rt-goal-target" value="12" min="1" max="365" aria-label="Yearly reading goal">
+          <span class="rt-goal-unit">books this year</span>
+        </div>
+        <div class="rt-goal-bar-wrap">
+          <div class="rt-goal-bar">
+            <div class="rt-goal-fill" id="rt-goal-fill" style="width:0%"></div>
+          </div>
+          <span class="rt-goal-pct" id="rt-goal-pct">0%</span>
+        </div>
+      </div>
+
+      <div class="rt-stat-card">
+        <div class="rt-stat-label">Total read</div>
+        <div class="rt-stat-number" id="rt-total">0</div>
+        <div class="rt-stat-sub">all time</div>
+      </div>
+
+      <div class="rt-stat-card">
+        <div class="rt-stat-label">This year</div>
+        <div class="rt-stat-number" id="rt-this-year">0</div>
+        <div class="rt-stat-sub" id="rt-year-label">2025</div>
+      </div>
+
+      <div class="rt-stat-card">
+        <div class="rt-stat-label">Favourites</div>
+        <div class="rt-stat-number" id="rt-favourites">0</div>
+        <div class="rt-stat-sub">5★ reads</div>
+      </div>
+
+    </div>
+
+    <!-- ADD BOOK -->
+    <div class="rt-add-card">
+      <h3 class="rt-section-title">Add a book</h3>
+      <div class="rt-add-form">
+        <div class="rt-add-fields">
+          <div class="rt-field rt-field--title">
+            <label for="rt-title">Title <span class="rt-required">*</span></label>
+            <input type="text" id="rt-title" placeholder="e.g. The Way of Kings" autocomplete="off">
+          </div>
+          <div class="rt-field rt-field--author">
+            <label for="rt-author">Author</label>
+            <input type="text" id="rt-author" placeholder="e.g. Brandon Sanderson" autocomplete="off">
+          </div>
+          <div class="rt-field rt-field--genre">
+            <label for="rt-genre">Genre</label>
+            <select id="rt-genre">
+              <option value="">— select —</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Science Fiction">Science Fiction</option>
+              <option value="Horror">Horror</option>
+              <option value="Dystopian">Dystopian</option>
+              <option value="Literary Fiction">Literary Fiction</option>
+              <option value="Historical Fiction">Historical Fiction</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Non-Fiction">Non-Fiction</option>
+              <option value="Short Stories">Short Stories</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="rt-field rt-field--rating">
+            <label>Rating</label>
+            <div class="rt-stars" id="rt-star-input" role="radiogroup" aria-label="Rating">
+              <button class="rt-star" data-val="1" aria-label="1 star">★</button>
+              <button class="rt-star" data-val="2" aria-label="2 stars">★</button>
+              <button class="rt-star" data-val="3" aria-label="3 stars">★</button>
+              <button class="rt-star" data-val="4" aria-label="4 stars">★</button>
+              <button class="rt-star" data-val="5" aria-label="5 stars">★</button>
+            </div>
+          </div>
+          <div class="rt-field rt-field--date">
+            <label for="rt-date">Date finished</label>
+            <input type="date" id="rt-date">
+          </div>
+        </div>
+        <div class="rt-field rt-field--notes">
+          <label for="rt-notes">Notes <span style="font-weight:300; color:var(--ink-muted);">(optional)</span></label>
+          <textarea id="rt-notes" rows="2" placeholder="A line or two about what you thought..."></textarea>
+        </div>
+        <button class="btn-generate rt-add-btn" id="rt-add-btn">+ Add to list</button>
+      </div>
+    </div>
+
+    <!-- BOOK LIST -->
+    <div class="rt-list-card">
+      <div class="rt-list-header">
+        <h3 class="rt-section-title">Your books</h3>
+        <div class="rt-list-controls">
+          <input type="text" class="rt-search" id="rt-search" placeholder="Search..." aria-label="Search books">
+          <select class="rt-filter-select" id="rt-filter-genre" aria-label="Filter by genre">
+            <option value="">All genres</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option value="Horror">Horror</option>
+            <option value="Dystopian">Dystopian</option>
+            <option value="Literary Fiction">Literary Fiction</option>
+            <option value="Historical Fiction">Historical Fiction</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Short Stories">Short Stories</option>
+            <option value="Other">Other</option>
+          </select>
+          <select class="rt-filter-select" id="rt-sort" aria-label="Sort books">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="rating-high">Rating: high to low</option>
+            <option value="rating-low">Rating: low to high</option>
+            <option value="title">Title A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="rt-book-list"></div>
+
+      <div class="rt-empty" id="rt-empty">
+        <div class="rt-empty-icon">📚</div>
+        <p>No books yet. Add your first read above.</p>
+      </div>
+
+    </div>
+
+    <!-- AI RECOMMENDATIONS -->
+    <div class="rt-ai-card">
+      <div class="rt-ai-header">
+        <div>
+          <div class="section-label" style="margin-bottom:0.4rem;">Powered by Claude</div>
+          <h3 class="rt-section-title" style="margin-bottom:0.4rem;">What should I read next?</h3>
+          <p class="rt-ai-sub">Based on the books you've logged, Claude will suggest what to read next — with reasons tailored to your taste.</p>
+        </div>
+        <div class="rt-ai-badge">AI</div>
+      </div>
+      <button class="btn-generate rt-ai-btn" id="rt-ai-btn">✦ Get recommendations</button>
+      <div class="rt-ai-output" id="rt-ai-output" style="display:none;"></div>
+      <p class="rt-ai-note" id="rt-ai-note" style="display:none;">Recommendations are generated by Claude (Anthropic) based on your logged books. Results are suggestions only.</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+// ============================================================
+// STATE & STORAGE
+// ============================================================
+const STORAGE_KEY = 'ctb_reading_tracker_v1';
+const GOAL_KEY    = 'ctb_reading_goal_v1';
+
+let books = [];
+let selectedRating = 0;
+
+function saveBooks() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(books)); } catch(e) {}
+}
+
+function loadBooks() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    books = raw ? JSON.parse(raw) : [];
+  } catch(e) { books = []; }
+}
+
+function saveGoal(val) {
+  try { localStorage.setItem(GOAL_KEY, val); } catch(e) {}
+}
+
+function loadGoal() {
+  try { return parseInt(localStorage.getItem(GOAL_KEY)) || 12; } catch(e) { return 12; }
+}
+
+// ============================================================
+// STATS
+// ============================================================
+function updateStats() {
+  const year = new Date().getFullYear();
+  document.getElementById('rt-year-label').textContent = year;
+
+  const thisYear = books.filter(b => b.date && new Date(b.date).getFullYear() === year);
+  const faves    = books.filter(b => b.rating === 5);
+  const goal     = parseInt(document.getElementById('rt-goal-target').value) || 12;
+  const pct      = Math.min(100, Math.round((thisYear.length / goal) * 100));
+
+  document.getElementById('rt-total').textContent      = books.length;
+  document.getElementById('rt-this-year').textContent  = thisYear.length;
+  document.getElementById('rt-favourites').textContent = faves.length;
+  document.getElementById('rt-goal-count').textContent = thisYear.length;
+  document.getElementById('rt-goal-fill').style.width  = pct + '%';
+  document.getElementById('rt-goal-pct').textContent   = pct + '%';
+}
+
+// ============================================================
+// RENDER BOOK LIST
+// ============================================================
+function renderBooks() {
+  const search     = document.getElementById('rt-search').value.toLowerCase();
+  const genreFilter= document.getElementById('rt-filter-genre').value;
+  const sort       = document.getElementById('rt-sort').value;
+
+  let filtered = books.filter(b => {
+    const matchSearch = !search ||
+      b.title.toLowerCase().includes(search) ||
+      (b.author || '').toLowerCase().includes(search);
+    const matchGenre = !genreFilter || b.genre === genreFilter;
+    return matchSearch && matchGenre;
+  });
+
+  filtered = [...filtered].sort((a, b) => {
+    if (sort === 'newest')      return new Date(b.added) - new Date(a.added);
+    if (sort === 'oldest')      return new Date(a.added) - new Date(b.added);
+    if (sort === 'rating-high') return (b.rating || 0) - (a.rating || 0);
+    if (sort === 'rating-low')  return (a.rating || 0) - (b.rating || 0);
+    if (sort === 'title')       return a.title.localeCompare(b.title);
+    return 0;
+  });
+
+  const list = document.getElementById('rt-book-list');
+  const empty = document.getElementById('rt-empty');
+
+  if (filtered.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = filtered.map(book => `
+    <div class="rt-book-item" data-id="${book.id}">
+      <div class="rt-book-main">
+        <div class="rt-book-info">
+          <div class="rt-book-title">${escHtml(book.title)}</div>
+          ${book.author ? `<div class="rt-book-author">${escHtml(book.author)}</div>` : ''}
+        </div>
+        <div class="rt-book-meta">
+          ${book.genre ? `<span class="rt-book-genre">${escHtml(book.genre)}</span>` : ''}
+          ${book.rating ? `<span class="rt-book-stars">${'★'.repeat(book.rating)}${'☆'.repeat(5-book.rating)}</span>` : ''}
+          ${book.date ? `<span class="rt-book-date">${formatDate(book.date)}</span>` : ''}
+          <button class="rt-delete" data-id="${book.id}" aria-label="Remove book" title="Remove">×</button>
+        </div>
+      </div>
+      ${book.notes ? `<div class="rt-book-notes">${escHtml(book.notes)}</div>` : ''}
+    </div>
+  `).join('');
+
+  updateStats();
+}
+
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(str));
+  return d.innerHTML;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// ============================================================
+// ADD BOOK
+// ============================================================
+document.getElementById('rt-add-btn').addEventListener('click', function() {
+  const title = document.getElementById('rt-title').value.trim();
+  if (!title) {
+    document.getElementById('rt-title').focus();
+    document.getElementById('rt-title').classList.add('rt-input-error');
+    setTimeout(() => document.getElementById('rt-title').classList.remove('rt-input-error'), 1500);
+    return;
+  }
+
+  const book = {
+    id:     Date.now(),
+    title:  title,
+    author: document.getElementById('rt-author').value.trim(),
+    genre:  document.getElementById('rt-genre').value,
+    rating: selectedRating,
+    date:   document.getElementById('rt-date').value,
+    notes:  document.getElementById('rt-notes').value.trim(),
+    added:  new Date().toISOString()
+  };
+
+  books.unshift(book);
+  saveBooks();
+
+  // Reset form
+  document.getElementById('rt-title').value  = '';
+  document.getElementById('rt-author').value = '';
+  document.getElementById('rt-genre').value  = '';
+  document.getElementById('rt-notes').value  = '';
+  document.getElementById('rt-date').value   = '';
+  setStars(0);
+
+  renderBooks();
+  updateStats();
+});
+
+// ============================================================
+// STAR RATING INPUT
+// ============================================================
+function setStars(val) {
+  selectedRating = val;
+  document.querySelectorAll('#rt-star-input .rt-star').forEach((s, i) => {
+    s.classList.toggle('active', i < val);
+  });
+}
+
+document.getElementById('rt-star-input').addEventListener('click', function(e) {
+  const btn = e.target.closest('.rt-star');
+  if (!btn) return;
+  const val = parseInt(btn.dataset.val);
+  setStars(selectedRating === val ? 0 : val);
+});
+
+document.getElementById('rt-star-input').addEventListener('mouseover', function(e) {
+  const btn = e.target.closest('.rt-star');
+  if (!btn) return;
+  const val = parseInt(btn.dataset.val);
+  document.querySelectorAll('#rt-star-input .rt-star').forEach((s, i) => {
+    s.classList.toggle('hover', i < val);
+  });
+});
+
+document.getElementById('rt-star-input').addEventListener('mouseleave', function() {
+  document.querySelectorAll('#rt-star-input .rt-star').forEach(s => s.classList.remove('hover'));
+});
+
+// ============================================================
+// DELETE
+// ============================================================
+document.getElementById('rt-book-list').addEventListener('click', function(e) {
+  const btn = e.target.closest('.rt-delete');
+  if (!btn) return;
+  const id = parseInt(btn.dataset.id);
+  books = books.filter(b => b.id !== id);
+  saveBooks();
+  renderBooks();
+  updateStats();
+});
+
+// ============================================================
+// FILTERS / SEARCH / SORT
+// ============================================================
+document.getElementById('rt-search').addEventListener('input', renderBooks);
+document.getElementById('rt-filter-genre').addEventListener('change', renderBooks);
+document.getElementById('rt-sort').addEventListener('change', renderBooks);
+
+// ============================================================
+// GOAL
+// ============================================================
+const goalInput = document.getElementById('rt-goal-target');
+goalInput.value = loadGoal();
+goalInput.addEventListener('change', function() {
+  saveGoal(this.value);
+  updateStats();
+});
+
+// ============================================================
+// AI RECOMMENDATIONS — Claude API
+// ============================================================
+document.getElementById('rt-ai-btn').addEventListener('click', async function() {
+  if (books.length === 0) {
+    document.getElementById('rt-ai-output').style.display = 'block';
+    document.getElementById('rt-ai-output').innerHTML = '<p class="rt-ai-msg">Add some books to your list first — Claude needs something to work with!</p>';
+    return;
+  }
+
+  const btn = this;
+  btn.disabled = true;
+  btn.textContent = '✦ Thinking...';
+
+  const output = document.getElementById('rt-ai-output');
+  const note   = document.getElementById('rt-ai-note');
+  output.style.display = 'block';
+  output.innerHTML = '<div class="rt-ai-loading"><span></span><span></span><span></span></div>';
+  note.style.display = 'none';
+
+  // Build reading summary for Claude
+  const topRated  = books.filter(b => b.rating >= 4).slice(0, 8);
+  const recentAll = books.slice(0, 5);
+  const genres    = [...new Set(books.map(b => b.genre).filter(Boolean))];
+
+  const bookList = (topRated.length > 0 ? topRated : recentAll)
+    .map(b => `- "${b.title}"${b.author ? ` by ${b.author}` : ''}${b.genre ? ` (${b.genre})` : ''}${b.rating ? ` — ${b.rating}/5 stars` : ''}${b.notes ? `: "${b.notes}"` : ''}`)
+    .join('\n');
+
+  const prompt = `You are a knowledgeable book recommender. A reader has logged the following books they've read and rated:
+
+${bookList}
+
+Genres they read: ${genres.length > 0 ? genres.join(', ') : 'mixed'}
+Total books logged: ${books.length}
+
+Based on their reading history and ratings, recommend exactly 4 books they would love next. Focus on books that match the tone, themes, and authors they seem to enjoy most.
+
+For each recommendation, give:
+1. Title and author (bold the title)
+2. Why it matches their taste specifically (1-2 sentences referencing something they've read)
+3. One sentence on what makes it special
+
+Keep the tone warm, direct, and knowledgeable — like a recommendation from a well-read friend. Do not use bullet point lists within each recommendation. Format as 4 numbered recommendations.`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.find(c => c.type === 'text')?.text || '';
+
+    if (!text) throw new Error('No response');
+
+    // Render with basic markdown-ish formatting
+    const html = text
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/^(\d+\.)/, '<span class="rt-ai-num">$1</span>');
+
+    output.innerHTML = `<div class="rt-ai-response"><p>${html}</p></div>`;
+    note.style.display = 'block';
+
+  } catch(err) {
+    output.innerHTML = `<p class="rt-ai-msg">Couldn't get recommendations right now — please try again in a moment.</p>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '✦ Get new recommendations';
+});
+
+// ============================================================
+// INIT
+// ============================================================
+loadBooks();
+document.getElementById('rt-date').value = new Date().toISOString().split('T')[0];
+renderBooks();
+updateStats();
+</script>
