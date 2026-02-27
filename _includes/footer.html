@@ -38,7 +38,11 @@
 
     <div class="footer-bottom">
       <span>© {{ site.time | date: "%Y" }} Cabbage Tree Books. All rights reserved.</span>
-      <span>Affiliate links may earn a small commission at no cost to you.</span>
+      <div class="footer-legal-links">
+        <a href="{{ '/terms/' | relative_url }}">Terms &amp; Conditions</a>
+        <a href="{{ '/cookie-policy/' | relative_url }}">Cookie Policy</a>
+        <span>Affiliate links may earn a small commission at no cost to you.</span>
+      </div>
     </div>
   </div>
 </footer>

@@ -1,0 +1,60 @@
+<!-- Cookie consent banner -->
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-live="polite">
+  <div class="cookie-banner-inner">
+    <div class="cookie-banner-text">
+      <p>
+        We use cookies to analyse site traffic and improve your experience. We also use affiliate links which may set cookies from Amazon. 
+        <a href="{{ '/cookie-policy/' | relative_url }}">Cookie Policy</a>
+      </p>
+    </div>
+    <div class="cookie-banner-actions">
+      <button class="cookie-btn cookie-btn--decline" id="cookie-decline">Decline</button>
+      <button class="cookie-btn cookie-btn--accept" id="cookie-accept">Accept cookies</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var banner = document.getElementById('cookie-banner');
+  var consent = localStorage.getItem('ctb_cookie_consent');
+
+  // Hide banner if already decided
+  if (consent === 'accepted' || consent === 'declined') {
+    banner.style.display = 'none';
+    if (consent === 'accepted') loadAnalytics();
+    return;
+  }
+
+  // Show banner
+  banner.style.display = 'block';
+
+  document.getElementById('cookie-accept').addEventListener('click', function() {
+    localStorage.setItem('ctb_cookie_consent', 'accepted');
+    banner.classList.add('cookie-banner--hiding');
+    setTimeout(function() { banner.style.display = 'none'; }, 350);
+    loadAnalytics();
+  });
+
+  document.getElementById('cookie-decline').addEventListener('click', function() {
+    localStorage.setItem('ctb_cookie_consent', 'declined');
+    banner.classList.add('cookie-banner--hiding');
+    setTimeout(function() { banner.style.display = 'none'; }, 350);
+  });
+
+  function loadAnalytics() {
+    // Google Analytics — replace GA_MEASUREMENT_ID with your actual ID (e.g. G-XXXXXXXXXX)
+    // Only loads after explicit user consent
+    var GA_ID = 'GA_MEASUREMENT_ID';
+    if (!GA_ID || GA_ID === 'GA_MEASUREMENT_ID') return;
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(script);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+})();
+</script>
