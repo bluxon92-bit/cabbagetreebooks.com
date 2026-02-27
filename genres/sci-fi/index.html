@@ -78,8 +78,7 @@ permalink: /genres/sci-fi/
 </section>
 
 <!-- BLOG POSTS: Sci-Fi relevant categories -->
-{% assign scifi_posts = site.posts | where_exp: "post", "post.category == 'Book Recommendations' or post.category == 'Book Reviews' or post.category == 'Author Profiles' or post.category == 'Reading Tips'" %}
-{% if scifi_posts.size > 0 %}
+{% for post in scifi_posts limit:6 %}
 <section class="section" style="background:var(--paper); border-top:1px solid var(--border);">
   <div class="section-inner">
     <div class="section-header">
