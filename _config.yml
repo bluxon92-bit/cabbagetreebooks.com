@@ -18,7 +18,7 @@ mailerlite:
 
 markdown: kramdown
 highlighter: rouge
-permalink: /blog/:slug/
+permalink: /blog/:title/
 
 plugins:
   - jekyll-feed
