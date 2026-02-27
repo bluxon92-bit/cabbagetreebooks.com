@@ -8,37 +8,41 @@
 
     <ul class="nav-links" role="list">
 
-      <li><a href="{{ '/' | relative_url }}">Home</a></li>
       <li><a href="{{ '/blog/' | relative_url }}">Blog</a></li>
 
       <li class="nav-dropdown">
         <a href="{{ '/genres/' | relative_url }}" aria-haspopup="true">Explore</a>
         <div class="dropdown-menu" role="menu">
-          <a href="{{ '/genres/sci-fi/' | relative_url }}" role="menuitem">Science Fiction</a>
-          <a href="{{ '/genres/fantasy/' | relative_url }}" role="menuitem">Fantasy</a>
-          <a href="{{ '/genres/horror/' | relative_url }}" role="menuitem">Horror</a>
-          <a href="{{ '/genres/dystopian/' | relative_url }}" role="menuitem">Dystopian</a>
+          <a href="{{ '/genres/sci-fi/' | relative_url }}"      role="menuitem">Science Fiction</a>
+          <a href="{{ '/genres/fantasy/' | relative_url }}"     role="menuitem">Fantasy</a>
+          <a href="{{ '/genres/horror/' | relative_url }}"      role="menuitem">Horror</a>
+          <a href="{{ '/genres/dystopian/' | relative_url }}"   role="menuitem">Dystopian</a>
         </div>
       </li>
 
       <li class="nav-dropdown">
         <a href="{{ '/tools/quiz/' | relative_url }}" aria-haspopup="true">Tools</a>
         <div class="dropdown-menu" role="menu">
-          <a href="{{ '/tools/quiz/' | relative_url }}" role="menuitem">What Should I Read Next?</a>
-          <a href="{{ '/tools/reading-tracker/' | relative_url }}" role="menuitem">Reading Tracker</a>
-          <div class="dropdown-divider"></div>
-          <a href="{{ '/tools/name-generator/' | relative_url }}" role="menuitem">Fantasy Name Generator</a>
+          <a href="{{ '/tools/reading-tracker/' | relative_url }}" role="menuitem">📖 Reading Tracker</a>
+          <a href="{{ '/tools/quiz/' | relative_url }}"            role="menuitem">What Should I Read Next?</a>
+          <a href="{{ '/tools/name-generator/' | relative_url }}"  role="menuitem">Fantasy Name Generator</a>
           <a href="{{ '/tools/fantasy-prompts/' | relative_url }}" role="menuitem">Fantasy Prompt Generator</a>
-          <a href="{{ '/tools/scifi-prompts/' | relative_url }}" role="menuitem">Sci-Fi Prompt Generator</a>
-          <div class="dropdown-divider"></div>
-          <a href="{{ '/free-downloads/' | relative_url }}" role="menuitem">Free Sci-Fi Stories ↓</a>
+          <a href="{{ '/tools/scifi-prompts/' | relative_url }}"   role="menuitem">Sci-Fi Prompt Generator</a>
+        </div>
+      </li>
+
+      <li class="nav-dropdown">
+        <a href="{{ '/free-downloads/' | relative_url }}" aria-haspopup="true">Free downloads</a>
+        <div class="dropdown-menu" role="menu">
+          <a href="{{ '/free-downloads/' | relative_url }}"        role="menuitem">Free Sci-Fi Stories ↓</a>
           <a href="{{ '/free-downloads/horror/' | relative_url }}" role="menuitem">Free Horror Stories ↓</a>
         </div>
       </li>
 
       <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+
       <li class="nav-cta">
-        <a href="{{ site.sister_site.url }}" target="_blank" rel="noopener">Ben Luxon ↗</a>
+        <a href="{{ '/tools/reading-tracker/' | relative_url }}">📖 Reading Tracker</a>
       </li>
 
     </ul>
@@ -51,7 +55,6 @@
 </header>
 
 <nav class="nav-mobile" aria-label="Mobile navigation">
-  <a href="{{ '/' | relative_url }}">Home</a>
   <a href="{{ '/blog/' | relative_url }}">Blog</a>
 
   <div class="nav-mobile-section">Explore by Genre</div>
@@ -60,16 +63,17 @@
   <a href="{{ '/genres/horror/' | relative_url }}">Horror</a>
   <a href="{{ '/genres/dystopian/' | relative_url }}">Dystopian</a>
 
-  <div class="nav-mobile-section">Tools &amp; Downloads</div>
+  <div class="nav-mobile-section">Tools</div>
+  <a href="{{ '/tools/reading-tracker/' | relative_url }}" style="color:var(--teal); font-weight:500;">📖 Reading Tracker</a>
   <a href="{{ '/tools/quiz/' | relative_url }}">What Should I Read Next?</a>
-  <a href="{{ '/tools/reading-tracker/' | relative_url }}">Reading Tracker</a>
   <a href="{{ '/tools/name-generator/' | relative_url }}">Name Generator</a>
   <a href="{{ '/tools/fantasy-prompts/' | relative_url }}">Fantasy Prompts</a>
   <a href="{{ '/tools/scifi-prompts/' | relative_url }}">Sci-Fi Prompts</a>
+
+  <div class="nav-mobile-section">Free Downloads</div>
   <a href="{{ '/free-downloads/' | relative_url }}">Free Sci-Fi Stories ↓</a>
   <a href="{{ '/free-downloads/horror/' | relative_url }}">Free Horror Stories ↓</a>
 
   <div class="nav-mobile-section">More</div>
   <a href="{{ '/about/' | relative_url }}">About</a>
-  <a href="{{ site.sister_site.url }}" target="_blank" rel="noopener" style="color:var(--teal);">Ben Luxon Author ↗</a>
 </nav>
