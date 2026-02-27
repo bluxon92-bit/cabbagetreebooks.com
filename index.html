@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Home
-description: Cabbage Tree Books — book recommendations, resources, reviews, and genre guides for lovers of sci-fi, fantasy, and horror fiction.
+description: Cabbage Tree Books — book recommendations, reviews, and genre guides for lovers of sci-fi, fantasy, and horror fiction.
 ---
 
 <!-- ==============================
@@ -76,9 +76,31 @@ description: Cabbage Tree Books — book recommendations, resources, reviews, an
     </div>
 
     <div class="blog-grid-main">
-      {% for post in site.posts limit: 5 %}
-        <article class="blog-card-ct {% if forloop.first %}blog-card-large{% endif %}"
-                 data-category="{{ post.category | default: 'Book Recommendations' }}">
+      {% assign first_post = site.posts.first %}
+      {% if first_post %}
+        <article class="blog-card-ct blog-card-large" data-category="{{ first_post.category | default: 'Book Recommendations' }}">
+          {% if first_post.image %}
+          <div class="blog-card-image">
+            <img src="{{ first_post.image | relative_url }}" alt="{{ first_post.title }}" loading="lazy">
+          </div>
+          {% else %}
+          <div class="blog-card-image" style="background: linear-gradient(135deg, var(--teal) 0%, #0d2e2c 100%); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:var(--font-display); font-size:2rem; color:rgba(255,255,255,0.15);">✦</span>
+          </div>
+          {% endif %}
+          <div class="blog-card-body">
+            <div class="blog-card-tag">{{ first_post.category | default: "Book Recommendations" }}</div>
+            <h3><a href="{{ first_post.url | relative_url }}">{{ first_post.title }}</a></h3>
+            <p>{{ first_post.excerpt | strip_html | truncate: 160 }}</p>
+            <div class="blog-card-meta">
+              <span class="blog-card-date">{{ first_post.date | date: "%b %-d, %Y" }}</span>
+              <a href="{{ first_post.url | relative_url }}" class="blog-card-readmore">Read more</a>
+            </div>
+          </div>
+        </article>
+      {% endif %}
+      {% for post in site.posts offset: 1 limit: 4 %}
+        <article class="blog-card-ct" data-category="{{ post.category | default: 'Book Recommendations' }}">
           {% if post.image %}
           <div class="blog-card-image">
             <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
@@ -91,7 +113,7 @@ description: Cabbage Tree Books — book recommendations, resources, reviews, an
           <div class="blog-card-body">
             <div class="blog-card-tag">{{ post.category | default: "Book Recommendations" }}</div>
             <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-            <p>{{ post.excerpt | strip_html | truncate: {% if forloop.first %}160{% else %}100{% endif %} }}</p>
+            <p>{{ post.excerpt | strip_html | truncate: 100 }}</p>
             <div class="blog-card-meta">
               <span class="blog-card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
               <a href="{{ post.url | relative_url }}" class="blog-card-readmore">Read more</a>
