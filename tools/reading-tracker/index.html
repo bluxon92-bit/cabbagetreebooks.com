@@ -5,658 +5,862 @@ description: Track your reading progress, set yearly goals, and get AI-powered r
 permalink: /tools/reading-tracker/
 ---
 
-<div class="tool-hero" style="padding-bottom:1.5rem;">
-  <div class="tool-hero-inner">
+<div class="rt-hero">
+  <div class="rt-hero-inner">
     <div class="tool-label">
       <span class="tool-label-line"></span>
       <span>Reader's Tool</span>
     </div>
     <h1>Reading <em>Tracker</em></h1>
-    <p>Track every book — from your TBR pile through to finished reads. Bookmark or install for the best experience.</p>
+    <p>Track every book — from your TBR pile through to finished reads.</p>
   </div>
 </div>
 
+<!-- STICKY TAB BAR -->
+<div class="rt-tabbar-wrap" id="rt-tabbar-wrap">
+  <div class="rt-tabbar">
+    <button class="rt-tab active" data-tab="home"      onclick="switchTab('home')">
+      <span class="rt-tab-icon">◈</span> Home
+    </button>
+    <button class="rt-tab" data-tab="add"       onclick="switchTab('add')">
+      <span class="rt-tab-icon">＋</span> Add book
+    </button>
+    <button class="rt-tab" data-tab="tbr"       onclick="switchTab('tbr')">
+      <span class="rt-tab-icon">🔖</span> TBR
+    </button>
+    <button class="rt-tab" data-tab="recs"      onclick="switchTab('recs')">
+      <span class="rt-tab-icon">✦</span> Recs
+    </button>
+    <button class="rt-tab rt-tab--soon" data-tab="save" onclick="switchTab('save')">
+      <span class="rt-tab-icon">✉</span> Save list
+    </button>
+  </div>
+</div>
+
+<!-- PANELS -->
 <div class="rt-app">
   <div class="rt-panels">
 
-    <!-- ═══════════════════════════════════════
-         TAB 1 — CURRENTLY READING
-    ════════════════════════════════════════ -->
-    <div class="rt-panel" id="rt-panel-reading" data-tab="reading">
+    <!-- ══════════════════════════════════
+         HOME / DASHBOARD
+    ══════════════════════════════════ -->
+    <div class="rt-panel" id="rt-panel-home" data-tab="home">
       <div class="rt-panel-inner">
-        <h2 class="rt-panel-title">Currently reading</h2>
 
-        <div id="rt-reading-list"></div>
+        <!-- Currently reading -->
+        <div class="rt-home-section">
+          <div class="rt-home-section-header">
+            <h2 class="rt-section-heading">Currently reading</h2>
+            <button class="rt-ghost-btn" onclick="switchTab('add')">+ Start a new book</button>
+          </div>
 
-        <div class="rt-empty" id="rt-reading-empty">
-          <div class="rt-empty-icon">📖</div>
-          <p>Nothing in progress. <button class="btn-text-link" onclick="switchTab('tbr')">Pick something from your TBR →</button></p>
+          <div id="rt-home-reading-list"></div>
+
+          <div class="rt-empty rt-empty--inline" id="rt-home-reading-empty">
+            <p>Nothing in progress yet. <button class="btn-text-link" onclick="switchTab('add')">Start reading something →</button></p>
+          </div>
         </div>
 
-        <div class="rt-add-quick-wrap">
-          <h3 class="rt-subsection-title">Start reading something new</h3>
-          <div class="rt-quick-add-row">
-            <input type="text" id="rt-q-title"  class="rt-tbr-input" placeholder="Title..." autocomplete="off">
-            <input type="text" id="rt-q-author" class="rt-tbr-input" placeholder="Author (optional)" autocomplete="off">
-            <select id="rt-q-genre" class="rt-tbr-input rt-tbr-select">
-              <option value="">Genre...</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Science Fiction">Science Fiction</option>
-              <option value="Horror">Horror</option>
-              <option value="Romance">Romance</option>
-              <option value="Dystopian">Dystopian</option>
-              <option value="Literary Fiction">Literary Fiction</option>
-              <option value="Historical Fiction">Historical Fiction</option>
-              <option value="Thriller">Thriller</option>
-              <option value="Non-Fiction">Non-Fiction</option>
-              <option value="Short Stories">Short Stories</option>
-              <option value="Other">Other</option>
-            </select>
-            <button class="rt-tbr-add-btn" id="rt-q-start-btn">Start reading</button>
+        <!-- Stats -->
+        <div class="rt-home-section">
+          <h2 class="rt-section-heading">Your reading year</h2>
+          <div class="rt-stats-grid">
+            <div class="rt-stat-card rt-stat-goal">
+              <div class="rt-stat-label">Goal</div>
+              <div class="rt-goal-display">
+                <span class="rt-goal-current" id="rt-goal-count">0</span>
+                <span class="rt-goal-sep">/</span>
+                <input type="number" class="rt-goal-input" id="rt-goal-target" value="12" min="1" max="365" aria-label="Yearly goal">
+                <span class="rt-goal-unit">this year</span>
+              </div>
+              <div class="rt-goal-bar-wrap">
+                <div class="rt-goal-bar"><div class="rt-goal-fill" id="rt-goal-fill" style="width:0%"></div></div>
+                <span class="rt-goal-pct" id="rt-goal-pct">0%</span>
+              </div>
+            </div>
+            <div class="rt-stat-card">
+              <div class="rt-stat-label">This year</div>
+              <div class="rt-stat-number" id="rt-this-year">0</div>
+              <div class="rt-stat-sub" id="rt-year-label">2026</div>
+            </div>
+            <div class="rt-stat-card">
+              <div class="rt-stat-label">All time</div>
+              <div class="rt-stat-number" id="rt-total">0</div>
+              <div class="rt-stat-sub">books read</div>
+            </div>
+            <div class="rt-stat-card">
+              <div class="rt-stat-label">Favourites</div>
+              <div class="rt-stat-number" id="rt-favourites">0</div>
+              <div class="rt-stat-sub">5★ reads</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reading history -->
+        <div class="rt-home-section">
+          <div class="rt-home-section-header">
+            <h2 class="rt-section-heading">Reading history</h2>
+            <div style="display:flex;gap:0.5rem;">
+              <select class="rt-filter-select" id="rt-home-sort">
+                <option value="newest">Newest first</option>
+                <option value="rating-high">Top rated</option>
+                <option value="title">A–Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="rt-status-tabs">
+            <button class="rt-status-tab active" data-status="read" onclick="setHomeFilter('read',this)">Finished</button>
+            <button class="rt-status-tab" data-status="dnf"  onclick="setHomeFilter('dnf',this)">DNF</button>
+          </div>
+
+          <div id="rt-history-list"></div>
+          <div class="rt-empty rt-empty--inline" id="rt-history-empty">
+            <p id="rt-history-empty-msg">No finished books yet. <button class="btn-text-link" onclick="switchTab('add')">Log your first read →</button></p>
           </div>
         </div>
 
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         TAB 2 — TBR
-    ════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════
+         ADD BOOK
+    ══════════════════════════════════ -->
+    <div class="rt-panel" id="rt-panel-add" data-tab="add" style="display:none;">
+      <div class="rt-panel-inner">
+        <h2 class="rt-section-heading">Add a book</h2>
+        <p class="rt-panel-sub">Adding a book will mark it as currently reading. Fill in rating and notes when you're done.</p>
+
+        <div class="rt-form-card">
+          <div class="rt-form-row">
+            <div class="rt-field">
+              <label for="rt-title">Title <span class="rt-required">*</span></label>
+              <input type="text" id="rt-title" placeholder="e.g. The Way of Kings" autocomplete="off">
+            </div>
+          </div>
+          <div class="rt-form-row rt-form-row--2">
+            <div class="rt-field">
+              <label for="rt-author">Author</label>
+              <input type="text" id="rt-author" placeholder="e.g. Brandon Sanderson" autocomplete="off">
+            </div>
+            <div class="rt-field">
+              <label for="rt-genre">Genre</label>
+              <select id="rt-genre">
+                <option value="">— select —</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Horror">Horror</option>
+                <option value="Romance">Romance</option>
+                <option value="Dystopian">Dystopian</option>
+                <option value="Literary Fiction">Literary Fiction</option>
+                <option value="Historical Fiction">Historical Fiction</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Non-Fiction">Non-Fiction</option>
+                <option value="Short Stories">Short Stories</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="rt-form-row rt-form-row--2">
+            <div class="rt-field">
+              <label>Status</label>
+              <div class="rt-status-toggle">
+                <label class="rt-toggle-opt">
+                  <input type="radio" name="rt-status" value="reading" checked> Currently reading
+                </label>
+                <label class="rt-toggle-opt">
+                  <input type="radio" name="rt-status" value="read"> Already finished
+                </label>
+                <label class="rt-toggle-opt">
+                  <input type="radio" name="rt-status" value="tbr"> Add to TBR
+                </label>
+              </div>
+            </div>
+            <div class="rt-field">
+              <label for="rt-date">Date finished</label>
+              <input type="date" id="rt-date">
+            </div>
+          </div>
+
+          <!-- Shown only when "already finished" -->
+          <div class="rt-form-row" id="rt-rating-row" style="display:none;">
+            <div class="rt-field">
+              <label>Rating</label>
+              <div class="rt-stars" id="rt-star-input" role="radiogroup" aria-label="Rating">
+                <button class="rt-star" data-val="1" type="button">★</button>
+                <button class="rt-star" data-val="2" type="button">★</button>
+                <button class="rt-star" data-val="3" type="button">★</button>
+                <button class="rt-star" data-val="4" type="button">★</button>
+                <button class="rt-star" data-val="5" type="button">★</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="rt-form-row" id="rt-notes-row" style="display:none;">
+            <div class="rt-field">
+              <label for="rt-notes">Notes <span class="rt-optional">(optional — helps personalise your recommendations)</span></label>
+              <textarea id="rt-notes" rows="3" placeholder="What did you think?"></textarea>
+            </div>
+          </div>
+
+          <div class="rt-form-row">
+            <button class="rt-submit-btn" id="rt-add-btn" type="button">Add book</button>
+          </div>
+
+          <div class="rt-add-success" id="rt-add-success" style="display:none;">
+            <span>✓</span>&nbsp;<span id="rt-add-success-msg">Added!</span>
+            <button class="btn-text-link" onclick="switchTab('home')">Back to home →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         TBR
+    ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-tbr" data-tab="tbr" style="display:none;">
       <div class="rt-panel-inner">
-        <h2 class="rt-panel-title">To be read</h2>
+        <h2 class="rt-section-heading">To be read</h2>
+        <p class="rt-panel-sub">Books you want to read next. Hit "Start reading" to move one to your current reads.</p>
 
         <div class="rt-tbr-add">
           <input type="text" id="rt-tbr-title"  class="rt-tbr-input" placeholder="Book title..." autocomplete="off">
           <input type="text" id="rt-tbr-author" class="rt-tbr-input" placeholder="Author (optional)" autocomplete="off">
-          <button class="rt-tbr-add-btn" id="rt-tbr-add-btn">+ Add</button>
+          <button class="rt-tbr-add-btn" id="rt-tbr-add-btn" type="button">+ Add</button>
         </div>
 
         <div id="rt-tbr-list"></div>
-        <div class="rt-empty" id="rt-tbr-empty">
-          <div class="rt-empty-icon">🔖</div>
+        <div class="rt-empty rt-empty--inline" id="rt-tbr-empty">
           <p>Your TBR pile is empty — <button class="btn-text-link" onclick="switchTab('recs')">get some recommendations →</button></p>
         </div>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════
-         TAB 3 — READ + DNF
-    ════════════════════════════════════════ -->
-    <div class="rt-panel" id="rt-panel-done" data-tab="done" style="display:none;">
-      <div class="rt-panel-inner">
-
-        <!-- Stats row -->
-        <div class="rt-stats-grid">
-          <div class="rt-stat-card rt-stat-goal">
-            <div class="rt-stat-label">Reading goal</div>
-            <div class="rt-goal-display">
-              <span class="rt-goal-current" id="rt-goal-count">0</span>
-              <span class="rt-goal-sep">/</span>
-              <input type="number" class="rt-goal-input" id="rt-goal-target" value="12" min="1" max="365" aria-label="Yearly goal">
-              <span class="rt-goal-unit">books this year</span>
-            </div>
-            <div class="rt-goal-bar-wrap">
-              <div class="rt-goal-bar"><div class="rt-goal-fill" id="rt-goal-fill" style="width:0%"></div></div>
-              <span class="rt-goal-pct" id="rt-goal-pct">0%</span>
-            </div>
-          </div>
-          <div class="rt-stat-card">
-            <div class="rt-stat-label">This year</div>
-            <div class="rt-stat-number" id="rt-this-year">0</div>
-            <div class="rt-stat-sub" id="rt-year-label">2026</div>
-          </div>
-          <div class="rt-stat-card">
-            <div class="rt-stat-label">All time</div>
-            <div class="rt-stat-number" id="rt-total">0</div>
-            <div class="rt-stat-sub">books read</div>
-          </div>
-          <div class="rt-stat-card">
-            <div class="rt-stat-label">Favourites</div>
-            <div class="rt-stat-number" id="rt-favourites">0</div>
-            <div class="rt-stat-sub">5★ reads</div>
-          </div>
-        </div>
-
-        <!-- Filter tabs -->
-        <div class="rt-status-tabs">
-          <button class="rt-status-tab active" data-status="read" onclick="setDoneFilter('read')">Finished</button>
-          <button class="rt-status-tab" data-status="dnf" onclick="setDoneFilter('dnf')">Did not finish</button>
-        </div>
-
-        <div class="rt-list-controls" style="margin-bottom:1rem;">
-          <input type="text" class="rt-search" id="rt-search" placeholder="Search..." aria-label="Search">
-          <select class="rt-filter-select" id="rt-filter-genre">
-            <option value="">All genres</option>
-            <option value="Fantasy">Fantasy</option>
-            <option value="Science Fiction">Science Fiction</option>
-            <option value="Horror">Horror</option>
-            <option value="Romance">Romance</option>
-            <option value="Dystopian">Dystopian</option>
-            <option value="Literary Fiction">Literary Fiction</option>
-            <option value="Historical Fiction">Historical Fiction</option>
-            <option value="Thriller">Thriller</option>
-            <option value="Non-Fiction">Non-Fiction</option>
-            <option value="Short Stories">Short Stories</option>
-            <option value="Other">Other</option>
-          </select>
-          <select class="rt-filter-select" id="rt-sort">
-            <option value="newest">Newest first</option>
-            <option value="oldest">Oldest first</option>
-            <option value="rating-high">Top rated</option>
-            <option value="title">A–Z</option>
-          </select>
-        </div>
-
-        <div id="rt-done-list"></div>
-        <div class="rt-empty" id="rt-done-empty">
-          <div class="rt-empty-icon">✓</div>
-          <p id="rt-done-empty-msg">No finished books yet.</p>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════
-         TAB 4 — RECOMMENDATIONS
-    ════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════
+         RECS
+    ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-recs" data-tab="recs" style="display:none;">
       <div class="rt-panel-inner">
         <div class="rt-recs-header">
           <div>
             <div class="section-label" style="margin-bottom:0.4rem;">Powered by Claude</div>
-            <h2 class="rt-panel-title" style="margin-bottom:0.4rem;">What should I read next?</h2>
-            <p class="rt-panel-sub">Claude analyses your reading history — ratings, notes, genres you love — and suggests books matched to your actual taste.</p>
+            <h2 class="rt-section-heading" style="margin-bottom:0.3rem;">What should I read next?</h2>
+            <p class="rt-panel-sub">Claude reads your full history — ratings, DNFs, genres, notes — and recommends books matched to your actual taste. The more you log, the better it gets.</p>
           </div>
           <div class="rt-ai-badge">AI</div>
         </div>
-        <button class="rt-submit-btn" id="rt-ai-btn">✦ Get recommendations</button>
+        <button class="rt-submit-btn" id="rt-ai-btn" type="button">✦ Get recommendations</button>
         <div class="rt-ai-output" id="rt-ai-output" style="display:none;"></div>
-        <p class="rt-ai-note" id="rt-ai-note" style="display:none;">Recommendations generated by Claude (Anthropic) based on your logged books.</p>
+        <p class="rt-ai-note" id="rt-ai-note" style="display:none;">Recommendations generated by Claude (Anthropic). Not affiliated with any retailer.</p>
       </div>
     </div>
 
-  </div><!-- /rt-panels -->
+    <!-- ══════════════════════════════════
+         SAVE LIST (coming soon)
+    ══════════════════════════════════ -->
+    <div class="rt-panel" id="rt-panel-save" data-tab="save" style="display:none;">
+      <div class="rt-panel-inner">
+        <div class="rt-coming-soon-card">
+          <div class="rt-coming-soon-icon">✉</div>
+          <h2 class="rt-section-heading">Save &amp; backup your list</h2>
+          <p>Your reading data lives in your browser — which means it could be lost if you clear your cache or switch devices.</p>
+          <p>We're building an email backup feature that will let you:</p>
+          <ul class="rt-coming-soon-list">
+            <li>Email yourself your full TBR list and reading history</li>
+            <li>Get a monthly digest with your stats and top picks</li>
+            <li>Restore your list on any device</li>
+          </ul>
+          <p class="rt-coming-soon-note">Coming soon. In the meantime, <strong>bookmark this page</strong> and don't clear your browser data.</p>
+          <a href="{{ '/newsletter/' | relative_url }}" class="rt-submit-btn" style="display:inline-block; text-decoration:none; text-align:center; max-width:300px;">
+            Join the newsletter to be notified →
+          </a>
+        </div>
+      </div>
+    </div>
 
-  <!-- BOTTOM NAV -->
-  <nav class="rt-bottom-nav" aria-label="Tracker navigation">
-    <button class="rt-nav-btn active" data-tab="reading" onclick="switchTab('reading')">
-      <span class="rt-nav-icon">📖</span>
-      <span class="rt-nav-label">Reading</span>
-    </button>
-    <button class="rt-nav-btn" data-tab="tbr" onclick="switchTab('tbr')">
-      <span class="rt-nav-icon">🔖</span>
-      <span class="rt-nav-label">TBR</span>
-    </button>
-    <button class="rt-nav-btn" data-tab="done" onclick="switchTab('done')">
-      <span class="rt-nav-icon">✓</span>
-      <span class="rt-nav-label">Read</span>
-    </button>
-    <button class="rt-nav-btn" data-tab="recs" onclick="switchTab('recs')">
-      <span class="rt-nav-icon">✦</span>
-      <span class="rt-nav-label">Recs</span>
-    </button>
-  </nav>
+  </div>
+</div>
 
-</div><!-- /rt-app -->
+<!-- ══════════════════════════════════
+     MOBILE BOTTOM NAV
+══════════════════════════════════ -->
+<nav class="rt-bottom-nav" aria-label="Tracker navigation">
+  <button class="rt-nav-btn active" data-tab="home" onclick="switchTab('home')">
+    <span class="rt-nav-icon">◈</span>
+    <span class="rt-nav-label">Home</span>
+  </button>
+  <button class="rt-nav-btn" data-tab="add" onclick="switchTab('add')">
+    <span class="rt-nav-icon">＋</span>
+    <span class="rt-nav-label">Add</span>
+  </button>
+  <button class="rt-nav-btn" data-tab="tbr" onclick="switchTab('tbr')">
+    <span class="rt-nav-icon">🔖</span>
+    <span class="rt-nav-label">TBR</span>
+  </button>
+  <button class="rt-nav-btn" data-tab="recs" onclick="switchTab('recs')">
+    <span class="rt-nav-icon">✦</span>
+    <span class="rt-nav-label">Recs</span>
+  </button>
+  <button class="rt-nav-btn" data-tab="save" onclick="switchTab('save')">
+    <span class="rt-nav-icon">✉</span>
+    <span class="rt-nav-label">Save</span>
+  </button>
+</nav>
 
-<!-- FINISH BOOK MODAL -->
+<!-- FINISH MODAL -->
 <div class="rt-modal-overlay" id="rt-modal-overlay" style="display:none;" aria-modal="true" role="dialog">
   <div class="rt-modal">
     <div class="rt-modal-header">
-      <h3 id="rt-modal-title">Finished reading?</h3>
-      <button class="rt-modal-close" id="rt-modal-close" aria-label="Close">×</button>
+      <h3 id="rt-modal-title">How was it?</h3>
+      <button class="rt-modal-close" id="rt-modal-close" aria-label="Close" type="button">×</button>
     </div>
     <input type="hidden" id="rt-modal-book-id">
 
-    <div class="rt-modal-section" id="rt-modal-read-section">
-      <div class="rt-field">
-        <label>Your rating</label>
-        <div class="rt-stars" id="rt-modal-stars" role="radiogroup">
-          <button class="rt-star" data-val="1">★</button>
-          <button class="rt-star" data-val="2">★</button>
-          <button class="rt-star" data-val="3">★</button>
-          <button class="rt-star" data-val="4">★</button>
-          <button class="rt-star" data-val="5">★</button>
-        </div>
-      </div>
-      <div class="rt-field" style="margin-top:1rem;">
-        <label for="rt-modal-notes">Notes <span class="rt-optional">(optional)</span></label>
-        <textarea id="rt-modal-notes" rows="3" placeholder="What did you think? A line or two helps Claude personalise your future recommendations..."></textarea>
-      </div>
-      <div class="rt-field" style="margin-top:1rem;">
-        <label for="rt-modal-date">Date finished</label>
-        <input type="date" id="rt-modal-date">
+    <div class="rt-field" style="margin-bottom:1rem;">
+      <label>Rating <span class="rt-optional">(optional)</span></label>
+      <div class="rt-stars rt-stars--large" id="rt-modal-stars" role="radiogroup">
+        <button class="rt-star" data-val="1" type="button">★</button>
+        <button class="rt-star" data-val="2" type="button">★</button>
+        <button class="rt-star" data-val="3" type="button">★</button>
+        <button class="rt-star" data-val="4" type="button">★</button>
+        <button class="rt-star" data-val="5" type="button">★</button>
       </div>
     </div>
 
+    <div class="rt-field" style="margin-bottom:1rem;">
+      <label for="rt-modal-notes">Notes <span class="rt-optional">(helps personalise your recommendations)</span></label>
+      <textarea id="rt-modal-notes" rows="3" placeholder="What did you think? Even a few words helps..."></textarea>
+    </div>
+
+    <div class="rt-field" style="margin-bottom:1.5rem;">
+      <label for="rt-modal-date">Date finished</label>
+      <input type="date" id="rt-modal-date">
+    </div>
+
     <div class="rt-modal-actions">
-      <button class="rt-modal-btn rt-modal-btn--read"  id="rt-modal-mark-read">Mark as read ✓</button>
-      <button class="rt-modal-btn rt-modal-btn--dnf"   id="rt-modal-mark-dnf">Did not finish</button>
-      <button class="rt-modal-btn rt-modal-btn--cancel" id="rt-modal-cancel">Cancel</button>
+      <button class="rt-modal-btn rt-modal-btn--read"   id="rt-modal-mark-read"  type="button">✓ Mark as read</button>
+      <button class="rt-modal-btn rt-modal-btn--dnf"    id="rt-modal-mark-dnf"   type="button">Did not finish</button>
+      <button class="rt-modal-btn rt-modal-btn--cancel" id="rt-modal-cancel"     type="button">Cancel</button>
     </div>
   </div>
 </div>
 
+<!-- INSTALL STRIP -->
 <div class="rt-install-strip" id="rt-install-strip">
   <div class="rt-install-strip-inner">
     <span>📱 <strong>Add to home screen</strong> — your data saves automatically in your browser.</span>
-    <span id="rt-install-chrome" style="display:none;"><button class="rt-install-btn" id="rt-install-btn">Install app</button></span>
+    <span id="rt-install-chrome" style="display:none;">
+      <button class="rt-install-btn" id="rt-install-btn" type="button">Install app</button>
+    </span>
     <em class="rt-ios-hint">iPhone: Share → "Add to Home Screen"</em>
   </div>
 </div>
 
 <script>
-// ─────────────────────────────────────────────
+'use strict';
+// ─────────────────────────────────────────────────────────────
 // DATA MODEL
-// book = { id, title, author, genre, status,
-//          rating, notes, date, dateStarted, added }
+// book = { id, title, author, genre, status, rating, notes,
+//          date (finished), dateStarted, added }
 // status: 'tbr' | 'reading' | 'read' | 'dnf'
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 const SK = 'ctb_tracker_v2';
 const GK = 'ctb_reading_goal_v1';
 
-let books = [];
+let books       = [];
 let modalRating = 0;
-let doneFilter  = 'read';
+let addRating   = 0;
+let histFilter  = 'read';
 
-function save()     { try { localStorage.setItem(SK, JSON.stringify(books)); } catch(e){} }
-function load()     { try { books = JSON.parse(localStorage.getItem(SK)) || []; } catch(e){ books=[]; }
-                      // migrate old data if present
-                      try { const old = JSON.parse(localStorage.getItem('ctb_reading_tracker_v1'));
-                        if (old && old.length && !books.length) {
-                          books = old.map(b=>({...b, status:'read'})); save();
-                        }} catch(e){} }
-function saveGoal(v){ try { localStorage.setItem(GK,v); } catch(e){} }
-function loadGoal() { try { return parseInt(localStorage.getItem(GK))||12; } catch(e){return 12;} }
+function save()      { try { localStorage.setItem(SK, JSON.stringify(books)); } catch(e){} }
+function saveGoal(v) { try { localStorage.setItem(GK, v); } catch(e){} }
+function loadGoal()  { try { return parseInt(localStorage.getItem(GK)) || 12; } catch(e){ return 12; } }
 
-// ─────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────
-function esc(s) { const d=document.createElement('div'); d.appendChild(document.createTextNode(s||'')); return d.innerHTML; }
-function fmtDate(s){ return s ? new Date(s+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : ''; }
-function uid() { return Date.now() + Math.random(); }
-
-function getBooks(status) { return books.filter(b=>b.status===status); }
-
-// ─────────────────────────────────────────────
-// TAB SWITCHING
-// ─────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.rt-panel').forEach(p=>p.style.display='none');
-  document.querySelectorAll('.rt-nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('rt-panel-'+name).style.display='block';
-  document.querySelector(`.rt-nav-btn[data-tab="${name}"]`).classList.add('active');
-  if (name==='reading') renderReading();
-  if (name==='tbr')     renderTBR();
-  if (name==='done')    { updateStats(); renderDone(); }
-  if (name==='recs')    {}
-  window.scrollTo({top:document.querySelector('.rt-app').offsetTop-80,behavior:'smooth'});
+function load() {
+  try { books = JSON.parse(localStorage.getItem(SK)) || []; } catch(e){ books = []; }
+  // Migrate from old key
+  if (!books.length) {
+    try {
+      const old = JSON.parse(localStorage.getItem('ctb_reading_tracker_v1'));
+      if (old && old.length) { books = old.map(b => ({...b, status: b.status || 'read'})); save(); }
+    } catch(e){}
+  }
 }
 
-// ─────────────────────────────────────────────
+function getBooks(status) { return books.filter(b => b.status === status); }
+function uid() { return Date.now() + Math.floor(Math.random() * 1000); }
+function esc(s) {
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(s || ''));
+  return d.innerHTML;
+}
+function fmtDate(s) {
+  if (!s) return '';
+  return new Date(s + 'T12:00:00').toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+}
+
+// ─────────────────────────────────────────────────────────────
+// TAB SWITCHING — syncs both top bar and bottom nav
+// ─────────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.rt-panel').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.rt-tab, .rt-nav-btn').forEach(b => b.classList.remove('active'));
+
+  const panel = document.getElementById('rt-panel-' + name);
+  if (panel) panel.style.display = 'block';
+  document.querySelectorAll(`[data-tab="${name}"]`).forEach(b => b.classList.add('active'));
+
+  if (name === 'home') { updateStats(); renderHomeReading(); renderHistory(); }
+  if (name === 'tbr')  { renderTBR(); }
+
+  // Scroll to top of app
+  const wrap = document.querySelector('.rt-tabbar-wrap');
+  if (wrap) window.scrollTo({ top: wrap.offsetTop - 10, behavior: 'smooth' });
+}
+
+// ─────────────────────────────────────────────────────────────
 // STATS
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 function updateStats() {
   const year = new Date().getFullYear();
   const read  = getBooks('read');
-  const ty    = read.filter(b=>b.date && new Date(b.date).getFullYear()===year);
-  const fav   = read.filter(b=>b.rating===5);
-  const goal  = parseInt(document.getElementById('rt-goal-target').value)||12;
-  const pct   = Math.min(100,Math.round((ty.length/goal)*100));
+  const ty    = read.filter(b => b.date && new Date(b.date).getFullYear() === year);
+  const fav   = read.filter(b => b.rating === 5);
+  const goal  = parseInt(document.getElementById('rt-goal-target').value) || 12;
+  const pct   = Math.min(100, Math.round((ty.length / goal) * 100));
+
   document.getElementById('rt-year-label').textContent  = year;
   document.getElementById('rt-total').textContent       = read.length;
   document.getElementById('rt-this-year').textContent   = ty.length;
   document.getElementById('rt-favourites').textContent  = fav.length;
   document.getElementById('rt-goal-count').textContent  = ty.length;
-  document.getElementById('rt-goal-fill').style.width   = pct+'%';
-  document.getElementById('rt-goal-pct').textContent    = pct+'%';
+  document.getElementById('rt-goal-fill').style.width   = pct + '%';
+  document.getElementById('rt-goal-pct').textContent    = pct + '%';
 }
 
-// ─────────────────────────────────────────────
-// CURRENTLY READING
-// ─────────────────────────────────────────────
-function renderReading() {
-  const reading = getBooks('reading');
-  const list  = document.getElementById('rt-reading-list');
-  const empty = document.getElementById('rt-reading-empty');
-  empty.style.display = reading.length ? 'none' : 'flex';
+const gi = document.getElementById('rt-goal-target');
+gi.value = loadGoal();
+gi.addEventListener('change', function() { saveGoal(this.value); updateStats(); });
 
-  list.innerHTML = reading.map(b=>`
-    <div class="rt-book-item rt-reading-item">
-      <div class="rt-reading-badge">Currently reading</div>
-      <div class="rt-book-main">
-        <div class="rt-book-info">
-          <div class="rt-book-title">${esc(b.title)}</div>
-          ${b.author?`<div class="rt-book-author">${esc(b.author)}</div>`:''}
-          ${b.dateStarted?`<div class="rt-book-date">Started ${fmtDate(b.dateStarted)}</div>`:''}
-        </div>
-        <div class="rt-book-meta rt-book-meta--col">
-          <button class="rt-finish-btn" data-id="${b.id}">Finished?</button>
-          <button class="rt-delete" data-id="${b.id}" data-action="remove-reading" title="Remove">×</button>
-        </div>
+// ─────────────────────────────────────────────────────────────
+// HOME — CURRENTLY READING
+// ─────────────────────────────────────────────────────────────
+function renderHomeReading() {
+  const reading = getBooks('reading');
+  const list    = document.getElementById('rt-home-reading-list');
+  const empty   = document.getElementById('rt-home-reading-empty');
+
+  empty.style.display = reading.length ? 'none' : 'flex';
+  list.innerHTML = reading.map(b => `
+    <div class="rt-reading-card">
+      <div class="rt-reading-card-body">
+        <div class="rt-reading-badge">Currently reading</div>
+        <div class="rt-reading-title">${esc(b.title)}</div>
+        ${b.author ? `<div class="rt-reading-author">${esc(b.author)}</div>` : ''}
+        ${b.dateStarted ? `<div class="rt-reading-meta">Started ${fmtDate(b.dateStarted)}</div>` : ''}
+      </div>
+      <div class="rt-reading-card-actions">
+        <button class="rt-finish-btn" data-id="${b.id}" type="button">Finished?</button>
+        <button class="rt-delete rt-delete--quiet" data-id="${b.id}" data-action="remove-reading" title="Remove" type="button">×</button>
       </div>
     </div>`).join('');
 }
 
-document.getElementById('rt-reading-list').addEventListener('click', function(e) {
+// Event delegation for home reading list
+document.getElementById('rt-home-reading-list').addEventListener('click', function(e) {
   const finBtn = e.target.closest('.rt-finish-btn');
-  if (finBtn) { openModal(parseInt(finBtn.dataset.id)); return; }
-
-  const delBtn = e.target.closest('.rt-delete[data-action="remove-reading"]');
-  if (delBtn) {
-    if (confirm('Remove from currently reading?')) {
-      books = books.filter(b=>b.id!==parseInt(delBtn.dataset.id));
-      save(); renderReading();
-    }
+  if (finBtn) {
+    openModal(Number(finBtn.dataset.id));
+    return;
+  }
+  const delBtn = e.target.closest('[data-action="remove-reading"]');
+  if (delBtn && confirm('Remove from currently reading?')) {
+    books = books.filter(b => b.id !== Number(delBtn.dataset.id));
+    save(); renderHomeReading();
   }
 });
 
-// Quick-start reading
-document.getElementById('rt-q-start-btn').addEventListener('click', function() {
-  const title = document.getElementById('rt-q-title').value.trim();
-  if (!title) { document.getElementById('rt-q-title').focus(); return; }
-  books.unshift({ id:uid(), title, author:document.getElementById('rt-q-author').value.trim(), genre:document.getElementById('rt-q-genre').value, status:'reading', dateStarted:new Date().toISOString().split('T')[0], added:new Date().toISOString() });
-  save();
-  ['rt-q-title','rt-q-author'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('rt-q-genre').value='';
-  renderReading();
+// ─────────────────────────────────────────────────────────────
+// HOME — HISTORY
+// ─────────────────────────────────────────────────────────────
+function setHomeFilter(status, btn) {
+  histFilter = status;
+  document.querySelectorAll('#rt-panel-home .rt-status-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('rt-history-empty-msg').textContent =
+    status === 'read' ? 'No finished books yet.' : 'No DNF books logged.';
+  renderHistory();
+}
+
+function renderHistory() {
+  const so   = document.getElementById('rt-home-sort').value;
+  let   list = getBooks(histFilter).sort((a,b) => {
+    if (so === 'newest')      return new Date(b.date||b.added) - new Date(a.date||a.added);
+    if (so === 'rating-high') return (b.rating||0) - (a.rating||0);
+    if (so === 'title')       return a.title.localeCompare(b.title);
+    return 0;
+  });
+
+  const el    = document.getElementById('rt-history-list');
+  const empty = document.getElementById('rt-history-empty');
+  empty.style.display = list.length ? 'none' : 'flex';
+  if (!list.length) { el.innerHTML = ''; return; }
+
+  el.innerHTML = list.map(b => `
+    <div class="rt-book-item ${b.status==='dnf' ? 'rt-book-item--dnf' : ''}">
+      <div class="rt-book-main">
+        <div class="rt-book-info">
+          <div class="rt-book-title">${esc(b.title)}${b.status==='dnf' ? ' <span class="rt-dnf-label">DNF</span>' : ''}</div>
+          ${b.author ? `<div class="rt-book-author">${esc(b.author)}</div>` : ''}
+        </div>
+        <div class="rt-book-meta">
+          ${b.genre  ? `<span class="rt-book-genre">${esc(b.genre)}</span>` : ''}
+          ${b.rating ? `<span class="rt-book-stars">${'★'.repeat(b.rating)}${'☆'.repeat(5-b.rating)}</span>` : ''}
+          ${b.date   ? `<span class="rt-book-date">${fmtDate(b.date)}</span>` : ''}
+          <button class="rt-delete" data-id="${b.id}" data-action="remove-hist" title="Remove" type="button">×</button>
+        </div>
+      </div>
+      ${b.notes ? `<div class="rt-book-notes">${esc(b.notes)}</div>` : ''}
+    </div>`).join('');
+}
+
+document.getElementById('rt-history-list').addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-action="remove-hist"]');
+  if (btn && confirm('Remove this book from your history?')) {
+    books = books.filter(b => b.id !== Number(btn.dataset.id));
+    save(); renderHistory(); updateStats();
+  }
 });
 
-// ─────────────────────────────────────────────
+document.getElementById('rt-home-sort').addEventListener('change', renderHistory);
+
+// ─────────────────────────────────────────────────────────────
+// ADD BOOK
+// ─────────────────────────────────────────────────────────────
+// Show/hide rating+notes based on status selection
+document.querySelectorAll('input[name="rt-status"]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const isRead = this.value === 'read';
+    document.getElementById('rt-rating-row').style.display = isRead ? 'flex' : 'none';
+    document.getElementById('rt-notes-row').style.display  = isRead ? 'flex' : 'none';
+  });
+});
+
+// Star rating for add form
+function setAddStars(v) {
+  addRating = v;
+  document.querySelectorAll('#rt-star-input .rt-star').forEach((s,i) => s.classList.toggle('active', i < v));
+}
+const addStarWrap = document.getElementById('rt-star-input');
+addStarWrap.addEventListener('click', e => {
+  const b = e.target.closest('.rt-star'); if (!b) return;
+  const v = parseInt(b.dataset.val);
+  setAddStars(addRating === v ? 0 : v);
+});
+addStarWrap.addEventListener('mouseover', e => {
+  const b = e.target.closest('.rt-star'); if (!b) return;
+  const v = parseInt(b.dataset.val);
+  document.querySelectorAll('#rt-star-input .rt-star').forEach((s,i) => s.classList.toggle('hover', i < v));
+});
+addStarWrap.addEventListener('mouseleave', () =>
+  document.querySelectorAll('#rt-star-input .rt-star').forEach(s => s.classList.remove('hover')));
+
+document.getElementById('rt-add-btn').addEventListener('click', function() {
+  const titleEl = document.getElementById('rt-title');
+  const title   = titleEl.value.trim();
+  if (!title) {
+    titleEl.focus();
+    titleEl.classList.add('rt-input-error');
+    setTimeout(() => titleEl.classList.remove('rt-input-error'), 1500);
+    return;
+  }
+  const status  = document.querySelector('input[name="rt-status"]:checked').value;
+  const book = {
+    id:          uid(),
+    title,
+    author:      document.getElementById('rt-author').value.trim(),
+    genre:       document.getElementById('rt-genre').value,
+    status,
+    rating:      status === 'read' ? addRating || null : null,
+    notes:       status === 'read' ? document.getElementById('rt-notes').value.trim() : null,
+    date:        status === 'read' ? (document.getElementById('rt-date').value || new Date().toISOString().split('T')[0]) : null,
+    dateStarted: status === 'reading' ? new Date().toISOString().split('T')[0] : null,
+    added:       new Date().toISOString()
+  };
+  books.unshift(book);
+  save();
+
+  // Reset form
+  ['rt-title','rt-author','rt-notes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('rt-genre').value = '';
+  document.querySelector('input[name="rt-status"][value="reading"]').checked = true;
+  document.getElementById('rt-rating-row').style.display = 'none';
+  document.getElementById('rt-notes-row').style.display  = 'none';
+  setAddStars(0);
+
+  const msgs = { reading:'Started! You can mark it as finished from the Home tab.', read:'Logged!', tbr:'Added to your TBR pile.' };
+  const s = document.getElementById('rt-add-success');
+  document.getElementById('rt-add-success-msg').textContent = msgs[status] || 'Added!';
+  s.style.display = 'flex';
+  setTimeout(() => s.style.display = 'none', 4000);
+});
+
+// ─────────────────────────────────────────────────────────────
 // TBR
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 function renderTBR() {
-  const tbr  = getBooks('tbr');
+  const tbr   = getBooks('tbr');
   const list  = document.getElementById('rt-tbr-list');
   const empty = document.getElementById('rt-tbr-empty');
   empty.style.display = tbr.length ? 'none' : 'flex';
 
-  list.innerHTML = tbr.map(b=>`
+  list.innerHTML = tbr.map(b => `
     <div class="rt-book-item">
       <div class="rt-book-main">
         <div class="rt-book-info">
           <div class="rt-book-title">${esc(b.title)}</div>
-          ${b.author?`<div class="rt-book-author">${esc(b.author)}</div>`:''}
+          ${b.author ? `<div class="rt-book-author">${esc(b.author)}</div>` : ''}
         </div>
         <div class="rt-book-meta">
-          <button class="rt-start-reading-btn" data-id="${b.id}">📖 Start reading</button>
-          <button class="rt-delete" data-id="${b.id}" data-action="remove-tbr" title="Remove">×</button>
+          <button class="rt-start-reading-btn" data-id="${b.id}" type="button">📖 Start reading</button>
+          <button class="rt-delete" data-id="${b.id}" data-action="remove-tbr" title="Remove" type="button">×</button>
         </div>
       </div>
     </div>`).join('');
 }
-
-document.getElementById('rt-tbr-add-btn').addEventListener('click', addToTBR);
-document.getElementById('rt-tbr-author').addEventListener('keydown', e=>{ if(e.key==='Enter') addToTBR(); });
-document.getElementById('rt-tbr-title').addEventListener('keydown',  e=>{ if(e.key==='Enter') addToTBR(); });
 
 function addToTBR() {
   const title = document.getElementById('rt-tbr-title').value.trim();
   if (!title) { document.getElementById('rt-tbr-title').focus(); return; }
   books.push({ id:uid(), title, author:document.getElementById('rt-tbr-author').value.trim(), status:'tbr', added:new Date().toISOString() });
   save();
-  document.getElementById('rt-tbr-title').value='';
-  document.getElementById('rt-tbr-author').value='';
+  document.getElementById('rt-tbr-title').value  = '';
+  document.getElementById('rt-tbr-author').value = '';
   renderTBR();
 }
 
-// Add to TBR from recommendations
-function addRecToTBR(title, author) {
-  books.push({ id:uid(), title, author:author||'', status:'tbr', added:new Date().toISOString() });
-  save();
-  // Brief feedback
-  const btn = document.querySelector(`.rt-rec-add-btn[data-title="${CSS.escape(title)}"]`);
-  if (btn) { btn.textContent='✓ Added'; btn.disabled=true; }
-}
+document.getElementById('rt-tbr-add-btn').addEventListener('click', addToTBR);
+document.getElementById('rt-tbr-title').addEventListener('keydown',  e => { if(e.key==='Enter') addToTBR(); });
+document.getElementById('rt-tbr-author').addEventListener('keydown', e => { if(e.key==='Enter') addToTBR(); });
 
 document.getElementById('rt-tbr-list').addEventListener('click', function(e) {
   const startBtn = e.target.closest('.rt-start-reading-btn');
   if (startBtn) {
-    const id = parseInt(startBtn.dataset.id);
-    const book = books.find(b=>b.id===id);
-    if (book) { book.status='reading'; book.dateStarted=new Date().toISOString().split('T')[0]; save(); renderTBR(); }
+    const book = books.find(b => b.id === Number(startBtn.dataset.id));
+    if (book) { book.status = 'reading'; book.dateStarted = new Date().toISOString().split('T')[0]; save(); renderTBR(); }
     return;
   }
-  const delBtn = e.target.closest('.rt-delete[data-action="remove-tbr"]');
-  if (delBtn) {
-    books = books.filter(b=>b.id!==parseInt(delBtn.dataset.id));
-    save(); renderTBR();
-  }
+  const delBtn = e.target.closest('[data-action="remove-tbr"]');
+  if (delBtn) { books = books.filter(b => b.id !== Number(delBtn.dataset.id)); save(); renderTBR(); }
 });
 
-// ─────────────────────────────────────────────
-// DONE LIST (read + dnf)
-// ─────────────────────────────────────────────
-let doneFilterCurrent = 'read';
-
-function setDoneFilter(status) {
-  doneFilterCurrent = status;
-  document.querySelectorAll('.rt-status-tab').forEach(t=>t.classList.toggle('active', t.dataset.status===status));
-  document.getElementById('rt-done-empty-msg').textContent = status==='read' ? 'No finished books yet.' : 'No DNF books.';
-  renderDone();
-}
-
-function renderDone() {
-  const q  = document.getElementById('rt-search').value.toLowerCase();
-  const gf = document.getElementById('rt-filter-genre').value;
-  const so = document.getElementById('rt-sort').value;
-
-  let f = books.filter(b=>b.status===doneFilterCurrent)
-    .filter(b => (!q || b.title.toLowerCase().includes(q)||(b.author||'').toLowerCase().includes(q)) && (!gf||b.genre===gf))
-    .sort((a,b)=>{
-      if(so==='newest')      return new Date(b.date||b.added)-new Date(a.date||a.added);
-      if(so==='oldest')      return new Date(a.date||a.added)-new Date(b.date||b.added);
-      if(so==='rating-high') return (b.rating||0)-(a.rating||0);
-      if(so==='title')       return a.title.localeCompare(b.title);
-      return 0;
-    });
-
-  const list  = document.getElementById('rt-done-list');
-  const empty = document.getElementById('rt-done-empty');
-  empty.style.display = f.length ? 'none' : 'flex';
-  if (!f.length) { list.innerHTML=''; return; }
-
-  list.innerHTML = f.map(b=>`
-    <div class="rt-book-item ${b.status==='dnf'?'rt-book-item--dnf':''}">
-      <div class="rt-book-main">
-        <div class="rt-book-info">
-          <div class="rt-book-title">${esc(b.title)} ${b.status==='dnf'?'<span class="rt-dnf-label">DNF</span>':''}</div>
-          ${b.author?`<div class="rt-book-author">${esc(b.author)}</div>`:''}
-        </div>
-        <div class="rt-book-meta">
-          ${b.genre ?`<span class="rt-book-genre">${esc(b.genre)}</span>`:''}
-          ${b.rating?`<span class="rt-book-stars">${'★'.repeat(b.rating)}${'☆'.repeat(5-b.rating)}</span>`:''}
-          ${b.date  ?`<span class="rt-book-date">${fmtDate(b.date)}</span>`:''}
-          <button class="rt-delete" data-id="${b.id}" data-action="remove-done" title="Remove">×</button>
-        </div>
-      </div>
-      ${b.notes?`<div class="rt-book-notes">${esc(b.notes)}</div>`:''}
-    </div>`).join('');
-}
-
-document.getElementById('rt-done-list').addEventListener('click', function(e) {
-  const delBtn = e.target.closest('.rt-delete[data-action="remove-done"]');
-  if (delBtn) {
-    if (confirm('Remove this book?')) {
-      books = books.filter(b=>b.id!==parseInt(delBtn.dataset.id));
-      save(); renderDone(); updateStats();
-    }
+// Add to TBR from recommendations
+function addRecToTBR(title, author) {
+  if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
+    alert(`"${title}" is already in your list.`); return;
   }
-});
+  books.push({ id:uid(), title, author:author||'', status:'tbr', added:new Date().toISOString() });
+  save();
+}
 
-document.getElementById('rt-search').addEventListener('input', renderDone);
-document.getElementById('rt-filter-genre').addEventListener('change', renderDone);
-document.getElementById('rt-sort').addEventListener('change', renderDone);
-
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 // FINISH MODAL
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 function openModal(bookId) {
-  const book = books.find(b=>b.id===bookId);
-  if (!book) return;
-  document.getElementById('rt-modal-book-id').value = bookId;
+  const book = books.find(b => b.id === bookId);
+  if (!book) { console.warn('Book not found:', bookId, books.map(b=>b.id)); return; }
+
+  document.getElementById('rt-modal-book-id').value   = bookId;
   document.getElementById('rt-modal-title').textContent = `"${book.title}"`;
-  document.getElementById('rt-modal-notes').value = '';
-  document.getElementById('rt-modal-date').value  = new Date().toISOString().split('T')[0];
+  document.getElementById('rt-modal-notes').value     = '';
+  document.getElementById('rt-modal-date').value      = new Date().toISOString().split('T')[0];
   setModalStars(0);
-  document.getElementById('rt-modal-overlay').style.display='flex';
-  document.body.style.overflow='hidden';
+  document.getElementById('rt-modal-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
-  document.getElementById('rt-modal-overlay').style.display='none';
-  document.body.style.overflow='';
+  document.getElementById('rt-modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
 }
 
-document.getElementById('rt-modal-close').addEventListener('click', closeModal);
+document.getElementById('rt-modal-close').addEventListener('click',  closeModal);
 document.getElementById('rt-modal-cancel').addEventListener('click', closeModal);
-document.getElementById('rt-modal-overlay').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+document.getElementById('rt-modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
 
 function setModalStars(v) {
   modalRating = v;
-  document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i)=>s.classList.toggle('active',i<v));
+  document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i) => s.classList.toggle('active', i < v));
 }
 const ms = document.getElementById('rt-modal-stars');
-ms.addEventListener('click', e=>{ const b=e.target.closest('.rt-star'); if(!b) return; const v=parseInt(b.dataset.val); setModalStars(modalRating===v?0:v); });
-ms.addEventListener('mouseover', e=>{ const b=e.target.closest('.rt-star'); if(!b) return; const v=parseInt(b.dataset.val); document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i)=>s.classList.toggle('hover',i<v)); });
-ms.addEventListener('mouseleave', ()=>document.querySelectorAll('#rt-modal-stars .rt-star').forEach(s=>s.classList.remove('hover')));
-
-document.getElementById('rt-modal-mark-read').addEventListener('click', function() {
-  const id   = parseInt(document.getElementById('rt-modal-book-id').value);
-  const book = books.find(b=>b.id===id);
-  if (!book) return;
-  book.status = 'read';
-  book.rating = modalRating || null;
-  book.notes  = document.getElementById('rt-modal-notes').value.trim();
-  book.date   = document.getElementById('rt-modal-date').value;
-  save(); closeModal(); renderReading(); updateStats();
-  // Show confirmation
-  const flash = document.createElement('div');
-  flash.className='rt-flash'; flash.textContent=`✓ "${book.title}" marked as read!`;
-  document.querySelector('.rt-app').prepend(flash);
-  setTimeout(()=>flash.remove(), 3000);
+ms.addEventListener('click', e => {
+  const b = e.target.closest('.rt-star'); if (!b) return;
+  const v = parseInt(b.dataset.val);
+  setModalStars(modalRating === v ? 0 : v);
 });
-
-document.getElementById('rt-modal-mark-dnf').addEventListener('click', function() {
-  const id   = parseInt(document.getElementById('rt-modal-book-id').value);
-  const book = books.find(b=>b.id===id);
-  if (!book) return;
-  book.status = 'dnf';
-  book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
-  book.date   = new Date().toISOString().split('T')[0];
-  save(); closeModal(); renderReading();
+ms.addEventListener('mouseover', e => {
+  const b = e.target.closest('.rt-star'); if (!b) return;
+  const v = parseInt(b.dataset.val);
+  document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i) => s.classList.toggle('hover', i < v));
 });
+ms.addEventListener('mouseleave', () =>
+  document.querySelectorAll('#rt-modal-stars .rt-star').forEach(s => s.classList.remove('hover')));
 
-// ─────────────────────────────────────────────
+function finishBook(status) {
+  const id   = Number(document.getElementById('rt-modal-book-id').value);
+  const book = books.find(b => b.id === id);
+  if (!book) { closeModal(); return; }
+
+  book.status = status;
+  book.date   = document.getElementById('rt-modal-date').value || new Date().toISOString().split('T')[0];
+  if (status === 'read') {
+    book.rating = modalRating || null;
+    book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
+  } else {
+    book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
+  }
+  save();
+  closeModal();
+  renderHomeReading();
+  updateStats();
+
+  // Flash confirmation
+  const label = status === 'read' ? `✓ "${book.title}" marked as finished!` : `"${book.title}" marked as DNF.`;
+  showFlash(label);
+}
+
+document.getElementById('rt-modal-mark-read').addEventListener('click', () => finishBook('read'));
+document.getElementById('rt-modal-mark-dnf').addEventListener('click',  () => finishBook('dnf'));
+
+function showFlash(msg) {
+  const f = document.createElement('div');
+  f.className = 'rt-flash'; f.textContent = msg;
+  document.querySelector('.rt-app').prepend(f);
+  setTimeout(() => f.remove(), 3200);
+}
+
+// ─────────────────────────────────────────────────────────────
 // AI RECOMMENDATIONS
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 document.getElementById('rt-ai-btn').addEventListener('click', async function() {
-  const read = getBooks('read');
+  const read    = getBooks('read');
+  const reading = getBooks('reading');
 
-  if (!read.length && !getBooks('reading').length) {
+  if (!read.length && !reading.length) {
     const o = document.getElementById('rt-ai-output');
-    o.style.display='block';
-    o.innerHTML='<p class="rt-ai-msg">Start reading or log some finished books first — Claude needs something to work with!</p>';
+    o.style.display = 'block';
+    o.innerHTML = '<p class="rt-ai-msg">Log some books first — Claude needs your reading history to make good recommendations!</p>';
     return;
   }
 
   const btn    = this;
-  btn.disabled = true; btn.textContent='✦ Thinking...';
+  btn.disabled = true; btn.textContent = '✦ Thinking...';
   const output = document.getElementById('rt-ai-output');
   const note   = document.getElementById('rt-ai-note');
-  output.style.display='block';
-  output.innerHTML='<div class="rt-ai-loading"><span></span><span></span><span></span></div>';
-  note.style.display='none';
+  output.style.display = 'block';
+  output.innerHTML = '<div class="rt-ai-loading"><span></span><span></span><span></span></div>';
+  note.style.display = 'none';
 
-  const topRated  = read.filter(b=>b.rating>=4).slice(0,8);
-  const sample    = topRated.length ? topRated : read.slice(0,6);
-  const dnf       = getBooks('dnf').slice(0,4);
-  const reading   = getBooks('reading').slice(0,3);
-  const tbr       = getBooks('tbr').slice(0,5);
-  const genres    = [...new Set(books.map(b=>b.genre).filter(Boolean))];
+  const topRated = read.filter(b => b.rating >= 4).slice(0, 8);
+  const sample   = topRated.length ? topRated : read.slice(0, 6);
+  const dnf      = getBooks('dnf').slice(0, 4);
+  const tbr      = getBooks('tbr').slice(0, 5);
+  const genres   = [...new Set(books.map(b => b.genre).filter(Boolean))];
 
-  const fmtBook = b => `"${b.title}"${b.author?` by ${b.author}`:''}${b.genre?` (${b.genre})`:''}${b.rating?` ${b.rating}/5★`:''}${b.notes?` — "${b.notes}"`:''}`; 
+  const fmt = b => `"${b.title}"${b.author ? ` by ${b.author}` : ''}${b.genre ? ` (${b.genre})` : ''}${b.rating ? ` ${b.rating}/5★` : ''}${b.notes ? ` — "${b.notes}"` : ''}`;
 
-  const prompt = `You are a knowledgeable book recommender. Here is a reader's full reading history:
+  const prompt = `You are a knowledgeable book recommender. Here is a reader's reading history:
 
 ENJOYED (rated 4-5★):
-${sample.map(fmtBook).join('\n') || 'None yet'}
+${sample.map(fmt).join('\n') || 'None yet'}
 
 CURRENTLY READING:
-${reading.map(b=>fmtBook(b)).join('\n') || 'Nothing'}
+${reading.map(fmt).join('\n') || 'Nothing'}
 
 DID NOT FINISH:
-${dnf.map(b=>`"${b.title}"${b.notes?` — stopped because: "${b.notes}"`:''}` ).join('\n') || 'None'}
+${dnf.map(b => `"${b.title}"${b.notes ? ` — reason: "${b.notes}"` : ''}`).join('\n') || 'None'}
 
-WANTS TO READ (TBR):
-${tbr.map(b=>b.title).join(', ') || 'None listed'}
+WANTS TO READ (TBR pile):
+${tbr.map(b => b.title).join(', ') || 'Empty'}
 
-Genres they read: ${genres.join(', ')||'mixed'}
-Total finished: ${read.length}
+Genres they read: ${genres.join(', ') || 'mixed'}. Total books finished: ${read.length}.
 
-Based on all of this, recommend exactly 4 books they would love — taking into account what they've DNF'd to avoid those patterns. For each recommendation give: the title and author in bold, one specific sentence explaining why it fits their taste referencing something they've actually read, and one sentence on what makes the book special. Number them 1–4. End with a single line suggesting which TBR book they should pick up first if any were listed (skip this if TBR is empty). Warm, direct tone like a well-read friend.`;
+Recommend exactly 4 books. For each: bold the title and author, one sentence why it fits their specific taste referencing something they've actually read, one sentence on what makes it special. Number 1–4.
+${tbr.length ? 'After your 4 recommendations, add a single line: "From your TBR list, I\'d start with: [title]" — pick whichever TBR book best matches their taste.' : ''}
+Warm and direct, like a well-read friend.`;
 
   try {
-    const res  = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    const res  = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1200, messages:[{role:'user', content:prompt}] })
+    });
     const data = await res.json();
-    const text = data.content?.find(c=>c.type==='text')?.text||'';
+    const text = data.content?.find(c => c.type === 'text')?.text || '';
     if (!text) throw new Error('empty');
 
-    // Parse recommendations to add "Add to TBR" buttons
-    // Split on numbered items and render with action buttons
-    const html = text
-      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
-      .split('\n\n')
-      .map(p => {
-        const isRec = /^\d+\./.test(p.trim());
-        if (isRec) {
-          // Extract title for TBR button (first bold text)
-          const titleMatch = p.match(/<strong>([^<]+)<\/strong>/);
-          const title = titleMatch ? titleMatch[1].split(' by ')[0].replace(/["""]/g,'').trim() : '';
-          const authorMatch = p.match(/by ([^<\n,]+)/i);
-          const author = authorMatch ? authorMatch[1].trim() : '';
-          const addBtn = title ? `<button class="rt-rec-add-btn" data-title="${esc(title)}" data-author="${esc(author)}" onclick="addRecToTBR('${title.replace(/'/g,"\\'")}','${author.replace(/'/g,"\\'")}')">+ Add to TBR</button>` : '';
-          return `<div class="rt-rec-item"><p>${p}</p>${addBtn}</div>`;
-        }
-        return `<p>${p}</p>`;
-      }).join('');
+    // Render with Add to TBR buttons on numbered items
+    const paras = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').split('\n\n').filter(p => p.trim());
+    const html  = paras.map(p => {
+      const isNum = /^\d+\./.test(p.trim());
+      if (isNum) {
+        const strongMatch = p.match(/<strong>([^<]+)<\/strong>/);
+        const raw = strongMatch ? strongMatch[1] : '';
+        const titlePart  = raw.split(' by ')[0].replace(/["""*]/g,'').trim();
+        const authorPart = raw.includes(' by ') ? raw.split(' by ')[1].replace(/["""*]/g,'').trim() : '';
+        const safeTitle  = titlePart.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        const safeAuthor = authorPart.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        const addBtn = titlePart
+          ? `<button class="rt-rec-add-btn" onclick="addRecToTBR('${safeTitle}','${safeAuthor}');this.textContent='✓ Added to TBR';this.disabled=true;" type="button">+ Add to TBR</button>`
+          : '';
+        return `<div class="rt-rec-item"><p>${p}</p>${addBtn}</div>`;
+      }
+      return `<p class="rt-rec-footer">${p}</p>`;
+    }).join('');
 
-    output.innerHTML=`<div class="rt-ai-response">${html}</div>`;
-    note.style.display='block';
-  } catch(e) {
-    output.innerHTML='<p class="rt-ai-msg">Couldn\'t get recommendations right now — please try again.</p>';
+    output.innerHTML = `<div class="rt-ai-response">${html}</div>`;
+    note.style.display = 'block';
+  } catch(err) {
+    output.innerHTML = '<p class="rt-ai-msg">Couldn\'t get recommendations right now — please try again.</p>';
   }
-  btn.disabled=false; btn.textContent='✦ Get new recommendations';
+  btn.disabled = false; btn.textContent = '✦ Get new recommendations';
 });
 
-// ─────────────────────────────────────────────
-// GOAL
-// ─────────────────────────────────────────────
-const gi = document.getElementById('rt-goal-target');
-gi.value = loadGoal();
-gi.addEventListener('change', function(){ saveGoal(this.value); updateStats(); });
-
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 // PWA
-// ─────────────────────────────────────────────
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',function(e){
-  e.preventDefault(); deferredPrompt=e;
-  document.getElementById('rt-install-chrome').style.display='inline';
+// ─────────────────────────────────────────────────────────────
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('rt-install-chrome').style.display = 'inline';
 });
-document.getElementById('rt-install-btn')?.addEventListener('click',async function(){
-  if(!deferredPrompt) return;
+document.getElementById('rt-install-btn').addEventListener('click', async function() {
+  if (!deferredPrompt) return;
   deferredPrompt.prompt();
-  const {outcome}=await deferredPrompt.userChoice;
-  deferredPrompt=null;
-  if(outcome==='accepted') document.getElementById('rt-install-strip').style.display='none';
+  const {outcome} = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  if (outcome === 'accepted') document.getElementById('rt-install-strip').style.display = 'none';
 });
 
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+// STICKY TAB BAR
+// ─────────────────────────────────────────────────────────────
+(function() {
+  const wrap   = document.getElementById('rt-tabbar-wrap');
+  const heroH  = () => document.querySelector('.rt-hero').offsetHeight;
+  window.addEventListener('scroll', function() {
+    wrap.classList.toggle('rt-tabbar--stuck', window.scrollY >= heroH());
+  }, {passive: true});
+})();
+
+// ─────────────────────────────────────────────────────────────
 // INIT
-// ─────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
 load();
-renderReading();
 updateStats();
+renderHomeReading();
+renderHistory();
 </script>
