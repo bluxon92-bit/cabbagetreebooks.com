@@ -1,0 +1,44 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="footer-brand-name">Cabbage Tree Books</div>
+        <p>Book recommendations, reviews, and genre guides for lovers of sci-fi, fantasy, and horror fiction.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="{{ '/genres/sci-fi/' | relative_url }}">Science Fiction</a></li>
+          <li><a href="{{ '/genres/fantasy/' | relative_url }}">Fantasy</a></li>
+          <li><a href="{{ '/genres/horror/' | relative_url }}">Horror</a></li>
+          <li><a href="{{ '/genres/dystopian/' | relative_url }}">Dystopian</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="{{ '/tools/name-generator/' | relative_url }}">Name Generator</a></li>
+          <li><a href="{{ '/blog/' | relative_url }}">Book Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Also</h4>
+        <ul>
+          <li><a href="{{ site.author.author_site }}" target="_blank" rel="noopener">Ben Luxon Author ↗</a></li>
+          <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+          <li><a href="{{ '/newsletter/' | relative_url }}">Newsletter</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {{ site.time | date: "%Y" }} Cabbage Tree Books. All rights reserved.</span>
+      <span>Affiliate links may earn a small commission at no cost to you.</span>
+    </div>
+  </div>
+</footer>

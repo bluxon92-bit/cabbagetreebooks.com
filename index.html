@@ -1,0 +1,166 @@
+---
+layout: default
+title: Home
+description: Cabbage Tree Books — book recommendations, reviews, and genre guides for lovers of sci-fi, fantasy, and horror fiction.
+---
+
+<!-- ==============================
+     HERO
+     ============================== -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-content">
+      <div class="hero-label">Your guide to great reading</div>
+      <h1>Find Your Next<br><em>Great Read</em></h1>
+      <p class="hero-description">
+        Book recommendations, deep-dive reviews, and genre guides for readers who take their fiction seriously. Sci-fi, fantasy, horror, and beyond.
+      </p>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">Browse the Blog</a>
+        <a href="{{ '/genres/' | relative_url }}" class="btn btn-ghost">Explore by Genre</a>
+      </div>
+    </div>
+
+    <!-- Featured latest post -->
+    {% assign featured = site.posts.first %}
+    {% if featured %}
+    <div class="hero-featured-post">
+      {% if featured.image %}
+      <div class="hero-featured-post-image">
+        <img src="{{ featured.image | relative_url }}" alt="{{ featured.title }}">
+      </div>
+      {% else %}
+      <div class="hero-featured-post-image" style="background: linear-gradient(135deg, var(--teal) 0%, #0d2e2c 100%); display:flex; align-items:center; justify-content:center;">
+        <span style="font-family: var(--font-display); font-size:3rem; color:rgba(255,255,255,0.15);">✦</span>
+      </div>
+      {% endif %}
+      <div class="hero-featured-post-body">
+        <div class="hero-featured-tag">{{ featured.category | default: "Latest" }}</div>
+        <h2><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h2>
+        <p>{{ featured.excerpt | strip_html | truncate: 120 }}</p>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<!-- ==============================
+     GENRE STRIP
+     ============================== -->
+<div class="genre-strip">
+  <div class="genre-strip-inner">
+    <span class="genre-strip-label">Explore</span>
+    <a href="{{ '/genres/sci-fi/' | relative_url }}" class="genre-pill">🚀 Science Fiction</a>
+    <a href="{{ '/genres/fantasy/' | relative_url }}" class="genre-pill">⚔️ Fantasy</a>
+    <a href="{{ '/genres/horror/' | relative_url }}" class="genre-pill">🕯️ Horror</a>
+    <a href="{{ '/genres/dystopian/' | relative_url }}" class="genre-pill">🌆 Dystopian</a>
+    <a href="{{ '/blog/?category=Book+Reviews' | relative_url }}" class="genre-pill">📖 Reviews</a>
+    <a href="{{ '/tools/name-generator/' | relative_url }}" class="genre-pill">✨ Name Generator</a>
+  </div>
+</div>
+
+<!-- ==============================
+     RECENT POSTS
+     ============================== -->
+<section class="section" style="background: var(--white);">
+  <div class="section-inner">
+
+    <div class="section-header">
+      <div>
+        <div class="section-label">Latest</div>
+        <h2 class="section-title">Recent <em>Recommendations</em></h2>
+      </div>
+      <a href="{{ '/blog/' | relative_url }}" class="btn btn-ghost" style="font-size:0.72rem;">All Posts →</a>
+    </div>
+
+    <div class="blog-grid-main">
+      {% for post in site.posts limit: 5 %}
+        <article class="blog-card-ct {% if forloop.first %}blog-card-large{% endif %}"
+                 data-category="{{ post.category | default: 'Book Recommendations' }}">
+          {% if post.image %}
+          <div class="blog-card-image">
+            <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+          </div>
+          {% else %}
+          <div class="blog-card-image" style="background: linear-gradient(135deg, var(--teal) 0%, #0d2e2c 100%); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:var(--font-display); font-size:2rem; color:rgba(255,255,255,0.15);">✦</span>
+          </div>
+          {% endif %}
+          <div class="blog-card-body">
+            <div class="blog-card-tag">{{ post.category | default: "Book Recommendations" }}</div>
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+            <p>{{ post.excerpt | strip_html | truncate: {% if forloop.first %}160{% else %}100{% endif %} }}</p>
+            <div class="blog-card-meta">
+              <span class="blog-card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+              <a href="{{ post.url | relative_url }}" class="blog-card-readmore">Read more</a>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<!-- ==============================
+     GENRE HUBS
+     ============================== -->
+<section class="section" style="background: var(--paper); border-top: 1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-label">By Genre</div>
+        <h2 class="section-title">Explore <em>by genre</em></h2>
+      </div>
+    </div>
+    <div class="genre-grid">
+      <a href="{{ '/genres/sci-fi/' | relative_url }}" class="genre-card">
+        <span class="genre-icon">🚀</span>
+        <h3>Science Fiction</h3>
+        <p>Space opera, hard sci-fi, cyberpunk, and everything in between.</p>
+      </a>
+      <a href="{{ '/genres/fantasy/' | relative_url }}" class="genre-card">
+        <span class="genre-icon">⚔️</span>
+        <h3>Fantasy</h3>
+        <p>Epic quests, grimdark worlds, and magic systems that dazzle.</p>
+      </a>
+      <a href="{{ '/genres/horror/' | relative_url }}" class="genre-card">
+        <span class="genre-icon">🕯️</span>
+        <h3>Horror</h3>
+        <p>Gothic dread, cosmic terror, and things that go bump in the night.</p>
+      </a>
+      <a href="{{ '/genres/dystopian/' | relative_url }}" class="genre-card">
+        <span class="genre-icon">🌆</span>
+        <h3>Dystopian</h3>
+        <p>Dark visions of the future that hold a mirror up to the present.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     NAME GENERATOR TEASER
+     ============================== -->
+<section class="tool-teaser">
+  <div class="tool-teaser-inner">
+    <div class="tool-teaser-label">Free Tool</div>
+    <h2>Character Name Generator</h2>
+    <p>Need a name for your next protagonist? Generate fantasy, sci-fi, and horror character names in one click — with genre-appropriate surnames included.</p>
+    <a href="{{ '/tools/name-generator/' | relative_url }}" class="btn btn-white">Try the Generator</a>
+  </div>
+</section>
+
+<!-- ==============================
+     NEWSLETTER
+     ============================== -->
+<section class="newsletter-section">
+  <div class="newsletter-inner">
+    <div class="section-label" style="justify-content:center; margin-bottom:0.75rem;">Find your next read</div>
+    <h2>Never miss a recommendation</h2>
+    <p>New book recommendations, reviews, and genre guides — delivered straight to your inbox.</p>
+    {% include newsletter-form.html %}
+    <p style="font-size:0.75rem; color:var(--ink-muted); margin-top:1rem;">No spam. Unsubscribe any time.</p>
+  </div>
+</section>

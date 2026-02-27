@@ -1,0 +1,99 @@
+---
+layout: default
+title: Horror Books — The Complete Guide
+description: The best horror books from gothic classics to cosmic horror, psychological thrillers, and modern dark fiction.
+permalink: /genres/horror/
+---
+
+<div class="genre-hub-hero genre-hub-hero--horror">
+  <div class="genre-hub-hero-inner">
+    <div class="section-label" style="color:rgba(255,255,255,0.55);">Genre Hub</div>
+    <h1>Horror</h1>
+    <p>Gothic classics, cosmic horror, psychological thrillers, and modern dark fiction. The best horror books that will genuinely unsettle you.</p>
+    <div class="hero-tags">
+      <span>Cosmic Horror</span><span>Gothic</span><span>Psychological</span><span>Dark Fantasy</span><span>Short Fiction</span>
+    </div>
+  </div>
+</div>
+
+<!-- ESSENTIAL READING -->
+<section class="section" style="background:var(--paper);">
+  <div class="section-inner" style="max-width:860px;">
+    <div class="section-label" style="margin-bottom:1rem;">Start here</div>
+    <h2 class="section-title" style="margin-bottom:2rem;">Essential <em>Horror</em></h2>
+    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;">Horror at its best does something no other genre can: it makes the familiar terrifying. Whether it's the creeping dread of Shirley Jackson or the cosmic indifference of Lovecraft, the best horror books leave you changed.</p>
+    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For psychological horror:</strong> Shirley Jackson's <em>The Haunting of Hill House</em> is the definitive text. It's a novel about how perception distorts reality — and it's genuinely frightening.</p>
+    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For cosmic horror:</strong> Start with H.P. Lovecraft's <em>The Call of Cthulhu</em>, then move to modern cosmic horror: Paul Tremblay's <em>A Head Full of Ghosts</em> or Jeff VanderMeer's <em>Annihilation</em>.</p>
+    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:1.5rem;"><strong>For Stephen King:</strong> <em>The Shining</em> remains his finest novel. <em>Pet Sematary</em> is his darkest. <em>It</em> is the most ambitious. Start with <em>The Shining</em>.</p>
+    <p style="font-size:1rem; color:var(--ink-soft); line-height:1.9; margin-bottom:2.5rem;"><strong>For short horror:</strong> King's <em>Night Shift</em> is the best horror short story collection in the language. Shirley Jackson's <em>The Lottery and Other Stories</em> is quieter and more devastating.</p>
+    <a href="{{ '/blog/?category=Book+Recommendations' | relative_url }}" class="btn btn-primary">Browse all horror posts →</a>
+  </div>
+</section>
+
+<!-- FREE DOWNLOAD STRIP — Horror collection -->
+<section class="free-download-strip free-download-strip--horror">
+  <div class="section-inner">
+    <div class="free-download-content">
+      <div class="free-download-text">
+        <div class="section-label" style="color:rgba(255,255,255,0.6);">Free Download</div>
+        <h3>Free Horror Short Story Collection</h3>
+        <p>A collection of original horror short stories from Ben Luxon — atmospheric, unsettling, and free to download.</p>
+      </div>
+      <div class="free-download-action">
+        <a href="{{ '/free-downloads/horror/' | relative_url }}" class="btn-download btn-download--dark">
+          <span class="btn-download-icon">↓</span>
+          Download Free
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG POSTS: Horror relevant -->
+{% assign horror_posts = site.posts %}
+{% assign horror_filtered = "" | split: "" %}
+{% for post in horror_posts %}
+  {% if post.title contains 'Horror' or post.title contains 'horror' or post.title contains 'Stephen King' or post.title contains 'Dark' or post.title contains 'Spine' or post.title contains 'Bone-Chilling' or post.title contains 'Scary' or post.title contains 'Creepy' or post.title contains 'Gothic' or post.title contains 'Short Stories' %}
+    {% assign horror_filtered = horror_filtered | push: post %}
+  {% endif %}
+{% endfor %}
+{% if horror_filtered.size > 0 %}
+<section class="section" style="background:var(--white); border-top:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="section-header">
+      <div>
+        <div class="section-label">From the blog</div>
+        <h2 class="section-title">Horror <em>Reading Lists</em></h2>
+      </div>
+      <a href="{{ '/blog/' | relative_url }}" class="section-link">All posts →</a>
+    </div>
+    <div class="posts-grid">
+      {% for post in horror_filtered limit:6 %}
+      <article class="blog-card-ct">
+        <div class="blog-card-image" style="background:linear-gradient(135deg, #1a0a0a 0%, #3d1111 100%); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:var(--font-display); font-size:2rem; color:rgba(255,255,255,0.1);">🕯</span>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-tag">{{ post.category }}</div>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt | strip_html | truncate: 110 }}</p>
+          <div class="blog-card-meta">
+            <span class="blog-card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+            <a href="{{ post.url | relative_url }}" class="blog-card-readmore">Read</a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ALSO ON CABBAGE TREE -->
+<section class="section" style="background:var(--paper); padding:3rem 2rem;">
+  <div class="section-inner" style="max-width:600px; text-align:center;">
+    <h3 style="font-family:var(--font-display); font-size:1.5rem; margin-bottom:0.75rem;">Enjoy writing as much as reading?</h3>
+    <p style="color:var(--ink-soft); margin-bottom:1.5rem; font-size:0.9rem;">Try the fantasy writing prompt generator — grimdark prompts make excellent dark fiction seeds.</p>
+    <a href="{{ '/tools/fantasy-prompts/' | relative_url }}" class="btn btn-primary">Try the Prompt Generator →</a>
+  </div>
+</section>

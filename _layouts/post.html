@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="section-label">{{ page.category | default: "Book Recommendations" }}</div>
+    <h1>{{ page.title }}</h1>
+    <div class="page-hero-meta">
+      {% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>{% endif %}
+    </div>
+  </div>
+</div>
+
+<article class="post-body">
+  {{ content }}
+</article>
+
+<div class="newsletter-section">
+  <div class="newsletter-inner">
+    <h2>More great reads</h2>
+    <p>Get book recommendations and the latest from Cabbage Tree Books direct to your inbox.</p>
+    {% include newsletter-form.html %}
+  </div>
+</div>
