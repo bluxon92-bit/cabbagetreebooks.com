@@ -24,7 +24,7 @@
   <link rel="apple-touch-icon" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
   <meta name="theme-color" content="#1B4D4A">
 </head>
-<body>
+<body class="{% if page.permalink %}page-{{ page.permalink | remove: "/" | replace: "/", "-" }}{% endif %}">
 
   {% include header.html %}
 
