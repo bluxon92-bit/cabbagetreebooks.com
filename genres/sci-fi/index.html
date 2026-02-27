@@ -78,7 +78,8 @@ permalink: /genres/sci-fi/
 </section>
 
 <!-- BLOG POSTS: Sci-Fi relevant categories -->
-{% for post in scifi_posts limit:6 %}
+{% assign scifi_filtered = site.posts | where_exp: "post", "post.title contains 'Sci' or post.title contains 'sci' or post.title contains 'Isaac Asimov' or post.title contains 'Space Opera' or post.title contains 'space' or post.title contains 'Arthur C' or post.title contains 'Short Stories' or post.title contains 'Short Story' or post.title contains 'Ursula' or post.title contains 'Science Fiction' or post.title contains 'Star Wars'" %}
+{% if scifi_filtered.size > 0 %}
 <section class="section" style="background:var(--paper); border-top:1px solid var(--border);">
   <div class="section-inner">
     <div class="section-header">
@@ -89,7 +90,6 @@ permalink: /genres/sci-fi/
       <a href="{{ '/blog/' | relative_url }}" class="section-link">All posts →</a>
     </div>
     <div class="posts-grid">
-      {% assign scifi_filtered = scifi_posts | where_exp: "post", "post.title contains 'Sci' or post.title contains 'sci' or post.title contains 'Isaac Asimov' or post.title contains 'Space Opera' or post.title contains 'space' or post.title contains 'Arthur C' or post.title contains 'Short Stories' or post.title contains 'Short Story' or post.title contains 'Ursula' or post.title contains 'Science Fiction' or post.title contains 'Star Wars'" %}
       {% for post in scifi_filtered limit:6 %}
       <article class="blog-card-ct">
         <div class="blog-card-image" style="background:linear-gradient(135deg, #0d1b2a 0%, #0077b6 100%); display:flex; align-items:center; justify-content:center;">
