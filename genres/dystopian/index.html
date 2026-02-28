@@ -29,11 +29,7 @@ permalink: /genres/dystopian/
   </div>
 </section>
 
-{% assign dys_posts = "" | split: "" %}
-{% for post in site.posts %}
-  {% if post.title contains 'Dystopian' %}{% assign dys_posts = dys_posts | push: post %}{% endif %}
-{% endfor %}
-{% assign dys_posts = dys_posts | uniq %}
+{% assign dys_posts = site.posts | where: "genre", "Dystopian" %}
 {% if dys_posts.size > 0 %}
 <section class="section" style="background:var(--white); border-top:1px solid var(--border);">
   <div class="section-inner">

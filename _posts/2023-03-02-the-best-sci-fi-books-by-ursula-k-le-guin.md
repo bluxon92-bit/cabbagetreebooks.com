@@ -3,6 +3,7 @@ layout: post
 title: "The Best Sci-Fi Books by Ursula K Le Guin"
 date: 2023-03-02
 category: Author Profiles
+genre: Science Fiction
 excerpt: "-
   About Ursula K Le Guin
 -

@@ -3,6 +3,7 @@ layout: post
 title: "Book Review: The Man in the High Castle by Philip K. Dick"
 date: 2023-06-02
 category: Book Reviews
+genre: Science Fiction
 excerpt: "What if the Nazis had emerged victorious and conquered America? How would life be if the Japanese ruled alongside them, while other races suffered under slavery and discrimination? These are the themes explored in Philip"
 published: false
 ---

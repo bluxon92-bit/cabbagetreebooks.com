@@ -3,6 +3,7 @@ layout: post
 title: "11 of the Best Science Fiction Authors That Everyone Should Read"
 date: 2025-08-01
 category: Author Profiles
+genre: Science Fiction
 excerpt: "Science fiction has always held a special place in my heart. I think it started with Arthur C. Clarke’s The City and The Stars—a book that cracked my mind wide open with a vision of the future I found both disturbing and"
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/64972be0-c9ea-45bd-990e-45301a6baa56/fantasy+sci+fi+%281%29.jpeg"
 ---

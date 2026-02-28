@@ -3,6 +3,7 @@ layout: post
 title: "11 Of The Best Historical Fiction Authors You Must Read"
 date: 2023-07-04
 category: Author Profiles
+genre: Historical Fiction
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/bb39b776-a244-4de3-9792-18f596230145/last+kingdom+%281%29.jpg"
 ---

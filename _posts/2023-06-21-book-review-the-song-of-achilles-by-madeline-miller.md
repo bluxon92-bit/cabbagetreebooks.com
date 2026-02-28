@@ -3,6 +3,7 @@ layout: post
 title: "Book Review: The Song of Achilles by Madeline Miller"
 date: 2023-06-21
 category: Book Reviews
+genre: Fantasy
 excerpt: "If you're a fan of books about Greek mythology(https://www.cabbagetreebooks.com/blog/best-books-about-greek-mythology) you’ve likely come across Madeline Miller(http://madelinemiller.com) and her two novels, The Song of "
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/006533d7-4e2c-4eb6-a628-dd6e1ccbd375/THE+SONG+OF+ACHILLES.jpg"
 ---

@@ -3,6 +3,7 @@ layout: post
 title: "15 Best Apps to Read Books for Free"
 date: 2023-06-27
 category: Reading Tips
+genre: Guides
 excerpt: "If you don't own a dedicated ebook reader, don't worry! There are numerous ebooks available online that you can either purchase at a low cost or acquire for free. In such cases, all you need to do is launch an ebook read"
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ad52d73-3aaa-472b-8674-bf45b6d1fb1a/kindle+reading+app+%281%29.jpg"
 ---

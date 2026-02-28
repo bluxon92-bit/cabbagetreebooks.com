@@ -3,6 +3,7 @@ layout: post
 title: "Book Review: The Atlas Six by Olivie Blake"
 date: 2023-06-02
 category: Book Reviews
+genre: Fantasy
 excerpt: "The cover of The Atlas Six by Olivie Blake promises a captivating blend of science, magic, and a dark, brooding atmosphere. While this is indeed true, unfortunately, Blake fails to make it appealing to read about."
 published: false
 ---

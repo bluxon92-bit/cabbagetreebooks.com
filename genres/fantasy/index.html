@@ -98,51 +98,7 @@ permalink: /genres/fantasy/
   </div>
 </section>
 
-{% assign all_posts = site.posts %}
-{% assign fp_bucket = "" | split: "" %}
-{% for post in all_posts %}
-  {% if post.title contains 'Fantasy' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'fantasy' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Dragon' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Robin Hobb' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Grimdark' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Eragon' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Harry Potter' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Sanderson' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Abercrombie' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Gwynne' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Gemmell' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Assassin' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Malazan' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Greek Mythology' %}{% assign fp_bucket = fp_bucket | push: post %}{% endif %}
-{% endfor %}
-{% assign fp_bucket = fp_bucket | uniq %}
+{% assign fp_bucket = site.posts | where: "genre", "Fantasy" %}
 
 {% if fp_bucket.size > 0 %}
 <section class="section" style="background:var(--paper); border-top:1px solid var(--border);">

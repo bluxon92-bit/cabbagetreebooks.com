@@ -3,6 +3,7 @@ layout: post
 title: "32 Best Short Books You Can Read in a Day"
 date: 2025-03-01
 category: Book Recommendations
+genre: Guides
 excerpt: "When you're short on time but craving a great read, there's nothing better than a short book that packs a punch. Here are 32 of the best short books you can devour in a single day, grouped by theme and each offering a un"
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/221bebc8-6d62-457c-b36e-defa51b030b4/dalle+short+books+copy.png"
 ---

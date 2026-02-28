@@ -3,6 +3,7 @@ layout: post
 title: "9 Dystopian Novels That Will Change How You View The World"
 date: 2025-07-01
 category: Book Recommendations
+genre: Dystopian
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/30fbbdce-7991-4069-957c-fa353c870d4a/reading+fiction+%281%29.jpeg"
 ---

@@ -4,7 +4,19 @@ layout: default
 
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="section-label">{{ page.category | default: "Book Recommendations" }}</div>
+    <div class="page-hero-meta-top">
+      <span class="section-label-text">{{ page.category | default: "Book Recommendations" }}</span>
+      {% if page.genre %}
+        {% assign genre_slug = page.genre | downcase | replace: ' ', '-' %}
+        {% assign genre_url = '/genres/' | append: genre_slug | append: '/' %}
+        {% if page.genre == 'Science Fiction' %}{% assign genre_url = '/genres/sci-fi/' %}{% endif %}
+        {% if page.genre == 'Historical Fiction' %}{% assign genre_url = '/blog/' %}{% endif %}
+        {% if page.genre == 'Guides' %}{% assign genre_url = '/blog/' %}{% endif %}
+        {% if page.genre == 'Non-Fiction' %}{% assign genre_url = '/blog/' %}{% endif %}
+        {% if page.genre == 'Thriller' %}{% assign genre_url = '/blog/' %}{% endif %}
+        <a href="{{ genre_url | relative_url }}" class="post-genre-tag">{{ page.genre }}</a>
+      {% endif %}
+    </div>
     <h1>{{ page.title }}</h1>
     <div class="page-hero-meta">
       {% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>{% endif %}

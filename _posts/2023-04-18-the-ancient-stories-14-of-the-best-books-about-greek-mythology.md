@@ -3,6 +3,7 @@ layout: post
 title: "The Ancient Stories: 14 of the Best Books About Greek Mythology"
 date: 2023-04-18
 category: Book Recommendations
+genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/a0c4ae70-497f-4962-a39c-3b8a44e56752/Banner+greek+mythology+%281%29.png"
 ---

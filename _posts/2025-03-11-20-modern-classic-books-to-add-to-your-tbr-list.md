@@ -3,6 +3,7 @@ layout: post
 title: "20 Modern Classic Books To Add To Your TBR List"
 date: 2025-03-11
 category: Book Recommendations
+genre: Guides
 excerpt: "Some books don’t just tell a story—they leave a mark. They sneak into your thoughts, reshape how you see the world, and somehow, years later, you’re still bringing them up in conversations. That’s the magic of modern cla"
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1741033700593-0JD1OE02OF1KVPI6V5ZA/unsplash-image-S3nUOqDmUvc.jpg"
 ---

@@ -3,6 +3,7 @@ layout: post
 title: "How To Read David Gemmell's Drenai Series"
 date: 2025-09-12
 category: Author Profiles
+genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/98dc8c5c-aa9a-4486-b634-9a565b0ebb21/drenai+series+banner.png"
 ---

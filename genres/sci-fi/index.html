@@ -72,32 +72,7 @@ permalink: /genres/sci-fi/
 </section>
 
 {% assign sf_posts = site.posts %}
-{% assign sf_bucket = "" | split: "" %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Science Fiction' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Isaac Asimov' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Space Opera' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Star Wars' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Ursula' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Arthur C' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Short Stories' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in sf_posts %}
-  {% if post.title contains 'Sci-Fi' %}{% assign sf_bucket = sf_bucket | push: post %}{% endif %}
-{% endfor %}
-{% assign sf_bucket = sf_bucket | uniq %}
+{% assign sf_bucket = site.posts | where: "genre", "Science Fiction" %}
 
 {% if sf_bucket.size > 0 %}
 <section class="section" style="background:var(--paper); border-top:1px solid var(--border);">

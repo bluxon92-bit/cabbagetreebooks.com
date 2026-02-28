@@ -47,27 +47,7 @@ permalink: /genres/horror/
   </div>
 </section>
 
-{% assign all_posts = site.posts %}
-{% assign hr_bucket = "" | split: "" %}
-{% for post in all_posts %}
-  {% if post.title contains 'Horror' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'horror' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Stephen King' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Spine' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Bone-Chilling' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
-{% endfor %}
-{% for post in all_posts %}
-  {% if post.title contains 'Short Stories' %}{% assign hr_bucket = hr_bucket | push: post %}{% endif %}
-{% endfor %}
-{% assign hr_bucket = hr_bucket | uniq %}
+{% assign hr_bucket = site.posts | where: "genre", "Horror" %}
 
 {% if hr_bucket.size > 0 %}
 <section class="section" style="background:var(--white); border-top:1px solid var(--border);">

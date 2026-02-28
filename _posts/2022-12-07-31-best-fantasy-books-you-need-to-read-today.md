@@ -3,6 +3,7 @@ layout: post
 title: "31 Best Fantasy Books You Need To Read Today"
 date: 2022-12-07
 category: Book Recommendations
+genre: Fantasy
 excerpt: "-
   7 Of The Best Classic Fantasy Books
 -
