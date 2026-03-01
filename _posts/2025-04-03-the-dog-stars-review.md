@@ -5,10 +5,10 @@ date: 2025-04-03
 category: Book Reviews
 genre: Science Fiction
 excerpt: "The Dog Stars is the post-apocalyptic novel that doesn't feel like the others. Here's our review of Peter Heller's debut — lyrical, quiet, and quietly devastating."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/dog-stars-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/dog-stars-cover.jpg"
 ---
 
-![The Dog Stars by Peter Heller](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/dog-stars-cover.jpg)
+![The Dog Stars by Peter Heller](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/dog-stars-cover.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -67,4 +67,4 @@ When Hig follows the radio signal and discovers there are people beyond his rang
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

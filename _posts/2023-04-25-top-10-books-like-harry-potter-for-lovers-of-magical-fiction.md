@@ -5,10 +5,10 @@ date: 2023-04-25
 category: Book Recommendations
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/0f68f16a-0137-4fbb-9e0f-5acd0a003922/Harry+Potter+%281%29.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/harry-potter-1-.jpg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/0f68f16a-0137-4fbb-9e0f-5acd0a003922/Harry+Potter+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/harry-potter-1-.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -24,7 +24,7 @@ So, if you're a fan of magic worlds and looking for books similar books to Harry
 
 ### 1. The Magicians by Lev Grossman
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/d3c5779a-4768-4ae7-9506-07c407906115/The+magicians+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-magicians-1-.jpg)
 
 "The Magicians" by Lev Grossman is a popular contemporary fantasy series that follows a group of young adults attending Brakebills, a secret school of magic. The story is often compared to Harry Potter because of the magical school setting, the coming-of-age themes, and the dark, complex plotlines.
 
@@ -36,7 +36,7 @@ Though a more mature and edgier story than Harry Potter, "The Magicians" is a go
 
 ### 2. Percy Jackson and the Olympians by Rick Riordan
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f56f58cc-8222-4d3a-b40a-258202bd811f/percy+jackson+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/percy-jackson-1-.jpg)
 
 "Percy Jackson and the Olympians" by Rick Riordan is a popular young adult fantasy series that's often compared to Harry Potter due to the fact it features a hidden magical world layered over the top of our contemporary one. The difference though is that instead of a wizarding world, the [Greek gods](https://www.cabbagetreebooks.com/blog/best-books-about-greek-mythology) of Olympus are real, and living above New York.
 
@@ -48,7 +48,7 @@ The series follows Percy Jackson who discovers he’s a demigod, the son of Pose
 
 ### 3. The Hunger Games by Suzanne Collins
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1ebb13c3-1f29-4b1f-bbea-0a09679fb865/hunger+games+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/hunger-games-1-.jpeg)
 
 Like Harry Potter, "The Hunger Games" by Suzanne Collins sets up a strong good vs evil dichotomy and presents a young hero who must overcome adversity to reshape the world for the better aided only by a few faithful allies. However, these two series also have some striking differences. "Harry Potter" takes place in a magical wizarding world, while "The Hunger Games" is set in [a dystopian future](https://www.cabbagetreebooks.com/blog/9-dystopian-novels-to-read).
 
@@ -60,7 +60,7 @@ Katniss Everdeen is a teenager who is chosen to compete in a televised battle to
 
 ### 4. His Dark Materials by Philip Pullman
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/69a7e75c-182f-4453-9f79-d0dfc2bcb230/dark+materials+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/dark-materials-1-.jpg)
 
 "His Dark Materials" by Philip Pullman is a fantastical trilogy that follows Lyra Belacqua, a young girl who embarks on a quest to save her world and others from a mysterious substance called Dust.
 
@@ -72,7 +72,7 @@ The series features an expansive and imaginative [world-building](https://www.ca
 
 ### 5. The Chronicles of Narnia by C.S. Lewis
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/86be71ea-cbfe-41fa-b073-a7c6103b6cf6/narnia+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/narnia-1-.jpg)
 
 "The Chronicles of Narnia" by C.S. Lewis is a [classic fantasy series](https://www.cabbagetreebooks.com/blog/29-best-fantasy-books) that's often compared to Harry Potter because of its magical world and epic adventures.
 
@@ -84,7 +84,7 @@ The series follows the Pevensie siblings as they journey to the magical land of 
 
 ### 6. The Hobbit by J.R.R. Tolkien
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1ecf373b-add9-4379-a216-5c1258bcf993/hobbit+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/hobbit-1-.jpg)
 
 Known as the father of fantasy J.R.R. Tolkien’s classic “The Hobbit” is an adventure of epic proportions with a hero of diminutive stature. Though better known for the Lord of The Rings trilogy, J.R.R Tolikien’s The Hobbit is a more fun-sized novel depicting the incredible journey of Bilbo Baggins as he travels with Gandalf and his troop of Dwarves to the Misty Mountains.
 
@@ -96,7 +96,7 @@ With trolls and goblins, [dragons](https://www.cabbagetreebooks.com/blog/best-dr
 
 ### 7. The Inheritance Cycle by Christopher Paolini
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/77d079d8-4b08-4f36-aeb1-e074cf4725bd/eragon+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/eragon-1-.jpg)
 
 Though on the surface the book isn’t obviously like Harry Potter, it definitely captures a similar magical excitement. The first book in the Inheritance cycle, "Eragon" by Christopher Paolini is a young adult fantasy novel that follows Eragon, a farm boy who discovers a dragon egg. However, this world of magic, of elves and dwarves and [dragons](https://www.cabbagetreebooks.com/blog/best-dragon-books) is ruled by a tyrant of insurmountable power.
 
@@ -108,7 +108,7 @@ When Eragon discovers the dragon egg though, he becomes a target of the evil kin
 
 ### 8. Inkheart by Cornelia Funke
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/59ddcfa1-1720-4b53-8711-bad5dc448a84/inkheart+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/inkheart-1-.jpg)
 
 "Inkheart" by Cornelia Funke is a young adult fantasy novel about a girl named Meggie who discovers that her father has the ability to bring characters from books to life.
 
@@ -120,7 +120,7 @@ The book is filled with adventure, magic, and danger, and has been compared to H
 
 ### 9. The Dark is Rising by Susan Cooper
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/cb33c468-f35d-4fc5-9653-d59feaece092/dark+is+rising+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/dark-is-rising-1-.jpeg)
 
 "The Dark is Rising" by Susan Cooper is another young adult fantasy novel that sets a young hero against the forces of evil. The book follows a boy named Will Stanton, who discovers that he's the last of the Old Ones. Will must find the six Signs that will aid him in his quest against the Dark. Along the way he encounters a variety of magical events and characters and must overcome not only the adversaries pitted against him, but his own doubts and fears.
 
@@ -143,7 +143,7 @@ The book is filled with adventure, magic, and danger, and has been compared to H
 
 
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f5f030d5-fcef-49b1-944c-6846367e06f4/stardust+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/stardust-1-.jpg)
 
 
 

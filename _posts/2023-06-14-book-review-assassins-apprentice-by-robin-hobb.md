@@ -5,10 +5,10 @@ date: 2023-06-14
 category: Book Reviews
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5023a299-de4c-4e82-87f7-5c9c3515a8c5/farseer-trilogy+%281%29.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/farseer-trilogy-1-.jpg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5023a299-de4c-4e82-87f7-5c9c3515a8c5/farseer-trilogy+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/farseer-trilogy-1-.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -22,7 +22,7 @@ The first book in the Farseer trilogy, Assassin's Apprentice, follows the journe
 
 ## Assassin’s Apprentice Plot - 4/5
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1686044138796-QNWU5B3Q6E8TJPZ19ZLL/assassins+apprentice.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/assassins-apprentice.jpg)
 
 [Assassin's Apprentice](https://amzn.to/42qRInW) tells the story of Fitz-Chivalry. Fitz is abandoned on the doorstep of royalty and informed that he’s the bastard son of Prince Chivalry Farseer. He’s entrusted to the head f the stables, a man called Burrich, who becomes a father figure to him, teaching him right from wrong.
 
@@ -48,7 +48,7 @@ Then there are the villains. Some you identify straight away, and others are sur
 
 ## Overall Rating of Assassin's Apprentice by Robin Hobb - 4.5/5
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/84b65ca7-b612-4ff0-97fc-0b0387e09676/farseer+2+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/farseer-2-1-.jpeg)
 
 I was inclined to give [Assassin's Apprentice](https://amzn.to/42qRInW) five stars, but I actually think the rest of the series gets even better.
 

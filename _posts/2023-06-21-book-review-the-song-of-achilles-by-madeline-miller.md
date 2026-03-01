@@ -5,7 +5,7 @@ date: 2023-06-21
 category: Book Reviews
 genre: Fantasy
 excerpt: "If you're a fan of books about Greek mythology(https://www.cabbagetreebooks.com/blog/best-books-about-greek-mythology) you’ve likely come across Madeline Miller(http://madelinemiller.com) and her two novels, The Song of "
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/006533d7-4e2c-4eb6-a628-dd6e1ccbd375/THE+SONG+OF+ACHILLES.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-song-of-achilles.jpg"
 ---
 
 If you're a fan of [books about Greek mythology](https://www.cabbagetreebooks.com/blog/best-books-about-greek-mythology) you’ve likely come across [Madeline Miller](http://madelinemiller.com) and her two novels, The Song of Achilles, and [Circe](https://amzn.to/431yiXm). [The Song of Achilles](https://amzn.to/42TtG5h) is Miller's is her debut novel and delves into the story of Achilles and Patroclus, tracing their journey from childhood to adulthood and the divergent paths they take despite their profound love for each other.
@@ -20,7 +20,7 @@ Miller, with her MA and BA in Ancient Greek, showcases a profound knowledge of t
 
        [caption id="" align="alignnone" width="600"][
 
-![   Rated 4.6 Stars. Buy on Amazon.   ](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/006533d7-4e2c-4eb6-a628-dd6e1ccbd375/THE+SONG+OF+ACHILLES.jpg)
+![   Rated 4.6 Stars. Buy on Amazon.   ](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-song-of-achilles.jpg)
 
 ](https://amzn.to/42XGRSK)    Rated 4.6 Stars. Buy on Amazon.   [/caption]
 

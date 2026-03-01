@@ -5,10 +5,10 @@ date: 2023-08-01
 category: Book Recommendations
 genre: Science Fiction
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/09df17e8-a5db-456a-be75-56addc2d9889/space-travel-sci+fi+%281%29.jpeg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/space-travel-sci-fi-1-.jpeg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/09df17e8-a5db-456a-be75-56addc2d9889/space-travel-sci+fi+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/space-travel-sci-fi-1-.jpeg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -44,7 +44,7 @@ This story is set in the future where children go camping to forget their parent
 
 ### **5. **[**Sunset In The East**](https://amzn.to/3SOrcBT)** by Ben Luxon**
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/d08a47f0-c84a-4a09-ae2c-d9ba278ed68b/Ebook+cover+no+bg+copy.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ebook-cover-no-bg-copy.png)
 
 ‘Sunset in the East’ is a collection of eight mind-bending sci-fi short stories. featuring distant futures, bizarre aliens, AI and automatons this compelling collection of thought-provoking science fiction short stories by Ben Luxon are perfect for sci-fi enthusiasts and fans of Black Mirror.
 
@@ -113,6 +113,6 @@ A Spaceship Named McGuire by Randall Garrett showcases the power of human ingenu
 
 Sunset in the East by Ben Luxon is available free for Kindle Unlimited users. [**Learn more...**](https://www.cabbagetreebooks.com/sci-fi-short-stories)[
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

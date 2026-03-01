@@ -5,10 +5,10 @@ date: 2022-04-26
 category: Book Recommendations
 genre: Fantasy
 excerpt: "Among all the famous book genres, fantasy fiction is one of the most loved. Whichever genre you love, and whichever style, it can be hard to find time to read amongst the hustle and bustle of everyday life."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1650494876460-T6NB6HESWVKQTA7D07Q9/Fantasy+stories+book"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fantasy-stories-book"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1650494876460-T6NB6HESWVKQTA7D07Q9/Fantasy+stories+book)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fantasy-stories-book)
 
 Among all the famous book genres, fantasy fiction is one of the most loved. Whichever genre you love, and whichever style, it can be hard to find time to read amongst the hustle and bustle of everyday life.
 
@@ -40,7 +40,7 @@ If you are into [horror fiction](https://www.cabbagetreebooks.com/blog/horror-sh
 
 David gets caught in an avalanche and dies. And then he wakes up. But this is not a happy tale of someone escaping death. When he wakes up he finds he has bizarre powers that terrify him. With everyone thinking him dead, and after a year of isolation from the world, David must learn how to fit back into the world. But we quickly realise it’s not just his powers that he needs to be afraid of.
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3a2d7798-268b-4d29-b7a7-35847f00a1c4/book-863418_1920.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/book-863418_1920.jpg)
 
 ### 6. [The Smallest Dragonboy](https://www.baen.com/Chapters/9781476781617/9781476781617___4.htm) by Anne McCaffrey
 
@@ -76,6 +76,6 @@ There we have it, 9 wonderful fantasy short stories to spend your weekend in a d
   [How To Read David Gemmell's Drenai Series](https://www.cabbagetreebooks.com/blog/david-gemmells-drenai-series)
 [
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

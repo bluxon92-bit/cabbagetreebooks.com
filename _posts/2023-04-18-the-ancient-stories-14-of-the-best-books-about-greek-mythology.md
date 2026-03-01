@@ -5,10 +5,10 @@ date: 2023-04-18
 category: Book Recommendations
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/a0c4ae70-497f-4962-a39c-3b8a44e56752/Banner+greek+mythology+%281%29.png"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/banner-greek-mythology-1-.png"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/a0c4ae70-497f-4962-a39c-3b8a44e56752/Banner+greek+mythology+%281%29.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/banner-greek-mythology-1-.png)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -28,7 +28,7 @@ In this article, we explore some of the best Greek mythology books fiction has t
 
 ### 1. Clytemnestra by Costanza Casati
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3dd42c12-9f0c-46b3-a732-4af86048bde9/clytemnestra.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/clytemnestra.jpg)
 
 Clytemnestra, a debut novel by Costanza Casati, is a fascinating retelling of the life of one of the most infamous female villains in ancient Greece.
 
@@ -44,7 +44,7 @@ Clytemnestra's story teaches a valuable lesson about power and its acquisition. 
 
 ### 2. Circe by Madeline Miller
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/d8e9efd0-f85d-4933-9d5f-4c651a2715b3/circe.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/circe.jpeg)
 
 This beautifully written novel about Greek mythology offers an alternate perspective from the point of view of Circe the Witch. Circe is most famously known for capturing Odysseus and turning his men into pigs during Homer’s The Odyssey.
 
@@ -64,7 +64,7 @@ If you like Circe you will also enjoy Madeline Millers’s book, [The Song of Ac
 
 ### 3. Mythos: A Modern Telling of Classical Greek Myths by Stephen Fry
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8f5ca148-2737-4196-8edd-90b86ab0ab04/mythos+stephen+fry.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/mythos-stephen-fry.jpeg)
 
 “Mythos” by Stephen Fry is a modern and witty retelling of the classic Greek myths, bringing ancient tales to life for both newcomers and enthusiasts alike.
 
@@ -78,7 +78,7 @@ The tales span from Pandora's box to Prometheus's fire and the punishments of th
 
 ### 4. The Minotaur Takes a Cigarette Break by Steven Sherrill
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/34a732e9-7a40-4e48-8743-0a016816f315/the+minotaur+takes+a+cigarette+break.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-minotaur-takes-a-cigarette-break.jpeg)
 
 In Steven Sherrill's novel, "The Minotaur Takes a Cigarette Break," the Minotaur, who is five thousand years old and has long since left the labyrinth, has found himself in the American South. Now living in a trailer park and working as a line cook at a steakhouse, the Minotaur is no longer the terrifying creature he once was, having given up his taste for human flesh. Instead, he is a socially awkward and lonely being with basic human needs.
 
@@ -90,7 +90,7 @@ As his life begins to unravel over a two-week period, the Minotaur discovers the
 
 ### 5. The King Must Die (Theseus #1) by Mary Renault
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/90105afd-a81a-40ce-b143-515ea669e424/the-king-must-die-1.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-king-must-die-1.jpg)
 
 Mary Renault’s “The King Must Die” offers a vivid portrayal of the mythic hero Theseus, who famously defeated the Minotaur in Crete. Through Renault's use of modern scholarship and archaeological findings at Knossos, Theseus becomes a [fully realized character](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters) - a charismatic king with both strengths and weaknesses, guided by prophetic destiny.
 
@@ -102,7 +102,7 @@ The novel follows Theseus on his journey from Troizen to Eleusis, where he faces
 
 ### 6. The Lion of Macedon by David Gemmel
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/9a1be701-501f-4d9d-aab6-0f31caeb216b/lion+of+macedon.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/lion-of-macedon.jpeg)
 
 Regular readers of this blog will know that no list is complete without an entry from one of my favourite authors, David Gemmel. He write a few [fantasy fiction](https://www.cabbagetreebooks.com/blog/29-best-fantasy-books) books set in ancient Greece, with his Troy series, starting with [Lord of the Silver Bow](https://amzn.to/41sFZ8X), becoming highly acclaimed.
 
@@ -118,7 +118,7 @@ He’s a mighty warrior, an unbeatable strategist, and hated by the gods. Along 
 
 ### 7. The Penelopiad by Margaret Atwood
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/c36fc14d-613e-48fb-824b-3a648011e5cd/the-penelopiad.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-penelopiad.jpg)
 
 Margaret Atwood has returned with a witty and perceptive retelling of the myth of Odysseus, told from the perspective of Penelope. In the foreword, Atwood explains her decision to give Penelope and the twelve hanged maids the opportunity to tell the story.
 
@@ -130,7 +130,7 @@ The maids form a Chorus, singing and chanting, and questioning the events that l
 
 ### 8. Stone Blind by Natalie Haynes
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1d613b63-021b-4dfc-b108-18f0d91f60da/stone-blind.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/stone-blind.jpeg)
 
 Medusa, the youngest of the Gorgon sisters, is the only mortal in her family of gods. Unlike her siblings, Medusa ages, and experiences change and weakness. When the sea god Poseidon violates her in the temple of Athene, the goddess punishes Medusa instead of him, forever transforming her. Her hair is replaced by writhing snakes, and her gaze can turn any living creature to stone. Cursed with the power to destroy all she loves with one look, Medusa lives a life of solitude until Perseus embarks on a fateful quest to fetch the head of a Gorgon.
 
@@ -142,7 +142,7 @@ In Stone Blind, classicist and comedian Natalie Haynes turns our understanding o
 
 ### 9. Gods Behaving Badly by Marie Phillips
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/2e30e37c-74da-4fe6-8a3d-f0f3cb643d80/gods-behaving-badly.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/gods-behaving-badly.jpg)
 
 The Greek gods of Olympus are still alive and kicking in the twenty-first century, but their current living situation in a cramped London townhouse is less than ideal. To make ends meet, they’ve had to take on day jobs, with Artemis working as a dog-walker, Apollo posing as a TV psychic, Aphrodite taking calls as a phone sex operator, and Dionysus spinning records as a DJ. To make matters worse, their powers are weakening, and even their favourite pastime of turning mortals into trees is draining their energy reserves.
 
@@ -154,7 +154,7 @@ As tensions rise between Aphrodite and Apollo, the conflict quickly escalates in
 
 ### 10. Piranesi by Susanna Clarke
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b98873ce-c312-4a5b-a748-98e0e92e063e/piranesi-1356x2048.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/piranesi-1356x2048.jpg)
 
 Piranesi's dwelling is no ordinary edifice. Its rooms are limitless, its corridors endless, and its walls adorned with countless statues, each unique from the others. Within the maze-like structure, an ocean is contained; waves crash up stairwells, rooms flood within moments. But Piranesi is unafraid; he comprehends the tides as he does the labyrinth's layout. He lives to explore the house.
 
@@ -166,7 +166,7 @@ Apart from Piranesi, there is just one other individual who frequents the house�
 
 ### 11. House of Names by Colm Tóibín
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/0bfed430-6c25-4f1c-8e1f-63fa3cbcc8dd/house-of-names.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/house-of-names.jpg)
 
 Agamemnon makes a fatal decision on the day of his daughter's wedding: he orders her sacrifice before taking his army off to win a glorious victory in battle. Three years later, Agamemnon returns home only to find that his murderous action has triggered a chain reaction of violence within his own family. His wife seeks his death, and his children, Electra and Orestes, are pulled into a world of whispered commands and secret journeys through the palace's hidden chambers.
 
@@ -178,7 +178,7 @@ As Electra silently watches the family's game of innocence and Orestes is forced
 
 ### 12. The Wolf Den by Elodie Harper
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4237a7c1-6997-4bb2-82c8-c5462a5fad8c/the-wolf-den.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-wolf-den.jpeg)
 
 Amara was once a cherished daughter, but her father’s death left her family in poverty. Forced to sell Amara to a brothel owner in Pompeii, her mother leaves her to a life of slavery. Amara's sharp mind and resourcefulness are of no value in the brothel where she is only prized for her ability to attract customers.
 
@@ -190,7 +190,7 @@ Despite the oppressive conditions, Amara refuses to lose her spirit and bonds wi
 
 ### 13. Lore by Alexandra Bracken
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/fa14d432-1b89-412d-9357-535d8882c87b/lore+alexandra+bracken.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/lore-alexandra-bracken.jpeg)
 
 Every seven years, the Agon begins, forcing nine Greek gods to walk the earth as mortals and be hunted by the descendants of ancient bloodlines, who seek to kill a god and take their divine power and immortality. Lore Perseous had fled this brutal world after her family was murdered by a rival line, turning away from the hunt's promise of eternal glory.
 
@@ -202,7 +202,7 @@ However, as the next hunt approaches in New York City, a childhood friend believ
 
 ### 14. Lore Olympus Series by Rachel Smythe
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f58f8705-8eda-4c4b-a3ad-1d69eb0a8998/lore+olympus.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/lore-olympus.jpeg)
 
 The final item on this list is something a little different - a graphic novel.
 

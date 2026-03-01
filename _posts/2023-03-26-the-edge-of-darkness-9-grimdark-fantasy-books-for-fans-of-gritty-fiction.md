@@ -5,10 +5,10 @@ date: 2023-03-26
 category: Book Recommendations
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/e2944594-b5db-429c-ab53-f65f3ba2938b/the+broken+empire+trilogy+%281%29.jpeg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-broken-empire-trilogy-1-.jpeg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/e2944594-b5db-429c-ab53-f65f3ba2938b/the+broken+empire+trilogy+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-broken-empire-trilogy-1-.jpeg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -43,7 +43,7 @@ Here’s our list of grimdark fantasy books and series that you should consider 
 
 ### 1. The First Law Trilogy by Joe Abercrombie (published 2006-2008)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/baafd31e-4a16-4642-87e4-67ebff45c584/The+First+Law+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-first-law-1-.jpg)
 
 The First Law Trilogy takes place in a world of war and political intrigue, where characters must navigate a brutal and unforgiving landscape. The series focuses on a cast of gritty characters including a barbarian warrior, a crippled torturer, and a self-centred nobleman. Each of them must confront their own flaws and prejudices as they struggle to survive in a world full of violence, betrayal, and treachery.
 
@@ -55,7 +55,7 @@ The First Law Trilogy takes place in a world of war and political intrigue, wher
 
 ### 2. The Malazan Book of the Fallen by Steven Erikson (published 1999-2011)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f72a4875-1708-42c7-8c5d-edce5c82c064/Malazan-Book-of-the-Fallen-Reading-Order+copy+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/malazan-book-of-the-fallen-reading-order-copy-1-.jpg)
 
 The Malazan Book of the Fallen is an epic series that explores themes of mortality, power, and the human condition. Set in a world of gods, magic, and warfare, the series follows a vast cast of characters, including soldiers, assassins, and sorcerers. With its richly detailed world-building, intricate plotting, and morally complex characters, The Malazan Book of the Fallen is a monumental work of grimdark fantasy that challenges readers to think deeply about the nature of power and the consequences of war.
 
@@ -72,7 +72,7 @@ The Malazan Book of the Fallen is an epic series that explores themes of mortali
 
 ### 3. The Black Company by Glen Cook (published 1984 - 1985)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/686ce047-e7d3-4d5b-b6c3-01e2e632ce16/black+company+books+%281%29.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/black-company-books-1-.png)
 
 The Black Company follows a group of mercenaries as they navigate a world of war and politics. Led by their enigmatic and ruthless captain, the company becomes embroiled in a conflict between two powerful sorcerers, forcing them to confront their own loyalties and morality. With stark realism and complex themes, The Black Company is a classic grimdark fantasy book series.
 
@@ -82,7 +82,7 @@ The Black Company follows a group of mercenaries as they navigate a world of war
 
 ### 4. The Broken Empire Trilogy by Mark Lawrence (published 2011-2013)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/e2944594-b5db-429c-ab53-f65f3ba2938b/the+broken+empire+trilogy+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-broken-empire-trilogy-1-.jpeg)
 
 The first in the Broken Empire Trilogy (and Mark Lawrence’s debut novel) is A Prince of Thorns. It tells a tale of blood and treachery, magic and brotherhood and paints a compelling and brutal, and sometimes beautiful, picture of the young prince Jorg Ancrath on his journey toward manhood and the throne. With his ruthless tactics and disregard for human life, Jorg is a compelling antihero who must confront the consequences of his own actions as he seeks to conquer the world around him.
 
@@ -92,7 +92,7 @@ The first in the Broken Empire Trilogy (and Mark Lawrence’s debut novel) is A 
 
 ### 5. A Song of Ice and Fire by George R.R. Martin (published 1996 - present)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/84187d9c-a235-464a-861a-94601c56c954/game+of+thrones+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/game-of-thrones-1-.jpeg)
 
 A Song of Ice and Fire is a sprawling epic that follows a vast cast of characters spread out across the seven kingdoms of Westeros and beyond. It is one of the most ambitious examples of world-building since Tolkien. It explores themes of power, family, and the consequences of human ambition.
 
@@ -110,7 +110,7 @@ The series is famous for shocking violence where the main characters apparently 
 
 ### 6. The Farseer Trilogy by Robin Hobb (published1995 - 1997)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/a7a0ceb5-eaf8-48d9-84ee-28b566c0d018/The-Farseer-Trilogy-Robin-Hobb+copy+%281%29+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-farseer-trilogy-robin-hobb-copy-1-1-.jpg)
 
 Robin Hobb's Farseer Trilogy follows the story of FitzChivalry Farseer, the bastard son of a prince who is trained as an assassin for the royal family. Set in a world of political intrigue and courtly scheming, the novel explores themes of duty, loyalty, and the high cost of power.
 
@@ -124,7 +124,7 @@ While some readers may not consider Assassin's Apprentice to be strictly Grimdar
 
 ### 7. The Poppy War by R. F. Kuang (published 2018 - 2020)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/afe068b4-79ea-41a9-94ca-1ec0c7077811/the+poppy+war+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-poppy-war-1-.jpeg)
 
 The Poppy War series is one of the best examples of grimdark fantasy of recent years. The book explores themes of corruption and power, lust and vengeance, and delves into the darkest depths of humanity and savagery.
 
@@ -136,7 +136,7 @@ The story follows Rin. She comes from a poor background but gets into an elite m
 
 ### 8. War for the Rose Throne by Peter McLean (published 2018 -2022)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/732525ac-d7fc-4d8d-91ae-a48ed7b40ece/rosethronecovers+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/rosethronecovers-1-.jpg)
 
 Peter McLean's book "Priest of Bones" is the first in the War for the Rose Throne series and is a dark and gritty tale set in a world of gangsters and magic.
 
@@ -149,7 +149,7 @@ The story follows Tomas Piety, a former soldier and now a crime lord, as he retu
 
 ### 9. Empires of Dust by Anna Smith Spark (2017 - 2019)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/39ee2ee8-d013-45f9-9792-75eb663ecb6d/empires+of+dust+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/empires-of-dust-1-.jpeg)
 
 The first book in the Empire of Dust series by Anna Smith Spark is the novel "The Court of Broken Knives". It is a dark and atmospheric fantasy tale set in a world of political intrigue, violence, and magic. The story follows a cast of morally ambiguous characters, including a ruthless assassin, a disgraced prince, and a powerful sorceress, as they navigate through the treacherous Court of the Emperor, where alliances shift constantly and betrayal is the norm.
 

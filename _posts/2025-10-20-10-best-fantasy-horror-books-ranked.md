@@ -5,10 +5,10 @@ date: 2025-10-20
 category: Book Recommendations
 genre: Horror
 excerpt: "When it comes to fantasy horror books, I’m always on the lookout for stories that balance fantastical worldbuilding with a genuine chill that lingers long after the final page."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b8f728b7-3c2f-406b-8f2d-ee13c8ab22f2/books+skeleting+horror+%281%29.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/books-skeleting-horror-1-.jpg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b8f728b7-3c2f-406b-8f2d-ee13c8ab22f2/books+skeleting+horror+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/books-skeleting-horror-1-.jpg)
 
 When it comes to fantasy horror books, I’m always on the lookout for stories that balance fantastical worldbuilding with a genuine chill that lingers long after the final page.
 
@@ -16,7 +16,7 @@ Whether you’re drawn to modern urban nightmares, twisted fairy tales, or gothi
 
 ### 1. Coraline by Neil Gaiman
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/02def258-83e9-4232-95ee-c765315c3322/Coraline+book+cover.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/coraline-book-cover.jpg)
 
 There's something irresistibly eerie about stepping through a mysterious door into a world that mirrors—and distorts—our own.
 
@@ -36,7 +36,7 @@ If you're after a modern fairy-tale with a dark twist, [**The Changeling**](http
 
 ### 4. Ninth House by Leigh Bardugo
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/80685138-7e41-42bf-b28b-70d1ca7105ef/ninth+house+leigh+bardugo.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ninth-house-leigh-bardugo.jpg)
 
 Diving into the occult and dark academia, [**Ninth House**](https://www.amazon.com/dp/1250313074?tag=ctbooks09e-20) offers a unique cocktail of supernatural mystery and campus intrigue set against the backdrop of Yale University.
 
@@ -58,7 +58,7 @@ Moreno-Garcia masterfully intertwines dark supernatural elements with historical
 
 ### 7. The Blacktongue Thief by Christopher Buehlman
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/067c639b-e3b1-461d-9de3-9d8f827187d1/library+at+mount+char+book+cover+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/library-at-mount-char-book-cover-1-.jpg)
 
 For those who crave a dose of dark humor mixed with high stakes and grim adventure, [**The Blacktongue Thief**](https://www.amazon.com/dp/125079997X?tag=ctbooks09e-20) is a wild ride.
 

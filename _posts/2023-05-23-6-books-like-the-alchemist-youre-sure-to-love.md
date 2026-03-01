@@ -5,7 +5,7 @@ date: 2023-05-23
 category: Book Recommendations
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ff6a339e-0b36-482b-878d-4a1d27c5e5a8/the+alchemist+%281%29.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-alchemist-1-.jpg"
 ---
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
@@ -22,7 +22,7 @@ In this article, we explore six books like The Alchemist with similar themes and
 
 ## About The Alchemist by Paolo Coelho
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ff6a339e-0b36-482b-878d-4a1d27c5e5a8/the+alchemist+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-alchemist-1-.jpg)
 
 ["The Alchemist" by Paulo Coelho](https://amzn.to/42WQW3a) is a concise yet impactful book that delves into profound themes and offers a timeless message. Written in simple language, it emphasizes the pursuit of dreams. Its power lies in its lyrical charm and effective use of allegory and metaphor, which convey its message whilst making it accessible to a wide audience.
 
@@ -40,7 +40,7 @@ When building this list I wanted to choose novels which had a similar impact on 
 
 ### Siddhartha by Hermann Hesse
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/2611e4f7-e677-4cea-a9d4-00ffcd059911/siddharta+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/siddharta-1-.jpg)
 
 Siddhartha is a philosophical novel by Herman Hesse that loosely mimics the story of Siddharta Gautama, the Buddha. It tells the story of a man named Siddhartha, a brilliant young man, charismatic and fiercely intelligent. He’s born to a wealthy Brahmin family and has everything he could want. But, even so he feels empty, he feels like there must be more to life. He leaves everything behind and embarks on a spiritual journey of self-discovery in search of enlightenment.
 
@@ -52,7 +52,7 @@ Like The Alchemist, Siddhartha features accessible writing and a simple, yet tho
 
 ### Candide by Voltaire
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ede9e840-aee3-4f6b-b3f1-f747276554e2/Candide+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/candide-1-.jpeg)
 
 Candide is a satirical novel by the french philosopher Voltaire. It follows the misadventures of a young man named Candide as he searches for love and meaning in a world that seems to be conspiring against him.
 
@@ -64,7 +64,7 @@ The book explores themes of optimism, the human condition, and the nature of rea
 
 ### The Celestine Prophecy by James Redfield
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/18e0c54a-3da6-42d3-bbaa-5443e6cedc2c/celestine+prophecy+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/celestine-prophecy-1-.jpg)
 
 The Celestine Prophecy by James Redfield is a captivating spiritual adventure novel set in Peru. The story follows John Woodson as he [embarks on a transformative journey](https://www.cabbagetreebooks.com/blog/29-best-fantasy-books) to ancient spiritual insights known as the Nine Insights. Through encounters with insightful individuals and the exploration of mystical landscapes, John learns about synchronicity, energy flow, and the interconnectedness of all beings.
 
@@ -76,7 +76,7 @@ The book blends fiction and self-help, inspiring readers to embrace personal gro
 
 ### The Pilgrimage by Paulo Coelho
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b906fa43-faff-4d63-bd65-a61cd376b480/the+pilgrimage+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-pilgrimage-1-.jpg)
 
 The Pilgrimage is another novel by Paulo Coelho that explores similar themes to The Alchemist, including self-discovery, spirituality, and personal growth. The book is loosely autobiographical featuring a protagonist named Paulo and tells the story of a man who embarks on a pilgrimage across Spain in search of spiritual enlightenment. Guided by his mentor, Petrus, Paulo encounters a series of challenges and encounters that test his faith, determination, and understanding of mystical teachings.
 
@@ -90,7 +90,7 @@ The Pilgrimage has been praised for its poetic and introspective writing style, 
 
 ### Jonathan Livingston Seagull by Richard Bach
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/d5345d42-3bf0-4bd9-9ef3-50ee75366a74/john+livingstone+seagull+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/john-livingstone-seagull-1-.jpg)
 
 Jonathan Livingston Seagull by Richard Bach is a timeless novella that follows the journey of a seagull named Jonathan, who seeks to transcend the limitations of his flock and explore the possibilities of flight. As an outcast, he devotes himself to perfecting his flying skills and discovers a higher plane of existence where he learns profound lessons about freedom, love, and personal fulfilment. The allegorical narrative encourages readers to embrace their uniqueness, challenge societal norms, and pursue their dreams.
 
@@ -102,7 +102,7 @@ This internationally bestselling book, known for its lyrical prose, inspires ind
 
 ### The Prophet by Kahlil Gibran
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7d41794b-3cc0-432c-b370-20148d5dd747/the+prophet+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-prophet-1-.jpg)
 
 The Prophet by Kahlil Gibran was published in 1923 and has since become one of the most beloved works of literature in the 20th century. The book takes the form of a poetic conversation between Almustafa, a prophet, and a group of people who seek his wisdom before he departs from the city of Orphalese. Almustafa shares his insights on various aspects of life, including love, marriage, children, work, joy, sorrow, and more.
 

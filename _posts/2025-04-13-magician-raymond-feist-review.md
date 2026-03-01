@@ -5,10 +5,10 @@ date: 2025-04-13
 category: Book Reviews
 genre: Fantasy
 excerpt: "Magician is Raymond Feist's debut novel and the foundation of the Riftwar Saga — one of fantasy's longest-running universes. Here's our full review of where it all began."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/magician-feist-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/magician-feist-cover.jpg"
 ---
 
-![Magician by Raymond E. Feist](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/magician-feist-cover.jpg)
+![Magician by Raymond E. Feist](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/magician-feist-cover.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -69,4 +69,4 @@ Read *Magician* first, in the expanded 1992 edition if you can find it.
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

@@ -5,10 +5,10 @@ date: 2023-06-07
 category: Book Recommendations
 genre: Horror
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ed5100c-a827-4ec2-b475-52abc3170792/scary+short+story+2+%281%29.jpeg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/scary-short-story-2-1-.jpeg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ed5100c-a827-4ec2-b475-52abc3170792/scary+short+story+2+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/scary-short-story-2-1-.jpeg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -24,7 +24,7 @@ In this article, we take a look at some of his classic horror short story collec
 
 ### 1. Night Shift by Stephen King
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8ff0e89a-c380-4ab2-8b4a-d980f80aa6db/night+shoft+stephen+king+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/night-shoft-stephen-king-1-.jpg)
 
 Night Shift is a short story collection published originally in 1978, the book features King's distinctive writing style and iconic storytelling. It contains 20 stories of varied themes and lengths, ranging from terrifying supernatural encounters to more grounded, relatable horrors.
 
@@ -36,7 +36,7 @@ Among the standout tales are "The Boogeyman," "Children of the Corn," and "Quitt
 
 ### 2. Skeleton Crew by Stephen King
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/92d8b541-31dd-43a8-a898-216e2fab344a/skeleton+crew+sKing+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/skeleton-crew-sking-1-.jpg)
 
 Skeleton Crew is a masterpiece in horror literature and a must-read for any Stephen King fan. This short story collection boasts 22 gripping tales that showcase King's ability to terrify readers with his dark imagination and deft storytelling. From the haunted hotel room in "1408" to the chilling revenge of "The Monkey," each story is distinctly crafted to leave readers on edge.
 
@@ -48,7 +48,7 @@ The collection's standout piece is the novella "The Mist," which introduces the 
 
 ### 3. Nightmares & Dreamscapes by Stephen King
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/83988d7d-ec8e-453b-96d6-28b4eb393e56/nightmares+and+dreamscapes+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/nightmares-and-dreamscapes-1-.jpg)
 
 Stephen King's collection of short stories, Nightmares & Dreamscapes, is a rollercoaster ride of terror, suspense, and, at times, even humour. With each story offering its unique blend of horror, the collection captures the essence of King's storytelling genius. Whether it's the demonic car in "Dolan's Cadillac," or the chilling tale of a memory-eating creature in "Crouch End," each story is a masterclass in suspense-building and imaginative narration.
 
@@ -60,7 +60,7 @@ Despite its sometimes gruesome subject matter, the collection is not without its
 
 ### 4. The Bazaar of Bad Dreams: Stories by Stephen King
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6fe7e32c-1316-497a-90e0-e13f0ab69670/bazaar+of+bad+dreams+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/bazaar-of-bad-dreams-1-.jpg)
 
 The Bazaar of Bad Dreams: Stories is a gripping [page-turner](https://www.cabbagetreebooks.com/blog/29-best-fantasy-books) that contains twenty stories, some of which have been previously published but with new endings. The book delves deep into human emotions such as love, loss, greed, and revenge. King's writing style is masterful and he has an excellent ability to create characters that readers can relate to.
 
@@ -82,7 +82,7 @@ There are [supernatural](https://www.cabbagetreebooks.com/blog/11-best-books-by-
 
 
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3908e70a-dc0e-4cbd-9f4b-64402247283b/just+after+sunset+%281%29.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/just-after-sunset-1-.jpg)
 
 
 

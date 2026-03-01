@@ -5,10 +5,10 @@ date: 2022-04-19
 category: Book Reviews
 genre: Science Fiction
 excerpt: "The City and The Stars by Arthur C Clarke, published in 1956, was the first novel by Arthur C Clarke I read. It was the reason I went on to read many more, a few of my favourites include: 2001: A Space Odyssey, The Fount"
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7c291cf3-4105-4b39-b7ad-b96adaff14e3/city+and+the+stars+%281%29.jpeg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/city-and-the-stars-1-.jpeg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7c291cf3-4105-4b39-b7ad-b96adaff14e3/city+and+the+stars+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/city-and-the-stars-1-.jpeg)
 
 The City and The Stars by Arthur C Clarke, published in 1956, was the first novel by Arthur C Clarke I read. It was the reason I went on to read many more, a few of my favourites include: 2001: A Space Odyssey, The Fountain of Paradise, and Rendezvous with Rama.
 
@@ -18,7 +18,7 @@ However, it’s not the writer Arthur C Clarke we’re looking at today, or his 
 
 ## About The City and The Stars
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ccad9015-453e-446d-a0c9-4731f3eaf427/city+and+the+stars.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/city-and-the-stars.jpeg)
 
 [The City and The Stars by Arthur C Clarke](https://www.amazon.co.uk/City-Stars-S-F-MASTERWORKS/dp/1857987632) is an interesting tale, not without its flaws. Millennia ago an unknown threat, that we are led to believe to be an interstellar war, nearly annihilated humanity. In response, humanity retreated, withdrew from the stars and built a city, enclosed, safe and hidden, it was called Diaspar. (Interesting sidebar: the name Diaspar is derived from the word [diaspora](https://www.merriam-webster.com/dictionary/diaspora) which means the dispersion or spread of people from their original homeland. This city then is the realisation of the opposite.)
 
@@ -60,6 +60,6 @@ However, I don’t really care. Clarke’s vision of mankind’s future is bizar
   [The Best Sci-Fi Books by Ursula K Le Guin](https://www.cabbagetreebooks.com/blog/the-best-sci-fi-books-by-ursula-k-le-guin)
 [
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

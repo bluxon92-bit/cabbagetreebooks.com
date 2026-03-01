@@ -5,10 +5,10 @@ date: 2025-03-01
 category: Book Recommendations
 genre: Guides
 excerpt: "When you're short on time but craving a great read, there's nothing better than a short book that packs a punch. Here are 32 of the best short books you can devour in a single day, grouped by theme and each offering a un"
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/221bebc8-6d62-457c-b36e-defa51b030b4/dalle+short+books+copy.png"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/dalle-short-books-copy.png"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/221bebc8-6d62-457c-b36e-defa51b030b4/dalle+short+books+copy.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/dalle-short-books-copy.png)
 
 When you're short on time but craving a great read, there's nothing better than a short book that packs a punch. Here are 32 of the best short books you can devour in a single day, grouped by theme and each offering a unique literary experience.
 
@@ -226,6 +226,6 @@ From the harrowing isolation in William Golding's Pincher Martin to the lyrical 
 
       [
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
 
 ](/sci-fi-short-stories)

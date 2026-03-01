@@ -5,10 +5,10 @@ date: 2025-09-19
 category: Author Profiles
 genre: Fantasy
 excerpt: "No one writes fantasy quite like Joe Abercrombie. Brutal, brilliant, and laugh-out-loud cruel. His books hit so hard you almost want to cry."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f15aca2e-b22a-47d0-8540-aed42dc6bbf3/joe+abercrombie+%281%29.png"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/joe-abercrombie-1-.png"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f15aca2e-b22a-47d0-8540-aed42dc6bbf3/joe+abercrombie+%281%29.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/joe-abercrombie-1-.png)
 
 *No one writes fantasy quite like Joe Abercrombie. Brutal, brilliant, and laugh-out-loud cruel. His books hit so hard you almost want to cry.*
 
@@ -26,7 +26,7 @@ Here’s my take on the trilogy that’s got me hooked.
 
 ### 1. The Blade Itself
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/d9a959f2-c515-46d7-91de-80404041fa91/blade+itself+abercrombie.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/blade-itself-abercrombie.jpg)
 
 This opener pulled me in straight away, not with noble heroes or epic quests, but with a gang of misfits I wasn’t sure I should even be rooting for.
 
@@ -62,7 +62,7 @@ Set three years after the original trilogy’s events, this standalone revenge e
 
 Gathering an unlikely band of misfits—including a cold-blooded Northman, a poisoner with a flair for dramatic theatrics, and an ex-inquisitor—the novel is a non-stop bloodbath of betrayal, retribution, and dark humor. Every character in her crew struggles with their own moral ambiguities, making this a tale where even the act of revenge is not black and white.
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/aee589ca-015f-4e90-aaf6-84cc2c05f3fc/heroes+abercormbie.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/heroes-abercormbie.jpg)
 
 ### 5. The Heroes
 
@@ -92,7 +92,7 @@ Whether you’re revisiting familiar faces or discovering new perspectives, each
 
 Thirty years later, the world moves on, but in true Abercrombie fashion, it doesn’t necessarily move forward. I haven’t cracked these open yet, but the themes of industrial upheaval and revolution sound like Abercrombie at his sharpest.
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/2d4f27d1-8d13-4e19-a783-936fef89ce1c/a+little+hatred+abercrombie.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/a-little-hatred-abercrombie.jpg)
 
 ### 8. A Little Hatred
 
@@ -118,7 +118,7 @@ This novel challenges the very nature of power and legacy. Abercrombie’s incis
 
 Different audience, same edge. This trilogy is technically YA, but from what I’ve read about it so far, it doesn’t pull too many punches. Another one I’ll be picking up down the line.
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8f58a89e-b630-4590-9f73-d81dd82f601a/half+teh+world+abercrombie.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/half-teh-world-abercrombie.jpg)
 
 ### Half a King
 

@@ -5,10 +5,10 @@ date: 2025-04-04
 category: Book Reviews
 genre: Science Fiction
 excerpt: "Death Troopers is the Star Wars novel nobody expected — a full-blooded zombie horror set in the galaxy far, far away. Here's our review of Joe Schreiber's most entertaining book."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/death-troopers-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/death-troopers-cover.jpg"
 ---
 
-![Death Troopers by Joe Schreiber](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/death-troopers-cover.jpg)
+![Death Troopers by Joe Schreiber](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/death-troopers-cover.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -67,4 +67,4 @@ Star Wars fans who are also horror readers — this is obviously made for you. H
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

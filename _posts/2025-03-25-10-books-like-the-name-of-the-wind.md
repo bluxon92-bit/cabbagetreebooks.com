@@ -5,10 +5,10 @@ date: 2025-03-25
 category: Book Recommendations
 genre: Fantasy
 excerpt: "If you’ve ever been completely swept away by Patrick Rothfuss’s The Name of the Wind, you’re not alone. The lyrical prose, deep character insights, and immersive world-building have captured the hearts of fantasy fans ev"
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6cdf163e-b9a8-4701-b630-2c6023076399/name+of+the+wind++banner+%281%29.png"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/name-of-the-wind-banner-1-.png"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6cdf163e-b9a8-4701-b630-2c6023076399/name+of+the+wind++banner+%281%29.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/name-of-the-wind-banner-1-.png)
 
 If you’ve ever been completely swept away by Patrick Rothfuss’s *The Name of the Wind*, you’re not alone. The lyrical prose, deep character insights, and immersive world-building have captured the hearts of fantasy fans everywhere.
 
@@ -42,7 +42,7 @@ What if the Dark Lord won? Well, this is the question Sanderson asks with a worl
 
 
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ae224f8b-7541-4b74-9eef-31ba7890db78/Brandon+sanderson+books+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/brandon-sanderson-books-1-.jpeg)
 
 
 
@@ -75,7 +75,7 @@ Dive into the intricate political chessboard of Westeros, where every character 
 
 
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ec0cf42a-0c87-40c2-bff2-218d6263dcde/game-of-thrones-shelf+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/game-of-thrones-shelf-1-.jpeg)
 
 
 
@@ -148,6 +148,6 @@ While none of them can quite replicate the magic of *The Name of the Wind*, each
 
       [
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
 
 ](/sci-fi-short-stories)

@@ -5,10 +5,10 @@ date: 2023-02-24
 category: Author Profiles
 genre: Fantasy
 excerpt: "John Gwynne is best known for his epic fantasy series, The Faithful and the Fallen, which consists of four books: Malice, Valour, Ruin, and Wrath. The series is set in the Banished Lands, a world of magic and danger, and"
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/9ba486a4-ddb9-4bec-8395-e33b680d1d78/faithful-and-the-fallen-collection-4-books-set-ruin-valour-malice-fantasy-paperback-john-gwynne-1_850x850+%281%29+%281%29.jpeg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/faithful-and-the-fallen-collection-4-books-set-ruin-valour-malice-fantasy-paperback-john-gwynne-1_850x850-1-1-.jpeg"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/9ba486a4-ddb9-4bec-8395-e33b680d1d78/faithful-and-the-fallen-collection-4-books-set-ruin-valour-malice-fantasy-paperback-john-gwynne-1_850x850+%281%29+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/faithful-and-the-fallen-collection-4-books-set-ruin-valour-malice-fantasy-paperback-john-gwynne-1_850x850-1-1-.jpeg)
 
 John Gwynne is best known for his epic fantasy series, The Faithful and the Fallen, which consists of four books: Malice, Valour, Ruin, and Wrath. The series is set in the Banished Lands, a world of magic and danger, and is a classic story depicting the struggle between good and evil.
 
@@ -71,7 +71,7 @@ The first book, The Shadow of the Gods, follows in the footsteps of three people
 
 ## About The Faithful and the Fallen Series by John Gwynne
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7b98b463-3cbd-4f43-9fdc-5ec3c6ee4794/faithful-and-the-fallen-collection-4-books-set-ruin-valour-malice-fantasy-paperback-john-gwynne-1_850x850+%281%29+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/faithful-and-the-fallen-collection-4-books-set-ruin-valour-malice-fantasy-paperback-john-gwynne-1_850x850-1-1-.jpeg)
 
 ### Malice by John Gwynne (2012)
 
@@ -107,7 +107,7 @@ Corban must make new allies to survive, and somehow counter the threat Nathair r
 
 ## About The Bloodsworn Saga by John Gwynne
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6b12c76c-f2bd-48eb-ae8a-c3f12bf6c9a6/ShadowOfTheGodsbloodsworn+saga+%281%29+%281%29.jpeg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/shadowofthegodsbloodsworn-saga-1-1-.jpeg)
 
 ### The Shadow of the Gods by John Gwynne (2021)
 
