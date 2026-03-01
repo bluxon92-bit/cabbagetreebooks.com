@@ -1118,6 +1118,14 @@ a:hover { color: var(--teal-light); }
   background: radial-gradient(ellipse 60% 80% at 20% 50%, rgba(255,215,0,0.06) 0%, transparent 60%);
 }
 
+.tool-hero--horror {
+  background: #0e0e0e;
+}
+
+.tool-hero--horror::before {
+  background: radial-gradient(ellipse 60% 80% at 30% 50%, rgba(180,0,0,0.10) 0%, transparent 60%);
+}
+
 .tool-hero-inner {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -1320,6 +1328,11 @@ a:hover { color: var(--teal-light); }
   background: #0077b6;
 }
 .btn-generate--scifi:hover { background: #0096c7; }
+
+.btn-generate--horror {
+  background: #8b0000;
+}
+.btn-generate--horror:hover { background: #a80000; }
 
 .btn-generate-icon {
   font-size: 0.75rem;
@@ -3610,4 +3623,129 @@ a:hover { color: var(--teal-light); }
   background: rgba(255,255,255,0.1);
   border-color: rgba(255,255,255,0.5);
   color: white;
+}
+
+/* ==============================================
+   MAILERLITE EMBED — STYLE OVERRIDES
+   Match MailerLite's injected form to site design
+   ============================================== */
+
+/* Hide MailerLite's own wrapper chrome */
+.ml-embedded .ml-form-embedWrapper {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.ml-embedded .ml-form-embedBody,
+.ml-embedded .ml-form-embedContent {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Hide MailerLite's default heading/description inside the embed
+   (we have our own heading in the section above it) */
+.ml-embedded .ml-form-embedContent h4,
+.ml-embedded .ml-form-embedContent p {
+  display: none !important;
+}
+
+/* The form row itself — match .newsletter-form layout */
+.ml-embedded .ml-form-embedSubmit,
+.ml-embedded form {
+  display: flex !important;
+  gap: 0 !important;
+  max-width: 420px !important;
+  margin: 0 auto !important;
+  border: 1px solid var(--border-strong) !important;
+  background: var(--white) !important;
+}
+
+/* Email input */
+.ml-embedded .ml-form-fieldRow input[type="email"],
+.ml-embedded input[type="email"] {
+  flex: 1 !important;
+  padding: 0.9rem 1.25rem !important;
+  background: var(--white) !important;
+  border: none !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.9rem !important;
+  color: var(--ink) !important;
+  outline: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  min-width: 0 !important;
+}
+
+.ml-embedded input[type="email"]::placeholder {
+  color: var(--ink-muted) !important;
+}
+
+/* Submit button */
+.ml-embedded .ml-form-embedSubmit button,
+.ml-embedded button[type="submit"] {
+  padding: 0.9rem 1.5rem !important;
+  background: var(--teal) !important;
+  color: #fff !important;
+  border: none !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  border-radius: 0 !important;
+  transition: background 0.2s ease !important;
+  text-transform: none !important;
+}
+
+.ml-embedded .ml-form-embedSubmit button:hover,
+.ml-embedded button[type="submit"]:hover {
+  background: var(--teal-light) !important;
+}
+
+/* Success message */
+.ml-embedded .ml-form-successBody {
+  text-align: center !important;
+  padding: 0 !important;
+}
+
+.ml-embedded .ml-form-successBody h4 {
+  display: block !important;
+  font-family: var(--font-display) !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: var(--ink) !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.ml-embedded .ml-form-successBody p {
+  display: block !important;
+  font-size: 0.85rem !important;
+  color: var(--ink-muted) !important;
+}
+
+/* Remove MailerLite branding/reCAPTCHA row padding */
+.ml-embedded .ml-form-recaptcha,
+.ml-embedded .ml-form-checkboxRow {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Responsive */
+@media (max-width: 540px) {
+  .ml-embedded form,
+  .ml-embedded .ml-form-embedSubmit {
+    flex-direction: column !important;
+    border: none !important;
+  }
+  .ml-embedded input[type="email"] {
+    border: 1px solid var(--border-strong) !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .ml-embedded button[type="submit"] {
+    width: 100% !important;
+  }
 }

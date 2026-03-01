@@ -87,10 +87,87 @@ permalink: /genres/horror/
 </section>
 {% endif %}
 
-<section class="section" style="background:var(--paper); padding:3rem 2rem;">
-  <div class="section-inner" style="max-width:600px; text-align:center;">
-    <h3 style="font-family:var(--font-display); font-size:1.5rem; margin-bottom:0.75rem;">Enjoy writing as much as reading?</h3>
-    <p style="color:var(--ink-soft); margin-bottom:1.5rem; font-size:0.9rem;">Try the fantasy writing prompt generator — grimdark prompts make excellent dark fiction seeds.</p>
-    <a href="{{ '/tools/fantasy-prompts/' | relative_url }}" class="btn btn-primary">Try the Prompt Generator →</a>
+<section class="section" style="background:var(--white);">
+  <div class="section-inner" style="max-width:860px;">
+    <div class="section-label" style="margin-bottom:0.5rem;">Writer's Tool</div>
+    <h2 class="section-title" style="margin-bottom:0.5rem;">Horror Writing <em>Prompt Generator</em></h2>
+    <p style="color:var(--ink-soft); margin-bottom:2rem; font-size:0.9rem;">Inspired to write? Generate a horror prompt to get you started.</p>
+    <div class="tool-embed">
+      <div class="pill-group" id="hub-hp-cat">
+        <button class="pill active" data-value="plot">Plot</button>
+        <button class="pill" data-value="character">Character</button>
+        <button class="pill" data-value="setting">Setting</button>
+        <button class="pill" data-value="supernatural">Supernatural</button>
+        <button class="pill" data-value="psychological">Psychological</button>
+        <button class="pill" data-value="opening">Opening Line</button>
+      </div>
+      <button class="btn-generate btn-generate--horror" id="hub-hp-gen" style="margin-top:1rem;">☽ Generate</button>
+      <div class="prompt-output" id="hub-hp-output" style="margin-top:1.5rem;">
+        <p class="ng-placeholder">Hit Generate to get a horror writing prompt.</p>
+      </div>
+    </div>
+    <div style="margin-top:1rem; text-align:right;">
+      <a href="{{ '/tools/horror-prompts/' | relative_url }}" style="font-size:0.82rem; color:var(--teal);">Full generator with save &amp; copy →</a>
+    </div>
   </div>
 </section>
+
+<script>
+(function() {
+  var hubPrompts = {
+    plot: [
+      "A woman begins to notice that her neighbours all pause at the same moment every evening — just for a second, mid-sentence, mid-movement — then continue as if nothing happened. She has never paused. They have started to notice.",
+      "A detective investigating a series of disappearances discovers that all the missing people shared one thing: they had all, at some point, reported the same recurring dream. She had the dream last night.",
+      "A couple buys a house at auction and discovers a locked basement room. Inside is a mattress, a toilet, and a wall covered in tally marks — recent ones. The previous owners claim to know nothing about it.",
+      "A woman wakes in a hospital with no memory of how she arrived. She is told she was found outside, unharmed, in the clothes she wore the night she disappeared — fourteen years ago.",
+      "A woman house-sitting for a friend finds a logbook in the kitchen drawer. Previous house-sitters have been logging things they heard at night. The entries stop two weeks ago. She arrived two weeks ago.",
+    ],
+    character: [
+      "A hospice nurse who has sat with hundreds of dying patients. They all, without exception, look at the same corner of the room in their final moments. She needs to see what they see.",
+      "A child who insists, with total calm, that she has an invisible friend — but the friend has been leaving physical evidence. The child seems more worried about her parents' reaction than about the friend itself.",
+      "A woman who discovers she cannot be photographed. Not that cameras malfunction — she simply doesn't appear. She has found photographs going back thirty years. She is in none of them. She remembers being there.",
+      "A man who works as a professional house-clearer — emptying homes of the deceased. He has started keeping objects from the houses. He isn't sure why. He has started talking to them.",
+    ],
+    setting: [
+      "A lighthouse on a coast where no ships have sailed for forty years. The light still turns. The keeper's log is still being written. The keeper disappeared in 1987.",
+      "A hotel closed for renovation for eleven years. The renovation crew quit in the first week. No one has gone back. Guests still check in online. They leave reviews.",
+      "A rural road everyone in the area knows not to take after dark — not because of crime, but because of what happens when you count the mile markers. There are always too many.",
+      "A family home that passes from owner to owner every few years. Each owner leaves quickly. The estate agent who keeps selling it is the same person. She has been the same age for thirty years.",
+    ],
+    supernatural: [
+      "A ghost that doesn't know it's dead, and is slowly beginning to suspect. Write the moment of realisation.",
+      "A creature that takes the shape of whoever you most want to see. It is perfect. It is always slightly wrong. The wrongness is impossible to name and impossible to ignore.",
+      "Something old has woken because the thing keeping it dormant has finally died. That thing was a person. They knew, and made a choice. Write what happens when the family finds their journals.",
+      "A creature that feeds not on fear or flesh but on certainty — specifically the certainty that the world is ordered and comprehensible. It leaves its victims alive. It leaves them wrong.",
+    ],
+    psychological: [
+      "A woman keeps losing small stretches of time. She has started keeping a detailed diary. The diary has entries she doesn't remember writing.",
+      "A psychiatrist who realises, reviewing session notes, that three separate patients have described the same figure in their recurring nightmares. A figure he has been seeing in his own dreams for the past month.",
+      "A woman certain she is being stalked but unable to find evidence or identify any specific incident. She is not paranoid. She knows the difference. She is beginning to doubt the difference.",
+      "A man who has spent twenty years certain he killed someone. He didn't — there's evidence. He knows he didn't do it. He cannot stop being certain that he did.",
+    ],
+    opening: [
+      "The house had been empty for three years, which was why she didn't understand whose light was on.",
+      "The last thing she remembered was locking the door. The first thing she noticed, standing outside in the dark, was that she had no shoes.",
+      "By the time I understood what the house wanted, I had already given it what it needed.",
+      "I have lived in this house my whole life. Last year I found a room I had never been in. The room had photographs of me — not of the house, of me, at moments I remembered. The most recent one was from yesterday.",
+    ]
+  };
+
+  var currentCat = 'plot';
+
+  document.getElementById('hub-hp-cat').addEventListener('click', function(e) {
+    var pill = e.target.closest('.pill');
+    if (!pill) return;
+    document.querySelectorAll('#hub-hp-cat .pill').forEach(function(p) { p.classList.remove('active'); });
+    pill.classList.add('active');
+    currentCat = pill.dataset.value;
+  });
+
+  document.getElementById('hub-hp-gen').addEventListener('click', function() {
+    var bank = hubPrompts[currentCat] || hubPrompts.plot;
+    var prompt = bank[Math.floor(Math.random() * bank.length)];
+    document.getElementById('hub-hp-output').innerHTML = '<p class="prompt-text" style="font-style:italic;">' + prompt + '</p>';
+  });
+})();
+</script>
