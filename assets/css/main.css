@@ -1562,6 +1562,17 @@ a:hover { color: var(--teal-light); }
 
 .sidebar-card--teal h3 { color: white; }
 
+.sidebar-card--dark {
+  background: #1a1a1a;
+  border-color: #8b0000;
+}
+
+.sidebar-card--dark h3 { color: white; }
+
+.sidebar-card--dark .sidebar-link { color: #e8e8e8; }
+
+.sidebar-card--dark .sidebar-link:hover { color: white; }
+
 .sidebar-card--scifi {
   background: #0d1b2a;
   border-color: #0077b6;
