@@ -40,15 +40,7 @@ permalink: /free-downloads/
 
         <div class="lead-gen-form-wrap">
           <p class="lead-gen-label">Enter your email to get instant access:</p>
-          <!-- MailerLite embedded form — replace action URL with your actual MailerLite form action -->
-          <!-- Get it from: MailerLite → Forms → Embedded Forms → copy the form action URL -->
-          <form class="lead-gen-form" id="lg-scifi-form" action="{{ site.mailerlite.scifi_form_url }}" method="POST" target="_blank">
-            <input type="email" name="fields[email]" placeholder="your@email.com" required aria-label="Email address" class="lead-gen-input">
-            <button type="submit" class="lead-gen-btn lead-gen-btn--scifi">
-              Get Free Stories
-              <span class="lead-gen-btn-arrow">→</span>
-            </button>
-          </form>
+          <div class="ml-embedded" data-form="0hveDb"></div>
           <p class="lead-gen-small">No spam. You'll also receive occasional book recommendations from Cabbage Tree Books. Unsubscribe any time.</p>
         </div>
 
@@ -96,12 +88,9 @@ document.getElementById('lg-scifi-show-direct')?.addEventListener('click', funct
   document.getElementById('lg-step2').style.display = 'block';
 });
 
-// On form submit — show thank you state
-// (MailerLite opens in new tab via target="_blank", so we also update this page)
-document.getElementById('lg-scifi-form')?.addEventListener('submit', function() {
-  setTimeout(function() {
-    document.getElementById('lg-step1').style.display = 'none';
-    document.getElementById('lg-step2').style.display = 'block';
-  }, 400);
+// Listen for MailerLite successful submission, then reveal download
+document.addEventListener('ml-form-success', function() {
+  document.getElementById('lg-step1').style.display = 'none';
+  document.getElementById('lg-step2').style.display = 'block';
 });
 </script>
