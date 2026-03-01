@@ -5,10 +5,10 @@ date: 2025-04-11
 category: Author Profiles
 genre: Fantasy
 excerpt: "George R.R. Martin's bibliography stretches back to the 1970s. Here's the complete reading guide — including the Winds of Winter situation, honestly addressed."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/george-rr-martin-books.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/george-rr-martin-books.jpg"
 ---
 
-![George R.R. Martin Books in Order](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/george-rr-martin-books.jpg)
+![George R.R. Martin Books in Order](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/george-rr-martin-books.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -121,4 +121,4 @@ For most readers: **A Game of Thrones → A Clash of Kings → A Storm of Swords
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

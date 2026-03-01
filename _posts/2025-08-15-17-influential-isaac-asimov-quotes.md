@@ -5,10 +5,10 @@ date: 2025-08-15
 category: Book Recommendations
 genre: Science Fiction
 excerpt: "Isaac Asimov is one of my favourite science fiction authors(https://www.cabbagetreebooks.com/blog/10-sci-fi-authors) alongside the likes of Arthur C Clarke(https://www.cabbagetreebooks.com/blog/the-city-and-the-stars-art"
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/robot-sci-fi.jpeg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b06fc95f-0f42-4d8f-bdff-748293298ca4/robot+sci+fi.jpeg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/robot-sci-fi.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b06fc95f-0f42-4d8f-bdff-748293298ca4/robot+sci+fi.jpeg)
 
 Isaac Asimov is one of my favourite [science fiction authors](https://www.cabbagetreebooks.com/blog/10-sci-fi-authors) alongside the likes of [Arthur C Clarke](https://www.cabbagetreebooks.com/blog/the-city-and-the-stars-arthur-c-clarke) and Ursula K Le Guin. He’s best known for his Foundation and Robot series. But, he was a prolific author writing or editing over 500 books over his career and an estimated 90,000 letters and postcards.
 
@@ -30,7 +30,7 @@ Isaac Asimov died in 1992, but he left behind a legacy filled with a keen unders
 
 ### Isaac Asimov quotes on science and scientific understanding
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/city-and-the-stars-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1650365022331-68PDTJVCTG595OIYNY7S/city+and+the+stars+%281%29.jpeg)
 
 4) **"The most exciting phrase to hear in science, the one that heralds new discoveries, is not 'Eureka!' but 'That's funny...'"**
 
@@ -54,7 +54,7 @@ Isaac Asimov died in 1992, but he left behind a legacy filled with a keen unders
 
 ### Isaac Asimov quotes on writing and science fiction
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fantasy-reading-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f35f2ee7-7de5-4198-bfc0-51adac4aedfe/fantasy+reading+%281%29.jpeg)
 
 13) **"Science fiction writers foresee the inevitable, and although problems and catastrophes may be inevitable, solutions are not."**
 

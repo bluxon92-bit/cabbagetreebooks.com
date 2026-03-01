@@ -5,10 +5,10 @@ date: 2023-03-19
 category: Author Profiles
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/farseer-trilogy-1-.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5023a299-de4c-4e82-87f7-5c9c3515a8c5/farseer-trilogy+%281%29.jpg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/farseer-trilogy-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5023a299-de4c-4e82-87f7-5c9c3515a8c5/farseer-trilogy+%281%29.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -20,7 +20,7 @@ Since publishing the Farseer trilogy, Robin Hobb has published multiple series s
 
 ## The Farseer Trilogy: An Overview
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/farseer-2-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/84b65ca7-b612-4ff0-97fc-0b0387e09676/farseer+2+%281%29.jpeg)
 
 The Farseer Trilogy is set in a world of magics that are both revered and feared, known and forgotten. The main character, FitzChivalry Farseer, is the bastard son of Prince Chivalry and is raised in the royal household of the Farseers.
 
@@ -106,7 +106,7 @@ Reading the books in order is recommended to fully appreciate the interconnectio
 
 ### The Farseer Trilogy
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-farseer-trilogy-robin-hobb-copy-1-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/fcb6a5cc-7d49-4eb6-aa07-e020b4357aba/The-Farseer-Trilogy-Robin-Hobb+copy+%281%29+%281%29.jpg)
 
 **Assassin's Apprentice** (1995): The first book in the series introduces us to FitzChivalry Farseer, a young boy who is the bastard son of a prince. Fitz is trained as an assassin, and he must navigate political intrigue and personal relationships to survive.
 
@@ -118,7 +118,7 @@ Reading the books in order is recommended to fully appreciate the interconnectio
 
 ### Live Ship Traders Series
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-liveship-traders-robin-hobb-copy-1-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1d8a6ac8-5355-4c48-8a69-4c60d8419dff/The-Liveship-Traders-Robin-Hobb+copy+%281%29+%281%29.jpg)
 
 **Ship of Magic** (1998): The first book in the series introduces readers to the city of Bingtown, where a number of wealthy merchant families own sentient "liveships" made of magical wizardwood. These ships, passed down through generations of a family, have unique personalities and abilities. The Vestrit family is one such family, and they are preparing to launch their liveship, Vivacia, when the patriarch, Ephron Vestrit, suddenly dies. The family's finances are in dire straits and the launch of the liveship is critical to their future success. However, Vivacia's new captain has ulterior motives that put the Vestrits and their ship in danger.
 
@@ -130,7 +130,7 @@ Reading the books in order is recommended to fully appreciate the interconnectio
 
 ### The Tawny Man Trilogy
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-tawny-man-trilogy-robin-hobb-copy-1-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4ec712de-8ccf-420e-a713-6f00b3e19db1/The-Tawny-Man-Trilogy-Robin-Hobb+copy+%281%29+%281%29.jpg)
 
 **Fool's Errand **(2001): This trilogy takes place 15 years after the events of the Farseer Trilogy. Fitz is now living a quiet life as a beekeeper, but he is drawn back into the world of politics and magic when an old friend returns.
 
@@ -142,7 +142,7 @@ Reading the books in order is recommended to fully appreciate the interconnectio
 
 ### The Rain Wild Chronicles
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/rain-wild-trrilogy-1-1-.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/83528730-aaf1-4ddd-bf0d-c4d29b36ea91/rain+wild+trrilogy+%281%29+%281%29.png)
 
 **Dragon Keeper** (2009): This series takes place in the same universe as the Farseer Trilogy, but it follows a new set of characters. The story begins with a group of dragon keepers tasked with transporting a group of young dragons to a new home.
 
@@ -156,7 +156,7 @@ Reading the books in order is recommended to fully appreciate the interconnectio
 
 ### The Fitz and the Fool Trilogy
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fitz-and-the-fool-trilogy-robin-hobb-copy-1-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/dbbdd4c8-54a5-4ac9-a16c-1a016824eff6/Fitz-and-the-Fool-Trilogy-Robin-Hobb+copy+%281%29+%281%29.jpg)
 
 **Fool's Assassin** (2014): This trilogy takes place several years after the end of the Tawny Man Trilogy. Fitz is living a peaceful life with his family, but he is forced to confront the past when the Fool returns to his life.
 
@@ -196,6 +196,6 @@ Robin Hobb's books are an unforgettable journey for any fantasy lover from the F
 #### **Check out **[**Sunset In the East**](https://www.cabbagetreebooks.com/sci-fi-short-stories)** a mind-bending short story collection from Ben Luxon.**
 [
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

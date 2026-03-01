@@ -5,12 +5,12 @@ date: 2022-01-25
 category: Book Recommendations
 genre: Non-Fiction
 excerpt: "Zero to One, by investor and entrepreneur Peter Thiel,  is all about teaching people the importance of thinking for yourself. The next Mark Zuckerberg isn’t going to build a new social media channel."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/zero-to-one.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/18e3ba56-63b1-4c32-9a98-a581a21fb0b5/zero+to+one.jpg"
 ---
 
 ### 1. Zero to One - Peter Thiel
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/zero-to-one.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/18e3ba56-63b1-4c32-9a98-a581a21fb0b5/zero+to+one.jpg)
 
 Zero to One, by investor and entrepreneur Peter Thiel,  is all about teaching people the importance of thinking for yourself. The next Mark Zuckerberg isn’t going to build a new social media channel. Rather they are going to think outside the box, and instead of building on current ideas, they will develop entirely new way of thinking. Instead of competing in a ruthless marketplace, create and own a new market place.
 
@@ -30,7 +30,7 @@ The Innovator's Method outlines how to take those next steps. The authors Nathan
 
 ### 3. Founders at Work - Jessica Livingstone
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/founders-at-work.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f85d7220-b47f-40af-9780-671139141f7f/founders+at+work.jpg)
 
 A collection of interviews gathered by Jessica Livingstone with founders from now famous companies. It details there early days, the challenges they faced like every new startup, how they overcame it and got t where they are today.
 
@@ -42,7 +42,7 @@ She asks vital questions like: Where did they get the ideas that made them rich?
 
 ### 4. Crossing the Chasm - Geoffrey a. Moore
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/crossing-teh-chasm.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/77c8b8b3-6241-418a-bd64-c05b82cd3dd1/crossing+teh+chasm.jpg)
 
 Crossing the Chasm addresses the difference between early adopters of new technology and the early majority. The early adopters are those that are willing to sacrifice for the advantage of being first, though they can’t be sure if the technology will work for them they are willing to take the risk and maybe reap the biggest rewards. The early majority wait until they are sure of the value of the technology. The challenge for innovators, marketers and new business owners is crossing that chasm between being an early majority and taking the chance for the advantage of being part of the early adopters.
 
@@ -60,7 +60,7 @@ Iconic businessman, owner of Virgin, shares his personal secrets of success. Out
 
 ### 6. Start Something that Matters - Blake MyCoskie
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/start-something-that-mattersd.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/e4eebd1c-28af-446e-bbca-9653b113431e/start+something+that+mattersd.jpg)
 
 Blake Mycoskie, owner of Toms Shoes, one of the fastest-growing footwear companies, shares the story of how he build a multi-billion company in less than ten years, developing a new business model of success. He explores some of the challenges and the psychological mindset you have to have to create a fast growing successful startup.
 
@@ -82,7 +82,7 @@ He shows how your years of experience in business will be of vital importance to
 
 ### 8. Mastery - Robert Greene
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/mastery.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/34ff2835-b8ca-4a0a-bccb-80777ee5129f/mastery.jpg)
 
 Told in his concise style, Robert Greene builds on his previous work The 48 Laws of Power to provide a developed, practical guide to achieving success with your business. We are all individuals he says, and as such we all of us have a unique view of the world. First we must understand all the rules of the game, and then we must use our uniqueness to change the rules creating original ideas to achieve your potential.
 
@@ -100,7 +100,7 @@ Told in his concise style, Robert Greene builds on his previous work The 48 Laws
 
 ### 10. Influence the Psychology of Persuasion - Robert Cialdini
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/influence.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/eae93ef8-6a5b-4d79-bcce-d2f2fdc0f049/influence.jpeg)
 
 Why do people say yes? Dr. Robert Cialdini is an expert of the psychology behind persuasion and influence. In this book he outlines the six universal principles that he has uncovered in his 35 years of rigorous evidence-based research into just why people make the decisions they do and how they can be influenced. When it comes to creating a successful business, knowing these tricks on influence could make all the difference and completely change how you approach your business.
 
@@ -110,7 +110,7 @@ Why do people say yes? Dr. Robert Cialdini is an expert of the psychology behind
 
 ### 11. The First 90 Days - Michael Watkins
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/first-90-days.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/477ebc00-65aa-4bb2-987b-cde23a7b7b6c/first+90+days.jpg)
 
 This book is filled with sharp useful advice for anyone moving into a leadership position, whether that’s taking on your own business or just moving up the food chain in your company. Michael Watkins continuously reminds the reader that you don’t just ‘find’ the answer, you have to figure it out, you have to work for it. This book shows you how, and will help the reader get ahead of the game.
 
@@ -126,7 +126,7 @@ In this book, Brian Tracy gives practical suggestions, based on personal experie
 
 ### 13. Start with Why - Simon Sinek
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/start-with-why.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/fcaf4aad-215d-45fd-b69d-c1b9e3d1e365/start+with+why.jpg)
 
 Simon Sinek looks at the idea of ‘born leaders’. Leaders aren’t born, he argues, rather they are made. The book reveals how any of us can become a leader by examining what the world's ‘born’ leaders have that many people don’t. What are the great secrets that set some apart in their leadership. The book then explores how to apply these leadership qualities in your own business.
 
@@ -142,7 +142,7 @@ Eric Ries describes the avoidable reasons so many startups fail. It is all about
 
 ### 15. Hooked - Nir Eyal
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/hooked.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/214bda92-6eb2-44b6-8582-c98eed9bb5cb/hooked.jpeg)
 
 Nir Eyal explores some integral questions startups have to ask. Why do certain products capture consumer attention? What is it about those engaging products that captivates people? Once you know the answer to these questions you can begin to use the answers in your own business. This book offers practical insights and actionable steps to create attention grabbing products that people love.
 
@@ -158,7 +158,7 @@ In this book, Chris Guillebeau looks at 50 incredible case studies where the peo
 
 ### 17. The Power of Broke - Daymond John
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/power-of-broke.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/be123995-9059-46db-a4a8-76b666852836/power+of+broke.jpg)
 
 Daymond John, Shark Tank entrepreneur talks about how being broke can be your biggest advantage when it comes to building a successful business. Why? Because when you have nothing to fall back on, you are desperate, then you have to be bold and creative. It is creative, original, out-of-the-box thinking that makes the most out of the limited resources you have. In this book Daymond explores how you can scrape, hustle, and dream your way to the top with nothing but your determination and unforgiving drive.
 
@@ -174,7 +174,7 @@ The Internet has opened up and given everybody access to unparalleled resources,
 
 ### 19. The Checklist Manifesto - Atul Gawande
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/checklist-manifesto.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4d846cfb-3783-45c3-ade2-9e9b93f13ab9/checklist+manifesto.jpeg)
 
 Atul Gawande makes an argument that everyone should use the simplest method to organise and deliver our thoughts. A checklist. He outlines the striking improvements in efficiency and productivity that a powerful checklist will develop, helping you succeed.
 
@@ -190,7 +190,7 @@ This influential book offers insight into four provenly effective steps to the c
 
 ### 21. The Subtle Art of Not Giving F*ck – Mark Manson
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/not-giving-a-f-ck.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/815e9c25-4017-49ef-927a-3b2f05bf26a0/not+giving+a+F*ck.jpeg)
 
 Taking a much lighter tone than other books on this list, Manson insists that making the most of our lives isn’t about turning bad situations into good ones, it’s about stomaching the lemons life gives us. Start confronting our limitations and you’ll find that you can do a lot more than you ever realised to live the life you want to. *The Subtle Art of Not Giving a F**k *is a refreshing slap for a generation to help them lead contented, grounded lives.
 
@@ -208,7 +208,7 @@ This book teaches how to quickly and effectively build a loyal growing customer 
 
 ### 23. The Magic of Thinking Big – David Schwartz
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/thinking-big.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/c9385953-1375-4a0c-ac3f-34866b17ac30/thinking+big.jpg)
 
 David Schwartz, P.H.D. has his advice rooted deeply in psychology. He argues, drawing on illuminating anecdotes, that you don’t need some incredible innate talent or intellect to be successful, rather you need to understand habitual thinking and behaviours.
 
@@ -224,7 +224,7 @@ It’s the little decisions that make the final decision. *The Compound Effect* 
 
 ### 25. Ego is the Enemy – Ryan Holiday
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ego-is-the-enemy.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/da1e0da5-290b-4aba-bf6a-c7c283d97864/ego+is+the+enemy.jpg)
 
 Drawing on examples from literature to philosophy *Ego is the Enemy *offers analysis of how some of the highest achieving historical figures achieved their success and how we can adopt their strategies and tactics as our own.
 
@@ -240,7 +240,7 @@ This book breaks down how to plot your course from the beginning and effectively
 
 ### 27. The Seven Day Startup - Dan Norris
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/7-day-startup.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/c2d17c45-5267-4fad-819b-b271ce148c88/7+day+startup.jpg)
 
 This is a detailed guide on how you can launch your next product. In it you learn everything from evaluating your business idea to best ways to market a business, and building a customer base quickly and cost-efficiently. Drawing from real-life experiences, this book aims to outline how to quickly and easily launch a successful business, avoiding those common pitfalls that often scuttle new startups.
 
@@ -256,7 +256,7 @@ There has been a seismic change to how businesses begin, market, and grow over t
 
 ### 29. Will it Fly? - Thomas K. McKnight
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/will-it-fly.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/cf4ee324-e33f-438b-a3dd-2a2d361701cd/will+it+fly.jpg)
 
 Full of practical advice to apply to your business today, Will it Fly? Uses real world case studies and McKnight’s personal experience to show how you can launch a successful business.
 
@@ -266,7 +266,7 @@ Full of practical advice to apply to your business today, Will it Fly? Uses real
 
 ### 30. The Third Wave - Steve Case
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-third-wave.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3dbf7707-42c4-4ed4-b39e-fdbb7bea3d75/the+third+wave.jpg)
 
 Steve Case, the internet pioneer behind the company AOL argues that there is a third stage to the development of the internet which will be harnessed by entrepreneurs to rapidly develop the most efficient productive use of our time.
 

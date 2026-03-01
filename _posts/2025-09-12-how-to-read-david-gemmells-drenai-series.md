@@ -5,10 +5,10 @@ date: 2025-09-12
 category: Author Profiles
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/drenai-series-banner.png"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/98dc8c5c-aa9a-4486-b634-9a565b0ebb21/drenai+series+banner.png"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/drenai-series-banner.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/98dc8c5c-aa9a-4486-b634-9a565b0ebb21/drenai+series+banner.png)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -64,9 +64,9 @@ The Drenai King has been assassinated, murdered ruthlessly in the night. With hi
 
 [**Rated 4.6 Stars. Buy on Amazon.**](https://amzn.to/41ohpGj)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/legend-gemmell.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/91d60287-d4c3-49f4-938d-0e6cd00224cf/Legend+Gemmell.jpeg)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/quest-for-lost-heroes-drenai-series.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b3f15107-aa10-4914-b0b6-89b6b9415f55/quest+for+lost+heroes+drenai+series.jpg)
 
 ### 4. [Quest for Lost Heroes](https://amzn.to/3JfVRos)[ ](https://www.amazon.com/dp/0345379047)
 
@@ -92,9 +92,9 @@ Druss, now known as Deathwalker by the Nadir must join the warrior Talisman on a
 
 [**Rated 4.7 Stars. Buy on Amazon.**](https://amzn.to/41HFN5l)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/legend-of-deathwalker.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/0daa2805-55b3-4876-b257-b727b782661c/legend+of+deathwalker.jpeg)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/winter-warriors.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/0544446b-94d1-41a5-8b33-ed8dec417822/winter+warriors.jpeg)
 
 ### 8. [Winter Warriors](https://amzn.to/3KZR5No)
 
@@ -120,9 +120,9 @@ A thousand years have gone passed since Druss and Skilgannon walked the earth, t
 
 [**Rated 4.7 Stars. Buy on Amazon.**](https://amzn.to/3mZ8xHU)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/swords_of_night_and_day.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/18fa9e3c-62a5-495d-8d2b-e6092d36f6f9/Swords_of_Night_and_Day.jpeg)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/hero_in_the_shadows.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5f5b6f71-e0f4-4fe6-bc81-579eabfd1100/Hero_in_the_Shadows.jpeg)
 
 ---
 
@@ -170,7 +170,7 @@ As mentioned already many of the stories in the Drenai series can be grouped log
 
 ### The Druss The Legend Books
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/legend-of-deathwalker.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/932da023-1eb1-4700-9536-f2bbaf252332/legend+of+deathwalker.jpeg)
 
 [The First Chronicles of Druss the Legend](https://amzn.to/3JgNBon)
 
@@ -180,7 +180,7 @@ As mentioned already many of the stories in the Drenai series can be grouped log
 
 ### The Waylander Books
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/waylander-the-drenai-saga-book-3.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f6cc92d4-5eca-4ea3-a476-009bd5d19052/waylander-the-drenai-saga-book-3.jpeg)
 
 [Waylander](https://amzn.to/3ZlQiuv)
 
@@ -190,7 +190,7 @@ As mentioned already many of the stories in the Drenai series can be grouped log
 
 ### The Skilgannon Books
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/white-wolf.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5258392b-a91e-4011-b397-b2f1d59b1968/white+wolf.jpeg)
 
 [White Wolf](https://amzn.to/3ZG8OgS)
 
@@ -198,7 +198,7 @@ As mentioned already many of the stories in the Drenai series can be grouped log
 
 ### Standalone Books in the Drenai Series
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/king-beyond-the-gate.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/335b4ab2-6cb5-4670-8206-2b99ea3e8a2f/king+beyond+the+gate.jpeg)
 
 [Knights of Dark Renown](https://amzn.to/3LgXvb5)
 
@@ -244,6 +244,6 @@ I’ve no doubt though, that once you get started you’ll want to read them all
   [Joe Abercrombie Books in Order: A Complete Reading Guide](https://www.benluxonauthor.com/blog/joe-abercrombie-books-in-order)
 [
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

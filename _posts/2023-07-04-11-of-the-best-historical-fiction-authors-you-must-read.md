@@ -5,7 +5,7 @@ date: 2023-07-04
 category: Author Profiles
 genre: Historical Fiction
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/last-kingdom-1-.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/bb39b776-a244-4de3-9792-18f596230145/last+kingdom+%281%29.jpg"
 ---
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
@@ -46,7 +46,7 @@ Ultimately, a great historical fiction book seamlessly weaves together history a
 
 ### 1. Bernard Cornwell - The Last Kingdom
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/last-kingdom-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/bb39b776-a244-4de3-9792-18f596230145/last+kingdom+%281%29.jpg)
 
 Bernard Cornwell is a British author known for his historical fiction novels. His most famous work is [the Sharpe series](https://amzn.to/46wuSi5) (with a total of 22 books in the series this will keep you busy), which follows the adventures of Richard Sharpe, a British soldier during the Napoleonic Wars.
 
@@ -58,7 +58,7 @@ More recently Cornwell’s [The Last Kingdom series](https://amzn.to/44834Pj) wa
 
 ### 2. Ken Follett - Pillars Of The Earth
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/pillars-of-the-earth-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/35485a09-26aa-4134-9747-955ee1440df9/pillars+of+the+earth+%281%29.jpg)
 
 Ken Follett is a Welsh author who has written in various genres, including thriller and historical fiction.
 
@@ -70,7 +70,7 @@ His best-known work is "[The Pillars of the Earth](https://amzn.to/448kiwg)," an
 
 ### 3. Conn Iggulden - The Wolf Of The Plains
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/wolf-of-the-plains-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/c717170c-5bac-45f6-828f-a163bd035176/wolf+of+the+plains+%281%29.jpeg)
 
 Conn Iggulden is a British author specialising in historical fiction, particularly in the genres of ancient Rome and mediaeval England. He is renowned for his [Emperor series](https://amzn.to/44N4Qpl), which delves into the lives of Roman emperors, including Julius Caesar.
 
@@ -82,7 +82,7 @@ My favourite series of his though is the [series featuring Genghis Khan](https:/
 
 ### 4. Wilbur Smith - River God
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/river-god-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/863e5da1-7634-48f4-b81b-f2fbe367fb82/River+God+%281%29.jpg)
 
 Wilbur Smith is a South African author known for his adventure novels set in various historical periods primarily set in Africa. His works often feature themes of exploration, survival, and family sagas.
 
@@ -94,7 +94,7 @@ Smith's most popular series is the Courtney series, which spans generations and 
 
 ### 5. Mary Renault - The King Must Die
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-king-must-die-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/aa5a1556-3532-44a6-9b60-0ee7ba1e066a/the+king+must+die+%281%29.jpg)
 
 Mary Renault, a British author born in 1905, is best known for her extraordinary talent in bringing ancient Greece to life through her historical novels. Her meticulous research, captivating storytelling, and deep understanding of the period have made her a beloved figure in the genre.
 
@@ -104,7 +104,7 @@ Renault's most celebrated work is "[The King Must Die](https://amzn.to/3NYiTCH),
 
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ebook-cover-no-bg-copy.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8f99a60f-28c2-4b8b-a620-81113d334daf/Ebook+cover+no+bg+copy.jpg)
 
 #### You might also be interested in Sunset In The East by Ben Luxon
 
@@ -116,7 +116,7 @@ Distant futures, bizarre aliens, AI and automatons come together in this compell
 
 ### 6. Beatriz Williams - The Secret Life Of Violet Grant
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/secret-life-of-violet-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/619754ea-a061-4656-8991-b95bdc92de9e/secret+life+of+violet+%281%29.jpg)
 
 Beatriz Williams is an American author known for her historical fiction novels, often set during the early 20th century. Her works often revolve around themes of love, secrets, and family dynamics.
 
@@ -128,7 +128,7 @@ Notable novels by Williams include "[A Hundred Summers](https://amzn.to/3NZqOQa)
 
 ### 7. Hilary Mantel - Wolf Hall
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/wolf-hall-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/2c479797-11c0-460a-9126-9d8d486f62b3/Wolf+Hall+%281%29.jpg)
 
 Hilary Mantel is a British author renowned for her historical novels. Her most acclaimed work is the Thomas Cromwell trilogy, which includes "[Wolf Hall](https://amzn.to/3NYws5b)," "[Bring Up the Bodies](https://amzn.to/3NWghVY)," and "[The Mirror and the Light](https://amzn.to/44aJoKL)". The trilogy focuses on the life and rise to power of Thomas Cromwell in the court of Henry VIII. Mantel's writing is characterized by its meticulous attention to detail and immersive portrayal of historical figures.
 
@@ -138,7 +138,7 @@ Hilary Mantel is a British author renowned for her historical novels. Her most a
 
 ### 8. Colm Toibin - The Master
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-master-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/0ceaecd0-dc2c-4707-a737-6316775dec5f/the+master+%281%29.jpg)
 
 Colm Toibin is an Irish author known for his literary fiction and historical novels. His works often explore themes of identity, family relationships, and Irish history.
 
@@ -150,7 +150,7 @@ Toibin's notable works include "Brooklyn," a coming-of-age story about an Irish 
 
 ### 9. Natalie Haynes - The Children of Jocasta
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/children-of-jocasta-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8c31d56c-12de-495c-8513-dffea58ee4d2/children+of+jocasta+%281%29.jpg)
 
 Natalie Haynes is a British author and broadcaster known for her works of historical fiction and non-fiction. She is particularly interested in ancient history and mythology. Haynes has written novels such as "[The Amber Fury](https://amzn.to/46A3xLV)" and has also published non-fiction works exploring the lives and stories of ancient Greek and Roman women.
 
@@ -162,7 +162,7 @@ Her work tends to focus on retelling stories from the perspective of [women in a
 
 ### 10. Sharon Penman - Here Be Dragons
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/here-be-dragons-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1c32c167-cf8f-4faf-8eee-23a4e12a1b0b/here+be+dragons+%281%29.jpg)
 
 Sharon Penman is an American author specialising in historical fiction, primarily focusing on mediaeval England and Wales. Her novels often revolve around significant historical events and figures, such as the Plantagenet and Welsh princes.
 
@@ -174,7 +174,7 @@ Penman's notable works include "[Here Be Dragons](https://amzn.to/3NAzLy8)," "[T
 
 ### 11. Louis de Bernières - Captain Corelli’s Mandolin
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/captain-corelli-s-mandolin-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/08a9df66-83cd-4e83-a57c-ae9f812c493d/captain+corelli%27s+mandolin+%281%29.jpg)
 
 Louis de Bernières is a British author known for his diverse range of novels, characterised by their unique blend of wit, humour, and profound insight into the human condition. His most renowned work and one of my absolute all-time favourite novels is "[Captain Corelli's Mandolin](https://amzn.to/3NBFHa2)," a critically acclaimed historical fiction set on the Greek island of Cephalonia during World War II.
 

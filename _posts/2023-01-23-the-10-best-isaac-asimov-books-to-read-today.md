@@ -5,10 +5,10 @@ date: 2023-01-23
 category: Author Profiles
 genre: Science Fiction
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/science-fiction-1-.jpeg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1674791089903-LFEGZYAWG91R1GHUF1AU/science+fiction+%281%29.jpeg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/science-fiction-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1674791089903-LFEGZYAWG91R1GHUF1AU/science+fiction+%281%29.jpeg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -40,7 +40,7 @@ In this article, we explore some of my favourite and possibly the best Isaac Asi
 
 [**Rated 4.5 Stars. Buy on Amazon.**](https://amzn.to/3KVlt9P)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/foundation-series-by-asimov-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/50d5ef86-a8b2-4458-99fa-3db86326f872/foundation+series+by+asimov+%281%29.jpeg)
 
 ### 4. "The Caves of Steel" (1954)
 
@@ -104,6 +104,6 @@ With an author who’s written as much as Isaac Asimov, it’s impossible to wri
   [The 25 Best Space Opera Books Ever Written](https://www.cabbagetreebooks.com/blog/best-space-opera-books)
 [
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

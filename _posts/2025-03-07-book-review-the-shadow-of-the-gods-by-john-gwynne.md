@@ -5,10 +5,10 @@ date: 2025-03-07
 category: Book Reviews
 genre: Fantasy
 excerpt: "The Shadow of the Gods by John Gwynne immediately caught my attention after coming across a YouTube review. Intrigued by the premise, I stopped the video to avoid spoilers. Soon after, I discovered John Gwynne's name amo"
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/shadowofthegodsbloodsworn-saga-1-1-.jpeg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6b12c76c-f2bd-48eb-ae8a-c3f12bf6c9a6/ShadowOfTheGodsbloodsworn+saga+%281%29+%281%29.jpeg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/shadowofthegodsbloodsworn-saga-1-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/6b12c76c-f2bd-48eb-ae8a-c3f12bf6c9a6/ShadowOfTheGodsbloodsworn+saga+%281%29+%281%29.jpeg)
 
 The Shadow of the Gods by John Gwynne immediately caught my attention after coming across a YouTube review. Intrigued by the premise, I stopped the video to avoid spoilers. Soon after, I discovered John Gwynne's name among the best active fantasy authors on a Twitter thread. Serendipitously, The Shadow of the Gods was on offer at that very moment, tying everything together seamlessly.
 
@@ -22,7 +22,7 @@ The brilliance of these three narratives kept me eagerly turning the pages, anti
 
 The individual stories within The Shadow of the Gods are masterfully crafted. Gwynne skillfully varies the pacing, seamlessly transitioning between action-packed sequences and intimate conversations that reveal the characters' innermost thoughts, enriching their development. The book delivers enchanting fantasy moments, featuring formidable monsters, exhilarating battles, and displays of bravery from the main protagonists that leave readers yearning for more.
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/john-gwynne-header-1-.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5f3c7ad3-0e1f-4409-b96e-be6de68d5b8c/John+Gwynne+Header+%281%29.png)
 
 ## The Shadow of the Gods Characters - 5/5
 

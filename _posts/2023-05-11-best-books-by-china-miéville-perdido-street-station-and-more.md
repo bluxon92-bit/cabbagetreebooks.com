@@ -5,10 +5,10 @@ date: 2023-05-11
 category: Author Profiles
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/china-mieville-2-.png"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7f902300-1583-45f9-863d-9404f53b2172/china+mieville+%282%29.png"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/china-mieville-2-.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7f902300-1583-45f9-863d-9404f53b2172/china+mieville+%282%29.png)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -30,7 +30,7 @@ I will say, that Miéville's books can be hard to work. His ideas are complex an
 
 ## Perdido Street Station by China Miéville
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/perdidon-street-station-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/9333d237-d003-4f75-acfe-08172bb22f6d/perdidon+street+station+%281%29.jpg)
 
 Perdido Street Station is a sprawling, complex and imaginative novel by China Miéville set in the fictional city of New Crobuzon. The city is a melting pot of different cultures and species, and the story follows the lives of several characters as they navigate the city's dark underworld and politics.
 
@@ -46,7 +46,7 @@ Perdido Street Station is a thrilling and immersive read, with a [richly-detaile
 
 ## The Scar by China Miéville
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-scar-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/78d91439-55a2-41dd-9cb2-738902a9593f/the+scar+%281%29.jpg)
 
 The Scar is the second book in China Miéville's Bas-Lag series, set in the same world as Perdido Street Station. The novel follows the journey of a sailor named Bellis Coldwine, who is unwillingly swept up in a daring plan to sail to the mysterious city of Armada.
 
@@ -60,7 +60,7 @@ One of the standout aspects of The Scar is the world-building, which is rich and
 
 ## Embassy Town by China Miéville
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/embassy-town-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/75771929-3740-4762-8048-c5fca7937c63/embassy+town+%281%29.jpg)
 
 Embassy Town is a science fiction novel by China Miéville, set in a distant future in which humanity has spread out across the stars. The story follows Avice Benner Cho, a native of Embassy Town, a city located on a distant planet and home to a unique and mysterious alien species known as the Hosts.
 

@@ -5,10 +5,10 @@ date: 2023-05-29
 category: Book Recommendations
 genre: Horror
 excerpt: "Horror stories have always held a special place in my heart. As a writer, I'm constantly seeking out new sources of inspiration, and there's something about the genre that never fails to captivate me. Horror short storie"
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/horror-story-1-.jpeg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/22b0104e-9d54-4710-b4f6-a39ff97080bc/horror+story+%281%29.jpeg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/horror-story-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/22b0104e-9d54-4710-b4f6-a39ff97080bc/horror+story+%281%29.jpeg)
 
 Horror stories have always held a special place in my heart. As a writer, I'm constantly seeking out new sources of inspiration, and there's something about the genre that never fails to captivate me. Horror short stories, in particular, are a fascinating subset of horror fiction. They're like little snapshots of terror, each one crafted with care to send a shiver down your spine.
 
@@ -20,7 +20,7 @@ In this article, I've compiled a list of 40+ horror short stories that I believe
 
 ## 15 Classic Horror Short Stories
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/horror-books-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/579c7743-36ce-4c53-8ded-931e122c21e5/horror+books+%281%29.jpeg)
 
 When it comes to horror short stories, it's hard to beat the classics. These are the stories that set the stage for the genre, laying the foundation for all the spine-tingling tales that would follow. They may have been written over a century ago, but they're just as creepy and unsettling today as they were when they were first published.
 
@@ -94,7 +94,7 @@ A man who disregards a warning not to blow a certain whistle discovers that some
 
 The 20th century brought a new wave of horror short stories, each with its own unique style and terrifying elements. From unsettling psychological horror to spine-chilling supernatural tales, these 10 20th century horror short stories will keep you up at night.
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/scary-short-story-2-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ed5100c-a827-4ec2-b475-52abc3170792/scary+short+story+2+%281%29.jpeg)
 
 ### 16. "[The Lottery](https://www.newyorker.com/magazine/1948/06/26/the-lottery)" by Shirley Jackson (1948)
 
@@ -148,7 +148,7 @@ A man becomes obsessed with the idea of killing his wife, leading him down a dar
 
 ## 17 Short Horror Stories From Modern Authors
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/horror-story-2-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/fb2bf6df-3e92-4f62-8615-f0d0ef727790/horror+story+2+%281%29.jpeg)
 
 ### 28. "[The Specialist's Hat](https://kellylink.net/specialists-hat)" by Kelly Link (1998)
 
@@ -220,7 +220,7 @@ Originally published in 2015 as a fund-drive bonus in Strange Horizons, “The G
 
 **You might also like** [5 Bone-Chilling Horror Short Story Collections By Stephen King](https://www.cabbagetreebooks.com/blog/5-bone-chilling-horror-short-story-collections-by-stephen-king)[
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
 
 ](https://amzn.to/3OGjd9X)
 

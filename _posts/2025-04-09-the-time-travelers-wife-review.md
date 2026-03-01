@@ -5,10 +5,10 @@ date: 2025-04-09
 category: Book Reviews
 genre: Science Fiction
 excerpt: "The Time Traveler's Wife uses time travel not as adventure but as tragedy. Here's our review of Audrey Niffenegger's novel — and why it's one of the great modern love stories."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/time-travelers-wife-cover.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/time-travelers-wife-cover.jpg"
 ---
 
-![The Time Traveler's Wife by Audrey Niffenegger](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/time-travelers-wife-cover.jpg)
+![The Time Traveler's Wife by Audrey Niffenegger](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/time-travelers-wife-cover.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -63,4 +63,4 @@ Anyone who wants a love story that takes love seriously, rendered in a structure
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

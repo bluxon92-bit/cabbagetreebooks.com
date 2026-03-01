@@ -5,7 +5,7 @@ date: 2023-06-27
 category: Reading Tips
 genre: Guides
 excerpt: "If you don't own a dedicated ebook reader, don't worry! There are numerous ebooks available online that you can either purchase at a low cost or acquire for free. In such cases, all you need to do is launch an ebook read"
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/kindle-reading-app-1-.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ad52d73-3aaa-472b-8674-bf45b6d1fb1a/kindle+reading+app+%281%29.jpg"
 ---
 
 If you don't own a dedicated ebook reader, don't worry! There are numerous ebooks available online that you can either purchase at a low cost or acquire for free. In such cases, all you need to do is launch an ebook reader app on your smartphone or tablet.
@@ -16,7 +16,7 @@ Regardless of whether you prefer Mobi, EPUB, or PDF formats, you'll find there a
 
 ## 1. Amazon Kindle App
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/kindle-reading-app-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/3ad52d73-3aaa-472b-8674-bf45b6d1fb1a/kindle+reading+app+%281%29.jpg)
 
 [The Kindle app](https://amzn.to/44nFcqI) is compatible with various devices, such as Windows and Mac computers, iOS and Android devices. This app allows you to access books from Amazon as well as any items in your library.
 
@@ -58,7 +58,7 @@ Libby offers a user-friendly ebook reading experience, empowering you to borrow 
 
 **You might also like:** [How To Send Ebooks To Your Kindle](https://www.cabbagetreebooks.com/blog/how-to-send-ebooks-to-your-kindle)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/library-readin-app-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1d846c6d-8dfe-49bd-960e-bd03c7349d0b/library+readin+app+%281%29.jpg)
 
 ## 7. FBReader
 
@@ -128,7 +128,7 @@ Inkitt presents an excellent platform for book enthusiasts to discover new autho
 
 ## 15. Webtoon
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/lore-olympus.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/f58f8705-8eda-4c4b-a3ad-1d69eb0a8998/lore+olympus.jpeg)
 
 [Webtoon](https://www.webtoons.com/en/) is something a little bit different to the rest of this list offering access to a vast collection of free webcomics. Including break-out successes like [Tower of God by Lee Jong-hui](https://www.webtoons.com/en/fantasy/tower-of-god/list?page=1&title_no=95) and [Lore Olympus by by Rachel Smythe](https://www.cabbagetreebooks.com/blog/best-books-about-greek-mythology), Webtoon, offers access to a vast collection of incredible stories with stunning artwork. From romance and fantasy to action and comedy, there is something for every reader's taste.
 

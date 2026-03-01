@@ -5,10 +5,10 @@ date: 2025-04-10
 category: Book Reviews
 genre: Fantasy
 excerpt: "Fire and Blood is George R.R. Martin's history of House Targaryen — and it reads like a history book. Here's our honest review of what works, what doesn't, and who it's for."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fire-and-blood-cover.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/fire-and-blood-cover.jpg"
 ---
 
-![Fire and Blood by George R.R. Martin](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fire-and-blood-cover.jpg)
+![Fire and Blood by George R.R. Martin](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/fire-and-blood-cover.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -63,4 +63,4 @@ Devoted ASOIAF readers who want to understand the world's history more deeply �
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

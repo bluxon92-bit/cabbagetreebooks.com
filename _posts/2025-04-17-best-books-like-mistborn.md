@@ -5,10 +5,10 @@ date: 2025-04-17
 category: Book Recommendations
 genre: Fantasy
 excerpt: "Loved Mistborn? Here are 10 fantasy novels that share its magic systems, tight plotting, satisfying endings, and propulsive pace — the best books to read next."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/books-like-mistborn.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/books-like-mistborn.jpg"
 ---
 
-![Books Like Mistborn](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/books-like-mistborn.jpg)
+![Books Like Mistborn](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/books-like-mistborn.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -107,4 +107,4 @@ For readers who loved the way Mistborn used its magic system to explore question
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

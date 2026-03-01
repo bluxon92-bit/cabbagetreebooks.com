@@ -16,10 +16,10 @@ excerpt: "-
   Where to Start: The Works of Ursula K Le Guin
 -
   Ha"
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/le-guin-sci-fi-1-1-1-.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b51d0317-0e1b-4e8d-ae8e-d157623965ed/le+guin+sci+fi+%281%29+%281%29+%281%29.jpg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/le-guin-sci-fi-1-1-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/b51d0317-0e1b-4e8d-ae8e-d157623965ed/le+guin+sci+fi+%281%29+%281%29+%281%29.jpg)
 
 **Contents**
 
@@ -46,7 +46,7 @@ Throughout her career, Ursula K Le Guin received numerous awards and accolades f
 
 ## The Dispossessed by Ursula K. Le Guin
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-dispossessed.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/7ed62f1c-64d2-4b6a-9e2e-5a247402303b/the+dispossessed.jpg)
 
 [The Dispossessed](https://www.amazon.com/Dispossessed-Hainish-Cycle-Ursula-Guin/dp/0061054887) by Ursula K Le Guin is part of her Hainish series. In this novel, she asks the question what if no one owned anything? What would society look like? And how would this society engage with, view and be viewed by a more capitalistic one?
 
@@ -60,7 +60,7 @@ For [lovers of sci-fi looking for their next read](https://www.cabbagetreebooks.
 
 ## The Left Hand of Darkness by Ursula K. Le Guin
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-left-hand-of-darkness.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/66741019-a5e5-452b-8194-7721a8d2f257/the+left+hand+of+darkness.jpg)
 
 [The Left Hand of Darkness](https://www.amazon.com/Left-Hand-Darkness-Ursula-Guin/dp/0441478123) by Ursula K. Le Guin is a science fiction novel set in a world called Gethen. The inhabitants of the planet are known as the Gethenians, who for the majority of the month are entirely genderless, but for a period of about 4-5 days, become either male or female. With this biological setup Le Guin sets out to answer the question, what if there was no gender? What if gender wasn’t binary?
 
@@ -78,7 +78,7 @@ The Left Hand of Darkness by Ursula K. Le Guin is another masterful science fict
 
 ## The Lathe of Heaven by Ursul K. Le Guin
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-lathe-of-heaven.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/01aa4651-6830-4d59-96d5-452b1c10406a/the+lathe+of+heaven.jpg)
 
 [The Lathe of Heaven](https://www.amazon.com/Lathe-Heaven-S-F-MASTERWORKS-ebook/dp/B0117BFG5Y/) is a science fiction novel by Ursula K. Le Guin, first published in 1971. The story follows George Orr, a man who has the ability to change reality through his dreams. When George is referred to a psychiatrist named William Haber, Haber realizes the power of George's dreams and begins to manipulate them in order to change the world according to his own utopian vision.
 
@@ -92,7 +92,7 @@ Far from the utopian vision, each time Haber alters reality (despite his best in
 
 ## Where to Start: The Works of Ursula K Le Guin
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/spaceship-landing-next-to-a-city-on-a-dry-planet.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/5f86a404-40fc-4d61-9bfb-2c9e6732f104/Spaceship+landing+next+to+a+city+on+a+dry+planet.jpg)
 
 Ursula K Le Guin has quickly become one of my favourite authors of all time. Her work places her with the sci-fi greats like [Arthur C Clarke](https://www.cabbagetreebooks.com/blog/the-city-and-the-stars-arthur-c-clarke), [Isaac Asimov](https://www.cabbagetreebooks.com/blog/17-influential-isaac-asimov-quotes), Phillip K Dick and H. G. Wells. She’s a master of speculative fiction and fantasy, but with so many great novels under her belt where should you start?
 
@@ -149,6 +149,6 @@ I say ‘sort of’ because Le Guin never intended the books to be thought of as
 
 **If you like science fiction learn more about **[***Sunset In The East* by Ben Luxon**](https://www.cabbagetreebooks.com/sci-fi-short-stories)**.**[
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

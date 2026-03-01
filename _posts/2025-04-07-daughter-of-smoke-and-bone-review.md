@@ -5,10 +5,10 @@ date: 2025-04-07
 category: Book Reviews
 genre: Fantasy
 excerpt: "Daughter of Smoke and Bone is one of the most original YA fantasy debuts in years. Here's our review of Laini Taylor's first Karou novel — and why the world-building is extraordinary."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/daughter-smoke-bone-cover.jpg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/daughter-smoke-bone-cover.jpg"
 ---
 
-![Daughter of Smoke and Bone by Laini Taylor](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/daughter-smoke-bone-cover.jpg)
+![Daughter of Smoke and Bone by Laini Taylor](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/daughter-smoke-bone-cover.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -67,4 +67,4 @@ The Daughter of Smoke and Bone trilogy continues with *Days of Blood and Starlig
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

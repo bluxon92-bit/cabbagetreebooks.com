@@ -12,10 +12,10 @@ excerpt: "-
   12 Of The Best Fantasy Books You Haven’t Heard Of
 -
   The Best Fantasy Books: Wrapping Up"
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fantasy-book-overflowing-1-.jpeg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/bc791b24-6a9b-49b6-a807-810ff85b56f8/fantasy+book+overflowing+%281%29.jpeg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/fantasy-book-overflowing-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/bc791b24-6a9b-49b6-a807-810ff85b56f8/fantasy+book+overflowing+%281%29.jpeg)
 
 #### Contents
 
@@ -38,7 +38,7 @@ Whether you're looking for tales of dragons, knights, and magical creatures, or 
 
 ## 7 of the Best Classic Fantasy Books
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/narnia-fantasy-books-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/62f5f898-c1fe-4c61-8bfd-9b3a05c41dbb/narnia+fantasy+books+%281%29.jpeg)
 
 ### 1. [The Lion, The Witch, And The Wardrobe](https://www.amazon.com/Lion-Witch-Wardrobe-C-Lewis/dp/0064471047/) by C.S. Lewis
 
@@ -82,7 +82,7 @@ In the story, Phantasmion is the king of a fantastical realm who is forced into 
 
 ## 12 of the Best Modern Fantasy Books
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/game-of-thrones-shelf-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ec0cf42a-0c87-40c2-bff2-218d6263dcde/game-of-thrones-shelf+%281%29.jpeg)
 
 ### 8. [Game of Thrones](https://www.amazon.com/Game-Thrones-Song-Fire-Book/dp/0553381687) by George R.R. Martin
 
@@ -112,7 +112,7 @@ In the first book in the Earthsea Quartet, Ursula K Le Guin does something a lit
 
 Book 1 in the Stormlight Series, [The Way of Kings is Brandon Sanderson’s ](https://www.cabbagetreebooks.com/blog/11-best-books-by-brandon-sanderson)biggest challenge yet. The book explores the lives of the Heralds, the leaders of the Knights Radiant. The Heralds have waged war against a race of monsters, called Voidbringers, for thousands of years, protecting humanity from certain destruction. However, after countless rebirths, the Heralds abandon their calling and cast the world into chaos. This story is epic in scope and scale and arguably Sanderson’s masterwork.
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/brandon-sanderson-books-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1667859358012-PUL9K2W0EJEIIK5R731A/Brandon+sanderson+books+%281%29.jpeg)
 
 ### 14. [Dragonflight](https://www.amazon.com/Dragonflight-Dragonriders-Pern-Anne-McCaffrey/dp/0345335465/) by Anne McCaffrey
 
@@ -148,7 +148,7 @@ Throughout the novel, Murakami employs dreamlike imagery and magical realism to 
 
 ## 12 Best New Fantasy Books You Haven’t Heard Of
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/the-night-circus-fantasy-books-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/c5cacd10-425f-4ef8-bffd-678c09713855/the+night+circus+fantasy+books+%281%29.jpeg)
 
 ### 20. [The Night Circus](https://www.amazon.com/Night-Circus-Erin-Morgenstern/dp/0307744434/) by Erin Morgenstern
 
@@ -205,7 +205,7 @@ This is the first book in an ongoing series, and it tells the story of Logen Nin
 ## The Best Fantasy Books: Wrapping Up
 [
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/drenai-series-banner.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/98dc8c5c-aa9a-4486-b634-9a565b0ebb21/drenai+series+banner.png)
 
 ](https://www.cabbagetreebooks.com/blog/david-gemmells-drenai-series)
 
@@ -231,6 +231,6 @@ And finally, David Gemmel. I spent many of my later teen years devouring his boo
   [The Edge of Darkness: 9 Grimdark Fantasy Books for Fans of Gritty Fiction](https://www.cabbagetreebooks.com/blog/grimdark-fantasy-books)
 [
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

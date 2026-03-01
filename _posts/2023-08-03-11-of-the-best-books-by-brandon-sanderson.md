@@ -5,10 +5,10 @@ date: 2023-08-03
 category: Author Profiles
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/brandon-sanderson-books-1-.jpeg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ae224f8b-7541-4b74-9eef-31ba7890db78/Brandon+sanderson+books+%281%29.jpeg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/brandon-sanderson-books-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/ae224f8b-7541-4b74-9eef-31ba7890db78/Brandon+sanderson+books+%281%29.jpeg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer *[*here*](https://www.cabbagetreebooks.com/cookies)*.*
 
@@ -26,7 +26,7 @@ With that being said, while some, like the Stormlight Archive, are vast and spra
 
 ### 1. Elantris
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/elantris-cover-1-.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/9256b028-6259-4ab7-933d-7215e211c8c9/elantris+cover+%281%29.jpg)
 
 This was Sanderson’s debut novel and the first book by Brandon Sanderson that I read. It’s a standalone epic fantasy that is a more approachable length than many of his other books.
 
@@ -54,7 +54,7 @@ Governments collapse in the face of this new power and the Epics become the rule
 
 ### 4. Arcanum Unbounded
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/arcanum-1.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/9789fbdc-8662-4b47-ad32-61077076d164/arcanum+1.png)
 
 Arcanum Unbounded is a collection of nine [fantasy short stories](https://www.cabbagetreebooks.com/blog/fantasy-short-stories). These stories will give you a sense of Sanderson's voice and style and are a great starting point for people not yet ready to dive into his larger epics.
 
@@ -104,7 +104,7 @@ This story follows Alcatraz Smedry, a young boy who on his thirteenth birthday r
 
 ### 10. Mistborn: The Final Empire (Book 1 of the Mistborn Series)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/mistbonr-1.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/8df52a8c-7914-46a4-8476-f1bd85049ad3/mistbonr+1.jpg)
 
 The Mistborn trilogy is a great place for fantasy lovers to start with Brandon Sanderson. It has a fleshed-out world, and an incredible magic system called Allomancy, where the snapped can ‘burn’ metals for various magical properties. Plus, even though it’s truly epic in scale with three heavy volumes, it’s a fast and compelling reading that will drag you to the finale.
 
@@ -118,7 +118,7 @@ When one of the oppressed “snaps” and realises he has powers, he rises to th
 
 ### 11. The Way of Kings (Book 1 of the Stormlight Archives)
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/brandon-sanderson-books-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/1667859358012-PUL9K2W0EJEIIK5R731A/Brandon+sanderson+books+%281%29.jpeg)
 
 The Way of Kings is Sanderson’s most ambitious series to date. A decade of planning and writing brings a rich world, a compelling narrative, and engaging characters.
 
@@ -162,6 +162,6 @@ For lovers of epic fantasies though, you might want to start with either The Way
   [12 Classic Science Fiction Short Stories You Need To Read](https://www.cabbagetreebooks.com/blog/12-classic-science-fiction-short-stories-you-need-to-read)
 [
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/ad-banner-for-website.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
 
 ](https://www.cabbagetreebooks.com/sci-fi-short-stories)

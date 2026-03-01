@@ -5,10 +5,10 @@ date: 2023-05-24
 category: Reading Tips
 genre: Guides
 excerpt: "The Amazon Kindle is widely acclaimed as an excellent ebook reader, although it has a strong affiliation with Amazon's ecosystem. While Fire tablets and smartphones allow users to diversify their library by downloading a"
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/kindle-1-.jpeg"
+image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/a3fec148-8c24-4426-ac0a-f759b6a423e7/kindle+%281%29.jpeg"
 ---
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/kindle-1-.jpeg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/a3fec148-8c24-4426-ac0a-f759b6a423e7/kindle+%281%29.jpeg)
 
 The Amazon Kindle is widely acclaimed as an excellent ebook reader, although it has a strong affiliation with Amazon's ecosystem. While Fire tablets and smartphones allow users to diversify their library by downloading alternative e-reading applications, E Ink Kindles, including the popular [Kindle Paperwhite](https://amzn.to/3IELGZT), traditionally limit users to acquiring content exclusively from Amazon.
 
@@ -29,7 +29,7 @@ The most convenient method for adding books to your Kindle involves using email.
 
 2. Look for your specific Kindle device in the list and click on it. In the drop-down window, select [your name's] Kindle.
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/screenshot-2023-05-24-at-4.48.04-pm.png)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/a9032035-ce30-4d9f-a82d-68066779ce20/Screenshot+2023-05-24+at+4.48.04+PM.png)
 
 3. On the following page, you will find a Device Summary that displays your @kindle.com email address. By default, it is already set, but you can modify it by clicking on the "Edit" option.
 
@@ -39,7 +39,7 @@ The most convenient method for adding books to your Kindle involves using email.
 
 Please note that your Kindle must be connected to a Wi-Fi or 3G network in order for it to receive the ebook you choose to send to it.[
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/firehd6-7_assoc_728x90.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/91be6492-e2fb-45a0-bdda-95e8dc3216e0/fireHD6-7_assoc_728x90.jpg)
 
 ](https://amzn.to/3q8FuDf)
 
@@ -59,7 +59,7 @@ While Amazon no longer supports the Mobi format for new and updated reflowable e
 
 Amazon has the ability to automatically convert PDF files into Kindle format, but you have two formatting choices. If you want the Kindle to display each page of the PDF as a graphic, email the PDF file to your Kindle's email address without including a subject line. This method preserves the formatting and graphics but may result in a small font size that is difficult to read. Another option is to attach the PDF file to an email and set the subject line as "convert." By doing so, Amazon will convert the PDF into a Mobi file, allowing you to control the font size and formatting. However, note that the layout of the original PDF may be altered.[
 
-![](https://res.cloudinary.com/dnkddcxrt/image/upload/sq_images/kindle-deals-728x90.jpg)
+![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4c29d261-6833-4aef-ba1a-0cce7497580f/Kindle-Deals-728x90.jpg)
 
 ](https://amzn.to/3MSTPMP)
 
