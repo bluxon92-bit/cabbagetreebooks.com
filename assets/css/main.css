@@ -1059,7 +1059,6 @@ a:hover { color: var(--teal-light); }
   font-size: 0.75rem;
   flex-wrap: wrap;
   gap: 0.5rem;
-  color: #fff;
 }
 
 .footer-bottom a { color: rgba(255,255,255,0.55); }
@@ -2288,7 +2287,7 @@ a:hover { color: var(--teal-light); }
 }
 
 .footer-legal-links a {
-  color: var(--ink-muted);
+  color: rgba(255,255,255,0.55);
   font-size: 0.75rem;
   text-decoration: underline;
   transition: color var(--t-fast) var(--ease);
@@ -2297,7 +2296,7 @@ a:hover { color: var(--teal-light); }
 .footer-legal-links a:hover { color: var(--teal); }
 
 .footer-legal-links span {
-  color: var(--ink-muted);
+  color: rgba(255,255,255,0.35);
   font-size: 0.75rem;
 }
 
