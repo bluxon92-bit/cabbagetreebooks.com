@@ -5,10 +5,10 @@ date: 2025-03-13
 category: Book Reviews
 genre: Fantasy
 excerpt: "The Blacktongue Thief is the fantasy debut that caught everyone by surprise. Here's our review of Christopher Buehlman's gripping, voice-driven opener."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/blacktongue-thief-cover.jpg"
+image: ""
 ---
 
-![The Blacktongue Thief by Christopher Buehlman](https://res.cloudinary.com/dnkddcxrt/image/upload/blacktongue-thief-cover.jpg)
+![The Blacktongue Thief by Christopher Buehlman]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

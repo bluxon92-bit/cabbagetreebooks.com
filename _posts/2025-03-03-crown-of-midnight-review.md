@@ -5,10 +5,10 @@ date: 2025-03-03
 category: Book Reviews
 genre: Fantasy
 excerpt: "Crown of Midnight is where the Throne of Glass series stops being good and starts being great. Here's why this is the book the fuss is about."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/crown-of-midnight-cover_bn4c6n.jpg"
+image: ""
 ---
 
-![Crown of Midnight by Sarah J. Maas](https://res.cloudinary.com/dnkddcxrt/image/upload/crown-of-midnight-cover_bn4c6n.jpg)
+![Crown of Midnight by Sarah J. Maas]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

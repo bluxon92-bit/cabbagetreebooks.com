@@ -5,10 +5,10 @@ date: 2025-03-22
 category: Book Reviews
 genre: Fantasy
 excerpt: "Senlin Ascends started as a self-published novel and became a word-of-mouth sensation. Here's our review — and why it's one of the most original fantasy debuts in years."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/senlin-ascends-cover_s4qb4y.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772382133/senlinascends-cover_s4qb4y.jpg"
 ---
 
-![Senlin Ascends by Josiah Bancroft](https://res.cloudinary.com/dnkddcxrt/image/upload/senlin-ascends-cover_s4qb4y.jpg)
+![Senlin Ascends by Josiah Bancroft](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772382133/senlinascends-cover_s4qb4y.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

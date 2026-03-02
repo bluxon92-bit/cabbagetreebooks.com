@@ -5,10 +5,10 @@ date: 2025-03-01
 category: Author Profiles
 genre: Fantasy
 excerpt: "Not sure where to start with Sarah J. Maas? Here's every series, in order, with a quick take on each — so you can dive in without getting lost."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/throne-of-glass-cover_ew0ctw.jpg"
+image: ""
 ---
 
-![Sarah J. Maas Books in Order](https://res.cloudinary.com/dnkddcxrt/image/upload/throne-of-glass-cover_ew0ctw.jpg)
+![Sarah J. Maas Books in Order]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

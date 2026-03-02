@@ -5,10 +5,10 @@ date: 2025-04-01
 category: Book Reviews
 genre: Horror
 excerpt: "Last Days is Adam Nevill's most compelling novel — a found-footage horror that builds to something genuinely disturbing. Here's our full review."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/last-days-cover_hbysqo.jpg"
+image: ""
 ---
 
-![Last Days by Adam Nevill](https://res.cloudinary.com/dnkddcxrt/image/upload/last-days-cover_hbysqo.jpg)
+![Last Days by Adam Nevill]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

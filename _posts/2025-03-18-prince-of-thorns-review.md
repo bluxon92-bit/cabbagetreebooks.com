@@ -5,10 +5,10 @@ date: 2025-03-18
 category: Book Reviews
 genre: Fantasy
 excerpt: "Prince of Thorns is one of fantasy's most divisive debuts. Here's our honest review — what it does brilliantly, what you need to know going in, and who it's for."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/prince-of-thorns-cover_mqy3bo.jpg"
+image: ""
 ---
 
-![Prince of Thorns by Mark Lawrence](https://res.cloudinary.com/dnkddcxrt/image/upload/prince-of-thorns-cover_mqy3bo.jpg)
+![Prince of Thorns by Mark Lawrence]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

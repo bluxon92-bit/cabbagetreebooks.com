@@ -5,10 +5,10 @@ date: 2025-04-10
 category: Book Reviews
 genre: Fantasy
 excerpt: "Fire and Blood is George R.R. Martin's history of House Targaryen — and it reads like a history book. Here's our honest review of what works, what doesn't, and who it's for."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/fire-and-blood-cover_zaafyr.jpg"
+image: ""
 ---
 
-![Fire and Blood by George R.R. Martin](https://res.cloudinary.com/dnkddcxrt/image/upload/fire-and-blood-cover_zaafyr.jpg)
+![Fire and Blood by George R.R. Martin]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

@@ -5,10 +5,10 @@ date: 2025-04-13
 category: Book Reviews
 genre: Fantasy
 excerpt: "Magician is Raymond Feist's debut novel and the foundation of the Riftwar Saga — one of fantasy's longest-running universes. Here's our full review of where it all began."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/magician-feist-cover_ehvozj.jpg"
+image: ""
 ---
 
-![Magician by Raymond E. Feist](https://res.cloudinary.com/dnkddcxrt/image/upload/magician-feist-cover_ehvozj.jpg)
+![Magician by Raymond E. Feist]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

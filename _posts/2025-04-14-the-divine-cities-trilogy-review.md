@@ -5,10 +5,10 @@ date: 2025-04-14
 category: Book Reviews
 genre: Fantasy
 excerpt: "Robert Jackson Bennett's Divine Cities trilogy is a masterclass in secondary world fantasy. Here's our review — and why it deserves to be talked about in the same breath as the greats."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/divine-cities-cover_ehivef.jpg"
+image: ""
 ---
 
-![The Divine Cities by Robert Jackson Bennett](https://res.cloudinary.com/dnkddcxrt/image/upload/divine-cities-cover_ehivef.jpg)
+![The Divine Cities by Robert Jackson Bennett]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

@@ -5,10 +5,10 @@ date: 2025-03-14
 category: Book Reviews
 genre: Fantasy
 excerpt: "James Islington's debut arrived quietly and built a devoted following. Here's our review of The Shadow of What Was Lost — and why it deserves far more attention."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/shadow-of-what-was-lost-cover_ngmjuq.jpg"
+image: ""
 ---
 
-![The Shadow of What Was Lost by James Islington](https://res.cloudinary.com/dnkddcxrt/image/upload/shadow-of-what-was-lost-cover_ngmjuq.jpg)
+![The Shadow of What Was Lost by James Islington]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

@@ -5,10 +5,10 @@ date: 2025-04-03
 category: Book Reviews
 genre: Science Fiction
 excerpt: "The Dog Stars is the post-apocalyptic novel that doesn't feel like the others. Here's our review of Peter Heller's debut — lyrical, quiet, and quietly devastating."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/dog-stars-cover_kjg6jn.jpg"
+image: ""
 ---
 
-![The Dog Stars by Peter Heller](https://res.cloudinary.com/dnkddcxrt/image/upload/dog-stars-cover_kjg6jn.jpg)
+![The Dog Stars by Peter Heller]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

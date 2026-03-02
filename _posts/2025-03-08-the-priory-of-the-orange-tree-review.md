@@ -5,10 +5,10 @@ date: 2025-03-08
 category: Book Reviews
 genre: Fantasy
 excerpt: "At 848 pages, The Priory of the Orange Tree is a commitment. Here's why it's worth it — and whether you're the right reader for Samantha Shannon's epic."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/priory-orange-tree-cover_brwhc7.jpg"
+image: ""
 ---
 
-![The Priory of the Orange Tree by Samantha Shannon](https://res.cloudinary.com/dnkddcxrt/image/upload/priory-orange-tree-cover_brwhc7.jpg)
+![The Priory of the Orange Tree by Samantha Shannon]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

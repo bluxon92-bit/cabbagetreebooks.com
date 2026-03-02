@@ -5,10 +5,10 @@ date: 2025-03-19
 category: Author Profiles
 genre: Fantasy
 excerpt: "Mark Lawrence has written five fantasy series — here's every book in order, where to start, and a personal take on each series."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/mark-lawrence-books_qijanc.jpg"
+image: ""
 ---
 
-![Mark Lawrence Books in Order](https://res.cloudinary.com/dnkddcxrt/image/upload/mark-lawrence-books_qijanc.jpg)
+![Mark Lawrence Books in Order]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

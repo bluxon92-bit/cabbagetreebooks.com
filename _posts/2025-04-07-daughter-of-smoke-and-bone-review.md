@@ -5,10 +5,10 @@ date: 2025-04-07
 category: Book Reviews
 genre: Fantasy
 excerpt: "Daughter of Smoke and Bone is one of the most original YA fantasy debuts in years. Here's our review of Laini Taylor's first Karou novel — and why the world-building is extraordinary."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/daughter-smoke-bone-cover_aopjtb.jpg"
+image: ""
 ---
 
-![Daughter of Smoke and Bone by Laini Taylor](https://res.cloudinary.com/dnkddcxrt/image/upload/daughter-smoke-bone-cover_aopjtb.jpg)
+![Daughter of Smoke and Bone by Laini Taylor]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

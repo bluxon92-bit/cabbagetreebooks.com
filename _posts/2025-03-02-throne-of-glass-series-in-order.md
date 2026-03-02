@@ -5,10 +5,10 @@ date: 2025-03-02
 category: Book Recommendations
 genre: Fantasy
 excerpt: "The complete Throne of Glass reading order — all 7 books plus novellas, in the order that makes the most sense, with a quick hook for each."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/throne-of-glass-series_fxjzbg.jpg"
+image: ""
 ---
 
-![Throne of Glass Series in Order](https://res.cloudinary.com/dnkddcxrt/image/upload/throne-of-glass-series_fxjzbg.jpg)
+![Throne of Glass Series in Order]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 

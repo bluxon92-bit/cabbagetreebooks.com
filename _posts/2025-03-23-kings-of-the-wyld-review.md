@@ -5,10 +5,10 @@ date: 2025-03-23
 category: Book Reviews
 genre: Fantasy
 excerpt: "Kings of the Wyld is the most fun I've had reading a fantasy novel in years. Here's our review of Nicholas Eames' debut — and why it's impossible not to love."
-image: "https://res.cloudinary.com/dnkddcxrt/image/upload/kings-of-the-wyld-cover_qxavme.jpg"
+image: ""
 ---
 
-![Kings of the Wyld by Nicholas Eames](https://res.cloudinary.com/dnkddcxrt/image/upload/kings-of-the-wyld-cover_qxavme.jpg)
+![Kings of the Wyld by Nicholas Eames]()
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
