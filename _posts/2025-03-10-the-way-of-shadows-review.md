@@ -5,10 +5,10 @@ date: 2025-03-10
 category: Book Reviews
 genre: Fantasy
 excerpt: "The Way of Shadows is a dark, fast, and brutal fantasy debut. Here's our review of Brent Weeks' Night Angel trilogy opener — and whether it holds up."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/way-of-shadows-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/way-of-shadows-cover_ivrjbs.jpg"
 ---
 
-![The Way of Shadows by Brent Weeks](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/way-of-shadows-cover.jpg)
+![The Way of Shadows by Brent Weeks](https://res.cloudinary.com/dnkddcxrt/image/upload/way-of-shadows-cover_ivrjbs.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -65,4 +65,4 @@ If you want a fast, dark, emotionally engaging fantasy that doesn't take itself 
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

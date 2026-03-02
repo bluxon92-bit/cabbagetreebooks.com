@@ -5,10 +5,10 @@ date: 2025-04-14
 category: Book Reviews
 genre: Fantasy
 excerpt: "Robert Jackson Bennett's Divine Cities trilogy is a masterclass in secondary world fantasy. Here's our review — and why it deserves to be talked about in the same breath as the greats."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/divine-cities-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/divine-cities-cover_ehivef.jpg"
 ---
 
-![The Divine Cities by Robert Jackson Bennett](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/divine-cities-cover.jpg)
+![The Divine Cities by Robert Jackson Bennett](https://res.cloudinary.com/dnkddcxrt/image/upload/divine-cities-cover_ehivef.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -77,4 +77,4 @@ Genuinely unclear. The trilogy is critically praised, well-constructed, and emot
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

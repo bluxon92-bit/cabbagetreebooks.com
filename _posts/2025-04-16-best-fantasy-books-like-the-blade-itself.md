@@ -5,10 +5,10 @@ date: 2025-04-16
 category: Book Recommendations
 genre: Fantasy
 excerpt: "If you loved The Blade Itself and want more morally complex, darkly funny, brilliantly written fantasy — here are 10 books that hit the same notes."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/books-like-blade-itself.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/books-like-blade-itself_oeibik.jpg"
 ---
 
-![Books Like The Blade Itself](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/books-like-blade-itself.jpg)
+![Books Like The Blade Itself](https://res.cloudinary.com/dnkddcxrt/image/upload/books-like-blade-itself_oeibik.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -107,4 +107,4 @@ Locke Lamora is morally grey in a different register — a thief rather than a k
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

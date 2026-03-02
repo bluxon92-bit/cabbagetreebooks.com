@@ -5,10 +5,10 @@ date: 2025-03-13
 category: Book Reviews
 genre: Fantasy
 excerpt: "The Blacktongue Thief is the fantasy debut that caught everyone by surprise. Here's our review of Christopher Buehlman's gripping, voice-driven opener."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/blacktongue-thief-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/blacktongue-thief-cover.jpg"
 ---
 
-![The Blacktongue Thief by Christopher Buehlman](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/blacktongue-thief-cover.jpg)
+![The Blacktongue Thief by Christopher Buehlman](https://res.cloudinary.com/dnkddcxrt/image/upload/blacktongue-thief-cover.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -75,4 +75,4 @@ Yes. Particularly if you've been finding recent fantasy a bit samey, or if you w
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

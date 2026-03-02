@@ -5,10 +5,10 @@ date: 2025-03-16
 category: Book Reviews
 genre: Fantasy
 excerpt: "Words of Radiance is the second Stormlight Archive book and, for many readers, the finest. Here's our review — and why this is where the series becomes unmissable."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/words-of-radiance-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/words-of-radiance-cover_rijxur.jpg"
 ---
 
-![Words of Radiance by Brandon Sanderson](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/words-of-radiance-cover.jpg)
+![Words of Radiance by Brandon Sanderson](https://res.cloudinary.com/dnkddcxrt/image/upload/words-of-radiance-cover_rijxur.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -69,4 +69,4 @@ For most readers, yes. It's the more complete novel — a setup that's also a st
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

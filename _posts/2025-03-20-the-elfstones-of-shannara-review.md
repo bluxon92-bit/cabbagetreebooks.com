@@ -5,10 +5,10 @@ date: 2025-03-20
 category: Book Reviews
 genre: Fantasy
 excerpt: "The Elfstones of Shannara is widely considered the best book in Terry Brooks' long-running series. Here's our review — and where it sits in the reading order."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/elfstones-shannara-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/elfstones-shannara-cover_el9uti.jpg"
 ---
 
-![The Elfstones of Shannara by Terry Brooks](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/elfstones-shannara-cover.jpg)
+![The Elfstones of Shannara by Terry Brooks](https://res.cloudinary.com/dnkddcxrt/image/upload/elfstones-shannara-cover_el9uti.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -75,4 +75,4 @@ No. *The Elfstones of Shannara* is a sequel in the loosest sense — it shares a
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

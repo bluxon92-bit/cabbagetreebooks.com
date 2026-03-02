@@ -5,10 +5,10 @@ date: 2025-03-11
 category: Book Recommendations
 genre: Fantasy
 excerpt: "From Tolkien to Abercrombie, Sanderson to Hobb — our opinionated list of the best fantasy book series ever written, with a personal take on each."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/best-fantasy-series.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/best-fantasy-series_yzp4gm.jpg"
 ---
 
-![The Best Fantasy Book Series of All Time](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/best-fantasy-series.jpg)
+![The Best Fantasy Book Series of All Time](https://res.cloudinary.com/dnkddcxrt/image/upload/best-fantasy-series_yzp4gm.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -22,7 +22,7 @@ This isn't a Wikipedia roundup. These are series I'd press into someone's hands 
 
 ## 1. The Lord of the Rings — J.R.R. Tolkien
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/lotr-cover.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/lotr-cover_fpcuhv.jpg)
 
 Yes, it's first. It has to be. Tolkien didn't just write a great fantasy series — he essentially invented the template every other entry on this list is working from or reacting against. The world-building remains unmatched. The languages, the mythologies, the sense of deep history — Middle-earth feels like a place that existed before the story began and will continue after it ends. If you somehow haven't read it, start with *The Hobbit* and go from there.
 
@@ -32,7 +32,7 @@ Yes, it's first. It has to be. Tolkien didn't just write a great fantasy series 
 
 ## 2. The First Law Trilogy — Joe Abercrombie
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/first-law-cover.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/first-law-cover_l5tuxn.jpg)
 
 The series that dragged fantasy kicking and screaming into moral ambiguity. Abercrombie's First Law trilogy takes everything you expect from the genre — the quest, the warrior, the tortured inquisitor — and uses them to ask uncomfortable questions about heroism, power, and whether people actually change. Glokta alone is worth the price of admission, but the whole trilogy is exceptional. Read [our review of The Blade Itself](https://www.cabbagetreebooks.com/blog/the-blade-itself-review) if you need convincing.
 
@@ -117,4 +117,4 @@ A list of ten can't hold everything. Worth knowing about: *The Wheel of Time* (R
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

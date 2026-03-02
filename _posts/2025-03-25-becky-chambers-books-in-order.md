@@ -5,10 +5,10 @@ date: 2025-03-25
 category: Author Profiles
 genre: Science Fiction
 excerpt: "Becky Chambers has written five Wayfarers novels plus a standalone novella series. Here's the full reading guide — including where to start and what order works best."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/becky-chambers-books.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/becky-chambers-books_wuvt59.jpg"
 ---
 
-![Becky Chambers Books in Order](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ае2f1d/becky-chambers-books.jpg)
+![Becky Chambers Books in Order](https://res.cloudinary.com/dnkddcxrt/image/upload/becky-chambers-books_wuvt59.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -107,4 +107,4 @@ For readers who bounced off *Long Way*: Try **A Closed and Common Orbit** — it
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

@@ -5,10 +5,10 @@ date: 2025-11-03
 category: Book Recommendations
 genre: Science Fiction
 excerpt: "I've been a Star Wars fan for as long as I can remember, and like a lot of fans, the films were just the start. Once you fall down the rabbit hole of Star Wars books, it's hard to climb back out. Especially considering t"
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/2aedfd0b-aab4-47e5-a615-76f4bd866b76/Best-Star-Wars-Books-Science-Fiction.jpg.webp"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/best-star-wars-books-science-fiction.jpg_kyltlb.webp"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/2aedfd0b-aab4-47e5-a615-76f4bd866b76/Best-Star-Wars-Books-Science-Fiction.jpg.webp)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/best-star-wars-books-science-fiction.jpg_kyltlb.webp)
 
 I've been a Star Wars fan for as long as I can remember, and like a lot of fans, the films were just the start. Once you fall down the rabbit hole of Star Wars books, it's hard to climb back out. Especially considering there’s nearly 400 of them. An entire galaxy of stories beyond the Skywalker saga, some thrilling, some epic, some heartbreaking, and some that well, maybe you can skip.
 

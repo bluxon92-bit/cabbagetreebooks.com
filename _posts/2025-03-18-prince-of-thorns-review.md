@@ -5,10 +5,10 @@ date: 2025-03-18
 category: Book Reviews
 genre: Fantasy
 excerpt: "Prince of Thorns is one of fantasy's most divisive debuts. Here's our honest review — what it does brilliantly, what you need to know going in, and who it's for."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/prince-of-thorns-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/prince-of-thorns-cover_mqy3bo.jpg"
 ---
 
-![Prince of Thorns by Mark Lawrence](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/prince-of-thorns-cover.jpg)
+![Prince of Thorns by Mark Lawrence](https://res.cloudinary.com/dnkddcxrt/image/upload/prince-of-thorns-cover_mqy3bo.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -73,4 +73,4 @@ For readers who love it, *Prince of Thorns* is the beginning of one of the genre
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

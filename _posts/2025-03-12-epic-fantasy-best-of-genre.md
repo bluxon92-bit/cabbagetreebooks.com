@@ -5,10 +5,10 @@ date: 2025-03-12
 category: Book Recommendations
 genre: Fantasy
 excerpt: "What makes epic fantasy great? And where should you start? Our guide to the genre — from the defining classics to the best of the current generation."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/epic-fantasy-guide.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381447/epic-fantasy-guide_w5rswh.jpg"
 ---
 
-![Epic Fantasy: A Guide to the Best Books in the Genre](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/epic-fantasy-guide.jpg)
+![Epic Fantasy: A Guide to the Best Books in the Genre](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381447/epic-fantasy-guide_w5rswh.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -109,4 +109,4 @@ Something slightly different: an epic fantasy told in a tight, fast, voice-drive
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

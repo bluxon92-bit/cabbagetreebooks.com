@@ -5,10 +5,10 @@ date: 2025-03-04
 category: Book Reviews
 genre: Fantasy
 excerpt: "Heir of Fire is the book where the Throne of Glass series becomes something truly epic. Here's our review of book three — and why it's the series best."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/heir-of-fire-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/heir-of-fire-cover_kpf1mx.jpg"
 ---
 
-![Heir of Fire by Sarah J. Maas](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/heir-of-fire-cover.jpg)
+![Heir of Fire by Sarah J. Maas](https://res.cloudinary.com/dnkddcxrt/image/upload/heir-of-fire-cover_kpf1mx.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -67,4 +67,4 @@ If you've got this far in the series, this is probably your favourite so far. An
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

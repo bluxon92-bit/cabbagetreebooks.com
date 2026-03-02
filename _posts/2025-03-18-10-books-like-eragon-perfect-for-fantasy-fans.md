@@ -5,10 +5,10 @@ date: 2025-03-18
 category: Book Recommendations
 genre: Fantasy
 excerpt: "Christopher Paolini’s Eragon and The Inheritance Cycle captivated a generation of fantasy readers with its coming-of-age story, epic world-building, and, of course, dragons."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4ce800d0-8ed6-4a66-8462-336245d87105/inheritance+cycle+%281%29.png"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381481/inheritance-cycle-1-_uv6rho.webp"
 ---
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/4ce800d0-8ed6-4a66-8462-336245d87105/inheritance+cycle+%281%29.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381481/inheritance-cycle-1-_uv6rho.webp)
 
 Christopher Paolini’s *Eragon* and *The Inheritance Cycle* captivated a generation of fantasy readers with its coming-of-age story, epic world-building, and, of course, dragons.
 
@@ -56,7 +56,7 @@ Ged, a young boy with great magical potential, is sent to a wizarding school to 
 
 A beautifully written fantasy with deep themes of identity, power, and redemption, *The Earthsea Cycle* is an essential read for any fantasy fan.
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/9dab421e-d96b-4342-ad65-93b0be56bcb9/wheel+of+time.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/wheel-of-time_wkulox.jpg)
 
 ### **6. **[**The Wheel of Time**](https://amzn.to/4ktu1pm)** by Robert Jordan**
 
@@ -131,6 +131,6 @@ If you loved *Eragon* and want more books like it, this list should give you ple
   [The Edge of Darkness: 9 Grimdark Fantasy Books for Fans of Gritty Fiction](https://www.cabbagetreebooks.com/blog/grimdark-fantasy-books)
 [
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)
 
 ](/sci-fi-short-stories)

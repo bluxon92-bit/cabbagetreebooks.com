@@ -5,10 +5,10 @@ date: 2025-03-06
 category: Book Reviews
 genre: Fantasy
 excerpt: "The Blade Itself is the grimdark fantasy opener that changed the genre. Here's our review — and why Sand dan Glokta is one of fantasy's greatest characters."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/blade-itself-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/blade-itself-cover_ottfdf.jpg"
 ---
 
-![The Blade Itself by Joe Abercrombie](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/blade-itself-cover.jpg)
+![The Blade Itself by Joe Abercrombie](https://res.cloudinary.com/dnkddcxrt/image/upload/blade-itself-cover_ottfdf.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -73,4 +73,4 @@ One of the best first entries in a fantasy trilogy. Full stop.
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

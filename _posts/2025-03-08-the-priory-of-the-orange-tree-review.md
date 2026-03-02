@@ -5,10 +5,10 @@ date: 2025-03-08
 category: Book Reviews
 genre: Fantasy
 excerpt: "At 848 pages, The Priory of the Orange Tree is a commitment. Here's why it's worth it — and whether you're the right reader for Samantha Shannon's epic."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/priory-orange-tree-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/priory-orange-tree-cover_brwhc7.jpg"
 ---
 
-![The Priory of the Orange Tree by Samantha Shannon](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/priory-orange-tree-cover.jpg)
+![The Priory of the Orange Tree by Samantha Shannon](https://res.cloudinary.com/dnkddcxrt/image/upload/priory-orange-tree-cover_brwhc7.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -73,4 +73,4 @@ If you're in the market for a vast, beautifully built fantasy world that doesn't
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

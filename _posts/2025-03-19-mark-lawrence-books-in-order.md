@@ -5,10 +5,10 @@ date: 2025-03-19
 category: Author Profiles
 genre: Fantasy
 excerpt: "Mark Lawrence has written five fantasy series — here's every book in order, where to start, and a personal take on each series."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/mark-lawrence-books.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/mark-lawrence-books_qijanc.jpg"
 ---
 
-![Mark Lawrence Books in Order](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/mark-lawrence-books.jpg)
+![Mark Lawrence Books in Order](https://res.cloudinary.com/dnkddcxrt/image/upload/mark-lawrence-books_qijanc.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -133,4 +133,4 @@ All five series take place in the same universe, though you don't need to read t
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

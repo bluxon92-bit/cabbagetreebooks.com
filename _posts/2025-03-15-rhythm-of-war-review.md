@@ -5,10 +5,10 @@ date: 2025-03-15
 category: Book Reviews
 genre: Fantasy
 excerpt: "Rhythm of War is the fourth Stormlight Archive book and Sanderson's most character-driven entry. Here's our full review — with context for new and returning readers."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/rhythm-of-war-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/rhythm-of-war-cover_dsgkez.jpg"
 ---
 
-![Rhythm of War by Brandon Sanderson](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/rhythm-of-war-cover.jpg)
+![Rhythm of War by Brandon Sanderson](https://res.cloudinary.com/dnkddcxrt/image/upload/rhythm-of-war-cover_dsgkez.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -67,4 +67,4 @@ If you've read the first three Stormlight books, this is not optional. Read it.
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

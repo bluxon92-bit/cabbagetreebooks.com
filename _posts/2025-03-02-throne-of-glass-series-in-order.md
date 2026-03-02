@@ -5,10 +5,10 @@ date: 2025-03-02
 category: Book Recommendations
 genre: Fantasy
 excerpt: "The complete Throne of Glass reading order — all 7 books plus novellas, in the order that makes the most sense, with a quick hook for each."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/throne-of-glass-series.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/throne-of-glass-series_fxjzbg.jpg"
 ---
 
-![Throne of Glass Series in Order](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/throne-of-glass-series.jpg)
+![Throne of Glass Series in Order](https://res.cloudinary.com/dnkddcxrt/image/upload/throne-of-glass-series_fxjzbg.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -103,4 +103,4 @@ The main series runs to around 4,800 pages across eight volumes including the no
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

@@ -5,10 +5,10 @@ date: 2025-03-22
 category: Book Reviews
 genre: Fantasy
 excerpt: "Senlin Ascends started as a self-published novel and became a word-of-mouth sensation. Here's our review — and why it's one of the most original fantasy debuts in years."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/senlin-ascends-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/senlin-ascends-cover_s4qb4y.jpg"
 ---
 
-![Senlin Ascends by Josiah Bancroft](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/senlin-ascends-cover.jpg)
+![Senlin Ascends by Josiah Bancroft](https://res.cloudinary.com/dnkddcxrt/image/upload/senlin-ascends-cover_s4qb4y.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -73,4 +73,4 @@ Start here. Do not read ahead. The less you know going in, the better.
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

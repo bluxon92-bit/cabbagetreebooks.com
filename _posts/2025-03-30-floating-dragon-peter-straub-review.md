@@ -5,10 +5,10 @@ date: 2025-03-30
 category: Book Reviews
 genre: Horror
 excerpt: "Floating Dragon is Peter Straub's most ambitious novel — a sweeping, literary horror epic set in a Connecticut town. Here's our review of a criminally overlooked masterpiece."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/floating-dragon-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/floating-dragon-cover_q2d6t5.jpg"
 ---
 
-![Floating Dragon by Peter Straub](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/floating-dragon-cover.jpg)
+![Floating Dragon by Peter Straub](https://res.cloudinary.com/dnkddcxrt/image/upload/floating-dragon-cover_q2d6t5.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -75,4 +75,4 @@ If you've read King's major novels and want to explore what else exists in serio
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

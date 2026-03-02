@@ -5,10 +5,10 @@ date: 2025-03-05
 category: Author Profiles
 genre: Fantasy
 excerpt: "Everything Patrick Rothfuss has published — including The Slow Regard of Silent Things — in the order you should read it, plus the honest truth about Book 3."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/name-of-the-wind-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/name-of-the-wind-cover_bfnbm3.jpg"
 ---
 
-![The Name of the Wind by Patrick Rothfuss](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/name-of-the-wind-cover.jpg)
+![The Name of the Wind by Patrick Rothfuss](https://res.cloudinary.com/dnkddcxrt/image/upload/name-of-the-wind-cover_bfnbm3.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -28,7 +28,7 @@ The series follows Kvothe — legendary hero, feared warrior, accomplished music
 
 ### 1. The Name of the Wind (2007)
 
-![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/name-of-the-wind-cover.jpg)
+![](https://res.cloudinary.com/dnkddcxrt/image/upload/name-of-the-wind-cover_bfnbm3.jpg)
 
 The first day of Kvothe's account. We follow him from a difficult childhood in a travelling troupe of performers, through poverty and loss, to his arrival at the University — a place of learning and arcane magic — and his early years there.
 
@@ -93,4 +93,4 @@ Readers who love Rothfuss tend to also enjoy [*Empire of Silence* by Christopher
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

@@ -5,10 +5,10 @@ date: 2025-03-14
 category: Book Reviews
 genre: Fantasy
 excerpt: "James Islington's debut arrived quietly and built a devoted following. Here's our review of The Shadow of What Was Lost — and why it deserves far more attention."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/shadow-of-what-was-lost-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/shadow-of-what-was-lost-cover_ngmjuq.jpg"
 ---
 
-![The Shadow of What Was Lost by James Islington](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/shadow-of-what-was-lost-cover.jpg)
+![The Shadow of What Was Lost by James Islington](https://res.cloudinary.com/dnkddcxrt/image/upload/shadow-of-what-was-lost-cover_ngmjuq.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -73,4 +73,4 @@ The Licanius Trilogy is complete: *The Shadow of What Was Lost*, *An Echo of Thi
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)

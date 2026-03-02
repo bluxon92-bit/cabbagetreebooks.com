@@ -5,10 +5,10 @@ date: 2025-03-31
 category: Book Reviews
 genre: Horror
 excerpt: "Joe Hill's debut novel is one of the best ghost stories of the last twenty years. Here's our review of Heart-Shaped Box — and why it announced a major horror talent."
-image: "https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/heart-shaped-box-cover.jpg"
+image: "https://res.cloudinary.com/dnkddcxrt/image/upload/heart-shaped-box-cover_yzsvkd.jpg"
 ---
 
-![Heart-Shaped Box by Joe Hill](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/heart-shaped-box-cover.jpg)
+![Heart-Shaped Box by Joe Hill](https://res.cloudinary.com/dnkddcxrt/image/upload/heart-shaped-box-cover_yzsvkd.jpg)
 
 *This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer [here](https://www.cabbagetreebooks.com/cookies).*
 
@@ -77,4 +77,4 @@ Hill has since published *NOS4A2*, *The Fireman*, and the *Locke and Key* graphi
 
 #### Check out [Sunset In the East](https://www.cabbagetreebooks.com/sci-fi-short-stories) — a mind-bending short story collection from Ben Luxon.
 
-[![](https://images.squarespace-cdn.com/content/v1/61dd3a4e102f883537ae2f1d/de39e3f4-22ef-47b7-8ffe-fb497e577963/ad+banner+for+website.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
+[![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)](https://www.cabbagetreebooks.com/sci-fi-short-stories)
