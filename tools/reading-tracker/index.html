@@ -477,6 +477,25 @@ permalink: /tools/reading-tracker/
   </div>
 </div>
 
+<!-- PASSWORD RESET OVERLAY -->
+<div class="rt-reset-overlay" id="rt-reset-overlay" style="display:none;">
+  <div class="rt-reset-modal">
+    <div class="rt-reset-icon">🔑</div>
+    <h2 class="rt-section-heading">Choose a new password</h2>
+    <p style="font-size:0.88rem; color:var(--ink-soft); margin-bottom:1.25rem;">Enter a new password for your Cabbage Tree Books account.</p>
+    <div class="rt-field" style="margin-bottom:0.9rem;">
+      <label for="rt-reset-password">New password <span class="rt-optional">(min 8 characters)</span></label>
+      <input type="password" id="rt-reset-password" placeholder="Choose a new password" autocomplete="new-password">
+    </div>
+    <div class="rt-field" style="margin-bottom:1.25rem;">
+      <label for="rt-reset-confirm">Confirm password</label>
+      <input type="password" id="rt-reset-confirm" placeholder="Repeat your new password" autocomplete="new-password">
+    </div>
+    <button class="rt-submit-btn" id="rt-reset-btn" type="button" onclick="doResetPassword()">Save new password →</button>
+    <p id="rt-reset-msg" style="display:none;" class="rt-auth-msg"></p>
+  </div>
+</div>
+
 <!-- INSTALL STRIP -->
 <div class="rt-install-strip" id="rt-install-strip">
   <div class="rt-install-strip-inner">
@@ -503,10 +522,40 @@ let   currentUser      = null;
 sb.auth.onAuthStateChange(async (event, session) => {
   currentUser = session?.user || null;
   renderAuthUI();
+
+  if (event === 'PASSWORD_RECOVERY') {
+    // User clicked the reset link in their email — show the new password form
+    document.getElementById('rt-reset-overlay').style.display = 'flex';
+    return;
+  }
+
   if (currentUser) {
     await syncFromCloud();
   }
 });
+
+async function doResetPassword() {
+  const password = document.getElementById('rt-reset-password').value;
+  const confirm  = document.getElementById('rt-reset-confirm').value;
+  const msgEl    = document.getElementById('rt-reset-msg');
+  const btn      = document.getElementById('rt-reset-btn');
+
+  if (password.length < 8) { showMsg(msgEl, 'Password must be at least 8 characters.', 'error'); return; }
+  if (password !== confirm)  { showMsg(msgEl, 'Passwords don\'t match.', 'error'); return; }
+
+  btn.disabled = true; btn.textContent = 'Saving…';
+  const { error } = await sb.auth.updateUser({ password });
+  if (error) {
+    showMsg(msgEl, error.message, 'error');
+    btn.disabled = false; btn.textContent = 'Save new password →';
+  } else {
+    showMsg(msgEl, '✓ Password updated! Signing you in…', 'success');
+    setTimeout(() => {
+      document.getElementById('rt-reset-overlay').style.display = 'none';
+      showFlash('Password updated — you\'re signed in!');
+    }, 1500);
+  }
+}
 
 function renderAuthUI() {
   const loggedIn  = document.getElementById('rt-auth-loggedin');

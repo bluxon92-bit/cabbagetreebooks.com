@@ -4079,3 +4079,31 @@ a:hover { color: var(--teal-light); }
   flex-shrink: 0;
 }
 .rt-signin-cta-btn:hover { background: #f0fafa; }
+
+/* ─────────────────────────────────────────────────
+   PASSWORD RESET OVERLAY
+───────────────────────────────────────────────── */
+.rt-reset-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.rt-reset-modal {
+  background: var(--white);
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+.rt-reset-icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+.rt-reset-modal .rt-field {
+  text-align: left;
+}
