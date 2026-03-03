@@ -33,7 +33,7 @@ Below we break down some of the key characteristics frequently found in grimdark
 -
   **Lack of Hope: **In many of these fantasy books there is a somewhat pessimistic outlook on the world. The cruelty that the characters experience is unforgiving and realistic, and presents insurmountable obstacles that can’t be overcome without some sacrifice.
 -
-  **A Bleak World:** The [world-building](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building) in grimdark fantasy is typically dark and foreboding, with a focus on realism.
+  **A Bleak World:** The [world-building](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building) in grimdark fantasy is typically dark and foreboding, with a focus on realism.
 
 By embracing these defining characteristics, grimdark fantasy provides a unique and often challenging reading experience that can be both rewarding and thought-provoking.
 
@@ -169,7 +169,7 @@ While there is some overlap between Dark Fantasy and Grimdark, the key differenc
 
 Dark Fantasy typically refers to works of fantasy that incorporate elements of horror or the supernatural, and often involve morally ambiguous characters and settings that are darker and more atmospheric than traditional fantasy. Examples of Dark Fantasy books include Neil Gaiman's "Sandman" series, Anne Rice's "The Vampire Chronicles," and H.P. Lovecraft's stories. Dark Fantasy books often explore themes of mortality, identity, and the nature of good and evil.
 
-Grimdark, on the other hand, is a subgenre of fantasy that is characterized by its harsh realism, moral ambiguity, bleak world-building, and often are feature gritty violence. Because of this I actually find the characters in grimdark fantasy books tend to be more relatable and multi-dimensional than in other fantasy subgenres. They have [complex character motivations](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters) that are never wholly good but are realistically selfish. The villains as well are often more understandable and so the line between good and evil becomes blurred or disappears entirely.
+Grimdark, on the other hand, is a subgenre of fantasy that is characterized by its harsh realism, moral ambiguity, bleak world-building, and often are feature gritty violence. Because of this I actually find the characters in grimdark fantasy books tend to be more relatable and multi-dimensional than in other fantasy subgenres. They have [complex character motivations](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation) that are never wholly good but are realistically selfish. The villains as well are often more understandable and so the line between good and evil becomes blurred or disappears entirely.
 
 Ultimately, both the Grimdark Fantasy and Dark Fantasy subgenres offer readers a chance to explore mature and complex themes in the context of a rich and imaginative fantasy world.
 

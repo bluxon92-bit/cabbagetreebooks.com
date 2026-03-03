@@ -32,7 +32,7 @@ While Assassin's Apprentice may not possess the high [fantasy](https://www.cabba
 
 The pacing and writing in this novel are superb. The story doesn't rush along, yet it is narrated in a compelling manner that invests readers in the characters and the narrative. Despite being Hobb's debut novel, Assassin's Apprentice demonstrates a remarkable level of maturity and thoughtful execution.
 
-The only reason that it doesn’t get five stars is that it’s the later books in the Farseer trilogy (and actually in the overall Elderlings series as Hobbs develops her [world-building](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building)) that really show Hobb’s true plotting abilities.
+The only reason that it doesn’t get five stars is that it’s the later books in the Farseer trilogy (and actually in the overall Elderlings series as Hobbs develops her [world-building](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building)) that really show Hobb’s true plotting abilities.
 
 **Related **[The Best Robin Hobb Books: Six Duchies Books Reading Order](https://www.cabbagetreebooks.com/blog/robin-hobb-farseer-and-beyond)
 

@@ -230,9 +230,9 @@ The internet is a treasure trove of horror short stories. I’ve included links 
 
 ## Write Your Own Horror Short Stories
 
-If you're inspired to try your hand at writing horror fiction, there are a few tips to keep in mind. Focus on a single idea or theme, use sensory language to create atmosphere and mood. You want to [build tension](https://www.cabbagetreebooks.com/writers-blog/creating-tension-when-writing-your-book) and don't be afraid to push the boundaries of your reader's comfort zone. Remember, the goal of horror is to scare and unsettle your reader, so don't hold back.
+If you're inspired to try your hand at writing horror fiction, there are a few tips to keep in mind. Focus on a single idea or theme, use sensory language to create atmosphere and mood. You want to [build tension](https://www.benluxonauthor.com/blog/how-to-create-tension-when-writing-your-story) and don't be afraid to push the boundaries of your reader's comfort zone. Remember, the goal of horror is to scare and unsettle your reader, so don't hold back.
 
-Deliver unexpected twists, [avoid cliches and tropes](https://www.cabbagetreebooks.com/writers-blog/book-tropes-you-need-to-know) and [create engaging characters](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters) that drive the plot forward. With practice and perseverance, you may just write the next great horror short story.
+Deliver unexpected twists, [avoid cliches and tropes](https://www.benluxonauthor.com/blog/93-book-tropes-that-writers-need-to-know-about) and [create engaging characters](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation) that drive the plot forward. With practice and perseverance, you may just write the next great horror short story.
 
 ## Horror Short Stories: Final Words
 

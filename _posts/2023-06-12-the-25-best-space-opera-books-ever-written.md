@@ -22,7 +22,7 @@ In this article, we explore the classics that laid the foundation for space oper
 
 ## What Exactly Is A Space Opera?
 
-It may surprise you to learn that “space opera” was originally coined as an insult. It’s based on the idea of the “soap opera”, and had the subtext of a hacky, overdone, [trope-ridden ](https://www.cabbagetreebooks.com/writers-blog/book-tropes-you-need-to-know)genre. Generally, a space opera is set in outer space, and when thinking about the original usage of the term, would refer to stories with a rather simplistic and melodramatic nature.
+It may surprise you to learn that “space opera” was originally coined as an insult. It’s based on the idea of the “soap opera”, and had the subtext of a hacky, overdone, [trope-ridden ](https://www.benluxonauthor.com/blog/93-book-tropes-that-writers-need-to-know-about)genre. Generally, a space opera is set in outer space, and when thinking about the original usage of the term, would refer to stories with a rather simplistic and melodramatic nature.
 
 However, the space opera terminology quickly became co-opted by sci-fi lovers and reframed by sci-fi greats and it evolved into something far grander. It still has some of those hallmarks of melodrama and romance that you might find typical in a soap opera, but now it incorporates the memorable traits we know and love, including [weird alien worlds](https://www.cabbagetreebooks.com/blog/10-sci-fi-authors), epic sceneries, space battles, and universe-ending stakes.
 
@@ -360,7 +360,7 @@ Enter Rydra Wong, a poet and linguist, who possesses the unwavering resolve to d
 
 ## Space Opera Books: Final Words
 
-The space opera genre has come a long way since its origins as a term of insult. It has evolved into a genre that embraces the grandeur of opera, with its larger-than-life stories, [unforgettable characters](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters), and universe-spanning stakes. Whether you're a fan of space battles, alien civilizations, or mind-bending mysteries, there's something for everyone in the vast and diverse world of space opera.
+The space opera genre has come a long way since its origins as a term of insult. It has evolved into a genre that embraces the grandeur of opera, with its larger-than-life stories, [unforgettable characters](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation), and universe-spanning stakes. Whether you're a fan of space battles, alien civilizations, or mind-bending mysteries, there's something for everyone in the vast and diverse world of space opera.
 
 From classics like Frank Herbert's "Dune" and [Isaac Asimov's](https://www.cabbagetreebooks.com/blog/17-influential-isaac-asimov-quotes) "Foundation" to contemporary works like James S.A. Corey's "Leviathan Wakes" and Alex White's "A Big Ship at the Edge of the Universe," these books push the boundaries of the genre and deliver captivating narratives that explore the depths of human nature, the mysteries of the universe, and the complexities of intergalactic politics.
 

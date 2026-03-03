@@ -32,7 +32,7 @@ Several factors contribute to making a great historical fiction book including:
 
 **Authenticity and Research:** When I read a historical fiction book I want to come away feeling like I was there. I want to take away a new understanding of how the world worked in this place and time. As such, a great historical fiction book is grounded in thorough research and attention to detail, this helps readers visualise and understand the historical context.
 
-**Compelling Characters:** Having a great setting for your story isn’t enough. We ultimately [read stories for the characters](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters). They should be multi-dimensional and we need to care about what happens to them.
+**Compelling Characters:** Having a great setting for your story isn’t enough. We ultimately [read stories for the characters](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation). They should be multi-dimensional and we need to care about what happens to them.
 
 **Well-Crafted Plot:** The plot should be driven by both historical events and the character’s personal journey. Balancing historical accuracy with an intriguing narrative arc, including conflicts, tensions, and resolutions, is essential in creating a page-turning experience.
 

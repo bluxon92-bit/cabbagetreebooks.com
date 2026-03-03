@@ -14,7 +14,7 @@ image: "https://res.cloudinary.com/dnkddcxrt/image/upload/farseer-trilogy-1-_gf4
 
 ---
 
-Robin Hobb is a beloved author in the fantasy genre, known for her richly imagined worlds and [complex characters](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters). One of her most significant contributions to the genre is the Farseer Trilogy. These books introduce readers to the realm of the Six Duchies and the character of FitzChivalry Farseer, and they’re personally my favourite of her work.
+Robin Hobb is a beloved author in the fantasy genre, known for her richly imagined worlds and [complex characters](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation). One of her most significant contributions to the genre is the Farseer Trilogy. These books introduce readers to the realm of the Six Duchies and the character of FitzChivalry Farseer, and they’re personally my favourite of her work.
 
 Since publishing the Farseer trilogy, Robin Hobb has published multiple series set in the same world, including the Liveship Traders Trilogy, the Tawny Man Trilogy, and the Fitz and the Fool Trilogy. In this article, we explore Robin Hobb’s Farseer Trilogy as well as her wider body of work, discussing the importance of reading order and the impact of her writing on [the fantasy genre](https://www.cabbagetreebooks.com/blog/29-best-fantasy-books).
 
@@ -42,9 +42,9 @@ The three books that make up the trilogy (Assassin's Apprentice, Royal Assassin,
 
 ## Recommended Reading Order for Robin Hobb Books
 
-Many of her books take place in the same world and feature [interconnected characters](https://www.cabbagetreebooks.com/writers-blog/how-to-create-a-character-profile) and storylines. Because of the interconnected nature of each of these series, whilst it’s not essential to read them in order it is recommended to start at the beginning with her first book Assassin’s Apprentice.
+Many of her books take place in the same world and feature [interconnected characters](https://www.benluxonauthor.com/blog/the-writers-guide-how-to-create-a-character-profile) and storylines. Because of the interconnected nature of each of these series, whilst it’s not essential to read them in order it is recommended to start at the beginning with her first book Assassin’s Apprentice.
 
-Reading them in order can enhance the reading experience and lead to a deeper understanding of the [world-building](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building) and characters.
+Reading them in order can enhance the reading experience and lead to a deeper understanding of the [world-building](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building) and characters.
 
 ### Recommended reading order for Robin Hobb's books:
 

@@ -136,7 +136,7 @@ The Way of Kings is a masterclass in originality. This epic fast-paced series is
 
 Ultimately, whether you prefer the Mistborn series or Stormligt Archives comes down to personal preference. Both series are gripping page-turners with compelling characters. To give you an idea of what I mean, I finished the first book in the Stormlight series, a vast 1,000 page epic, in less than a week.
 
-The Stormlight Archives’ [world-building](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building) is richer and more detailed. With thousands of years of history, highly original and disparate customs and cultures unique to specific geographic locations. Even the eco-systems are carefully thought out with plants and animals with hard carapaces designed to survive the terrifying high storms.
+The Stormlight Archives’ [world-building](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building) is richer and more detailed. With thousands of years of history, highly original and disparate customs and cultures unique to specific geographic locations. Even the eco-systems are carefully thought out with plants and animals with hard carapaces designed to survive the terrifying high storms.
 
 The Mistborn series also features original elements from the ash that rains from the skies, to the integrated magic system of Allomancy. They both feature strong female and male protagonists with epic heart-pounding fight scenes.
 

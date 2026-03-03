@@ -64,7 +64,7 @@ The Bloody Chamber is actually a selection of ten [fantasy short stories](https:
 
 ### 5. [Treasure Island](https://www.amazon.com/Treasure-Island-Robert-Louis-Stevenson-ebook/dp/B07VGY1BBZ/) by Robert Louis Stevenson
 
-Treasure Island by Robert Louis Stevenson is an exciting and gripping adventure story that follows young Jim Hawkins and his quest to uncover the treasure of the infamous pirate, Captain Flint. However, it’s not the captain, but the villainous rogue Long John Silver that sets the tempo of this tale of treachery, greed, and daring. This work has had a significant impact on [fiction](https://www.cabbagetreebooks.com/blog/fiction-vs-nonfiction-whats-the-difference) over the years shaping and colouring our perception of pirates, adventure, and of course gold.
+Treasure Island by Robert Louis Stevenson is an exciting and gripping adventure story that follows young Jim Hawkins and his quest to uncover the treasure of the infamous pirate, Captain Flint. However, it’s not the captain, but the villainous rogue Long John Silver that sets the tempo of this tale of treachery, greed, and daring. This work has had a significant impact on [fiction](https://www.benluxonauthor.com/blog/fiction-vs-nonfiction-whats-the-difference) over the years shaping and colouring our perception of pirates, adventure, and of course gold.
 
 ### 6. [Gulliver’s Travels](https://www.amazon.com/Gullivers-Travels-Dover-Thrift-Editions/dp/0486292738/) by Jonathan Swift
 
@@ -86,7 +86,7 @@ In the story, Phantasmion is the king of a fantastical realm who is forced into 
 
 ### 8. [Game of Thrones](https://www.amazon.com/Game-Thrones-Song-Fire-Book/dp/0553381687) by George R.R. Martin
 
-When George R.R. Martin published the first book in the A Song of Ice and Fire series, no one could have predicted its phenomenal success. This series is full of political intrigue, bloodshed, betrayal, and sex (all the good stuff). Set in a medievalesque world with dragons, mysterious and unexplained magic, ice zombies, and more it pairs jaw-dropping surprises with subverted [fantasy tropes](https://www.cabbagetreebooks.com/writers-blog/book-tropes-you-need-to-know) to incredible effect. And we can all just hope that he gets around to finishing the series eventually.
+When George R.R. Martin published the first book in the A Song of Ice and Fire series, no one could have predicted its phenomenal success. This series is full of political intrigue, bloodshed, betrayal, and sex (all the good stuff). Set in a medievalesque world with dragons, mysterious and unexplained magic, ice zombies, and more it pairs jaw-dropping surprises with subverted [fantasy tropes](https://www.benluxonauthor.com/blog/93-book-tropes-that-writers-need-to-know-about) to incredible effect. And we can all just hope that he gets around to finishing the series eventually.
 
 ### 9. [The Name of The Wind](https://www.amazon.com/Name-Wind-Patrick-Rothfuss/dp/0756404746/) by Patrick Rothfuss
 
@@ -188,17 +188,17 @@ This is a beautiful and haunting story set in Spain, and it follows the story of
 
 ### 29. [Gardens of the Moon](https://www.amazon.com/Gardens-Moon-Malazan-Book-Fallen/dp/0765348780/) by Steven Erikson
 
-This is the first book in a 10-book epic fantasy series, and it's full of complex [characters and plotlines](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters). It's an amazing read, and it's a must-read for any fantasy fan.
+This is the first book in a 10-book epic fantasy series, and it's full of complex [characters and plotlines](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation). It's an amazing read, and it's a must-read for any fantasy fan.
 
 ### 30. [The Blade Itself](https://www.amazon.com/Blade-Itself-First-Law-Trilogy/dp/0316387312/) by Joe Abercrombie
 
 This is the first book in an ongoing series, and it tells the story of Logen Ninefingers, a barbarian warrior who's trying to put his past behind him. It's a great read and full of action and adventure.
 
-**Related**: [Joe Abercrombie Books in Order: A Complete Reading Guide](https://www.benluxonauthor.com/blog/joe-abercrombie-books-in-order)
+**Related**: [Joe Abercrombie Books in Order: A Complete Reading Guide](https://www.cabbagetreebooks.com/blog/joe-abercrombie-books-in-order-a-complete-reading-guide)
 
 ### 31. [Malice](https://www.amazon.com/Malice-Faithful-Fallen-John-Gwynne/dp/0316399736) by John Gwynne
 
-[The Faithful and the Fallen series by John Gwynne](https://www.cabbagetreebooks.com/blog/john-gwynne-gods-malice-and-wrath) consists of four books and is situated in a [unique fantasy world](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building) the Banished Lands where long-dormant creatures of legend are stirring, and an impending war of unprecedented scale is on the horizon. Malice, the initial book of the series, narrates a tale of avarice, aspiration, and disloyalty through no less than seven distinct perspectives. The critically acclaimed series has garnered significant attention for its captivating plot and imaginative world-building.
+[The Faithful and the Fallen series by John Gwynne](https://www.cabbagetreebooks.com/blog/john-gwynne-gods-malice-and-wrath) consists of four books and is situated in a [unique fantasy world](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building) the Banished Lands where long-dormant creatures of legend are stirring, and an impending war of unprecedented scale is on the horizon. Malice, the initial book of the series, narrates a tale of avarice, aspiration, and disloyalty through no less than seven distinct perspectives. The critically acclaimed series has garnered significant attention for its captivating plot and imaginative world-building.
 
 ---
 
@@ -215,7 +215,7 @@ As a final note, I'd like to pick out my personal favourites of the authors feat
 
 On that same note, [Neil Gaiman](https://www.neilgaiman.com), a lifelong friend of Pratchett’s, is far less prolific than many of the others on this list but is an incredible author. His stories have a mystery and darkness to them which is compelling and bizarre.
 
-[Brandon Sanderson’s books](https://www.cabbagetreebooks.com/blog/11-best-books-by-brandon-sanderson) all share fast-paced and dynamic plots with [great characters](https://www.cabbagetreebooks.com/writers-blog/how-to-create-a-character-profile) and intricate magic systems, making them perfect escapes from reality.
+[Brandon Sanderson’s books](https://www.cabbagetreebooks.com/blog/11-best-books-by-brandon-sanderson) all share fast-paced and dynamic plots with [great characters](https://www.benluxonauthor.com/blog/the-writers-guide-how-to-create-a-character-profile) and intricate magic systems, making them perfect escapes from reality.
 
 And finally, David Gemmel. I spent many of my later teen years devouring his books, everything from his [Drenai series](https://www.cabbagetreebooks.com/blog/david-gemmells-drenai-series) to his later historical fantasy [fiction works that revolve around ancient Greece](https://www.cabbagetreebooks.com/blog/best-books-about-greek-mythology) - a particular favourite of mine is The Lion of Macedon.
 

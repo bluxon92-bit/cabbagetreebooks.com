@@ -35,7 +35,7 @@ Colleen Hoover may not excel in intricate prose, but her story was definitely en
 
 ## Verity Characters - 4/5
 
-Hoover presents us with [believable and emotionally raw characters](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters) in Verity. Some personalities evoke genuine fear, while others compel us to root for them. Lowen, the main protagonist, is immensely likeable. She exudes nervousness and suspicion, yet isn't afraid to speak her mind.
+Hoover presents us with [believable and emotionally raw characters](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation) in Verity. Some personalities evoke genuine fear, while others compel us to root for them. Lowen, the main protagonist, is immensely likeable. She exudes nervousness and suspicion, yet isn't afraid to speak her mind.
 
 On the other hand, Crawford, our secondary protagonist, initially comes across as less captivating. He carries the weight of past hurts, resulting in a reserved and quiet demeanour. Admittedly, I found him somewhat dull at first, but he gradually grows on you, thanks to an element of mystery surrounding him.
 

@@ -64,7 +64,7 @@ Katniss Everdeen is a teenager who is chosen to compete in a televised battle to
 
 "His Dark Materials" by Philip Pullman is a fantastical trilogy that follows Lyra Belacqua, a young girl who embarks on a quest to save her world and others from a mysterious substance called Dust.
 
-The series features an expansive and imaginative [world-building](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building), complex characters, and a deep exploration of philosophy, religion, and morality.
+The series features an expansive and imaginative [world-building](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building), complex characters, and a deep exploration of philosophy, religion, and morality.
 
 [**Rated 4.5 Stars. Buy on Amazon.**](https://amzn.to/3KU6FIz)
 

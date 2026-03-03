@@ -88,7 +88,7 @@ Blood Child is a deeply unsettling story about codependent relationships and the
 
 ### **13.** [**Hallucination**](https://www.gearyschools.org/vimages/shared/vnews/stories/52123ed3d1d1c/Isaac%20Asimov%20&%20Hallucination.pdf)** by Isaac Asimov **
 
-One of the fathers of modern science fiction, [Isaac Asimov](https://www.cabbagetreebooks.com/blog/best-isaac-asimov-books) spins an incredible tale of a futuristic society where life and work are dictated by a central computer. Set on a distant planet it explores what alien life could be like and how it might react to the threat of human colonisation.  As with a lot of Asimov's speculative [fiction](https://www.cabbagetreebooks.com/blog/fiction-vs-nonfiction-whats-the-difference), this story grips and fascinates exploring novel ideas that have you rushing to the end to find out what happens next.
+One of the fathers of modern science fiction, [Isaac Asimov](https://www.cabbagetreebooks.com/blog/best-isaac-asimov-books) spins an incredible tale of a futuristic society where life and work are dictated by a central computer. Set on a distant planet it explores what alien life could be like and how it might react to the threat of human colonisation.  As with a lot of Asimov's speculative [fiction](https://www.benluxonauthor.com/blog/fiction-vs-nonfiction-whats-the-difference), this story grips and fascinates exploring novel ideas that have you rushing to the end to find out what happens next.
 
 ### **14. **[**A Little Journey**](https://www.cabbagetreebooks.com/free-short-stories)** by Ray Bradbury**
 

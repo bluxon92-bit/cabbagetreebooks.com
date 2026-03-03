@@ -35,7 +35,7 @@ The Malazan Book of the Fallen was the first series released into this fantasy u
 10.   **The Crippled God**
   Serving as the explosive conclusion, this final installment reshapes the cosmic order. The fates of gods and mortals intertwine in a dramatic resolution that redefines the world of Malazan.
 
-If you enjoy richly detailed world-building, you might also like [Best Books by China Miéville: Perdido Street Station and More](https://www.benluxonauthor.com/blog/best-books-by-china-mieville?utm_source=chatgpt.com).
+If you enjoy richly detailed world-building, you might also like [Best Books by China Miéville: Perdido Street Station and More](https://www.cabbagetreebooks.com/blog/best-books-by-china-miéville-perdido-street-station-and-more).
 
 ## **Novels of the Malazan Empire (By Ian C. Esslemont)**
 

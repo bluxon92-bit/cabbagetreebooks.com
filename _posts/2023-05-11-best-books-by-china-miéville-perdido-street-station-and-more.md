@@ -38,7 +38,7 @@ At the centre of the story is Isaac Dan der Grimnebulin, a scientist who is work
 
 As Isaac delves deeper into his research, he becomes embroiled in a web of intrigue and betrayal that threatens not only his own life but the lives of those he holds dear. Along the way, he encounters a colourful cast of characters, including a powerful politician, a seductive spy, and a group of rebels fighting against the tyrannical government of New Crobuzon.
 
-Perdido Street Station is a thrilling and immersive read, with a [richly-detailed world](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building) and [complex characters](https://www.cabbagetreebooks.com/writers-blog/how-to-create-a-character-profile). In Perdido Street Station Mieville skillfully weaves together multiple plot threads into a cohesive and satisfying whole.
+Perdido Street Station is a thrilling and immersive read, with a [richly-detailed world](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building) and [complex characters](https://www.benluxonauthor.com/blog/the-writers-guide-how-to-create-a-character-profile). In Perdido Street Station Mieville skillfully weaves together multiple plot threads into a cohesive and satisfying whole.
 
 [**Rated 4.3 Stars. Buy on Amazon.**](https://amzn.to/3BqUoXy)
 

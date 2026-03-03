@@ -88,7 +88,7 @@ There are [supernatural](https://www.cabbagetreebooks.com/blog/11-best-books-by-
 
 
 
-Just After Sunset: Stories is a collection of 13 short stories that showcase King's exceptional storytelling skills. Each story is unique and transports the reader into a world of horror, [suspense](https://www.cabbagetreebooks.com/writers-blog/creating-tension-when-writing-your-book), and sometimes even love. One of the most remarkable features of this book is King's ability to create multi-layered characters that stay with you long after you finish reading. From a creepy child predator to a man who can see the future, every story in this book has a surprise twist that keeps you on the edge of your seat.
+Just After Sunset: Stories is a collection of 13 short stories that showcase King's exceptional storytelling skills. Each story is unique and transports the reader into a world of horror, [suspense](https://www.benluxonauthor.com/blog/how-to-create-tension-when-writing-your-story), and sometimes even love. One of the most remarkable features of this book is King's ability to create multi-layered characters that stay with you long after you finish reading. From a creepy child predator to a man who can see the future, every story in this book has a surprise twist that keeps you on the edge of your seat.
 
 The book is another must-read for all Stephen King fans and fans of short horror fiction.
 

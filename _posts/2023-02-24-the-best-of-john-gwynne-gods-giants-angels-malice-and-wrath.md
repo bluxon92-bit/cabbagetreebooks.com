@@ -12,7 +12,7 @@ image: "https://res.cloudinary.com/dnkddcxrt/image/upload/faithful-and-the-falle
 
 John Gwynne is best known for his epic fantasy series, The Faithful and the Fallen, which consists of four books: Malice, Valour, Ruin, and Wrath. The series is set in the Banished Lands, a world of magic and danger, and is a classic story depicting the struggle between good and evil.
 
-John Gwynne is an excellent writer and has a rapidly growing and loyal following of fantasy readers. His work features [unique fantasy worlds](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building), gritty battle scenes, fast-paced plots and [well-developed characters](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters). He’s been praised for his ability to create vivid and believable fantasy worlds that are populated by characters that readers care about.
+John Gwynne is an excellent writer and has a rapidly growing and loyal following of fantasy readers. His work features [unique fantasy worlds](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building), gritty battle scenes, fast-paced plots and [well-developed characters](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation). He’s been praised for his ability to create vivid and believable fantasy worlds that are populated by characters that readers care about.
 
 In this article, we take a look at the best of John Gwynne’s books, the order of their publication and where you should start.
 
@@ -149,7 +149,7 @@ There are currently two books in the Bloodsworn saga with the third expected to 
 
 In conclusion, John Gwynne is an exceptional author for readers seeking a gripping and fast-paced epic fantasy. His novels are renowned for their exploration of complex characters who navigate the murky waters between good and evil, all while facing the looming threat of powerful and terrifying monsters, demons, and gods.
 
-Through his vivid and detailed [world-building](https://www.cabbagetreebooks.com/writers-blog/15-steps-to-fantasy-world-building), Gwynne has crafted a rich and immersive universe in both the Banished Lands and Vigrid, the setting for the Bloodsworn Saga. His stories will keep you engaged from start to finish. His ability to combine action, intrigue and compelling character development makes his novels a must-read [for fans of the fantasy genre](https://www.cabbagetreebooks.com/blog/fantasy-short-stories). Gwynne's work is a testament to the enduring popularity of epic fantasy and the power of skilled storytelling. His work has won numerous awards including several [David Gemmel](https://www.cabbagetreebooks.com/blog/david-gemmells-drenai-series) awards.
+Through his vivid and detailed [world-building](https://www.benluxonauthor.com/blog/15-steps-to-fantasy-world-building), Gwynne has crafted a rich and immersive universe in both the Banished Lands and Vigrid, the setting for the Bloodsworn Saga. His stories will keep you engaged from start to finish. His ability to combine action, intrigue and compelling character development makes his novels a must-read [for fans of the fantasy genre](https://www.cabbagetreebooks.com/blog/fantasy-short-stories). Gwynne's work is a testament to the enduring popularity of epic fantasy and the power of skilled storytelling. His work has won numerous awards including several [David Gemmel](https://www.cabbagetreebooks.com/blog/david-gemmells-drenai-series) awards.
 
 ### You Might Like
 

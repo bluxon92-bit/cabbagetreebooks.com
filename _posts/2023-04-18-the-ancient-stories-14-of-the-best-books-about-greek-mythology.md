@@ -92,7 +92,7 @@ As his life begins to unravel over a two-week period, the Minotaur discovers the
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/the-king-must-die-1_i7ewqp.jpg)
 
-Mary Renault’s “The King Must Die” offers a vivid portrayal of the mythic hero Theseus, who famously defeated the Minotaur in Crete. Through Renault's use of modern scholarship and archaeological findings at Knossos, Theseus becomes a [fully realized character](https://www.cabbagetreebooks.com/writers-blog/how-to-write-believable-characters) - a charismatic king with both strengths and weaknesses, guided by prophetic destiny.
+Mary Renault’s “The King Must Die” offers a vivid portrayal of the mythic hero Theseus, who famously defeated the Minotaur in Crete. Through Renault's use of modern scholarship and archaeological findings at Knossos, Theseus becomes a [fully realized character](https://www.benluxonauthor.com/blog/how-to-write-believable-characters-character-motivation) - a charismatic king with both strengths and weaknesses, guided by prophetic destiny.
 
 The novel follows Theseus on his journey from Troizen to Eleusis, where he faces the titular death, and from Athens to Crete, where he proves his worth by mastering the challenge of jumping bulls and is subsequently crowned king of the sacrificial victims. Renault expertly captures the spirit of Theseus's time, making this book both a page-turner and a daring work of imagination.
 

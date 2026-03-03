@@ -72,9 +72,9 @@ If you wish to remove the ebook from your Kindle, locate it in "Your Library" an
 ### You Might Also Like
 
 -
-  [93 Book Tropes That Writers Need To Know About](https://www.cabbagetreebooks.com/writers-blog/book-tropes-you-need-to-know)
+  [93 Book Tropes That Writers Need To Know About](https://www.benluxonauthor.com/blog/93-book-tropes-that-writers-need-to-know-about)
 -
-  [Fiction vs nonfiction: What’s the difference?](https://www.cabbagetreebooks.com/blog/fiction-vs-nonfiction-whats-the-difference)
+  [Fiction vs nonfiction: What’s the difference?](https://www.benluxonauthor.com/blog/fiction-vs-nonfiction-whats-the-difference)
 -
   [15 Best Apps to Read Books for Free](https://www.cabbagetreebooks.com/blog/15-best-apps-to-read-books-for-free)
 -

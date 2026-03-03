@@ -50,7 +50,7 @@ Brave New World tells the story of a single individual, the story's protagonist 
 
 Adapted into the award-winning TV show [The Handmaid’s Tale](https://amzn.to/3kPW4p2) focuses on The Handmaid's, a group of women who are forcibly assigned to produce children for the commanders, the ruling class of the dystopian society. The novel itself explores themes of the subjugation of women in a patriarchal society, the loss of female agency and individuality and perhaps most importantly, the means of resistance and the attempts to regain individuality and independence.
 
-**Fans of speculative **[**fiction**](https://www.cabbagetreebooks.com/blog/fiction-vs-nonfiction-whats-the-difference)** may also enjoy **[**the best sci-fi books of Ursla K Le Guin.**](https://www.cabbagetreebooks.com/blog/the-best-sci-fi-books-by-ursula-k-le-guin)
+**Fans of speculative **[**fiction**](https://www.benluxonauthor.com/blog/fiction-vs-nonfiction-whats-the-difference)** may also enjoy **[**the best sci-fi books of Ursla K Le Guin.**](https://www.cabbagetreebooks.com/blog/the-best-sci-fi-books-by-ursula-k-le-guin)
 
 ### **6. A Clockwork Orange by Anthony Burgess **
 

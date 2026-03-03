@@ -42,7 +42,7 @@ That being said, this is one of the reasons I love Arthur C Clarke's work. His o
 
 ## Final Words
 
-The City and The Stars by Arthur C Clarke then is a delightful dalliance of imagination. But, it lacks in several places. Everything takes second place to Clarke’s awe-inspiring ideas. For example, it fails, in my opinion, to make me really care about the main [character](https://www.cabbagetreebooks.com/writers-blog/how-to-create-a-character-profile) he’s a vehicle for the author rather than the other way round. This leads to the plot being a little disjointed, and it lacks the grit and realism at times that readers might want, reading almost like a fable at points.
+The City and The Stars by Arthur C Clarke then is a delightful dalliance of imagination. But, it lacks in several places. Everything takes second place to Clarke’s awe-inspiring ideas. For example, it fails, in my opinion, to make me really care about the main [character](https://www.benluxonauthor.com/blog/the-writers-guide-how-to-create-a-character-profile) he’s a vehicle for the author rather than the other way round. This leads to the plot being a little disjointed, and it lacks the grit and realism at times that readers might want, reading almost like a fable at points.
 
 However, I don’t really care. Clarke’s vision of mankind’s future is bizarre and unique. The City and The Stars offers an incredible reflection on humanity’s past and future and for these reasons, it has undoubtedly influenced the genre and has become a staple [for sci-fi fans](https://www.cabbagetreebooks.com/sci-fi-short-stories).
 
@@ -55,7 +55,7 @@ However, I don’t really care. Clarke’s vision of mankind’s future is bizar
 -
   [9 Dystopian Novels That Will Change How You View The World](https://www.cabbagetreebooks.com/blog/9-dystopian-novels-to-read)
 -
-  [5 Things Every Author Needs To Know Before Self-Publishing](https://www.cabbagetreebooks.com/writers-blog/what-every-author-needs-to-know-before-self-publishing)
+  [5 Things Every Author Needs To Know Before Self-Publishing](https://www.benluxonauthor.com/blog/5-things-every-author-needs-to-know-before-self-publishing)
 -
   [The Best Sci-Fi Books by Ursula K Le Guin](https://www.cabbagetreebooks.com/blog/the-best-sci-fi-books-by-ursula-k-le-guin)
 [

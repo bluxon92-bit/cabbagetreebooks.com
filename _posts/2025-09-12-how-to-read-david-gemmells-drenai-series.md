@@ -241,7 +241,7 @@ I’ve no doubt though, that once you get started you’ll want to read them all
 -
   [The Edge of Darkness: 9 Grimdark Fantasy Books for Fans of Gritty Fiction](https://www.cabbagetreebooks.com/blog/grimdark-fantasy-books)
 -
-  [Joe Abercrombie Books in Order: A Complete Reading Guide](https://www.benluxonauthor.com/blog/joe-abercrombie-books-in-order)
+  [Joe Abercrombie Books in Order: A Complete Reading Guide](https://www.cabbagetreebooks.com/blog/joe-abercrombie-books-in-order-a-complete-reading-guide)
 [
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/ad-banner-for-website_kbfgoq.png)
