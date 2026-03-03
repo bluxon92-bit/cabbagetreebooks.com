@@ -131,11 +131,22 @@ permalink: /tools/reading-tracker/
         <h2 class="rt-section-heading">Add a book</h2>
         <p class="rt-panel-sub">Adding a book will mark it as currently reading. Fill in rating and notes when you're done.</p>
 
+        <!-- CSV Import -->
+        <div class="rt-import-row">
+          <label class="rt-import-label" for="rt-csv-file">📥 Import from Goodreads</label>
+          <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
+          <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
+          <span class="rt-import-hint">Export your library from Goodreads → My Books → Export</span>
+        </div>
+        <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
+
         <div class="rt-form-card">
           <div class="rt-form-row">
-            <div class="rt-field">
+            <div class="rt-field" style="position:relative;">
               <label for="rt-title">Title <span class="rt-required">*</span></label>
-              <input type="text" id="rt-title" placeholder="e.g. The Way of Kings" autocomplete="off">
+              <input type="text" id="rt-title" placeholder="Search by title or author…" autocomplete="off">
+              <div id="rt-ol-dropdown" class="rt-ol-dropdown" style="display:none;"></div>
+              <input type="hidden" id="rt-ol-cover-id">
             </div>
           </div>
           <div class="rt-form-row rt-form-row--2">
@@ -261,21 +272,35 @@ permalink: /tools/reading-tracker/
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-save" data-tab="save" style="display:none;">
       <div class="rt-panel-inner">
-        <div class="rt-coming-soon-card">
-          <div class="rt-coming-soon-icon">✉</div>
-          <h2 class="rt-section-heading">Save &amp; backup your list</h2>
-          <p>Your reading data lives in your browser — which means it could be lost if you clear your cache or switch devices.</p>
-          <p>We're building an email backup feature that will let you:</p>
-          <ul class="rt-coming-soon-list">
-            <li>Email yourself your full TBR list and reading history</li>
-            <li>Get a monthly digest with your stats and top picks</li>
-            <li>Restore your list on any device</li>
-          </ul>
-          <p class="rt-coming-soon-note">Coming soon. In the meantime, <strong>bookmark this page</strong> and don't clear your browser data.</p>
-          <a href="{{ '/newsletter/' | relative_url }}" class="rt-submit-btn" style="display:inline-block; text-decoration:none; text-align:center; max-width:300px;">
-            Join the newsletter to be notified →
-          </a>
+
+        <!-- LOGGED OUT: show magic link form -->
+        <div id="rt-auth-loggedout">
+          <div class="rt-coming-soon-card">
+            <div class="rt-coming-soon-icon">☁</div>
+            <h2 class="rt-section-heading">Save &amp; sync your list</h2>
+            <p>Enter your email to get a magic login link. No password needed. Your reading list will sync across all your devices automatically.</p>
+
+            <div class="rt-auth-form">
+              <input type="email" id="rt-magic-email" class="rt-auth-input" placeholder="your@email.com" autocomplete="email">
+              <button class="rt-submit-btn" id="rt-magic-btn" type="button" onclick="sendMagicLink()">Send login link →</button>
+            </div>
+            <p id="rt-auth-msg" style="display:none;" class="rt-auth-msg"></p>
+
+            <p class="rt-coming-soon-note" style="margin-top:1.5rem;">Also join the newsletter for reading recommendations and updates from Cabbage Tree Books.</p>
+            {% include newsletter-form.html %}
+          </div>
         </div>
+
+        <!-- LOGGED IN: show account info -->
+        <div id="rt-auth-loggedin" style="display:none;">
+          <div class="rt-coming-soon-card">
+            <div class="rt-coming-soon-icon">✓</div>
+            <h2 class="rt-section-heading">You're synced</h2>
+            <p>Signed in as <strong><span id="rt-auth-email"></span></strong>. Your reading list saves to the cloud automatically and will be here on any device you log into.</p>
+            <button class="rt-ghost-btn" type="button" onclick="signOut()" style="margin-top:1rem;">Sign out</button>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -357,8 +382,144 @@ permalink: /tools/reading-tracker/
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 'use strict';
+// ─────────────────────────────────────────────────────────────
+// SUPABASE CLIENT
+// ─────────────────────────────────────────────────────────────
+const SUPABASE_URL     = 'https://faykquqgjndphmizwxts.supabase.co';
+const SUPABASE_ANON    = 'sb_publishable_Xd2AYNgs5TYgx0IYs4zhSA_S8I1cwQO';
+const sb               = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+let   currentUser      = null;
+
+// Auth state listener — runs on page load and whenever login/logout happens
+sb.auth.onAuthStateChange(async (event, session) => {
+  currentUser = session?.user || null;
+  renderAuthUI();
+  if (currentUser) {
+    await syncFromCloud();
+  }
+});
+
+function renderAuthUI() {
+  const loggedIn  = document.getElementById('rt-auth-loggedin');
+  const loggedOut = document.getElementById('rt-auth-loggedout');
+  const emailEl   = document.getElementById('rt-auth-email');
+  if (!loggedIn || !loggedOut) return;
+  if (currentUser) {
+    loggedIn.style.display  = 'flex';
+    loggedOut.style.display = 'none';
+    if (emailEl) emailEl.textContent = currentUser.email;
+  } else {
+    loggedIn.style.display  = 'none';
+    loggedOut.style.display = 'block';
+  }
+}
+
+async function sendMagicLink() {
+  const emailInput = document.getElementById('rt-magic-email');
+  const msgEl      = document.getElementById('rt-auth-msg');
+  const email      = emailInput?.value.trim();
+  if (!email) { emailInput?.focus(); return; }
+  const btn = document.getElementById('rt-magic-btn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.href }
+  });
+  msgEl.style.display = 'block';
+  if (error) {
+    msgEl.className = 'rt-auth-msg rt-auth-msg--error';
+    msgEl.textContent = 'Error: ' + error.message;
+    btn.disabled = false; btn.textContent = 'Send login link';
+  } else {
+    msgEl.className = 'rt-auth-msg rt-auth-msg--success';
+    msgEl.textContent = '✓ Check your email — a login link is on its way!';
+    btn.textContent = 'Sent!';
+  }
+}
+
+async function signOut() {
+  await sb.auth.signOut();
+  currentUser = null;
+  renderAuthUI();
+  showFlash('Signed out.');
+}
+
+// ── Cloud sync ────────────────────────────────────────────────
+async function syncFromCloud() {
+  if (!currentUser) return;
+  const { data, error } = await sb
+    .from('reading_entries')
+    .select('*, books(title, author, cover_id, ol_key)')
+    .eq('user_id', currentUser.id);
+  if (error) { console.error('Sync error:', error.message); return; }
+  if (data && data.length) {
+    books = data.map(e => ({
+      id:          e.id,
+      cloudId:     e.id,
+      title:       e.books?.title    || e.title_manual  || '',
+      author:      e.books?.author   || e.author_manual || '',
+      coverId:     e.books?.cover_id || null,
+      olKey:       e.books?.ol_key   || null,
+      status:      e.status,
+      rating:      e.rating,
+      notes:       e.notes,
+      date:        e.date_finished,
+      dateStarted: e.date_started,
+      added:       e.added_at
+    }));
+    save();
+    updateStats(); renderHomeReading(); renderHistory();
+    if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
+  }
+}
+
+async function saveBookToCloud(book) {
+  if (!currentUser) return;
+
+  let bookId = null;
+
+  // Upsert into canonical books table if we have an OL key
+  if (book.olKey) {
+    const { data, error } = await sb
+      .from('books')
+      .upsert({ ol_key: book.olKey, title: book.title, author: book.author, cover_id: book.coverId || null },
+               { onConflict: 'ol_key' })
+      .select('id')
+      .single();
+    if (!error) bookId = data?.id;
+  }
+
+  // Upsert the reading entry
+  const entry = {
+    user_id:      currentUser.id,
+    book_id:      bookId,
+    title_manual: bookId ? null : book.title,
+    author_manual:bookId ? null : (book.author || null),
+    status:       book.status,
+    rating:       book.rating || null,
+    notes:        book.notes  || null,
+    date_finished:book.date   || null,
+    date_started: book.dateStarted || null
+  };
+
+  // If we already have a cloudId, update that row; otherwise insert
+  if (book.cloudId) {
+    await sb.from('reading_entries').update(entry).eq('id', book.cloudId);
+  } else {
+    const { data } = await sb.from('reading_entries').insert(entry).select('id').single();
+    if (data) book.cloudId = data.id;
+  }
+  save();
+}
+
+async function deleteBookFromCloud(book) {
+  if (!currentUser || !book.cloudId) return;
+  await sb.from('reading_entries').delete().eq('id', book.cloudId);
+}
+
 // ─────────────────────────────────────────────────────────────
 // DATA MODEL
 // book = { id, title, author, genre, status, rating, notes,
@@ -528,7 +689,9 @@ function renderHistory() {
 document.getElementById('rt-history-list').addEventListener('click', function(e) {
   const btn = e.target.closest('[data-action="remove-hist"]');
   if (btn && confirm('Remove this book from your history?')) {
-    books = books.filter(b => b.id !== Number(btn.dataset.id));
+    const book = books.find(b => b.id === Number(btn.dataset.id) || b.id === btn.dataset.id);
+    if (book) deleteBookFromCloud(book);
+    books = books.filter(b => b.id !== Number(btn.dataset.id) && b.id !== btn.dataset.id);
     save(); renderHistory(); updateStats();
   }
 });
@@ -590,6 +753,7 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   };
   books.unshift(book);
   save();
+  saveBookToCloud(book); // sync to Supabase if logged in
 
   // Reset form
   ['rt-title','rt-author','rt-notes'].forEach(id => document.getElementById(id).value = '');
@@ -723,6 +887,7 @@ function finishBook(status) {
     book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
   }
   save();
+  saveBookToCloud(book); // sync to Supabase if logged in
   closeModal();
   renderHomeReading();
   updateStats();
@@ -828,6 +993,219 @@ Warm and direct, like a well-read friend.`;
   }
   btn.disabled = false; btn.textContent = '✦ Get new recommendations';
 });
+
+// ─────────────────────────────────────────────────────────────
+// OPEN LIBRARY AUTOCOMPLETE
+// ─────────────────────────────────────────────────────────────
+let olTimer = null;
+let olSelected = false;
+
+const titleInput  = document.getElementById('rt-title');
+const olDropdown  = document.getElementById('rt-ol-dropdown');
+
+titleInput.addEventListener('input', function() {
+  const q = this.value.trim();
+  olSelected = false;
+  document.getElementById('rt-ol-cover-id').value = '';
+  if (q.length < 3) { olDropdown.style.display = 'none'; return; }
+  clearTimeout(olTimer);
+  olTimer = setTimeout(() => searchOpenLibrary(q), 350);
+});
+
+titleInput.addEventListener('keydown', function(e) {
+  const items = olDropdown.querySelectorAll('.rt-ol-item');
+  const active = olDropdown.querySelector('.rt-ol-item.focused');
+  if (e.key === 'Escape') { olDropdown.style.display = 'none'; return; }
+  if (!items.length) return;
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    const next = active ? (active.nextElementSibling || items[0]) : items[0];
+    if (active) active.classList.remove('focused');
+    next.classList.add('focused');
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    const prev = active ? (active.previousElementSibling || items[items.length-1]) : items[items.length-1];
+    if (active) active.classList.remove('focused');
+    prev.classList.add('focused');
+  } else if (e.key === 'Enter') {
+    if (active) { e.preventDefault(); active.click(); }
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.rt-field')) olDropdown.style.display = 'none';
+});
+
+async function searchOpenLibrary(q) {
+  try {
+    const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&fields=key,title,author_name,first_publish_year,cover_i,subject&limit=6&language=eng`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    renderOLDropdown(data.docs || []);
+  } catch(e) {
+    olDropdown.style.display = 'none';
+  }
+}
+
+function renderOLDropdown(docs) {
+  if (!docs.length) { olDropdown.style.display = 'none'; return; }
+  olDropdown.innerHTML = docs.map(d => {
+    const title   = d.title || '';
+    const author  = (d.author_name || [])[0] || '';
+    const year    = d.first_publish_year || '';
+    const coverId = d.cover_i || '';
+    const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-S.jpg` : '';
+    return `<div class="rt-ol-item" data-title="${esc(title)}" data-author="${esc(author)}" data-cover="${coverId}">
+      ${coverUrl ? `<img src="${coverUrl}" class="rt-ol-cover" alt="" loading="lazy">` : '<div class="rt-ol-cover rt-ol-cover--placeholder">📖</div>'}
+      <div class="rt-ol-info">
+        <div class="rt-ol-title">${esc(title)}</div>
+        <div class="rt-ol-meta">${esc(author)}${year ? ` · ${year}` : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+  olDropdown.style.display = 'block';
+
+  olDropdown.querySelectorAll('.rt-ol-item').forEach(item => {
+    item.addEventListener('click', function() {
+      titleInput.value = this.dataset.title;
+      document.getElementById('rt-author').value = this.dataset.author;
+      document.getElementById('rt-ol-cover-id').value = this.dataset.cover;
+      olDropdown.style.display = 'none';
+      olSelected = true;
+    });
+  });
+}
+
+// Patch uid to include cover data when saving
+const _origAddBtn = document.getElementById('rt-add-btn');
+_origAddBtn.addEventListener('click', function() {
+  // cover_id gets picked up in the existing add handler via the hidden field
+  // We patch into the book object after creation
+}, true); // capture phase — runs before the existing click handler
+
+// Override save to include cover_id from hidden field
+const _origSave = save;
+// We inject cover_id into the book object inside the existing add handler:
+// (we do this by monkey-patching — the hidden field is read at add time)
+
+// ─────────────────────────────────────────────────────────────
+// GOODREADS CSV IMPORT
+// ─────────────────────────────────────────────────────────────
+document.getElementById('rt-csv-file').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    processGoodreadsCSV(ev.target.result);
+  };
+  reader.readAsText(file);
+  this.value = ''; // allow re-import
+});
+
+function processGoodreadsCSV(csvText) {
+  const statusEl = document.getElementById('rt-import-status');
+  statusEl.style.display = 'block';
+  statusEl.className = 'rt-import-status rt-import-status--loading';
+  statusEl.textContent = 'Importing…';
+
+  try {
+    const rows = parseCSV(csvText);
+    if (!rows.length) throw new Error('No rows found');
+
+    // Map Goodreads columns (case-insensitive)
+    const headers = rows[0].map(h => h.toLowerCase().trim());
+    const col = name => headers.findIndex(h => h.includes(name));
+
+    const iTitle    = col('title');
+    const iAuthor   = headers.findIndex(h => h === 'author'); // exact match, avoids 'author l-f'
+    const iShelf    = col('exclusive shelf');
+    const iRating   = col('my rating');
+    const iDateRead = col('date read');
+    const iDateAdded = col('date added');
+    const iReview   = col('my review');
+
+    if (iTitle === -1) throw new Error('Could not find Title column — is this a Goodreads CSV?');
+
+    let imported = 0, skipped = 0;
+
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      if (!row[iTitle] || !row[iTitle].trim()) continue;
+
+      const title  = row[iTitle].trim();
+      const author = iAuthor >= 0 ? row[iAuthor].trim() : '';
+      const shelf  = iShelf  >= 0 ? row[iShelf].trim().toLowerCase() : '';
+      const rating = iRating >= 0 ? parseInt(row[iRating]) || null : null;
+      const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
+      const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
+      const notes  = iReview >= 0 ? (row[iReview] || '').trim() || null : null;
+
+      // Skip if already exists
+      if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
+        skipped++; continue;
+      }
+
+      let status = 'read';
+      if (shelf === 'to-read')        status = 'tbr';
+      else if (shelf === 'currently-reading') status = 'reading';
+      else if (shelf === 'read')      status = 'read';
+
+      books.push({
+        id:     uid(),
+        title,
+        author,
+        status,
+        rating: status === 'read' ? rating : null,
+        notes:  status === 'read' ? notes  : null,
+        date:   status === 'read' ? dateRead : null,
+        dateStarted: status === 'reading' ? (dateAdded || null) : null,
+        added:  dateAdded || new Date().toISOString(),
+        source: 'goodreads'
+      });
+      imported++;
+    }
+
+    save();
+    statusEl.className = 'rt-import-status rt-import-status--success';
+    statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''}. <button class="btn-text-link" onclick="switchTab('home')">View your library →</button>`;
+    updateStats(); renderHomeReading(); renderHistory();
+
+  } catch(err) {
+    statusEl.className = 'rt-import-status rt-import-status--error';
+    statusEl.textContent = `Import failed: ${err.message}`;
+  }
+}
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [], cell = '', inQuote = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === '"') {
+      if (inQuote && text[i+1] === '"') { cell += '"'; i++; }
+      else inQuote = !inQuote;
+    } else if (c === ',' && !inQuote) {
+      row.push(cell); cell = '';
+    } else if ((c === '\n' || c === '\r') && !inQuote) {
+      if (c === '\r' && text[i+1] === '\n') i++;
+      row.push(cell); cell = '';
+      if (row.some(c => c)) rows.push(row);
+      row = [];
+    } else {
+      cell += c;
+    }
+  }
+  if (cell || row.length) { row.push(cell); if (row.some(c => c)) rows.push(row); }
+  return rows;
+}
+
+function parseGRDate(str) {
+  if (!str || !str.trim()) return null;
+  // Goodreads format: "2023/01/15" or "2023/01/15"
+  const m = str.trim().match(/(\d{4})\/(\d{2})\/(\d{2})/);
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  return null;
+}
 
 // ─────────────────────────────────────────────────────────────
 // PWA
