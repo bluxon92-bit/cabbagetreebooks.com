@@ -1353,7 +1353,7 @@ document.getElementById('rt-csv-file').addEventListener('change', function(e) {
   this.value = ''; // allow re-import
 });
 
-function processGoodreadsCSV(csvText) {
+async function processGoodreadsCSV(csvText) {
   const statusEl = document.getElementById('rt-import-status');
   statusEl.style.display = 'block';
   statusEl.className = 'rt-import-status rt-import-status--loading';
@@ -1417,9 +1417,20 @@ function processGoodreadsCSV(csvText) {
     }
 
     save();
-    statusEl.className = 'rt-import-status rt-import-status--success';
-    statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''}. <button class="btn-text-link" onclick="switchTab('home')">View your library →</button>`;
+    statusEl.className = 'rt-import-status rt-import-status--loading';
+    statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''}. Syncing to cloud…`;
     updateStats(); renderHomeReading(); renderHistory();
+
+    // Sync all newly imported books to Supabase if logged in
+    if (currentUser) {
+      const newBooks = books.slice(0, imported);
+      await Promise.all(newBooks.map(b => saveBookToCloud(b)));
+      statusEl.className = 'rt-import-status rt-import-status--success';
+      statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''} and synced to cloud. <button class="btn-text-link" onclick="switchTab('home')">View your library →</button>`;
+    } else {
+      statusEl.className = 'rt-import-status rt-import-status--success';
+      statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''}. <button class="btn-text-link" onclick="switchTab('account')">Sign in to sync →</button>`;
+    }
 
   } catch(err) {
     statusEl.className = 'rt-import-status rt-import-status--error';
