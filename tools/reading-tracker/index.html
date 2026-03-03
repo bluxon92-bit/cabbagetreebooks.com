@@ -47,6 +47,15 @@ permalink: /tools/reading-tracker/
     <div class="rt-panel" id="rt-panel-home" data-tab="home">
       <div class="rt-panel-inner">
 
+        <!-- Sign-in nudge — only shown when logged out -->
+        <div class="rt-signin-cta" id="rt-signin-cta" style="display:none;">
+          <div class="rt-signin-cta-text">
+            <strong>Sync your reading list</strong>
+            <span>Create a free account to access your books on any device.</span>
+          </div>
+          <button class="rt-signin-cta-btn" onclick="switchTab('account')" type="button">Sign up free →</button>
+        </div>
+
         <!-- Currently reading -->
         <div class="rt-home-section">
           <div class="rt-home-section-header">
@@ -147,6 +156,7 @@ permalink: /tools/reading-tracker/
               <input type="text" id="rt-title" placeholder="Search by title or author…" autocomplete="off">
               <div id="rt-ol-dropdown" class="rt-ol-dropdown" style="display:none;"></div>
               <input type="hidden" id="rt-ol-cover-id">
+              <input type="hidden" id="rt-ol-key">
             </div>
           </div>
           <div class="rt-form-row rt-form-row--2">
@@ -503,7 +513,9 @@ function renderAuthUI() {
   const loggedOut = document.getElementById('rt-auth-loggedout');
   const emailEl   = document.getElementById('rt-auth-email');
   const joinedEl  = document.getElementById('rt-profile-joined');
+  const ctaEl     = document.getElementById('rt-signin-cta');
   if (!loggedIn || !loggedOut) return;
+  if (ctaEl) ctaEl.style.display = currentUser ? 'none' : 'flex';
   if (currentUser) {
     loggedIn.style.display  = 'block';
     loggedOut.style.display = 'none';
@@ -553,9 +565,10 @@ async function doSignup() {
     showMsg(msgEl, error.message, 'error');
     btn.disabled = false; btn.textContent = 'Create free account →';
   } else if (data.user && !data.session) {
-    // Email confirmation required
-    showMsg(msgEl, '✓ Check your email to confirm your account, then sign in.', 'success');
+    // Email confirmation required — tell them clearly and switch to login tab
+    showMsg(msgEl, '✓ Account created! Check your email for a confirmation link, then come back and sign in.', 'success');
     btn.disabled = false; btn.textContent = 'Create free account →';
+    setTimeout(() => showAuthForm('login'), 3000);
   } else {
     // Auto-confirmed (email confirmation disabled in Supabase)
     btn.textContent = '✓ Done!';
@@ -906,6 +919,8 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
     return;
   }
   const status  = document.querySelector('input[name="rt-status"]:checked').value;
+  const coverIdRaw = document.getElementById('rt-ol-cover-id').value;
+  const olKeyRaw   = document.getElementById('rt-ol-key').value;
   const book = {
     id:          uid(),
     title,
@@ -916,7 +931,9 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
     notes:       status === 'read' ? document.getElementById('rt-notes').value.trim() : null,
     date:        status === 'read' ? (document.getElementById('rt-date').value || new Date().toISOString().split('T')[0]) : null,
     dateStarted: status === 'reading' ? new Date().toISOString().split('T')[0] : null,
-    added:       new Date().toISOString()
+    added:       new Date().toISOString(),
+    coverId:     coverIdRaw ? parseInt(coverIdRaw) : null,
+    olKey:       olKeyRaw   || null
   };
   books.unshift(book);
   save();
@@ -924,6 +941,8 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
 
   // Reset form
   ['rt-title','rt-author','rt-notes'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('rt-ol-cover-id').value = '';
+  document.getElementById('rt-ol-key').value = '';
   document.getElementById('rt-genre').value = '';
   document.querySelector('input[name="rt-status"][value="reading"]').checked = true;
   document.getElementById('rt-rating-row').style.display = 'none';
@@ -1184,6 +1203,7 @@ titleInput.addEventListener('input', function() {
   const q = this.value.trim();
   olSelected = false;
   document.getElementById('rt-ol-cover-id').value = '';
+  document.getElementById('rt-ol-key').value = '';
   if (q.length < 3) { olDropdown.style.display = 'none'; return; }
   clearTimeout(olTimer);
   olTimer = setTimeout(() => searchOpenLibrary(q), 350);
@@ -1231,8 +1251,9 @@ function renderOLDropdown(docs) {
     const author  = (d.author_name || [])[0] || '';
     const year    = d.first_publish_year || '';
     const coverId = d.cover_i || '';
+    const olKey   = d.key || '';
     const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-S.jpg` : '';
-    return `<div class="rt-ol-item" data-title="${esc(title)}" data-author="${esc(author)}" data-cover="${coverId}">
+    return `<div class="rt-ol-item" data-title="${esc(title)}" data-author="${esc(author)}" data-cover="${coverId}" data-olkey="${esc(olKey)}">
       ${coverUrl ? `<img src="${coverUrl}" class="rt-ol-cover" alt="" loading="lazy">` : '<div class="rt-ol-cover rt-ol-cover--placeholder">📖</div>'}
       <div class="rt-ol-info">
         <div class="rt-ol-title">${esc(title)}</div>
@@ -1245,8 +1266,9 @@ function renderOLDropdown(docs) {
   olDropdown.querySelectorAll('.rt-ol-item').forEach(item => {
     item.addEventListener('click', function() {
       titleInput.value = this.dataset.title;
-      document.getElementById('rt-author').value = this.dataset.author;
-      document.getElementById('rt-ol-cover-id').value = this.dataset.cover;
+      document.getElementById('rt-author').value        = this.dataset.author;
+      document.getElementById('rt-ol-cover-id').value   = this.dataset.cover;
+      document.getElementById('rt-ol-key').value        = this.dataset.olkey;
       olDropdown.style.display = 'none';
       olSelected = true;
     });

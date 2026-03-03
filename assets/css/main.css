@@ -4038,3 +4038,44 @@ a:hover { color: var(--teal-light); }
 @media (max-width: 480px) {
   .rt-benefits-grid { grid-template-columns: 1fr; }
 }
+
+/* ─────────────────────────────────────────────────
+   HOME — SIGN IN CTA BANNER
+───────────────────────────────────────────────── */
+.rt-signin-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--teal);
+  color: white;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.rt-signin-cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.rt-signin-cta-text strong {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.rt-signin-cta-text span {
+  font-size: 0.78rem;
+  opacity: 0.88;
+}
+.rt-signin-cta-btn {
+  background: white;
+  color: var(--teal);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rt-signin-cta-btn:hover { background: #f0fafa; }
