@@ -36,10 +36,7 @@
     ml('account', '2148788');
   </script>
   <!-- End MailerLite Universal -->
-  <!-- Supabase (reading tracker only) -->
-  {% if page.permalink == '/tools/reading-tracker/' %}
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  {% endif %}
+  
 </head>
 <body class="{% if page.permalink %}page-{{ page.permalink | remove: "/" | replace: "/", "-" }}{% endif %}">
 
