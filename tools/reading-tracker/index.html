@@ -663,8 +663,10 @@ function showMsg(el, text, type) {
 async function signOut() {
   await sb.auth.signOut();
   currentUser = null;
-  renderAuthUI();
+  books = [];
+  save();
   showFlash('Signed out.');
+  setTimeout(() => location.reload(), 800);
 }
 
 // ── Cloud sync ────────────────────────────────────────────────
