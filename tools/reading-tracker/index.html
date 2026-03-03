@@ -31,8 +31,8 @@ permalink: /tools/reading-tracker/
     <button class="rt-tab" data-tab="recs"      onclick="switchTab('recs')">
       <span class="rt-tab-icon">✦</span> Recs
     </button>
-    <button class="rt-tab rt-tab--soon" data-tab="save" onclick="switchTab('save')">
-      <span class="rt-tab-icon">✉</span> Save list
+    <button class="rt-tab" data-tab="account" onclick="switchTab('account')">
+      <span class="rt-tab-icon">◉</span> Account
     </button>
   </div>
 </div>
@@ -270,35 +270,131 @@ permalink: /tools/reading-tracker/
     <!-- ══════════════════════════════════
          SAVE LIST (coming soon)
     ══════════════════════════════════ -->
-    <div class="rt-panel" id="rt-panel-save" data-tab="save" style="display:none;">
+    <!-- ══════════════════════════════════
+         ACCOUNT
+    ══════════════════════════════════ -->
+    <div class="rt-panel" id="rt-panel-account" data-tab="account" style="display:none;">
       <div class="rt-panel-inner">
 
-        <!-- LOGGED OUT: show magic link form -->
+        <!-- LOGGED OUT: benefits + auth forms -->
         <div id="rt-auth-loggedout">
-          <div class="rt-coming-soon-card">
-            <div class="rt-coming-soon-icon">☁</div>
-            <h2 class="rt-section-heading">Save &amp; sync your list</h2>
-            <p>Enter your email to get a magic login link. No password needed. Your reading list will sync across all your devices automatically.</p>
 
-            <div class="rt-auth-form">
-              <input type="email" id="rt-magic-email" class="rt-auth-input" placeholder="your@email.com" autocomplete="email">
-              <button class="rt-submit-btn" id="rt-magic-btn" type="button" onclick="sendMagicLink()">Send login link →</button>
+          <!-- Benefits hero -->
+          <div class="rt-account-hero">
+            <div class="rt-account-hero-icon">☁</div>
+            <h2 class="rt-section-heading" style="margin-bottom:0.4rem;">Your reading life, everywhere</h2>
+            <p class="rt-panel-sub">Create a free account to unlock everything.</p>
+            <div class="rt-benefits-grid">
+              <div class="rt-benefit">
+                <span class="rt-benefit-icon">✦</span>
+                <div>
+                  <strong>AI recommendations</strong>
+                  <p>Claude reads your full history and finds books matched to your actual taste.</p>
+                </div>
+              </div>
+              <div class="rt-benefit">
+                <span class="rt-benefit-icon">☁</span>
+                <div>
+                  <strong>Sync across devices</strong>
+                  <p>Your reading list lives in the cloud — phone, tablet, laptop, all in sync.</p>
+                </div>
+              </div>
+              <div class="rt-benefit">
+                <span class="rt-benefit-icon">◈</span>
+                <div>
+                  <strong>Reading stats</strong>
+                  <p>Track your yearly goal, favourite genres, and reading streaks over time.</p>
+                </div>
+              </div>
+              <div class="rt-benefit">
+                <span class="rt-benefit-icon">🔖</span>
+                <div>
+                  <strong>TBR pile</strong>
+                  <p>Save books to read later and never forget a recommendation.</p>
+                </div>
+              </div>
             </div>
-            <p id="rt-auth-msg" style="display:none;" class="rt-auth-msg"></p>
-
-            <p class="rt-coming-soon-note" style="margin-top:1.5rem;">Also join the newsletter for reading recommendations and updates from Cabbage Tree Books.</p>
-            {% include newsletter-form.html %}
           </div>
+
+          <!-- Auth toggle: signup / login -->
+          <div class="rt-auth-tabs">
+            <button class="rt-auth-tab active" id="rt-tab-signup" onclick="showAuthForm('signup')">Create account</button>
+            <button class="rt-auth-tab" id="rt-tab-login" onclick="showAuthForm('login')">Sign in</button>
+          </div>
+
+          <!-- Sign up form -->
+          <div class="rt-auth-card" id="rt-form-signup">
+            <div class="rt-field">
+              <label for="rt-signup-email">Email</label>
+              <input type="email" id="rt-signup-email" placeholder="your@email.com" autocomplete="email">
+            </div>
+            <div class="rt-field">
+              <label for="rt-signup-password">Password <span class="rt-optional">(min 8 characters)</span></label>
+              <input type="password" id="rt-signup-password" placeholder="Choose a password" autocomplete="new-password">
+            </div>
+            <div class="rt-field">
+              <label for="rt-signup-confirm">Confirm password</label>
+              <input type="password" id="rt-signup-confirm" placeholder="Repeat your password" autocomplete="new-password">
+            </div>
+            <button class="rt-submit-btn" id="rt-signup-btn" type="button" onclick="doSignup()">Create free account →</button>
+            <p id="rt-signup-msg" style="display:none;" class="rt-auth-msg"></p>
+          </div>
+
+          <!-- Sign in form -->
+          <div class="rt-auth-card" id="rt-form-login" style="display:none;">
+            <div class="rt-field">
+              <label for="rt-login-email">Email</label>
+              <input type="email" id="rt-login-email" placeholder="your@email.com" autocomplete="email">
+            </div>
+            <div class="rt-field">
+              <label for="rt-login-password">Password</label>
+              <input type="password" id="rt-login-password" placeholder="Your password" autocomplete="current-password">
+            </div>
+            <button class="rt-submit-btn" id="rt-login-btn" type="button" onclick="doLogin()">Sign in →</button>
+            <p id="rt-login-msg" style="display:none;" class="rt-auth-msg"></p>
+            <button class="btn-text-link" style="margin-top:0.75rem; font-size:0.82rem;" onclick="doForgotPassword()">Forgot password?</button>
+          </div>
+
         </div>
 
-        <!-- LOGGED IN: show account info -->
+        <!-- LOGGED IN: profile -->
         <div id="rt-auth-loggedin" style="display:none;">
-          <div class="rt-coming-soon-card">
-            <div class="rt-coming-soon-icon">✓</div>
-            <h2 class="rt-section-heading">You're synced</h2>
-            <p>Signed in as <strong><span id="rt-auth-email"></span></strong>. Your reading list saves to the cloud automatically and will be here on any device you log into.</p>
-            <button class="rt-ghost-btn" type="button" onclick="signOut()" style="margin-top:1rem;">Sign out</button>
+          <div class="rt-profile-card">
+            <div class="rt-profile-avatar" id="rt-profile-avatar">◉</div>
+            <div class="rt-profile-info">
+              <div class="rt-profile-email" id="rt-auth-email"></div>
+              <div class="rt-profile-joined" id="rt-profile-joined"></div>
+            </div>
           </div>
+
+          <!-- Profile stats summary -->
+          <div class="rt-stats-grid" style="margin-bottom:1.5rem;">
+            <div class="rt-stat-card">
+              <div class="rt-stat-label">Books read</div>
+              <div class="rt-stat-number" id="rt-profile-read">0</div>
+            </div>
+            <div class="rt-stat-card">
+              <div class="rt-stat-label">TBR pile</div>
+              <div class="rt-stat-number" id="rt-profile-tbr">0</div>
+            </div>
+            <div class="rt-stat-card">
+              <div class="rt-stat-label">Favourites</div>
+              <div class="rt-stat-number" id="rt-profile-fav">0</div>
+            </div>
+            <div class="rt-stat-card">
+              <div class="rt-stat-label">DNF</div>
+              <div class="rt-stat-number" id="rt-profile-dnf">0</div>
+            </div>
+          </div>
+
+          <!-- Coming soon: community -->
+          <div class="rt-community-teaser">
+            <div class="rt-community-teaser-icon">👥</div>
+            <h3 class="rt-section-heading" style="margin-bottom:0.4rem;">Community — coming soon</h3>
+            <p style="font-size:0.88rem; color:var(--ink-soft);">Follow friends, share reviews, and see what your reading circle is into. Book clubs, reading challenges, and more — all in one place.</p>
+          </div>
+
+          <button class="rt-ghost-btn" type="button" onclick="signOut()" style="margin-top:1.5rem; width:100%;">Sign out</button>
         </div>
 
       </div>
@@ -327,9 +423,9 @@ permalink: /tools/reading-tracker/
     <span class="rt-nav-icon">✦</span>
     <span class="rt-nav-label">Recs</span>
   </button>
-  <button class="rt-nav-btn" data-tab="save" onclick="switchTab('save')">
-    <span class="rt-nav-icon">✉</span>
-    <span class="rt-nav-label">Save</span>
+  <button class="rt-nav-btn" data-tab="account" onclick="switchTab('account')">
+    <span class="rt-nav-icon">◉</span>
+    <span class="rt-nav-label">Account</span>
   </button>
 </nav>
 
@@ -406,38 +502,100 @@ function renderAuthUI() {
   const loggedIn  = document.getElementById('rt-auth-loggedin');
   const loggedOut = document.getElementById('rt-auth-loggedout');
   const emailEl   = document.getElementById('rt-auth-email');
+  const joinedEl  = document.getElementById('rt-profile-joined');
   if (!loggedIn || !loggedOut) return;
   if (currentUser) {
-    loggedIn.style.display  = 'flex';
+    loggedIn.style.display  = 'block';
     loggedOut.style.display = 'none';
     if (emailEl) emailEl.textContent = currentUser.email;
+    if (joinedEl) {
+      const d = new Date(currentUser.created_at || currentUser.email);
+      joinedEl.textContent = isNaN(d) ? '' : 'Member since ' + d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
+    }
+    // Update profile stats
+    const readCount = getBooks('read').length;
+    const tbrCount  = getBooks('tbr').length;
+    const favCount  = getBooks('read').filter(b => b.rating === 5).length;
+    const dnfCount  = getBooks('dnf').length;
+    const el = id => document.getElementById(id);
+    if (el('rt-profile-read')) el('rt-profile-read').textContent = readCount;
+    if (el('rt-profile-tbr'))  el('rt-profile-tbr').textContent  = tbrCount;
+    if (el('rt-profile-fav'))  el('rt-profile-fav').textContent  = favCount;
+    if (el('rt-profile-dnf'))  el('rt-profile-dnf').textContent  = dnfCount;
   } else {
     loggedIn.style.display  = 'none';
     loggedOut.style.display = 'block';
   }
 }
 
-async function sendMagicLink() {
-  const emailInput = document.getElementById('rt-magic-email');
-  const msgEl      = document.getElementById('rt-auth-msg');
-  const email      = emailInput?.value.trim();
-  if (!email) { emailInput?.focus(); return; }
-  const btn = document.getElementById('rt-magic-btn');
-  btn.disabled = true; btn.textContent = 'Sending…';
-  const { error } = await sb.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: window.location.href }
-  });
-  msgEl.style.display = 'block';
+function showAuthForm(which) {
+  document.getElementById('rt-form-signup').style.display = which === 'signup' ? 'block' : 'none';
+  document.getElementById('rt-form-login').style.display  = which === 'login'  ? 'block' : 'none';
+  document.getElementById('rt-tab-signup').classList.toggle('active', which === 'signup');
+  document.getElementById('rt-tab-login').classList.toggle('active',  which === 'login');
+}
+
+async function doSignup() {
+  const email    = document.getElementById('rt-signup-email').value.trim();
+  const password = document.getElementById('rt-signup-password').value;
+  const confirm  = document.getElementById('rt-signup-confirm').value;
+  const msgEl    = document.getElementById('rt-signup-msg');
+  const btn      = document.getElementById('rt-signup-btn');
+
+  msgEl.style.display = 'none';
+  if (!email || !password) { showMsg(msgEl, 'Please fill in all fields.', 'error'); return; }
+  if (password.length < 8) { showMsg(msgEl, 'Password must be at least 8 characters.', 'error'); return; }
+  if (password !== confirm) { showMsg(msgEl, 'Passwords don\'t match.', 'error'); return; }
+
+  btn.disabled = true; btn.textContent = 'Creating account…';
+  const { data, error } = await sb.auth.signUp({ email, password });
   if (error) {
-    msgEl.className = 'rt-auth-msg rt-auth-msg--error';
-    msgEl.textContent = 'Error: ' + error.message;
-    btn.disabled = false; btn.textContent = 'Send login link';
+    showMsg(msgEl, error.message, 'error');
+    btn.disabled = false; btn.textContent = 'Create free account →';
+  } else if (data.user && !data.session) {
+    // Email confirmation required
+    showMsg(msgEl, '✓ Check your email to confirm your account, then sign in.', 'success');
+    btn.disabled = false; btn.textContent = 'Create free account →';
   } else {
-    msgEl.className = 'rt-auth-msg rt-auth-msg--success';
-    msgEl.textContent = '✓ Check your email — a login link is on its way!';
-    btn.textContent = 'Sent!';
+    // Auto-confirmed (email confirmation disabled in Supabase)
+    btn.textContent = '✓ Done!';
+    showFlash('Account created — welcome!');
   }
+}
+
+async function doLogin() {
+  const email    = document.getElementById('rt-login-email').value.trim();
+  const password = document.getElementById('rt-login-password').value;
+  const msgEl    = document.getElementById('rt-login-msg');
+  const btn      = document.getElementById('rt-login-btn');
+
+  if (!email || !password) { showMsg(msgEl, 'Please enter your email and password.', 'error'); return; }
+
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    showMsg(msgEl, error.message === 'Invalid login credentials' ? 'Email or password incorrect.' : error.message, 'error');
+    btn.disabled = false; btn.textContent = 'Sign in →';
+  } else {
+    btn.textContent = '✓ Signed in!';
+    showFlash('Welcome back!');
+  }
+}
+
+async function doForgotPassword() {
+  const email = document.getElementById('rt-login-email').value.trim();
+  const msgEl = document.getElementById('rt-login-msg');
+  if (!email) { showMsg(msgEl, 'Enter your email above first.', 'error'); return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.href
+  });
+  showMsg(msgEl, error ? error.message : '✓ Password reset email sent — check your inbox.', error ? 'error' : 'success');
+}
+
+function showMsg(el, text, type) {
+  el.style.display = 'block';
+  el.className = `rt-auth-msg rt-auth-msg--${type}`;
+  el.textContent = text;
 }
 
 async function signOut() {
@@ -574,6 +732,7 @@ function switchTab(name) {
 
   if (name === 'home') { updateStats(); renderHomeReading(); renderHistory(); }
   if (name === 'tbr')  { renderTBR(); }
+  if (name === 'account') { renderAuthUI(); }
 
   // Scroll to top of app
   const wrap = document.querySelector('.rt-tabbar-wrap');
@@ -613,8 +772,11 @@ function renderHomeReading() {
   const empty   = document.getElementById('rt-home-reading-empty');
 
   empty.style.display = reading.length ? 'none' : 'flex';
-  list.innerHTML = reading.map(b => `
+  list.innerHTML = reading.map(b => {
+    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
+    return `
     <div class="rt-reading-card">
+      ${coverUrl ? `<img src="${coverUrl}" class="rt-reading-cover" alt="Cover of ${esc(b.title)}" loading="lazy">` : '<div class="rt-reading-cover rt-reading-cover--placeholder">📖</div>'}
       <div class="rt-reading-card-body">
         <div class="rt-reading-badge">Currently reading</div>
         <div class="rt-reading-title">${esc(b.title)}</div>
@@ -625,7 +787,8 @@ function renderHomeReading() {
         <button class="rt-finish-btn" data-id="${b.id}" type="button">Finished?</button>
         <button class="rt-delete rt-delete--quiet" data-id="${b.id}" data-action="remove-reading" title="Remove" type="button">×</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // Event delegation for home reading list
@@ -668,8 +831,11 @@ function renderHistory() {
   empty.style.display = list.length ? 'none' : 'flex';
   if (!list.length) { el.innerHTML = ''; return; }
 
-  el.innerHTML = list.map(b => `
+  el.innerHTML = list.map(b => {
+    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+    return `
     <div class="rt-book-item ${b.status==='dnf' ? 'rt-book-item--dnf' : ''}">
+      ${coverUrl ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">` : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
       <div class="rt-book-main">
         <div class="rt-book-info">
           <div class="rt-book-title">${esc(b.title)}${b.status==='dnf' ? ' <span class="rt-dnf-label">DNF</span>' : ''}</div>
@@ -683,7 +849,8 @@ function renderHistory() {
         </div>
       </div>
       ${b.notes ? `<div class="rt-book-notes">${esc(b.notes)}</div>` : ''}
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 document.getElementById('rt-history-list').addEventListener('click', function(e) {
@@ -779,8 +946,11 @@ function renderTBR() {
   const empty = document.getElementById('rt-tbr-empty');
   empty.style.display = tbr.length ? 'none' : 'flex';
 
-  list.innerHTML = tbr.map(b => `
+  list.innerHTML = tbr.map(b => {
+    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+    return `
     <div class="rt-book-item">
+      ${coverUrl ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">` : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
       <div class="rt-book-main">
         <div class="rt-book-info">
           <div class="rt-book-title">${esc(b.title)}</div>
@@ -791,7 +961,8 @@ function renderTBR() {
           <button class="rt-delete" data-id="${b.id}" data-action="remove-tbr" title="Remove" type="button">×</button>
         </div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function addToTBR() {
@@ -958,13 +1129,19 @@ ${tbr.length ? 'After your 4 recommendations, add a single line: "From your TBR 
 Warm and direct, like a well-read friend.`;
 
   try {
-    const res  = await fetch('https://api.anthropic.com/v1/messages', {
+    // Route through Supabase Edge Function to keep API key server-side
+    // Deploy the edge function from the guide — see supabase-setup-guide.docx
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/recommendations`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1200, messages:[{role:'user', content:prompt}] })
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON}`
+      },
+      body: JSON.stringify({ prompt })
     });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    const text = data.content?.find(c => c.type === 'text')?.text || '';
+    const text = data.text || data.content?.find(c => c.type === 'text')?.text || '';
     if (!text) throw new Error('empty');
 
     // Render with Add to TBR buttons on numbered items
