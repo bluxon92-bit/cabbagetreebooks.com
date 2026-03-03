@@ -3355,11 +3355,13 @@ a:hover { color: var(--teal-light); }
 .rt-ai-note { font-size: 0.68rem; color: var(--ink-muted); margin-top: 0.75rem; line-height: 1.6; }
 .rt-rec-item { padding: 1rem 0; border-bottom: 1px solid var(--border); }
 .rt-rec-item:last-child { border-bottom: none; }
+.rt-rec-text { font-size: 0.88rem; line-height: 1.8; color: var(--ink-soft); margin-bottom: 0.65rem; }
+.rt-rec-text strong { color: var(--ink); }
 .rt-rec-item p { font-size: 0.88rem; line-height: 1.8; color: var(--ink-soft); margin-bottom: 0.5rem; }
 .rt-rec-footer { font-size: 0.85rem; color: var(--teal); font-style: italic; margin-top: 0.5rem; }
 .rt-rec-add-btn { font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.85rem; background: transparent; color: var(--teal); border: 1px solid var(--teal-mid); cursor: pointer; transition: all var(--t-fast) var(--ease); }
 .rt-rec-add-btn:hover { background: var(--teal); color: white; }
-.rt-rec-add-btn:disabled { background: var(--teal-pale); cursor: default; }
+.rt-rec-add-btn:disabled { background: var(--teal-pale); color: var(--ink-muted); border-color: var(--border); cursor: default; }
 .rt-ai-loading { display: flex; gap: 6px; justify-content: center; padding: 1.5rem; }
 .rt-ai-loading span { width: 8px; height: 8px; background: var(--teal); border-radius: 50%; animation: rtbounce 1.1s ease-in-out infinite; }
 .rt-ai-loading span:nth-child(2) { animation-delay: 0.18s; }

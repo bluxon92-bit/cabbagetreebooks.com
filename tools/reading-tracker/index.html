@@ -1216,22 +1216,46 @@ Warm and direct, like a well-read friend.`;
     if (!text) throw new Error('empty');
 
     // Render with Add to TBR buttons on numbered items
-    const paras = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').split('\n\n').filter(p => p.trim());
-    const html  = paras.map(p => {
-      const isNum = /^\d+\./.test(p.trim());
+    const lines = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    const paras = lines.split(/\n\n+/).filter(p => p.trim());
+
+    const html = paras.map(p => {
+      const trimmed = p.trim();
+      const isNum = /^\d+[\.\)]/.test(trimmed);
+
       if (isNum) {
-        const strongMatch = p.match(/<strong>([^<]+)<\/strong>/);
+        // Try to extract title and author from the first strong tag
+        const strongMatch = trimmed.match(/<strong>([^<]+)<\/strong>/);
         const raw = strongMatch ? strongMatch[1] : '';
-        const titlePart  = raw.split(' by ')[0].replace(/["""*]/g,'').trim();
-        const authorPart = raw.includes(' by ') ? raw.split(' by ')[1].replace(/["""*]/g,'').trim() : '';
+        // Handle "Title by Author" or just "Title"
+        let titlePart  = '';
+        let authorPart = '';
+        if (raw.includes(' by ')) {
+          titlePart  = raw.split(' by ')[0].replace(/["""*]/g,'').trim();
+          authorPart = raw.split(' by ').slice(1).join(' by ').replace(/["""*]/g,'').trim();
+        } else {
+          titlePart = raw.replace(/["""*]/g,'').trim();
+        }
+
+        // Fallback: try grabbing title from first quoted string if no strong tag
+        if (!titlePart) {
+          const quoteMatch = trimmed.match(/["""']([^"""']+)["""']/);
+          if (quoteMatch) titlePart = quoteMatch[1];
+        }
+
         const safeTitle  = titlePart.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
         const safeAuthor = authorPart.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+
         const addBtn = titlePart
-          ? `<button class="rt-rec-add-btn" onclick="addRecToTBR('${safeTitle}','${safeAuthor}');this.textContent='✓ Added to TBR';this.disabled=true;" type="button">+ Add to TBR</button>`
+          ? `<button class="rt-rec-add-btn" onclick="addRecToTBR('${safeTitle}','${safeAuthor}');this.textContent='✓ Added';this.disabled=true;" type="button">+ Add to TBR</button>`
           : '';
-        return `<div class="rt-rec-item"><p>${p}</p>${addBtn}</div>`;
+
+        // Convert newlines within the paragraph to <br> for multi-line recs
+        const formatted = trimmed.replace(/\n/g, '<br>');
+        return `<div class="rt-rec-item"><div class="rt-rec-text">${formatted}</div>${addBtn}</div>`;
       }
-      return `<p class="rt-rec-footer">${p}</p>`;
+
+      return `<p class="rt-rec-footer">${trimmed.replace(/\n/g, '<br>')}</p>`;
     }).join('');
 
     output.innerHTML = `<div class="rt-ai-response">${html}</div>`;
