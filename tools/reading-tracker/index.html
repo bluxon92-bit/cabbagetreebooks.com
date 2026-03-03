@@ -660,12 +660,15 @@ function showMsg(el, text, type) {
 }
 
 async function signOut() {
-  await sb.auth.signOut();
+  // Clear local session directly — avoids sb.auth.signOut() hanging on bad session state
+  try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 1500))]); } catch(e) {}
+  // Always clear regardless of whether Supabase responded
+  const key = Object.keys(localStorage).find(k => k.startsWith('sb-') && k.endsWith('-auth-token'));
+  if (key) localStorage.removeItem(key);
   currentUser = null;
   books = [];
   save();
-  showFlash('Signed out.');
-  setTimeout(() => location.reload(), 800);
+  location.reload();
 }
 
 // ── Cloud sync ────────────────────────────────────────────────
@@ -676,25 +679,24 @@ async function syncFromCloud() {
     .select('*, books(title, author, cover_id, ol_key)')
     .eq('user_id', currentUser.id);
   if (error) { console.error('Sync error:', error.message); return; }
-  if (data && data.length) {
-    books = data.map(e => ({
-      id:          e.id,
-      cloudId:     e.id,
-      title:       e.books?.title    || e.title_manual  || '',
-      author:      e.books?.author   || e.author_manual || '',
-      coverId:     e.books?.cover_id || null,
-      olKey:       e.books?.ol_key   || null,
-      status:      e.status,
-      rating:      e.rating,
-      notes:       e.notes,
-      date:        e.date_finished,
-      dateStarted: e.date_started,
-      added:       e.added_at
-    }));
-    save();
-    updateStats(); renderHomeReading(); renderHistory();
-    if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
-  }
+  // Always replace local data with cloud data (even if empty — cloud is source of truth)
+  books = (data || []).map(e => ({
+    id:          e.id,
+    cloudId:     e.id,
+    title:       e.books?.title    || e.title_manual  || '',
+    author:      e.books?.author   || e.author_manual || '',
+    coverId:     e.books?.cover_id || null,
+    olKey:       e.books?.ol_key   || null,
+    status:      e.status,
+    rating:      e.rating,
+    notes:       e.notes,
+    date:        e.date_finished,
+    dateStarted: e.date_started,
+    added:       e.added_at
+  }));
+  save();
+  updateStats(); renderHomeReading(); renderHistory();
+  if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
 }
 
 async function saveBookToCloud(book) {
