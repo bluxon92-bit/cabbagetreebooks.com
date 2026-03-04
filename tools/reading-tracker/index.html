@@ -2764,12 +2764,14 @@ function closeModal() {
 // Patch saveBookToCloud to include review fields
 const _origSaveBookToCloud = saveBookToCloud;
 saveBookToCloud = async function(book) {
-  if (!currentUser) return;
+  if (!currentUser) { console.log('❌ Not logged in'); return; }
+  console.log('☁️ Saving:', book.title, '| user:', currentUser.id);
   let bookId = null;
   if (book.olKey) {
     const bookRecord = { ol_key: book.olKey, title: book.title, author: book.author, cover_id: book.coverId || null };
     if (book.goodreadsId) bookRecord.goodreads_book_id = book.goodreadsId;
     const { data, error } = await sb.from('books').upsert(bookRecord, { onConflict: 'ol_key' }).select('id').single();
+    console.log('📚 books upsert:', data, error);
     if (!error) bookId = data?.id;
   }
   const entry = {
@@ -2785,10 +2787,13 @@ saveBookToCloud = async function(book) {
     review_body:      book.reviewBody  || null,
     review_is_public: book.reviewPublic || false
   };
+  console.log('📝 entry to insert:', entry);
   if (book.cloudId) {
-    await sb.from('reading_entries').update(entry).eq('id', book.cloudId);
+    const { error } = await sb.from('reading_entries').update(entry).eq('id', book.cloudId);
+    console.log('✏️ update result:', error);
   } else {
-    const { data } = await sb.from('reading_entries').insert(entry).select('id').single();
+    const { data, error } = await sb.from('reading_entries').insert(entry).select('id').single();
+    console.log('➕ insert result:', data, error);
     if (data) book.cloudId = data.id;
   }
   save();
