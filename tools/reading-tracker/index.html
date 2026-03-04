@@ -737,44 +737,243 @@ permalink: /tools/reading-tracker/
 }
 .rt-profile-stat-l { font-size: 0.58rem; color: var(--rt-t3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.2rem; }
 
-/* ── MODAL ── */
-.rt-modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-  z-index: 500; display: flex; align-items: center; justify-content: center;
-  padding: 1.5rem;
+/* ── BOTTOM SHEET (3-step finish flow) ── */
+.rt-sheet-overlay {
+  position: fixed; inset: 0; background: rgba(10,15,30,0.55);
+  z-index: 500; opacity: 0; pointer-events: none;
+  transition: opacity var(--rt-med) var(--rt-ease);
 }
-.rt-modal {
-  background: var(--rt-white); width: 100%; max-width: 460px;
-  border-radius: var(--rt-r2); padding: 1.75rem;
-  position: relative; max-height: 90vh; overflow-y: auto;
-  box-shadow: var(--rt-s3);
+.rt-sheet-overlay.open { opacity: 1; pointer-events: auto; }
+
+.rt-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 501;
+  background: var(--rt-white);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 40px rgba(10,15,30,0.18);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  max-height: 92vh; overflow: hidden;
+  display: flex; flex-direction: column;
 }
-.rt-modal-header {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  margin-bottom: 1.5rem; gap: 1rem;
+.rt-sheet.open { transform: translateY(0); }
+
+/* Desktop: centre as tall modal */
+@media (min-width: 640px) {
+  .rt-sheet-overlay { display: flex; align-items: center; justify-content: center; }
+  .rt-sheet {
+    position: relative; left: auto; right: auto; bottom: auto;
+    border-radius: var(--rt-r2); max-width: 440px; width: 100%;
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.32s cubic-bezier(0.32,0.72,0,1), opacity 0.28s var(--rt-ease);
+    opacity: 0; max-height: 88vh;
+  }
+  .rt-sheet-overlay.open .rt-sheet { transform: translateY(0) scale(1); opacity: 1; }
 }
-.rt-modal-header h3 {
-  font-family: var(--rt-font-display); font-size: 1.25rem;
-  font-weight: 700; color: var(--rt-navy); line-height: 1.25;
+
+/* Drag handle */
+.rt-sheet-handle {
+  width: 36px; height: 4px; border-radius: 99px;
+  background: var(--rt-cream-md); margin: 10px auto 0; flex-shrink: 0;
 }
-.rt-modal-close {
-  background: none; border: none; font-size: 1.4rem;
-  color: var(--rt-t3); cursor: pointer; line-height: 1; padding: 0;
-  transition: color var(--rt-fast);
+@media (min-width: 640px) { .rt-sheet-handle { display: none; } }
+
+/* Sheet header */
+.rt-sheet-header {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 1.1rem 1.25rem 0; flex-shrink: 0;
 }
-.rt-modal-close:hover { color: var(--rt-navy); }
-.rt-modal-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
-.rt-modal-btn {
-  font-family: var(--rt-font-body); font-size: 0.84rem; font-weight: 700;
-  padding: 0.75rem 1rem; border: none; border-radius: var(--rt-r3);
-  cursor: pointer; transition: all var(--rt-fast); flex: 1; min-width: 110px;
+.rt-sheet-book-cover {
+  width: 40px; height: 58px; border-radius: 5px; object-fit: cover;
+  flex-shrink: 0; box-shadow: 0 3px 10px rgba(26,39,68,0.18);
 }
-.rt-modal-btn--read   { background: var(--rt-navy); color: white; }
-.rt-modal-btn--read:hover   { background: var(--rt-navy-light); }
-.rt-modal-btn--dnf    { background: #7f1d1d; color: white; }
-.rt-modal-btn--dnf:hover    { background: #991b1b; }
-.rt-modal-btn--cancel { background: var(--rt-surface); color: var(--rt-t2); }
-.rt-modal-btn--cancel:hover { background: var(--rt-cream-md); }
+.rt-sheet-book-cover--ph {
+  width: 40px; height: 58px; border-radius: 5px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  box-shadow: 0 3px 10px rgba(26,39,68,0.18);
+}
+.rt-sheet-book-info { flex: 1; min-width: 0; }
+.rt-sheet-book-title {
+  font-family: var(--rt-font-display); font-size: 1rem; font-weight: 700;
+  color: var(--rt-navy); line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rt-sheet-book-author { font-size: 0.75rem; color: var(--rt-t3); margin-top: 0.1rem; }
+.rt-sheet-close {
+  background: var(--rt-surface); border: none; border-radius: 50%;
+  width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--rt-t3); cursor: pointer; flex-shrink: 0;
+  transition: background var(--rt-fast), color var(--rt-fast);
+}
+.rt-sheet-close:hover { background: var(--rt-cream-md); color: var(--rt-navy); }
+
+/* Step indicator */
+.rt-sheet-steps {
+  display: flex; align-items: center; gap: 0.3rem;
+  padding: 0.85rem 1.25rem 0; flex-shrink: 0;
+}
+.rt-sheet-step-dot {
+  height: 3px; flex: 1; border-radius: 99px; background: var(--rt-cream-md);
+  transition: background 0.3s var(--rt-ease);
+}
+.rt-sheet-step-dot.active  { background: var(--rt-navy); }
+.rt-sheet-step-dot.done    { background: var(--rt-amber); }
+.rt-sheet-step-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rt-t3); margin-left: 0.5rem; white-space: nowrap;
+}
+
+/* Slides viewport */
+.rt-sheet-viewport { overflow: hidden; flex: 1; }
+.rt-sheet-slides {
+  display: flex; transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+}
+.rt-sheet-slide {
+  min-width: 100%; padding: 1.25rem 1.25rem 1.5rem;
+  overflow-y: auto; max-height: calc(92vh - 130px);
+  box-sizing: border-box;
+}
+
+/* ── Step 1: Rate ── */
+.rt-step-label {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--rt-t3); margin-bottom: 0.6rem;
+}
+.rt-sheet-stars {
+  display: flex; gap: 0.5rem; margin-bottom: 1.25rem; justify-content: center;
+}
+.rt-sheet-star {
+  background: none; border: none; font-size: 2.8rem; cursor: pointer;
+  color: var(--rt-cream-md); padding: 0; line-height: 1;
+  transition: color var(--rt-fast), transform 0.12s;
+}
+.rt-sheet-star.active, .rt-sheet-star.hover { color: var(--rt-amber); }
+.rt-sheet-star:hover { transform: scale(1.18); }
+
+.rt-sheet-date { width: 100%; margin-bottom: 1.1rem; }
+
+/* DNF option */
+.rt-dnf-toggle {
+  display: flex; align-items: center; gap: 0.65rem;
+  padding: 0.7rem 0.9rem; border: 1.5px solid var(--rt-border-md);
+  border-radius: var(--rt-r3); cursor: pointer; margin-bottom: 1.1rem;
+  transition: border-color var(--rt-fast), background var(--rt-fast);
+}
+.rt-dnf-toggle:hover { border-color: #b42828; background: rgba(180,40,40,0.04); }
+.rt-dnf-toggle.active { border-color: #b42828; background: rgba(180,40,40,0.06); }
+.rt-dnf-toggle input { accent-color: #b42828; width: 15px; height: 15px; cursor: pointer; }
+.rt-dnf-toggle span { font-size: 0.84rem; color: var(--rt-t2); }
+
+/* ── Step 2: Write ── */
+.rt-review-section { margin-bottom: 1.25rem; }
+.rt-review-section:last-child { margin-bottom: 0; }
+
+.rt-share-toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 0.9rem; background: var(--rt-cream);
+  border-radius: var(--rt-r3); margin-bottom: 0.75rem; gap: 0.75rem;
+  cursor: pointer;
+}
+.rt-share-toggle-text strong { display: block; font-size: 0.84rem; font-weight: 600; color: var(--rt-navy); }
+.rt-share-toggle-text span   { font-size: 0.73rem; color: var(--rt-t3); }
+/* iOS-style toggle switch */
+.rt-toggle-switch {
+  position: relative; width: 42px; height: 24px; flex-shrink: 0;
+}
+.rt-toggle-switch input { opacity: 0; width: 0; height: 0; }
+.rt-toggle-track {
+  position: absolute; inset: 0; background: var(--rt-border-md);
+  border-radius: 99px; transition: background 0.2s;
+  cursor: pointer;
+}
+.rt-toggle-track::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px; border-radius: 50%; background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: transform 0.2s;
+}
+.rt-toggle-switch input:checked + .rt-toggle-track { background: var(--rt-navy); }
+.rt-toggle-switch input:checked + .rt-toggle-track::after { transform: translateX(18px); }
+
+.rt-review-field {
+  display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.85rem;
+}
+.rt-review-field label {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rt-t3);
+}
+.rt-review-field textarea {
+  font-family: var(--rt-font-body); font-size: 0.9rem;
+  padding: 0.75rem 0.85rem; border: 1.5px solid var(--rt-border-md);
+  background: var(--rt-cream); color: var(--rt-t1);
+  border-radius: var(--rt-r4); resize: none;
+  transition: border-color var(--rt-fast), background var(--rt-fast);
+  line-height: 1.55;
+}
+.rt-review-field textarea:focus { outline: none; border-color: var(--rt-navy); background: var(--rt-white); }
+.rt-review-public-wrap { overflow: hidden; transition: max-height 0.28s var(--rt-ease), opacity 0.2s; max-height: 0; opacity: 0; }
+.rt-review-public-wrap.visible { max-height: 180px; opacity: 1; }
+
+/* ── Step 3: Done ── */
+.rt-done-hero {
+  text-align: center; padding: 0.5rem 0 1rem;
+}
+.rt-done-cover-wrap { position: relative; display: inline-block; margin-bottom: 0.9rem; }
+.rt-done-cover {
+  width: 72px; height: 104px; border-radius: 8px; object-fit: cover;
+  box-shadow: 0 6px 20px rgba(26,39,68,0.22);
+}
+.rt-done-cover--ph {
+  width: 72px; height: 104px; border-radius: 8px; display: inline-flex;
+  align-items: center; justify-content: center; font-size: 2rem;
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  box-shadow: 0 6px 20px rgba(26,39,68,0.22);
+}
+.rt-done-check {
+  position: absolute; bottom: -8px; right: -8px;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #22c55e; color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(34,197,94,0.35);
+}
+.rt-done-title {
+  font-family: var(--rt-font-display); font-size: 1.1rem; font-weight: 700;
+  color: var(--rt-navy); margin-bottom: 0.3rem; line-height: 1.25;
+}
+.rt-done-stars { font-size: 1.1rem; color: var(--rt-amber); letter-spacing: 1px; margin-bottom: 0.5rem; }
+.rt-done-status {
+  font-size: 0.78rem; color: var(--rt-t3); line-height: 1.5;
+}
+.rt-done-public-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--rt-amber-pale); color: var(--rt-amber);
+  border: 1px solid rgba(200,137,26,0.2); border-radius: var(--rt-r4);
+  font-size: 0.72rem; font-weight: 700; padding: 0.3em 0.75em; margin-top: 0.5rem;
+}
+
+/* ── Sheet footer (buttons) ── */
+.rt-sheet-footer {
+  padding: 0.85rem 1.25rem 1.25rem; flex-shrink: 0;
+  border-top: 1px solid var(--rt-border);
+  display: flex; gap: 0.6rem;
+}
+.rt-sheet-btn {
+  font-family: var(--rt-font-body); font-size: 0.9rem; font-weight: 700;
+  padding: 0.85rem 1.1rem; border: none; border-radius: var(--rt-r3);
+  cursor: pointer; transition: background var(--rt-fast); flex: 1;
+}
+.rt-sheet-btn--primary { background: var(--rt-navy); color: white; }
+.rt-sheet-btn--primary:hover { background: var(--rt-navy-light); }
+.rt-sheet-btn--secondary { background: var(--rt-surface); color: var(--rt-t2); flex: 0 0 auto; padding: 0.85rem 1rem; }
+.rt-sheet-btn--secondary:hover { background: var(--rt-cream-md); }
+.rt-sheet-btn--dnf { background: rgba(127,29,29,0.08); color: #7f1d1d; flex: 0 0 auto; padding: 0.85rem 1rem; }
+.rt-sheet-btn--dnf:hover { background: rgba(127,29,29,0.14); }
+.rt-sheet-btn--done { background: var(--rt-navy); color: white; }
+.rt-sheet-btn--done:hover { background: var(--rt-navy-light); }
+
+/* Legacy modal classes — kept so any stray refs don't break */
+.rt-modal-overlay { display: none !important; }
+.rt-modal-btn { display: none; }
 
 /* ── FLASH ── */
 .rt-flash {
@@ -930,9 +1129,8 @@ permalink: /tools/reading-tracker/
   .rt-form-card { padding: 1.1rem; }
   .rt-reading-card { flex-direction: column; }
   .rt-reading-card-actions { flex-direction: row; width: 100%; justify-content: space-between; }
-  .rt-modal { padding: 1.4rem; }
-  .rt-modal-actions { flex-direction: column; }
-  .rt-modal-btn { flex: none; width: 100%; }
+  /* sheet footer safe area on notched phones */
+  .rt-sheet-footer { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
   .rt-benefits-grid { grid-template-columns: 1fr; }
   .rt-profile-stats { grid-template-columns: repeat(2, 1fr); }
   .rt-recs-header { flex-direction: column; }
@@ -1399,36 +1597,128 @@ permalink: /tools/reading-tracker/
   </button>
 </nav>
 
-<!-- FINISH MODAL -->
-<div class="rt-modal-overlay" id="rt-modal-overlay" style="display:none;" aria-modal="true" role="dialog">
-  <div class="rt-modal">
-    <div class="rt-modal-header">
-      <h3 id="rt-modal-title">How was it?</h3>
-      <button class="rt-modal-close" id="rt-modal-close" aria-label="Close" type="button">×</button>
-    </div>
-    <input type="hidden" id="rt-modal-book-id">
-    <div class="rt-field" style="margin-bottom:1.1rem;">
-      <label>Rating <span class="rt-optional">(optional)</span></label>
-      <div class="rt-stars rt-stars--large" id="rt-modal-stars" role="radiogroup">
-        <button class="rt-star" data-val="1" type="button">★</button>
-        <button class="rt-star" data-val="2" type="button">★</button>
-        <button class="rt-star" data-val="3" type="button">★</button>
-        <button class="rt-star" data-val="4" type="button">★</button>
-        <button class="rt-star" data-val="5" type="button">★</button>
+<!-- ══════════════════════════════════════════════
+     FINISH BOTTOM SHEET — 3 steps
+══════════════════════════════════════════════ -->
+<div class="rt-sheet-overlay" id="rt-sheet-overlay" role="dialog" aria-modal="true" aria-label="Finish book">
+
+  <div class="rt-sheet" id="rt-sheet">
+
+    <div class="rt-sheet-handle"></div>
+
+    <!-- Header: cover + title + close -->
+    <div class="rt-sheet-header">
+      <div class="rt-sheet-book-cover--ph" id="rt-sheet-cover-ph">📖</div>
+      <img id="rt-sheet-cover-img" class="rt-sheet-book-cover" alt="" style="display:none;" loading="eager">
+      <div class="rt-sheet-book-info">
+        <div class="rt-sheet-book-title" id="rt-sheet-title"></div>
+        <div class="rt-sheet-book-author" id="rt-sheet-author"></div>
       </div>
+      <button class="rt-sheet-close" id="rt-sheet-close" aria-label="Close" type="button">×</button>
     </div>
-    <div class="rt-field" style="margin-bottom:1.1rem;">
-      <label for="rt-modal-notes">Notes <span class="rt-optional">(private — helps personalise recommendations)</span></label>
-      <textarea id="rt-modal-notes" rows="3" placeholder="What did you think? Even a few words helps…"></textarea>
+
+    <!-- Step indicators -->
+    <div class="rt-sheet-steps">
+      <div class="rt-sheet-step-dot active" id="rt-sdot-0"></div>
+      <div class="rt-sheet-step-dot" id="rt-sdot-1"></div>
+      <div class="rt-sheet-step-dot" id="rt-sdot-2"></div>
+      <span class="rt-sheet-step-label" id="rt-step-label">Rate it</span>
     </div>
-    <div class="rt-field" style="margin-bottom:1.5rem;">
-      <label for="rt-modal-date">Date finished</label>
-      <input type="date" id="rt-modal-date">
+
+    <!-- Slides -->
+    <div class="rt-sheet-viewport">
+      <div class="rt-sheet-slides" id="rt-sheet-slides">
+
+        <!-- ── STEP 1: Rate ── -->
+        <div class="rt-sheet-slide" id="rt-slide-0">
+          <div class="rt-step-label">How many stars?</div>
+          <div class="rt-sheet-stars" id="rt-sheet-stars" role="radiogroup" aria-label="Star rating">
+            <button class="rt-sheet-star" data-val="1" type="button" aria-label="1 star">★</button>
+            <button class="rt-sheet-star" data-val="2" type="button" aria-label="2 stars">★</button>
+            <button class="rt-sheet-star" data-val="3" type="button" aria-label="3 stars">★</button>
+            <button class="rt-sheet-star" data-val="4" type="button" aria-label="4 stars">★</button>
+            <button class="rt-sheet-star" data-val="5" type="button" aria-label="5 stars">★</button>
+          </div>
+
+          <div class="rt-review-field">
+            <label for="rt-sheet-date">Date finished</label>
+            <input type="date" id="rt-sheet-date" class="rt-field input" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;">
+          </div>
+
+          <label class="rt-dnf-toggle" id="rt-dnf-toggle">
+            <input type="checkbox" id="rt-dnf-check">
+            <span>Did not finish (DNF)</span>
+          </label>
+        </div>
+
+        <!-- ── STEP 2: Write ── -->
+        <div class="rt-sheet-slide" id="rt-slide-1">
+
+          <div class="rt-review-field">
+            <label for="rt-sheet-notes">Private notes <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(only you can see this — feeds your AI recommendations)</span></label>
+            <textarea id="rt-sheet-notes" rows="3" placeholder="What did you think? Even a few words helps Claude find your next book…"></textarea>
+          </div>
+
+          <div class="rt-share-toggle-row" id="rt-share-toggle-row">
+            <div class="rt-share-toggle-text">
+              <strong>Share a review</strong>
+              <span>Friends can see this and comment</span>
+            </div>
+            <label class="rt-toggle-switch" aria-label="Share review publicly">
+              <input type="checkbox" id="rt-share-check">
+              <div class="rt-toggle-track"></div>
+            </label>
+          </div>
+
+          <div class="rt-review-public-wrap" id="rt-review-public-wrap">
+            <div class="rt-review-field">
+              <label for="rt-sheet-review">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public — friends can comment)</span></label>
+              <textarea id="rt-sheet-review" rows="4" placeholder="Write something others would find useful…"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: Done ── -->
+        <div class="rt-sheet-slide" id="rt-slide-2">
+          <div class="rt-done-hero">
+            <div class="rt-done-cover-wrap">
+              <div class="rt-done-cover--ph" id="rt-done-cover-ph">📚</div>
+              <img id="rt-done-cover-img" class="rt-done-cover" alt="" style="display:none;">
+              <div class="rt-done-check">✓</div>
+            </div>
+            <div class="rt-done-title" id="rt-done-title"></div>
+            <div class="rt-done-stars" id="rt-done-stars"></div>
+            <div class="rt-done-status" id="rt-done-status"></div>
+            <div id="rt-done-public-badge" style="display:none;">
+              <span class="rt-done-public-badge">✦ Review shared to your feed</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /slides -->
+    </div><!-- /viewport -->
+
+    <!-- Footer buttons (change per step) -->
+    <div class="rt-sheet-footer" id="rt-sheet-footer">
+      <!-- Injected by JS -->
     </div>
+
+  </div><!-- /rt-sheet -->
+</div><!-- /rt-sheet-overlay -->
+
+<!-- Keep old modal markup so legacy IDs don't throw errors — hidden by CSS -->
+<div class="rt-modal-overlay" id="rt-modal-overlay" style="display:none;" aria-hidden="true">
+  <div class="rt-modal">
+    <input type="hidden" id="rt-modal-book-id">
+    <div id="rt-modal-title"></div>
+    <div id="rt-modal-stars"></div>
+    <textarea id="rt-modal-notes"></textarea>
+    <input type="date" id="rt-modal-date">
     <div class="rt-modal-actions">
-      <button class="rt-modal-btn rt-modal-btn--read"   id="rt-modal-mark-read" type="button">✓ Mark as read</button>
-      <button class="rt-modal-btn rt-modal-btn--dnf"    id="rt-modal-mark-dnf"  type="button">Did not finish</button>
-      <button class="rt-modal-btn rt-modal-btn--cancel" id="rt-modal-cancel"    type="button">Cancel</button>
+      <button id="rt-modal-mark-read" type="button" style="display:none;"></button>
+      <button id="rt-modal-mark-dnf"  type="button" style="display:none;"></button>
+      <button id="rt-modal-cancel"    type="button" style="display:none;"></button>
+      <button class="rt-modal-close"  id="rt-modal-close" type="button" style="display:none;"></button>
     </div>
   </div>
 </div>
@@ -1990,56 +2280,220 @@ function addRecToTBR(title, author) {
 }
 
 // ─────────────────────────────────────────────────────────────
-// FINISH MODAL
+// FINISH SHEET — 3-step bottom sheet
 // ─────────────────────────────────────────────────────────────
-function openModal(bookId) {
+let sheetBookId  = null;
+let sheetStep    = 0;
+let sheetRating  = 0;
+
+const STEP_LABELS = ['Rate it', 'Write', 'Done'];
+
+function openModal(bookId) {          // called from existing "Finished?" buttons
   const book = books.find(b => String(b.id) === String(bookId));
-  if (!book) { console.warn('Book not found:', bookId); return; }
-  document.getElementById('rt-modal-book-id').value     = bookId;
-  document.getElementById('rt-modal-title').textContent = `"${book.title}"`;
-  document.getElementById('rt-modal-notes').value       = '';
-  document.getElementById('rt-modal-date').value        = new Date().toISOString().split('T')[0];
-  setModalStars(0);
-  document.getElementById('rt-modal-overlay').style.display = 'flex';
+  if (!book) return;
+  sheetBookId = bookId;
+  sheetStep   = 0;
+  sheetRating = 0;
+
+  // Populate header
+  document.getElementById('rt-sheet-title').textContent  = book.title;
+  document.getElementById('rt-sheet-author').textContent = book.author || '';
+
+  // Cover art
+  const ph  = document.getElementById('rt-sheet-cover-ph');
+  const img = document.getElementById('rt-sheet-cover-img');
+  if (book.coverId) {
+    img.src = `https://covers.openlibrary.org/b/id/${book.coverId}-M.jpg`;
+    img.style.display = 'block'; ph.style.display = 'none';
+  } else {
+    img.style.display = 'none'; ph.style.display = 'flex';
+  }
+
+  // Reset fields
+  setSheetStars(0);
+  document.getElementById('rt-sheet-date').value   = new Date().toISOString().split('T')[0];
+  document.getElementById('rt-dnf-check').checked  = false;
+  document.getElementById('rt-dnf-toggle').classList.remove('active');
+  document.getElementById('rt-sheet-notes').value  = '';
+  document.getElementById('rt-sheet-review').value = '';
+  document.getElementById('rt-share-check').checked = false;
+  document.getElementById('rt-review-public-wrap').classList.remove('visible');
+
+  goToStep(0);
+
+  // Open sheet
+  const overlay = document.getElementById('rt-sheet-overlay');
+  const sheet   = document.getElementById('rt-sheet');
+  overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
   document.body.style.overflow = 'hidden';
 }
+
 function closeModal() {
-  document.getElementById('rt-modal-overlay').style.display = 'none';
+  const overlay = document.getElementById('rt-sheet-overlay');
+  const sheet   = document.getElementById('rt-sheet');
+  sheet.classList.remove('open');
+  overlay.classList.remove('open');
   document.body.style.overflow = '';
 }
-document.getElementById('rt-modal-close').addEventListener('click',  closeModal);
-document.getElementById('rt-modal-cancel').addEventListener('click', closeModal);
-document.getElementById('rt-modal-overlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-function setModalStars(v) {
-  modalRating = v;
-  document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i) => s.classList.toggle('active', i < v));
+// Step navigation
+function goToStep(n) {
+  sheetStep = n;
+  // Slide the viewport
+  document.getElementById('rt-sheet-slides').style.transform = `translateX(-${n * 100}%)`;
+  // Update dots
+  for (let i = 0; i < 3; i++) {
+    const dot = document.getElementById(`rt-sdot-${i}`);
+    dot.classList.toggle('active', i === n);
+    dot.classList.toggle('done',   i < n);
+  }
+  document.getElementById('rt-step-label').textContent = STEP_LABELS[n];
+  renderSheetFooter(n);
 }
-const ms = document.getElementById('rt-modal-stars');
-ms.addEventListener('click', e => {
-  const b = e.target.closest('.rt-star'); if (!b) return;
-  const v = parseInt(b.dataset.val); setModalStars(modalRating === v ? 0 : v);
-});
-ms.addEventListener('mouseover', e => {
-  const b = e.target.closest('.rt-star'); if (!b) return;
-  document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i) => s.classList.toggle('hover', i < parseInt(b.dataset.val)));
-});
-ms.addEventListener('mouseleave', () => document.querySelectorAll('#rt-modal-stars .rt-star').forEach(s => s.classList.remove('hover')));
 
-function finishBook(status) {
-  const id   = document.getElementById('rt-modal-book-id').value;
-  const book = books.find(b => String(b.id) === String(id));
+function renderSheetFooter(step) {
+  const footer = document.getElementById('rt-sheet-footer');
+  if (step === 0) {
+    footer.innerHTML = `
+      <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-sheet-cancel" type="button">Cancel</button>
+      <button class="rt-sheet-btn rt-sheet-btn--primary"   id="rt-sheet-next-0" type="button">Next →</button>`;
+    document.getElementById('rt-sheet-cancel').onclick = closeModal;
+    document.getElementById('rt-sheet-next-0').onclick = () => {
+      const isDnf = document.getElementById('rt-dnf-check').checked;
+      if (isDnf) { commitFinish('dnf'); return; }
+      goToStep(1);
+    };
+  } else if (step === 1) {
+    footer.innerHTML = `
+      <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-sheet-back-1"  type="button">← Back</button>
+      <button class="rt-sheet-btn rt-sheet-btn--primary"   id="rt-sheet-next-1"  type="button">Save →</button>`;
+    document.getElementById('rt-sheet-back-1').onclick = () => goToStep(0);
+    document.getElementById('rt-sheet-next-1').onclick = () => commitFinish('read');
+  } else if (step === 2) {
+    footer.innerHTML = `
+      <button class="rt-sheet-btn rt-sheet-btn--done" id="rt-sheet-done" type="button">Done</button>`;
+    document.getElementById('rt-sheet-done').onclick = () => {
+      closeModal();
+      renderHomeReading(); updateStats();
+    };
+  }
+}
+
+// Star interaction
+function setSheetStars(v) {
+  sheetRating = v;
+  document.querySelectorAll('#rt-sheet-stars .rt-sheet-star').forEach((s,i) => s.classList.toggle('active', i < v));
+}
+
+const sheetStarsEl = document.getElementById('rt-sheet-stars');
+sheetStarsEl.addEventListener('click', e => {
+  const b = e.target.closest('.rt-sheet-star'); if (!b) return;
+  const v = parseInt(b.dataset.val);
+  setSheetStars(sheetRating === v ? 0 : v);
+});
+sheetStarsEl.addEventListener('mouseover', e => {
+  const b = e.target.closest('.rt-sheet-star'); if (!b) return;
+  document.querySelectorAll('#rt-sheet-stars .rt-sheet-star')
+    .forEach((s,i) => s.classList.toggle('hover', i < parseInt(b.dataset.val)));
+});
+sheetStarsEl.addEventListener('mouseleave', () =>
+  document.querySelectorAll('#rt-sheet-stars .rt-sheet-star').forEach(s => s.classList.remove('hover')));
+
+// DNF toggle styling
+document.getElementById('rt-dnf-check').addEventListener('change', function() {
+  document.getElementById('rt-dnf-toggle').classList.toggle('active', this.checked);
+});
+
+// Share toggle — show/hide public review field
+document.getElementById('rt-share-check').addEventListener('change', function() {
+  document.getElementById('rt-review-public-wrap').classList.toggle('visible', this.checked);
+});
+
+// Close on overlay click
+document.getElementById('rt-sheet-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.getElementById('rt-sheet-close').addEventListener('click', closeModal);
+
+// Commit the book as finished or DNF
+function commitFinish(status) {
+  const book = books.find(b => String(b.id) === String(sheetBookId));
   if (!book) { closeModal(); return; }
-  book.status = status;
-  book.date   = document.getElementById('rt-modal-date').value || new Date().toISOString().split('T')[0];
-  book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
-  if (status === 'read') book.rating = modalRating || null;
-  save(); saveBookToCloud(book); closeModal();
-  renderHomeReading(); updateStats();
-  showFlash(status === 'read' ? `✓ "${book.title}" marked as finished!` : `"${book.title}" marked as DNF.`);
+
+  book.status      = status;
+  book.date        = document.getElementById('rt-sheet-date').value || new Date().toISOString().split('T')[0];
+  book.notes       = document.getElementById('rt-sheet-notes').value.trim() || null;
+  book.rating      = (status === 'read') ? (sheetRating || null) : null;
+
+  const isPublic   = document.getElementById('rt-share-check').checked;
+  const reviewText = document.getElementById('rt-sheet-review').value.trim();
+  book.reviewBody  = (isPublic && reviewText) ? reviewText : null;
+  book.reviewPublic = isPublic && !!reviewText;
+
+  save();
+  saveBookToCloud(book);
+
+  // Populate step 3
+  const ph  = document.getElementById('rt-done-cover-ph');
+  const img = document.getElementById('rt-done-cover-img');
+  if (book.coverId) {
+    img.src = `https://covers.openlibrary.org/b/id/${book.coverId}-M.jpg`;
+    img.style.display = 'block'; ph.style.display = 'none';
+  } else {
+    img.style.display = 'none'; ph.style.display = 'inline-flex';
+  }
+  document.getElementById('rt-done-title').textContent = book.title;
+  document.getElementById('rt-done-stars').textContent =
+    status === 'dnf' ? 'Did not finish' :
+    sheetRating ? '★'.repeat(sheetRating) + '☆'.repeat(5 - sheetRating) : '';
+  document.getElementById('rt-done-status').textContent =
+    status === 'dnf' ? 'Marked as DNF — logged to your history.' :
+    'Logged to your reading history.';
+  const badge = document.getElementById('rt-done-public-badge');
+  badge.style.display = book.reviewPublic ? 'block' : 'none';
+
+  goToStep(2);
 }
-document.getElementById('rt-modal-mark-read').addEventListener('click', () => finishBook('read'));
-document.getElementById('rt-modal-mark-dnf').addEventListener('click',  () => finishBook('dnf'));
+
+// Patch saveBookToCloud to include review fields
+const _origSaveBookToCloud = saveBookToCloud;
+saveBookToCloud = async function(book) {
+  if (!currentUser) return;
+  let bookId = null;
+  if (book.olKey) {
+    const bookRecord = { ol_key: book.olKey, title: book.title, author: book.author, cover_id: book.coverId || null };
+    if (book.goodreadsId) bookRecord.goodreads_book_id = book.goodreadsId;
+    const { data, error } = await sb.from('books').upsert(bookRecord, { onConflict: 'ol_key' }).select('id').single();
+    if (!error) bookId = data?.id;
+  }
+  const entry = {
+    user_id:          currentUser.id,
+    book_id:          bookId,
+    title_manual:     bookId ? null : book.title,
+    author_manual:    bookId ? null : (book.author || null),
+    status:           book.status,
+    rating:           book.rating   || null,
+    notes:            book.notes    || null,
+    date_finished:    book.date     || null,
+    date_started:     book.dateStarted || null,
+    review_body:      book.reviewBody  || null,
+    review_is_public: book.reviewPublic || false
+  };
+  if (book.cloudId) {
+    await sb.from('reading_entries').update(entry).eq('id', book.cloudId);
+  } else {
+    const { data } = await sb.from('reading_entries').insert(entry).select('id').single();
+    if (data) book.cloudId = data.id;
+  }
+  save();
+};
+
+// Keep old event listener targets alive (they now point to hidden elements — no-ops)
+document.getElementById('rt-modal-mark-read').addEventListener('click', () => {});
+document.getElementById('rt-modal-mark-dnf').addEventListener('click',  () => {});
+document.getElementById('rt-modal-cancel').addEventListener('click',    () => {});
+document.getElementById('rt-modal-close').addEventListener('click',     () => {});
 
 function showFlash(msg) {
   const f = document.createElement('div');
