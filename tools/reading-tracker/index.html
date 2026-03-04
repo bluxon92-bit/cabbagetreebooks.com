@@ -707,10 +707,18 @@ async function saveBookToCloud(book) {
 
   // Upsert into canonical books table if we have an OL key
   if (book.olKey) {
+    const bookRecord = {
+      ol_key:   book.olKey,
+      title:    book.title,
+      author:   book.author,
+      cover_id: book.coverId || null
+    };
+    // Store Goodreads book ID for dedup on re-import
+    if (book.goodreadsId) bookRecord.goodreads_book_id = book.goodreadsId;
+
     const { data, error } = await sb
       .from('books')
-      .upsert({ ol_key: book.olKey, title: book.title, author: book.author, cover_id: book.coverId || null },
-               { onConflict: 'ol_key' })
+      .upsert(bookRecord, { onConflict: 'ol_key' })
       .select('id')
       .single();
     if (!error) bookId = data?.id;
@@ -1370,96 +1378,219 @@ const _origSave = save;
 // (we do this by monkey-patching — the hidden field is read at add time)
 
 // ─────────────────────────────────────────────────────────────
-// GOODREADS CSV IMPORT
+// GOODREADS CSV IMPORT  (v2 — with Open Library key matching)
 // ─────────────────────────────────────────────────────────────
 document.getElementById('rt-csv-file').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(ev) {
-    processGoodreadsCSV(ev.target.result);
-  };
+  reader.onload = function(ev) { processGoodreadsCSV(ev.target.result); };
   reader.readAsText(file);
-  this.value = ''; // allow re-import
+  this.value = ''; // allow re-import of same file
 });
 
+// ── OL matching ──────────────────────────────────────────────
+// Query Open Library for a single book and return { olKey, coverId } or null.
+// We try "title + author" first, then fall back to title-only if no match.
+// Normalise both strings before comparing so minor punctuation differences
+// (e.g. "The Name of the Wind" vs "Name of the Wind, The") still match.
+
+function normaliseTitle(s) {
+  return s
+    .toLowerCase()
+    .replace(/^(a |an |the )/i, '')   // strip leading articles
+    .replace(/[^a-z0-9 ]/g, '')       // strip punctuation
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+async function matchBookToOL(title, author) {
+  // Build a focused query: title + author gives the highest precision
+  const query = author
+    ? `${title} ${author.split(',')[0].trim()}` // "first last" only, skip "last, first" format
+    : title;
+
+  try {
+    const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&fields=key,title,author_name,cover_i&limit=5&language=eng`;
+    const res  = await fetch(url);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const docs = data.docs || [];
+    if (!docs.length) return null;
+
+    const normTarget = normaliseTitle(title);
+
+    // Find the first result whose normalised title matches
+    const match = docs.find(d => normaliseTitle(d.title || '') === normTarget);
+    const best  = match || docs[0]; // fall back to top result if no exact match
+
+    // Reject the top result if titles are wildly different (edit distance heuristic)
+    if (!match) {
+      const resultNorm = normaliseTitle(best.title || '');
+      // Simple contains-check: if neither contains the other, skip
+      if (!resultNorm.includes(normTarget.split(' ')[0]) &&
+          !normTarget.includes(resultNorm.split(' ')[0])) {
+        return null;
+      }
+    }
+
+    return {
+      olKey:   best.key   || null,   // e.g. "/works/OL8479867W"
+      coverId: best.cover_i || null, // numeric cover ID
+      olTitle: best.title  || title, // OL's canonical title (use for dedup)
+      olAuthor:(best.author_name || [])[0] || author
+    };
+  } catch(e) {
+    return null; // network error — carry on without OL data
+  }
+}
+
+// ── Rate-limited batch runner ─────────────────────────────────
+// OL asks for ≤1 req/sec. We run 3 in parallel with a 350ms gap
+// between batches — fast enough for 100 books (~12 sec total).
+async function batchMatchOL(bookList, onProgress) {
+  const BATCH = 3;
+  const DELAY = 400; // ms between batches
+  const results = new Array(bookList.length).fill(null);
+
+  for (let i = 0; i < bookList.length; i += BATCH) {
+    const slice   = bookList.slice(i, i + BATCH);
+    const matches = await Promise.all(
+      slice.map(b => matchBookToOL(b.title, b.author))
+    );
+    matches.forEach((m, j) => { results[i + j] = m; });
+    onProgress(Math.min(i + BATCH, bookList.length), bookList.length);
+    if (i + BATCH < bookList.length) {
+      await new Promise(r => setTimeout(r, DELAY));
+    }
+  }
+  return results;
+}
+
+// ── Main importer ─────────────────────────────────────────────
 async function processGoodreadsCSV(csvText) {
   const statusEl = document.getElementById('rt-import-status');
   statusEl.style.display = 'block';
   statusEl.className = 'rt-import-status rt-import-status--loading';
-  statusEl.textContent = 'Importing…';
+  statusEl.textContent = 'Reading CSV…';
 
   try {
     const rows = parseCSV(csvText);
     if (!rows.length) throw new Error('No rows found');
 
-    // Map Goodreads columns (case-insensitive)
+    // Map Goodreads columns (case-insensitive header matching)
     const headers = rows[0].map(h => h.toLowerCase().trim());
     const col = name => headers.findIndex(h => h.includes(name));
 
-    const iTitle    = col('title');
-    const iAuthor   = headers.findIndex(h => h === 'author'); // exact match, avoids 'author l-f'
-    const iShelf    = col('exclusive shelf');
-    const iRating   = col('my rating');
-    const iDateRead = col('date read');
+    const iTitle     = col('title');
+    const iBookId    = col('book id');                              // Goodreads numeric ID
+    const iAuthor    = headers.findIndex(h => h === 'author');      // exact — avoids 'author l-f'
+    const iShelf     = col('exclusive shelf');
+    const iRating    = col('my rating');
+    const iDateRead  = col('date read');
     const iDateAdded = col('date added');
-    const iReview   = col('my review');
+    const iReview    = col('my review');
 
     if (iTitle === -1) throw new Error('Could not find Title column — is this a Goodreads CSV?');
 
-    let imported = 0, skipped = 0;
+    // ── Parse rows into raw book objects ──────────────────────
+    const toImport = [];
+    let skipped = 0;
 
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
       if (!row[iTitle] || !row[iTitle].trim()) continue;
 
       const title  = row[iTitle].trim();
-      const author = iAuthor >= 0 ? row[iAuthor].trim() : '';
-      const shelf  = iShelf  >= 0 ? row[iShelf].trim().toLowerCase() : '';
-      const rating = iRating >= 0 ? parseInt(row[iRating]) || null : null;
-      const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
-      const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
-      const notes  = iReview >= 0 ? (row[iReview] || '').trim() || null : null;
+      const author = iAuthor  >= 0 ? row[iAuthor].trim()  : '';
+      const shelf  = iShelf   >= 0 ? row[iShelf].trim().toLowerCase() : '';
+      const rating = iRating  >= 0 ? parseInt(row[iRating]) || null : null;
+      const grId   = iBookId  >= 0 ? row[iBookId].trim() : null;
+      const dateRead   = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
+      const dateAdded  = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
+      const notes  = iReview  >= 0 ? (row[iReview] || '').trim() || null : null;
 
-      // Skip if already exists
+      // Skip exact title duplicates already in the local list
       if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
         skipped++; continue;
       }
 
       let status = 'read';
-      if (shelf === 'to-read')        status = 'tbr';
+      if      (shelf === 'to-read')          status = 'tbr';
       else if (shelf === 'currently-reading') status = 'reading';
-      else if (shelf === 'read')      status = 'read';
+      else if (shelf === 'read')             status = 'read';
 
-      books.push({
-        id:     uid(),
+      toImport.push({
+        id:          uid(),
         title,
         author,
         status,
-        rating: status === 'read' ? rating : null,
-        notes:  status === 'read' ? notes  : null,
-        date:   status === 'read' ? dateRead : null,
+        rating:      status === 'read' ? rating : null,
+        notes:       status === 'read' ? notes  : null,
+        date:        status === 'read' ? dateRead : null,
         dateStarted: status === 'reading' ? (dateAdded || null) : null,
-        added:  dateAdded || new Date().toISOString(),
-        source: 'goodreads'
+        added:       dateAdded || new Date().toISOString(),
+        source:      'goodreads',
+        goodreadsId: grId || null,
+        // OL fields — filled in next step
+        olKey:   null,
+        coverId: null
       });
-      imported++;
     }
 
+    if (!toImport.length && skipped > 0) {
+      statusEl.className = 'rt-import-status rt-import-status--success';
+      statusEl.textContent = `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list — nothing new to import.`;
+      return;
+    }
+    if (!toImport.length) throw new Error('No valid book rows found in this CSV.');
+
+    // ── OL matching pass ──────────────────────────────────────
+    statusEl.innerHTML = `Matching ${toImport.length} book${toImport.length !== 1 ? 's' : ''} against Open Library… <span id="rt-import-progress">(0/${toImport.length})</span>`;
+
+    const olResults = await batchMatchOL(toImport, (done, total) => {
+      const p = document.getElementById('rt-import-progress');
+      if (p) p.textContent = `(${done}/${total})`;
+    });
+
+    let matched = 0;
+    olResults.forEach((ol, i) => {
+      if (ol) {
+        toImport[i].olKey   = ol.olKey;
+        toImport[i].coverId = ol.coverId;
+        matched++;
+      }
+    });
+
+    // ── Merge into local books array ──────────────────────────
+    toImport.forEach(b => books.push(b));
     save();
-    statusEl.className = 'rt-import-status rt-import-status--loading';
-    statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''}. Syncing to cloud…`;
     updateStats(); renderHomeReading(); renderHistory();
 
-    // Sync all newly imported books to Supabase if logged in
+    // ── Cloud sync ────────────────────────────────────────────
+    statusEl.className = 'rt-import-status rt-import-status--loading';
+    statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched to Open Library). ${currentUser ? 'Syncing to cloud…' : ''}`;
+
     if (currentUser) {
-      const newBooks = books.slice(0, imported);
-      await Promise.all(newBooks.map(b => saveBookToCloud(b)));
+      // Sync in batches of 10 to avoid overwhelming Supabase
+      const SYNC_BATCH = 10;
+      for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
+        await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
+      }
       statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''} and synced to cloud. <button class="btn-text-link" onclick="switchTab('home')">View your library →</button>`;
+      statusEl.innerHTML =
+        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped  ? ` (${skipped} skipped — already in list)` : '') +
+        ` · <strong>${matched}</strong> matched to Open Library` +
+        ` · synced to cloud.` +
+        ` <button class="btn-text-link" onclick="switchTab('home')">View your library →</button>`;
     } else {
       statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML = `✓ Imported <strong>${imported}</strong> book${imported !== 1 ? 's' : ''}${skipped ? ` (${skipped} skipped — already in list)` : ''}. <button class="btn-text-link" onclick="switchTab('account')">Sign in to sync →</button>`;
+      statusEl.innerHTML =
+        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` (${skipped} skipped — already in list)` : '') +
+        ` · <strong>${matched}</strong> matched to Open Library.` +
+        ` <button class="btn-text-link" onclick="switchTab('account')">Sign in to sync →</button>`;
     }
 
   } catch(err) {
