@@ -4,7 +4,7 @@ title: "10 Books Like Eragon Perfect for Fantasy Fans"
 date: 2025-03-18
 category: Book Recommendations
 genre: Fantasy
-excerpt: "Christopher Paolini’s Eragon and The Inheritance Cycle captivated a generation of fantasy readers with its coming-of-age story, epic world-building, and, of course, dragons."
+excerpt: "10 books like Eragon for fantasy fans — dragon riders, coming-of-age epics, and rich world-building to read after Paolini."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381481/inheritance-cycle-1-_uv6rho.webp"
 ---
 

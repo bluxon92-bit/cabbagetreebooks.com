@@ -4,7 +4,7 @@ title: "The Best Robin Hobb Books: Six Duchies Books Reading Order"
 date: 2023-03-19
 category: Author Profiles
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "Robin Hobb books in order — the complete Six Duchies reading guide covering the Farseer, Liveship, and Tawny Man trilogies."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/farseer-trilogy-1-_gf4uhi.jpg"
 permalink: /blog/robin-hobb-farseer-and-beyond/
 ---

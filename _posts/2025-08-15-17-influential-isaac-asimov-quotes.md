@@ -4,7 +4,7 @@ title: "17 Influential Isaac Asimov Quotes"
 date: 2025-08-15
 category: Book Recommendations
 genre: Science Fiction
-excerpt: "Isaac Asimov is one of my favourite science fiction authors(https://www.cabbagetreebooks.com/blog/10-sci-fi-authors) alongside the likes of Arthur C Clarke(https://www.cabbagetreebooks.com/blog/the-city-and-the-stars-art"
+excerpt: "17 Isaac Asimov quotes on science, creativity, and the future — from one of sci-fi's most prolific and visionary minds."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381450/robot-sci-fi_zdm8le.webp"
 ---
 

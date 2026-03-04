@@ -4,7 +4,7 @@ title: "Floating Dragon by Peter Straub Review: Underrated Horror at Its Finest"
 date: 2025-03-30
 category: Book Reviews
 genre: Horror
-excerpt: "Floating Dragon is Peter Straub's most ambitious novel — a sweeping, literary horror epic set in a Connecticut town. Here's our review of a criminally overlooked masterpiece."
+excerpt: "Floating Dragon by Peter Straub reviewed — Straub's most ambitious horror novel and one of the genre's most underrated books."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/floating-dragon-cover_q2d6t5.jpg"
 permalink: /blog/floating-dragon-review/
 ---

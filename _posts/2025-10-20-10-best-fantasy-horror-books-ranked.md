@@ -4,7 +4,7 @@ title: "10 Best Fantasy Horror Books (Ranked)"
 date: 2025-10-20
 category: Book Recommendations
 genre: Horror
-excerpt: "When it comes to fantasy horror books, I’m always on the lookout for stories that balance fantastical worldbuilding with a genuine chill that lingers long after the final page."
+excerpt: "10 best fantasy horror books ranked — dark fiction where magic meets genuine terror. The genre's finest, chosen for impact."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/books-skeleting-horror-1-_wnrmvv.jpg"
 ---
 

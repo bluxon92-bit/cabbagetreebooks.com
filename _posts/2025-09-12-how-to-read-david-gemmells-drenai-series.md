@@ -4,7 +4,7 @@ title: "How To Read David Gemmell's Drenai Series"
 date: 2025-09-12
 category: Author Profiles
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "David Gemmell's Drenai Series reading order — how to tackle the heroic fantasy series that defined a genre. Start here."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/drenai-series-banner_h2ybfk.png"
 permalink: /blog/david-gemmells-drenai-series/
 ---

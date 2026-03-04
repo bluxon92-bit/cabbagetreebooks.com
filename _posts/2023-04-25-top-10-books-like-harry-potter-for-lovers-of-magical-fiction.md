@@ -4,7 +4,7 @@ title: "Top 10 Books Like Harry Potter For Lovers of Magical Fiction"
 date: 2023-04-25
 category: Book Recommendations
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "Books like Harry Potter for fans of magical fiction — 10 picks that capture the wonder, adventure, and heart of the series."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381526/harry-potter-1-_rm3zw9.webp"
 permalink: /blog/books-like-harry-potter/
 ---

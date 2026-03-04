@@ -4,7 +4,7 @@ title: "Book Review: The Shadow of The Gods by John Gwynne"
 date: 2025-03-07
 category: Book Reviews
 genre: Fantasy
-excerpt: "The Shadow of the Gods by John Gwynne immediately caught my attention after coming across a YouTube review. Intrigued by the premise, I stopped the video to avoid spoilers. Soon after, I discovered John Gwynne's name amo"
+excerpt: "The Shadow of the Gods by John Gwynne reviewed — brutal Norse-inspired fantasy that earns every comparison to Abercrombie."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/shadowofthegodsbloodsworn-saga-1-1-_d83cmt.jpg"
 ---
 

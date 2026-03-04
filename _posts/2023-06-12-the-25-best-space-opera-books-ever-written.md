@@ -4,7 +4,7 @@ title: "The 25 Best Space Opera Books Ever Written"
 date: 2023-06-12
 category: Book Recommendations
 genre: Science Fiction
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "25 best space opera books ever written — Dune, Hyperion, A Fire Upon the Deep and the novels that define the genre."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381457/space-opera-1-_gwsitk.webp"
 permalink: /blog/best-space-opera-books/
 ---

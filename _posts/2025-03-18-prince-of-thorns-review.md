@@ -4,7 +4,7 @@ title: "Prince of Thorns Review: Mark Lawrence's Darkest, Boldest Opening"
 date: 2025-03-18
 category: Book Reviews
 genre: Fantasy
-excerpt: "Prince of Thorns is one of fantasy's most divisive debuts. Here's our honest review — what it does brilliantly, what you need to know going in, and who it's for."
+excerpt: "Prince of Thorns by Mark Lawrence reviewed — the Broken Empire's brutal, brilliant opening. Grimdark fantasy at its darkest."
 image: ""
 ---
 

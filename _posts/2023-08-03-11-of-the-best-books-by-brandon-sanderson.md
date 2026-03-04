@@ -4,7 +4,7 @@ title: "11 of the Best Books by Brandon Sanderson"
 date: 2023-08-03
 category: Author Profiles
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "Brandon Sanderson's best books ranked — from Mistborn to The Way of Kings. Where to start with the Cosmere and beyond."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381449/brandon-sanderson-books-1-_qgkvru.webp"
 permalink: /blog/11-best-books-by-brandon-sanderson/
 ---

@@ -4,7 +4,7 @@ title: "The Best Star Wars Books: A Fan’s Guide to the Galaxy’s Greatest Rea
 date: 2025-11-03
 category: Book Recommendations
 genre: Science Fiction
-excerpt: "I've been a Star Wars fan for as long as I can remember, and like a lot of fans, the films were just the start. Once you fall down the rabbit hole of Star Wars books, it's hard to climb back out. Especially considering t"
+excerpt: "Best Star Wars books ranked — a fan's guide to the Expanded Universe, from Thrawn to the New Jedi Order. Start reading here."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/best-star-wars-books-science-fiction.jpg_kyltlb.webp"
 ---
 

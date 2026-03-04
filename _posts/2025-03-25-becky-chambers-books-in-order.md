@@ -4,7 +4,7 @@ title: "Becky Chambers Books in Order: A Complete Wayfarers Reading Guide"
 date: 2025-03-25
 category: Author Profiles
 genre: Science Fiction
-excerpt: "Becky Chambers has written five Wayfarers novels plus a standalone novella series. Here's the full reading guide — including where to start and what order works best."
+excerpt: "Becky Chambers books in order — the complete Wayfarers reading guide. Cozy sci-fi at its warmest, starting with Wayfarers 1."
 image: ""
 ---
 

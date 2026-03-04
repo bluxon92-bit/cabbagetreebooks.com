@@ -4,7 +4,7 @@ title: "Book Review: Verity by Colleen Hoover"
 date: 2023-07-18
 category: Book Reviews
 genre: Thriller
-excerpt: "Verity by Colleen Hoover(https://amzn.to/3PNOacR) was recommended to me by a friend who described it as amazing and mind-blowing. Intrigued I did a bit of digging and could find only good things online so I downloaded on"
+excerpt: "Verity by Colleen Hoover reviewed — a dark, twisting thriller with an ending that will divide readers. Worth the hype?"
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/verity-colleen-hoover_qc60rt.jpg"
 permalink: /blog/verity-by-colleen-hoover/
 ---

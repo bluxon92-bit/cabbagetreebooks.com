@@ -4,7 +4,7 @@ title: "20 Best Dragon Books For Adults"
 date: 2023-05-16
 category: Book Recommendations
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "20 best dragon books for adults — from Pern to Temeraire. Epic fantasy featuring dragons as they were meant to be written."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/best-dragon-books-1-_r8b1jh.png"
 permalink: /blog/best-dragon-books/
 ---

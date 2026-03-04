@@ -4,7 +4,7 @@ title: "Death Troopers by Joe Schreiber Review: Star Wars Does Horror"
 date: 2025-04-04
 category: Book Reviews
 genre: Science Fiction
-excerpt: "Death Troopers is the Star Wars novel nobody expected — a full-blooded zombie horror set in the galaxy far, far away. Here's our review of Joe Schreiber's most entertaining book."
+excerpt: "Death Troopers by Joe Schreiber reviewed — Star Wars meets zombie horror in the franchise's most daring and divisive novel."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/death-troopers-cover_v2rjdb.jpg"
 ---
 

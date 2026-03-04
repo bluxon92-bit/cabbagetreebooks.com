@@ -4,7 +4,7 @@ title: "The Ancient Stories: 14 of the Best Books About Greek Mythology"
 date: 2023-04-18
 category: Book Recommendations
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "14 best books about Greek mythology — from Circe to The Song of Achilles. Retellings, histories, and epic originals ranked."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/banner-greek-mythology-1-_hjhles.png"
 permalink: /blog/best-books-about-greek-mythology/
 ---

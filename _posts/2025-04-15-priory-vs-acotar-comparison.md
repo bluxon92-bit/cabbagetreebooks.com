@@ -4,7 +4,7 @@ title: "The Priory of the Orange Tree vs ACOTAR: Which Should You Read First?"
 date: 2025-04-15
 category: Book Recommendations
 genre: Fantasy
-excerpt: "Both are epic fantasy with strong female leads and dragons. But Priory and ACOTAR are very different books. Here's a direct comparison to help you decide where to start."
+excerpt: "Priory of the Orange Tree vs ACOTAR — which epic fantasy should you read first? A head-to-head comparison for new readers."
 image: ""
 ---
 

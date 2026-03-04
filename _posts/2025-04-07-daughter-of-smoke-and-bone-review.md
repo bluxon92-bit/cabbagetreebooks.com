@@ -4,7 +4,7 @@ title: "Daughter of Smoke and Bone Review: Fantasy at Its Most Imaginative"
 date: 2025-04-07
 category: Book Reviews
 genre: Fantasy
-excerpt: "Daughter of Smoke and Bone is one of the most original YA fantasy debuts in years. Here's our review of Laini Taylor's first Karou novel — and why the world-building is extraordinary."
+excerpt: "Daughter of Smoke and Bone by Laini Taylor reviewed — lush, inventive fantasy that builds one of YA fiction's best worlds."
 image: ""
 ---
 

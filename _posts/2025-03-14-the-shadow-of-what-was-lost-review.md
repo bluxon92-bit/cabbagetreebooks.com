@@ -4,7 +4,7 @@ title: "The Shadow of What Was Lost Review: Underrated Epic Fantasy"
 date: 2025-03-14
 category: Book Reviews
 genre: Fantasy
-excerpt: "James Islington's debut arrived quietly and built a devoted following. Here's our review of The Shadow of What Was Lost — and why it deserves far more attention."
+excerpt: "The Shadow of What Was Lost by James Islington reviewed — underrated epic fantasy with some of the genre's best world-building."
 image: ""
 ---
 

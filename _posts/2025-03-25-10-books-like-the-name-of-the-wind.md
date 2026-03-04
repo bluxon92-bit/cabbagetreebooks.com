@@ -4,7 +4,7 @@ title: "10 Books Like The Name of the Wind"
 date: 2025-03-25
 category: Book Recommendations
 genre: Fantasy
-excerpt: "If you’ve ever been completely swept away by Patrick Rothfuss’s The Name of the Wind, you’re not alone. The lyrical prose, deep character insights, and immersive world-building have captured the hearts of fantasy fans ev"
+excerpt: "10 books like The Name of the Wind — lyrical fantasy with deep characters and immersive worlds for Rothfuss fans to read next."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381447/name-of-the-wind-banner-1-_wmglzp.webp"
 permalink: /blog/books-like-name-of-the-wind/
 ---

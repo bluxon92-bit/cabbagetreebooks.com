@@ -4,7 +4,7 @@ title: "15+ Classic Science Fiction Short Stories You Need To Read"
 date: 2023-08-01
 category: Book Recommendations
 genre: Science Fiction
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "15 classic sci-fi short stories you need to read — Asimov, Clarke, Dick and the tales that shaped the genre. Free to read."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381446/space-travel-sci-fi-1-_djbebg.webp"
 permalink: /blog/classic-science-fiction-short-stories-you-need-to-read/
 redirect_from:

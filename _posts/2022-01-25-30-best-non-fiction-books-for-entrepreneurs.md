@@ -4,7 +4,7 @@ title: "30 Best Non-Fiction Books For Entrepreneurs"
 date: 2022-01-25
 category: Book Recommendations
 genre: Non-Fiction
-excerpt: "Zero to One, by investor and entrepreneur Peter Thiel,  is all about teaching people the importance of thinking for yourself. The next Mark Zuckerberg isn’t going to build a new social media channel."
+excerpt: "30 essential non-fiction books for entrepreneurs — from Zero to One to The Lean Startup. Build your business reading list here."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381464/zero-to-one_jpts70.webp"
 permalink: /blog/30-best-books-for-entreprenuers/
 ---

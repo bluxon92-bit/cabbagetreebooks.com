@@ -4,7 +4,7 @@ title: "Rhythm of War Review: Sanderson's Most Personal Stormlight Book"
 date: 2025-03-15
 category: Book Reviews
 genre: Fantasy
-excerpt: "Rhythm of War is the fourth Stormlight Archive book and Sanderson's most character-driven entry. Here's our full review — with context for new and returning readers."
+excerpt: "Rhythm of War by Brandon Sanderson reviewed — Stormlight Archive book 4 is his most personal and ambitious entry yet."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/rhythm-of-war-cover_dsgkez.jpg"
 ---
 

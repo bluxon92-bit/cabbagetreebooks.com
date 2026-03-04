@@ -4,7 +4,7 @@ title: "What is Audible, How Does it Work, And Is It Worth it?"
 date: 2023-06-05
 category: Reading Tips
 genre: Guides
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "Audible explained — what it is, how it works, how credits work, and whether it's worth the subscription cost in 2025."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381456/audiobook-2-1-_z2sagt.webp"
 permalink: /blog/is-audible-worth-it/
 ---

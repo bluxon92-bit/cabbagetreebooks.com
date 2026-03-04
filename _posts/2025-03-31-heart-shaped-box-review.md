@@ -4,7 +4,7 @@ title: "Heart-Shaped Box by Joe Hill Review: A Ghost Story That Gets Under Your 
 date: 2025-03-31
 category: Book Reviews
 genre: Horror
-excerpt: "Joe Hill's debut novel is one of the best ghost stories of the last twenty years. Here's our review of Heart-Shaped Box — and why it announced a major horror talent."
+excerpt: "Heart-Shaped Box by Joe Hill reviewed — a ghost story that genuinely unsettles. Joe Hill announces himself as horror's next king."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/heart-shaped-box-cover_yzsvkd.jpg"
 ---
 

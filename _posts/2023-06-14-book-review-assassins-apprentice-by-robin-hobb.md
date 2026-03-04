@@ -4,7 +4,7 @@ title: "Book Review: Assassin's Apprentice by Robin Hobb"
 date: 2023-06-14
 category: Book Reviews
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "Assassin's Apprentice by Robin Hobb reviewed — the Farseer Trilogy's brilliant opening and why it's essential fantasy reading."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/farseer-trilogy-1-_gf4uhi.jpg"
 ---
 

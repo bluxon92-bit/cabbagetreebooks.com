@@ -4,7 +4,7 @@ title: "11 Of The Best Historical Fiction Authors You Must Read"
 date: 2023-07-04
 category: Author Profiles
 genre: Historical Fiction
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "11 best historical fiction authors — Hilary Mantel, Ken Follett, Bernard Cornwell and the writers who bring history alive."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381464/last-kingdom-1-_sg5u4x.webp"
 ---
 

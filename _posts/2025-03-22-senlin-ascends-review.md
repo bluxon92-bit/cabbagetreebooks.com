@@ -4,7 +4,7 @@ title: "Senlin Ascends Review: The Best Fantasy Novel Nobody Told You About"
 date: 2025-03-22
 category: Book Reviews
 genre: Fantasy
-excerpt: "Senlin Ascends started as a self-published novel and became a word-of-mouth sensation. Here's our review — and why it's one of the most original fantasy debuts in years."
+excerpt: "Senlin Ascends by Josiah Bancroft reviewed — the best fantasy novel most readers haven't heard of. A word-of-mouth masterpiece."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772382133/senlinascends-cover_s4qb4y.jpg"
 ---
 

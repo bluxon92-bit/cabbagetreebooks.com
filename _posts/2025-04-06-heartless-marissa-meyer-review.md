@@ -4,7 +4,7 @@ title: "Heartless by Marissa Meyer Review: The Queen of Hearts Gets Her Story"
 date: 2025-04-06
 category: Book Reviews
 genre: Fantasy
-excerpt: "Heartless is a prequel to Alice in Wonderland — the origin story of the Queen of Hearts. Here's our review of Marissa Meyer's most emotionally devastating standalone."
+excerpt: "Heartless by Marissa Meyer reviewed — the Queen of Hearts origin story done right. Dark fairy-tale YA fantasy at its best."
 image: ""
 permalink: /blog/heartless-review/
 ---

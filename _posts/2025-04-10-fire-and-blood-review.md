@@ -4,7 +4,7 @@ title: "Fire and Blood Review: A History Book Disguised as a Fantasy Novel"
 date: 2025-04-10
 category: Book Reviews
 genre: Fantasy
-excerpt: "Fire and Blood is George R.R. Martin's history of House Targaryen — and it reads like a history book. Here's our honest review of what works, what doesn't, and who it's for."
+excerpt: "Fire and Blood by George R R Martin reviewed — Targaryen history as fictional scholarship. Essential for House of the Dragon fans."
 image: ""
 ---
 

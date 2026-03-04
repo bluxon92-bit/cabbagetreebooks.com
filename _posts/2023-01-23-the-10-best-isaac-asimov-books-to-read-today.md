@@ -4,7 +4,7 @@ title: "The 10 Best Isaac Asimov Books To Read Today"
 date: 2023-01-23
 category: Author Profiles
 genre: Science Fiction
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "Isaac Asimov's best books ranked — from Foundation to the Robot series. Where to start and what to read next."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381501/science-fiction-1-_gethlp.webp"
 permalink: /blog/best-isaac-asimov-books/
 ---

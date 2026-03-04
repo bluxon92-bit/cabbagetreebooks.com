@@ -4,7 +4,7 @@ title: "The Edge of Darkness: 9 Grimdark Fantasy Books for Fans of Gritty Fictio
 date: 2023-03-26
 category: Book Recommendations
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "9 grimdark fantasy books for fans of dark, gritty fiction — Abercrombie, Lawrence, Cook and the authors who define the genre."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/the-broken-empire-trilogy-1-_ztj537.jpg"
 permalink: /blog/grimdark-fantasy-books/
 ---

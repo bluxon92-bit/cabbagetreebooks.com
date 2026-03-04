@@ -4,7 +4,7 @@ title: "6 Books Like The Alchemist You're Sure To Love"
 date: 2023-05-23
 category: Book Recommendations
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "6 books like The Alchemist by Paulo Coelho — philosophical, lyrical reads about purpose, journeys, and the meaning of life."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381470/the-alchemist-1-_jtq3s1.webp"
 ---
 

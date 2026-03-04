@@ -4,7 +4,7 @@ title: "The Divine Cities Trilogy Review: The Most Underrated Fantasy Series of 
 date: 2025-04-14
 category: Book Reviews
 genre: Fantasy
-excerpt: "Robert Jackson Bennett's Divine Cities trilogy is a masterclass in secondary world fantasy. Here's our review — and why it deserves to be talked about in the same breath as the greats."
+excerpt: "The Divine Cities Trilogy by Robert Jackson Bennett reviewed — the most underrated fantasy series of the decade, bar none."
 image: ""
 ---
 

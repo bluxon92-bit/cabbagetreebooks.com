@@ -4,7 +4,7 @@ title: "Terry Brooks Books in Order: The Complete Shannara Reading Guide"
 date: 2025-03-21
 category: Author Profiles
 genre: Fantasy
-excerpt: "Terry Brooks has published over 30 Shannara novels across 40 years. Here's the complete reading order — and the honest answer to where you should actually start."
+excerpt: "Terry Brooks books in order — the complete Shannara reading guide, from The Sword of Shannara to The Fall of Shannara."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/terry-brooks-books_ihazlu.jpg"
 ---
 

@@ -4,7 +4,7 @@ title: "Twilight — An Honest Review: What Works, What Doesn't, and Why It Matt
 date: 2025-04-08
 category: Book Reviews
 genre: Fantasy
-excerpt: "Twilight sold 100 million copies and spawned a generation of vampire fiction. Here's an honest review — not the mockery or the defence, but a genuine look at what the books actually do."
+excerpt: "Twilight by Stephenie Meyer — an honest review. What works, what doesn't, and why it became a cultural phenomenon regardless."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/twilight-cover_ghvein.jpg"
 ---
 

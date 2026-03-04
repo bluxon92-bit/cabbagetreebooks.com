@@ -4,7 +4,7 @@ title: "The Time Traveler's Wife Review: A Love Story That Uses Sci-Fi Brilliant
 date: 2025-04-09
 category: Book Reviews
 genre: Science Fiction
-excerpt: "The Time Traveler's Wife uses time travel not as adventure but as tragedy. Here's our review of Audrey Niffenegger's novel — and why it's one of the great modern love stories."
+excerpt: "The Time Traveler's Wife by Audrey Niffenegger reviewed — a love story that uses sci-fi as an emotional sledgehammer."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/time-travelers-wife-cover_udxrox.jpg"
 ---
 

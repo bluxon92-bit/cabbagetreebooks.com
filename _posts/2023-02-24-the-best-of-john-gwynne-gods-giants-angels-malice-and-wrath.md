@@ -4,7 +4,7 @@ title: "The Best of John Gwynne: Gods, Giants, Angels, Malice and Wrath"
 date: 2023-02-24
 category: Author Profiles
 genre: Fantasy
-excerpt: "John Gwynne is best known for his epic fantasy series, The Faithful and the Fallen, which consists of four books: Malice, Valour, Ruin, and Wrath. The series is set in the Banished Lands, a world of magic and danger, and"
+excerpt: "John Gwynne's best books explored — The Faithful and the Fallen, Of Blood and Bone, and beyond. Epic grimdark fantasy at its finest."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/faithful-and-the-fallen-collection-4-books-set-ruin-valour-malice-fantasy-paperback-john-gwynne-1_850x850-1-1-_toz0ng.jpg"
 permalink: /blog/john-gwynne-gods-malice-and-wrath/
 ---

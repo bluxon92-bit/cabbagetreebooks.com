@@ -4,7 +4,7 @@ title: "9 Dystopian Novels That Will Change How You View The World"
 date: 2025-07-01
 category: Book Recommendations
 genre: Dystopian
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "9 dystopian novels that will change how you see the world — from 1984 to The Road. Essential reading for dark fiction fans."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381516/reading-fiction-1-_lrtesd.webp"
 permalink: /blog/9-dystopian-novels-to-read/
 ---

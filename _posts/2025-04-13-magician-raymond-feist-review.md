@@ -4,7 +4,7 @@ title: "Magician by Raymond E. Feist Review: The Classic That Launched a Univers
 date: 2025-04-13
 category: Book Reviews
 genre: Fantasy
-excerpt: "Magician is Raymond Feist's debut novel and the foundation of the Riftwar Saga — one of fantasy's longest-running universes. Here's our full review of where it all began."
+excerpt: "Magician by Raymond E Feist reviewed — the 1982 classic that launched the Riftwar Saga and influenced a generation of fantasy."
 image: ""
 ---
 

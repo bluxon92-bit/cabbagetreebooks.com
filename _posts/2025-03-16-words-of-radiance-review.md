@@ -4,7 +4,7 @@ title: "Words of Radiance Review: The Stormlight Archive at Its Best"
 date: 2025-03-16
 category: Book Reviews
 genre: Fantasy
-excerpt: "Words of Radiance is the second Stormlight Archive book and, for many readers, the finest. Here's our review — and why this is where the series becomes unmissable."
+excerpt: "Words of Radiance by Brandon Sanderson reviewed — Stormlight Archive book 2 and why it's the series at its absolute peak."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/words-of-radiance-cover_rijxur.jpg"
 ---
 

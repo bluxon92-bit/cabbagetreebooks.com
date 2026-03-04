@@ -4,7 +4,7 @@ title: "Book Review: The Song of Achilles by Madeline Miller"
 date: 2023-06-21
 category: Book Reviews
 genre: Fantasy
-excerpt: "If you're a fan of books about Greek mythology(https://www.cabbagetreebooks.com/blog/best-books-about-greek-mythology) you’ve likely come across Madeline Miller(http://madelinemiller.com) and her two novels, The Song of "
+excerpt: "The Song of Achilles by Madeline Miller reviewed — a heartbreaking retelling of Achilles and Patroclus from the Trojan War."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381508/the-song-of-achilles_ssc0ae.webp"
 ---
 

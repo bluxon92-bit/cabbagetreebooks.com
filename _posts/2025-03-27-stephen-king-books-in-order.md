@@ -4,7 +4,7 @@ title: "Stephen King Books in Order: Where to Start and How to Navigate the King
 date: 2025-03-27
 category: Author Profiles
 genre: Horror
-excerpt: "Stephen King has published over 65 novels. Here's how to navigate his career — the essential reads, the connected universe, and the books that define his legacy."
+excerpt: "Stephen King books in order — where to start, how to navigate the King-verse, and which novels are essential reading."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/stephen-king-books_kxqyqs.jpg"
 ---
 

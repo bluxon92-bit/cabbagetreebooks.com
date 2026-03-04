@@ -4,7 +4,7 @@ title: "5 Bone-Chilling Horror Short Story Collections By Stephen King"
 date: 2023-06-07
 category: Book Recommendations
 genre: Horror
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "Stephen King's best short story collections ranked — Night Shift, Skeleton Crew, Nightmares & Dreamscapes and more."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/scary-short-story-2-1-_f94dp0.jpg"
 permalink: /blog/bone-chilling-horror-short-story-collections-by-stephen-king/
 ---
