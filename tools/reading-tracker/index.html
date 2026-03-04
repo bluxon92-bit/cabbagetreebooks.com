@@ -1895,7 +1895,7 @@ permalink: /tools/reading-tracker/
 // ─────────────────────────────────────────────────────────────
 const SUPABASE_URL  = 'https://faykquqgjndphmizwxts.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZheWtxdXFnam5kcGhtaXp3eHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1Mjk4NjYsImV4cCI6MjA4ODEwNTg2Nn0.OiXN7nNB2O6stDXUj6Y_usNb6w4aOVsxQqF-bF_OZno';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
+window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
   auth: {
     storageKey: 'rt-auth-token'
   }
