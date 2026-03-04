@@ -4,8 +4,8 @@ title: "The Ultimate Guide to the Malazan Reading Order"
 date: 2025-08-15
 category: Author Profiles
 genre: Fantasy
-excerpt: "The Malazan world is vast, complex, and richly imagined—created through the combined efforts of Steven Erikson and Ian C. Esslemont. With several interconnected series spanning centuries, newcomers are often overwhelmed "
-published: false
+excerpt: "The Malazan world is vast, complex, and richly imagined—created through the combined efforts of Steven Erikson and Ian C. Esslemont."
+
 ---
 
 The Malazan world is vast, complex, and richly imagined—created through the combined efforts of Steven Erikson and Ian C. Esslemont. With several interconnected series spanning centuries, newcomers are often overwhelmed by where to start. This guide breaks down the recommended reading order along with short synopses of each book, ensuring you can fully immerse yourself in the epic narrative.

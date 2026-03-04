@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Non-Fiction
 excerpt: "Zero to One, by investor and entrepreneur Peter Thiel,  is all about teaching people the importance of thinking for yourself. The next Mark Zuckerberg isn’t going to build a new social media channel."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381464/zero-to-one_jpts70.webp"
+permalink: /blog/30-best-books-for-entreprenuers/
 ---
 
 ### 1. Zero to One - Peter Thiel

@@ -4,8 +4,11 @@ title: "Best Books by China Miéville: Perdido Street Station and More"
 date: 2023-05-11
 category: Author Profiles
 genre: Fantasy
-excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
+excerpt: "China Miéville is a British author and academic, best known for his works of science fiction and fantasy."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381495/china-mieville-2-_kjtcb5.webp"
+permalink: /blog/best-books-by-china-mieville/
+redirect_from:
+  - /blog/best-books-by-china-miéville-perdido-street-station-and-more/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381495/china-mieville-2-_kjtcb5.webp)

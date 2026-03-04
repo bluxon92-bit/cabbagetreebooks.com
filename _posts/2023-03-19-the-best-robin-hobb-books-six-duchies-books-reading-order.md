@@ -6,6 +6,7 @@ category: Author Profiles
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/farseer-trilogy-1-_gf4uhi.jpg"
+permalink: /blog/robin-hobb-farseer-and-beyond/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/farseer-trilogy-1-_gf4uhi.jpg)

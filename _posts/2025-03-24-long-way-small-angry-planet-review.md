@@ -6,6 +6,7 @@ category: Book Reviews
 genre: Science Fiction
 excerpt: "Becky Chambers' debut is cozy, character-driven sci-fi that somehow became one of the most beloved novels in the genre. Here's our full review."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/long-way-small-angry-planet-cover_gxmyta.jpg"
+permalink: /blog/the-long-way-to-a-small-angry-planet-review/
 ---
 
 ![The Long Way to a Small, Angry Planet by Becky Chambers](https://res.cloudinary.com/dnkddcxrt/image/upload/long-way-small-angry-planet-cover_gxmyta.jpg)

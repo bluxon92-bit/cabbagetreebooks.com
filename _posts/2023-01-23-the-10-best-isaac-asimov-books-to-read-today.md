@@ -6,6 +6,7 @@ category: Author Profiles
 genre: Science Fiction
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381501/science-fiction-1-_gethlp.webp"
+permalink: /blog/best-isaac-asimov-books/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381501/science-fiction-1-_gethlp.webp)

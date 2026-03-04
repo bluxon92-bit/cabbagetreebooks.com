@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Guides
 excerpt: "Some books don’t just tell a story—they leave a mark. They sneak into your thoughts, reshape how you see the world, and somehow, years later, you’re still bringing them up in conversations. That’s the magic of modern cla"
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/unsplash-image-s3nuoqdmuvc_bcr8v8.jpg"
+permalink: /blog/modern-classic-books-to-add-to-your-tbr-list/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/unsplash-image-s3nuoqdmuvc_bcr8v8.jpg)

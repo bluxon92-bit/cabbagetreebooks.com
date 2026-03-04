@@ -6,6 +6,7 @@ category: Reading Tips
 genre: Guides
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381456/audiobook-2-1-_z2sagt.webp"
+permalink: /blog/is-audible-worth-it/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381456/audiobook-2-1-_z2sagt.webp)

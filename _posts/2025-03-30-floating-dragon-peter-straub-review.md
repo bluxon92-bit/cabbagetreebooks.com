@@ -6,6 +6,7 @@ category: Book Reviews
 genre: Horror
 excerpt: "Floating Dragon is Peter Straub's most ambitious novel — a sweeping, literary horror epic set in a Connecticut town. Here's our review of a criminally overlooked masterpiece."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/floating-dragon-cover_q2d6t5.jpg"
+permalink: /blog/floating-dragon-review/
 ---
 
 ![Floating Dragon by Peter Straub](https://res.cloudinary.com/dnkddcxrt/image/upload/floating-dragon-cover_q2d6t5.jpg)

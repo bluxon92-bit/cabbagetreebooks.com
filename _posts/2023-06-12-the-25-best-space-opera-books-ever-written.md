@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Science Fiction
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381457/space-opera-1-_gwsitk.webp"
+permalink: /blog/best-space-opera-books/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381457/space-opera-1-_gwsitk.webp)

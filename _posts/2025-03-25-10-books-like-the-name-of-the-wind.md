@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Fantasy
 excerpt: "If you’ve ever been completely swept away by Patrick Rothfuss’s The Name of the Wind, you’re not alone. The lyrical prose, deep character insights, and immersive world-building have captured the hearts of fantasy fans ev"
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381447/name-of-the-wind-banner-1-_wmglzp.webp"
+permalink: /blog/books-like-name-of-the-wind/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381447/name-of-the-wind-banner-1-_wmglzp.webp)

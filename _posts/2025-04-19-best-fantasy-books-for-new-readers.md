@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Fantasy
 excerpt: "Never read fantasy before? Not sure where to start? Here's a guide to the best entry points — organised by what kind of reader you are."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381453/best-fantasy-for-new-readers_hevxs4.jpg"
+permalink: /blog/29-best-fantasy-books/
 ---
 
 ![Best Fantasy Books for New Readers](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381453/best-fantasy-for-new-readers_hevxs4.jpg)

@@ -6,6 +6,7 @@ category: Book Reviews
 genre: Fantasy
 excerpt: "Malice is the first book in John Gwynne's Faithful and the Fallen series — a heroic epic in the tradition of Gemmell. Here's our full review."
 image: ""
+permalink: /blog/malice-by-john-gwynne-review/
 ---
 
 ![Malice by John Gwynne]()

@@ -6,6 +6,7 @@ category: Book Reviews
 genre: Fantasy
 excerpt: "Harry Potter and the Cursed Child is the most divisive entry in the Wizarding World. Here's our honest review — what it does well, what doesn't work, and whether you should bother."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/cursed-child-cover_ztjxpq.jpg"
+permalink: /blog/cursed-child-review/
 ---
 
 ![Harry Potter and the Cursed Child](https://res.cloudinary.com/dnkddcxrt/image/upload/cursed-child-cover_ztjxpq.jpg)

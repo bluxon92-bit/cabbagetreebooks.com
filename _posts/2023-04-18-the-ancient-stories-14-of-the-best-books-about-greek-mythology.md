@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/banner-greek-mythology-1-_hjhles.png"
+permalink: /blog/best-books-about-greek-mythology/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/banner-greek-mythology-1-_hjhles.png)

@@ -13,6 +13,7 @@ excerpt: "-
 -
   The Best Fantasy Books: Wrapping Up"
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/fantasy-book-overflowing-1-_oboxw2.jpg"
+permalink: /blog/best-fantasy-books-you-need-to-read-today/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/fantasy-book-overflowing-1-_oboxw2.jpg)

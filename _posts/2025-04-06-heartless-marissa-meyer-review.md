@@ -6,6 +6,7 @@ category: Book Reviews
 genre: Fantasy
 excerpt: "Heartless is a prequel to Alice in Wonderland — the origin story of the Queen of Hearts. Here's our review of Marissa Meyer's most emotionally devastating standalone."
 image: ""
+permalink: /blog/heartless-review/
 ---
 
 ![Heartless by Marissa Meyer]()

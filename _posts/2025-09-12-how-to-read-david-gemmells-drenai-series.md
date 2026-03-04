@@ -6,6 +6,7 @@ category: Author Profiles
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/drenai-series-banner_h2ybfk.png"
+permalink: /blog/david-gemmells-drenai-series/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/drenai-series-banner_h2ybfk.png)

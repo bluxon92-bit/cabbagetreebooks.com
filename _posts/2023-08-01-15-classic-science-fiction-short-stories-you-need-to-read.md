@@ -6,6 +6,9 @@ category: Book Recommendations
 genre: Science Fiction
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381446/space-travel-sci-fi-1-_djbebg.webp"
+permalink: /blog/classic-science-fiction-short-stories-you-need-to-read/
+redirect_from:
+  - /blog/12-classic-science-fiction-short-stories-you-need-to-read/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381446/space-travel-sci-fi-1-_djbebg.webp)

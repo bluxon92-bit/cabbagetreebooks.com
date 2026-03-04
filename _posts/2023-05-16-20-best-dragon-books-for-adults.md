@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Fantasy
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/best-dragon-books-1-_r8b1jh.png"
+permalink: /blog/best-dragon-books/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/best-dragon-books-1-_r8b1jh.png)

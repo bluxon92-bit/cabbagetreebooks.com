@@ -6,6 +6,9 @@ category: Book Recommendations
 genre: Horror
 excerpt: "Horror stories have always held a special place in my heart. As a writer, I'm constantly seeking out new sources of inspiration, and there's something about the genre that never fails to captivate me. Horror short storie"
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381517/horror-story-1-_audzv7.webp"
+permalink: /blog/horror-short-stories/
+redirect_from:
+  - /blog/spine-tingling-horror-short-stories/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381517/horror-story-1-_audzv7.webp)

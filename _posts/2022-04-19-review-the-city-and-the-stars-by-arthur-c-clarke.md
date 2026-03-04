@@ -6,6 +6,9 @@ category: Book Reviews
 genre: Science Fiction
 excerpt: "The City and The Stars by Arthur C Clarke, published in 1956, was the first novel by Arthur C Clarke I read. It was the reason I went on to read many more, a few of my favourites include: 2001: A Space Odyssey, The Fount"
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381526/city-and-the-stars-1-_dld81n.webp"
+permalink: /blog/the-city-and-the-stars-arthur-c-clarke/
+redirect_from:
+  - /blog/the-city-and-the-stars-art/
 ---
 
 ![](https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381526/city-and-the-stars-1-_dld81n.webp)

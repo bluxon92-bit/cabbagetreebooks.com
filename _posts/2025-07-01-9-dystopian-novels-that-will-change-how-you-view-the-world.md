@@ -6,6 +6,7 @@ category: Book Recommendations
 genre: Dystopian
 excerpt: "This post may contain affiliate links. As an Amazon Affiliate, I may earn a small commission from qualifying purchases at no extra cost to you. Read the full disclaimer here(https://www.cabbagetreebooks.com/cookies)."
 image: "https://res.cloudinary.com/dnkddcxrt/image/upload/v1772381516/reading-fiction-1-_lrtesd.webp"
+permalink: /blog/9-dystopian-novels-to-read/
 ---
 
 [
