@@ -1098,6 +1098,26 @@ permalink: /tools/reading-tracker/
 /* ══════════════════════════════════════════════
    MOBILE (≤700px)
 ══════════════════════════════════════════════ */
+/* Hide site header/footer on mobile for full-app feel */
+@media (max-width: 700px) {
+  .site-header  { display: none !important; }
+  .site-footer  { display: none !important; }
+  .rt-hero      { display: none !important; }
+  .rt-install-strip { display: none !important; }
+}
+
+/* ── Genre breakdown chart ── */
+.rt-genre-chart { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.5rem; }
+.rt-genre-row { display: flex; align-items: center; gap: 0.65rem; }
+.rt-genre-name {
+  font-size: 0.72rem; font-weight: 500; color: var(--rt-t2);
+  width: 90px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rt-genre-bar-wrap { flex: 1; height: 7px; background: var(--rt-cream-md); border-radius: 99px; overflow: hidden; }
+.rt-genre-bar-fill { height: 100%; border-radius: 99px; transition: width 0.6s var(--rt-ease); }
+.rt-genre-count { font-size: 0.68rem; color: var(--rt-t3); flex-shrink: 0; min-width: 1.5rem; text-align: right; }
+.rt-genre-empty { font-size: 0.8rem; color: var(--rt-t3); padding: 0.5rem 0; font-style: italic; }
+
 @media (max-width: 700px) {
   .rt-tabbar-wrap { display: none; }
   .rt-sidebar     { display: none; }
@@ -1267,6 +1287,14 @@ permalink: /tools/reading-tracker/
           </div>
         </div>
 
+        <!-- Genre breakdown -->
+        <div class="rt-home-section">
+          <h2 class="rt-section-heading">Genres read this year</h2>
+          <div id="rt-genre-chart" class="rt-genre-chart">
+            <p class="rt-genre-empty">Log some finished books to see your genre breakdown.</p>
+          </div>
+        </div>
+
         <!-- Currently reading -->
         <div class="rt-home-section">
           <div class="rt-home-section-header">
@@ -1313,14 +1341,6 @@ permalink: /tools/reading-tracker/
           <h2 class="rt-section-heading">Add a book</h2>
           <p class="rt-panel-sub">Search by title or author — we'll pull cover art and details from Open Library automatically.</p>
         </div>
-
-        <div class="rt-import-row">
-          <span class="rt-import-label">📥 Import from Goodreads</span>
-          <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
-          <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
-          <span class="rt-import-hint">Export your library: Goodreads → My Books → Export library. We'll match each book to Open Library automatically.</span>
-        </div>
-        <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
 
         <div class="rt-form-card">
           <div class="rt-form-row">
@@ -1388,6 +1408,15 @@ permalink: /tools/reading-tracker/
             <button class="btn-text-link" onclick="switchTab('home')">Back to home →</button>
           </div>
         </div>
+
+        <!-- Goodreads import — below the form -->
+        <div class="rt-import-row">
+          <span class="rt-import-label">📥 Import from Goodreads</span>
+          <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
+          <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
+          <span class="rt-import-hint">Export your library from Goodreads → My Books → Export library. We'll match each book to Open Library automatically.</span>
+        </div>
+        <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
       </div>
     </div>
 
@@ -1552,12 +1581,14 @@ permalink: /tools/reading-tracker/
         <!-- LOGGED IN -->
         <div id="rt-auth-loggedin" style="display:none;">
           <div class="rt-profile-card">
-            <div class="rt-profile-avatar">📚</div>
+            <div class="rt-profile-avatar">
+              <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="white" stroke-width="1.8"/></svg>
+            </div>
             <div style="flex:1;min-width:0;">
               <div class="rt-profile-email" id="rt-auth-email"></div>
               <div class="rt-profile-joined" id="rt-profile-joined"></div>
+              <button class="rt-ghost-btn" onclick="signOut()" type="button" style="margin-top:0.5rem;font-size:0.75rem;padding:0.35rem 0.75rem;">Sign out</button>
             </div>
-            <button class="rt-ghost-btn" onclick="signOut()" type="button">Sign out</button>
           </div>
           <div class="rt-profile-stats">
             <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
@@ -1925,7 +1956,7 @@ async function syncFromCloud() {
     added:       e.added_at
   }));
   save();
-  updateStats(); renderHomeReading(); renderHistory();
+  updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
   if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
 }
 
@@ -2022,7 +2053,51 @@ function updateStats() {
 
 const gi = document.getElementById('rt-goal-target');
 gi.value = loadGoal();
-gi.addEventListener('change', function() { saveGoal(this.value); updateStats(); });
+gi.addEventListener('change', function() { saveGoal(this.value); updateStats(); renderGenreChart(); });
+
+// ─────────────────────────────────────────────────────────────
+// GENRE CHART
+// ─────────────────────────────────────────────────────────────
+const GENRE_COLOURS = [
+  '#1a2744','#2A6E69','#c8891a','#5c6bc0','#7b3fa0',
+  '#b43a3a','#2e7d52','#7a5c2e'
+];
+
+function renderGenreChart() {
+  const year  = new Date().getFullYear();
+  const read  = getBooks('read').filter(b => b.date && new Date(b.date).getFullYear() === year);
+  const el    = document.getElementById('rt-genre-chart');
+  if (!el) return;
+
+  // Count genres
+  const counts = {};
+  read.forEach(b => {
+    const g = (b.genre || '').trim() || 'Untagged';
+    counts[g] = (counts[g] || 0) + 1;
+  });
+
+  const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+
+  if (!sorted.length) {
+    el.innerHTML = '<p class="rt-genre-empty">Log some finished books to see your genre breakdown.</p>';
+    return;
+  }
+
+  const max = sorted[0][1];
+  // Show top 5
+  el.innerHTML = sorted.slice(0, 5).map(([genre, count], i) => {
+    const pct   = Math.round((count / max) * 100);
+    const colour = GENRE_COLOURS[i % GENRE_COLOURS.length];
+    return `
+    <div class="rt-genre-row">
+      <span class="rt-genre-name" title="${esc(genre)}">${esc(genre)}</span>
+      <div class="rt-genre-bar-wrap">
+        <div class="rt-genre-bar-fill" style="width:${pct}%;background:${colour};"></div>
+      </div>
+      <span class="rt-genre-count">${count}</span>
+    </div>`;
+  }).join('');
+}
 
 // ─────────────────────────────────────────────────────────────
 // TAB SWITCHING
@@ -2329,14 +2404,6 @@ function openModal(bookId) {          // called from existing "Finished?" button
   document.body.style.overflow = 'hidden';
 }
 
-function closeModal() {
-  const overlay = document.getElementById('rt-sheet-overlay');
-  const sheet   = document.getElementById('rt-sheet');
-  sheet.classList.remove('open');
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
 // Step navigation
 function goToStep(n) {
   sheetStep = n;
@@ -2454,6 +2521,16 @@ function commitFinish(status) {
   badge.style.display = book.reviewPublic ? 'block' : 'none';
 
   goToStep(2);
+}
+
+// also refresh home stats when sheet closes
+function closeModal() {
+  const overlay = document.getElementById('rt-sheet-overlay');
+  const sheet   = document.getElementById('rt-sheet');
+  sheet.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  renderGenreChart();
 }
 
 // Patch saveBookToCloud to include review fields
@@ -2863,7 +2940,7 @@ async function processGoodreadsCSV(csvText) {
     let matched = 0;
     olResults.forEach((ol, i) => { if (ol) { toImport[i].olKey = ol.olKey; toImport[i].coverId = ol.coverId; matched++; } });
     toImport.forEach(b => books.push(b));
-    save(); updateStats(); renderHomeReading(); renderHistory();
+    save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
 
     statusEl.className = 'rt-import-status rt-import-status--loading';
     statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). ${currentUser ? 'Syncing to cloud…' : ''}`;
@@ -2942,6 +3019,7 @@ document.getElementById('rt-install-btn').addEventListener('click', async functi
 // ─────────────────────────────────────────────────────────────
 load();
 updateStats();
+renderGenreChart();
 renderHomeReading();
 renderHistory();
 // Initialise recs panel state (locked if not signed in)
