@@ -5,6 +5,951 @@ description: Track your reading progress, set yearly goals, and get AI-powered r
 permalink: /tools/reading-tracker/
 ---
 
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   READING TRACKER V2 — Design System
+   Scoped entirely to .rt-* — zero impact on site styles
+   Playfair Display loaded here; DM Sans already in main.css
+═══════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+
+:root {
+  /* V2 tracker palette — extends site tokens, doesn't replace */
+  --rt-navy:       #1a2744;
+  --rt-navy-mid:   #243156;
+  --rt-navy-light: #2e3d6b;
+  --rt-cream:      #faf8f3;
+  --rt-cream-md:   #ede9e0;
+  --rt-white:      #ffffff;
+  --rt-amber:      #c8891a;
+  --rt-amber-lt:   #e8a832;
+  --rt-amber-pale: rgba(200,137,26,0.12);
+  --rt-teal:       #1B4D4A;
+  --rt-teal-lt:    #2A6E69;
+
+  /* Text */
+  --rt-t1: #1a2744;
+  --rt-t2: #3a4460;
+  --rt-t3: #7a84a0;
+
+  /* Surfaces */
+  --rt-surface:  #f0ede6;
+  --rt-border:   rgba(26,39,68,0.10);
+  --rt-border-md:rgba(26,39,68,0.16);
+
+  /* Radii */
+  --rt-r1: 18px;
+  --rt-r2: 14px;
+  --rt-r3: 10px;
+  --rt-r4: 7px;
+
+  /* Shadows */
+  --rt-s1: 0 2px 10px rgba(26,39,68,0.07);
+  --rt-s2: 0 4px 20px rgba(26,39,68,0.11);
+  --rt-s3: 0 8px 32px rgba(26,39,68,0.16);
+
+  /* Typography */
+  --rt-font-display: 'Playfair Display', Georgia, serif;
+  --rt-font-body:    'DM Sans', system-ui, sans-serif;
+
+  --rt-ease: cubic-bezier(0.4,0,0.2,1);
+  --rt-fast: 0.16s;
+  --rt-med:  0.28s;
+}
+
+/* ── HERO ── */
+.rt-hero {
+  background: linear-gradient(135deg, var(--rt-navy) 0%, var(--rt-navy-mid) 60%, var(--rt-navy-light) 100%);
+  padding: 3.5rem 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.rt-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(232,168,48,0.13) 0%, transparent 65%);
+  pointer-events: none;
+}
+.rt-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: 10%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(27,77,74,0.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+.rt-hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.rt-hero .tool-label {
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.75rem;
+}
+.rt-hero .tool-label-line { background: rgba(255,255,255,0.3); }
+.rt-hero h1 {
+  font-family: var(--rt-font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+}
+.rt-hero h1 em { font-style: italic; font-weight: 400; opacity: 0.85; }
+.rt-hero p { font-size: 0.95rem; color: rgba(255,255,255,0.6); max-width: 480px; line-height: 1.7; }
+
+/* ── TAB BAR (desktop) ── */
+.rt-tabbar-wrap {
+  background: var(--rt-white);
+  border-bottom: 1px solid var(--rt-border);
+  position: sticky;
+  top: 68px; /* below site header */
+  z-index: 90;
+  box-shadow: var(--rt-s1);
+}
+.rt-tabbar {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  padding: 0 1.5rem;
+}
+.rt-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 1.25rem;
+  font-family: var(--rt-font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--rt-t3);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color var(--rt-fast) var(--rt-ease), border-color var(--rt-fast) var(--rt-ease);
+  white-space: nowrap;
+}
+.rt-tab:hover { color: var(--rt-navy); }
+.rt-tab.active { color: var(--rt-navy); border-bottom-color: var(--rt-amber); font-weight: 600; }
+.rt-tab-icon { font-size: 0.9rem; }
+.rt-tabbar--stuck { box-shadow: var(--rt-s2); }
+
+/* ── APP SHELL ── */
+.rt-app {
+  background: var(--rt-cream);
+  min-height: 60vh;
+  padding-bottom: 2rem;
+}
+.rt-panels { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+.rt-panel { padding: 1.75rem 0; }
+.rt-panel-inner { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* ── SECTION HEADINGS ── */
+.rt-section-heading {
+  font-family: var(--rt-font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--rt-navy);
+  line-height: 1.2;
+}
+.rt-panel-sub {
+  font-size: 0.85rem;
+  color: var(--rt-t3);
+  line-height: 1.65;
+  margin-top: 0.25rem;
+}
+.rt-home-section { display: flex; flex-direction: column; gap: 1rem; }
+.rt-home-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ── SIGN-IN CTA BANNER ── */
+.rt-signin-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  border-radius: var(--rt-r2);
+  flex-wrap: wrap;
+}
+.rt-signin-cta-text { display: flex; flex-direction: column; gap: 0.15rem; }
+.rt-signin-cta-text strong { font-size: 0.88rem; font-weight: 600; color: #fff; }
+.rt-signin-cta-text span  { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+.rt-signin-cta-btn {
+  background: var(--rt-amber-lt);
+  color: var(--rt-navy);
+  border: none;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--rt-r4);
+  font-family: var(--rt-font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background var(--rt-fast);
+}
+.rt-signin-cta-btn:hover { background: var(--rt-amber); color: #fff; }
+
+/* ── STATS GRID ── */
+.rt-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+.rt-stat-card {
+  background: var(--rt-white);
+  border-radius: var(--rt-r2);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--rt-s1);
+}
+.rt-stat-goal { grid-column: 1 / -1; background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid)); }
+.rt-stat-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rt-t3); margin-bottom: 0.3rem; font-weight: 500; }
+.rt-stat-goal .rt-stat-label { color: rgba(255,255,255,0.45); }
+.rt-stat-number { font-family: var(--rt-font-display); font-size: 2rem; font-weight: 700; color: var(--rt-navy); line-height: 1; }
+.rt-stat-sub { font-size: 0.68rem; color: var(--rt-t3); margin-top: 0.2rem; }
+
+.rt-goal-display { display: flex; align-items: baseline; gap: 0.25rem; margin-bottom: 0.5rem; }
+.rt-goal-current { font-family: var(--rt-font-display); font-size: 2rem; font-weight: 700; color: var(--rt-amber-lt); line-height: 1; }
+.rt-goal-sep { font-size: 1.2rem; color: rgba(255,255,255,0.3); }
+.rt-goal-input {
+  font-family: var(--rt-font-display); font-size: 1.5rem; font-weight: 700; color: rgba(255,255,255,0.6);
+  background: none; border: none; border-bottom: 1.5px solid rgba(255,255,255,0.2);
+  width: 3rem; text-align: center; -moz-appearance: textfield;
+}
+.rt-goal-input::-webkit-outer-spin-button,
+.rt-goal-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.rt-goal-input:focus { outline: none; border-bottom-color: var(--rt-amber-lt); }
+.rt-goal-unit { font-size: 0.68rem; color: rgba(255,255,255,0.35); margin-left: 0.2rem; }
+.rt-goal-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
+.rt-goal-bar { flex: 1; height: 4px; background: rgba(255,255,255,0.12); border-radius: 99px; overflow: hidden; }
+.rt-goal-fill { height: 100%; background: var(--rt-amber-lt); border-radius: 99px; transition: width 0.5s var(--rt-ease); }
+.rt-goal-pct { font-size: 0.65rem; color: rgba(255,255,255,0.4); min-width: 2.5rem; text-align: right; }
+
+/* ── CURRENTLY READING CARD ── */
+.rt-reading-card {
+  background: var(--rt-white);
+  border-radius: var(--rt-r2);
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: var(--rt-s1);
+  transition: box-shadow var(--rt-med) var(--rt-ease);
+}
+.rt-reading-card:hover { box-shadow: var(--rt-s2); }
+.rt-reading-cover {
+  width: 56px; height: 82px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(26,39,68,0.2);
+}
+.rt-reading-cover--placeholder {
+  width: 56px; height: 82px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(26,39,68,0.2);
+}
+.rt-reading-card-body { flex: 1; min-width: 0; }
+.rt-reading-badge {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--rt-amber); margin-bottom: 0.3rem;
+}
+.rt-reading-title { font-family: var(--rt-font-display); font-size: 1.05rem; font-weight: 700; color: var(--rt-navy); margin-bottom: 0.2rem; line-height: 1.25; }
+.rt-reading-author { font-size: 0.78rem; color: var(--rt-t3); margin-bottom: 0.4rem; }
+.rt-reading-meta { font-size: 0.72rem; color: var(--rt-t3); }
+.rt-reading-card-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
+
+/* ── HISTORY LIST ── */
+.rt-book-item {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  padding: 0.9rem 0; border-bottom: 1px solid var(--rt-border);
+}
+.rt-book-item:last-child { border-bottom: none; }
+.rt-book-item--dnf { opacity: 0.65; }
+.rt-book-cover {
+  width: 38px; height: 54px; object-fit: cover;
+  border-radius: 4px; flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(26,39,68,0.14);
+}
+.rt-book-cover--placeholder {
+  width: 38px; height: 54px; border-radius: 4px; flex-shrink: 0;
+  background: var(--rt-surface);
+}
+.rt-book-main { flex: 1; min-width: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
+.rt-book-info { flex: 1; min-width: 0; }
+.rt-book-title { font-weight: 600; font-size: 0.9rem; color: var(--rt-navy); margin-bottom: 0.15rem; }
+.rt-book-author { font-size: 0.75rem; color: var(--rt-t3); }
+.rt-book-meta { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+.rt-book-genre { font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rt-t3); background: var(--rt-surface); padding: 0.2em 0.55em; border-radius: 3px; }
+.rt-book-stars { font-size: 0.82rem; color: var(--rt-amber); letter-spacing: -1px; }
+.rt-book-date  { font-size: 0.7rem; color: var(--rt-t3); }
+.rt-book-notes { font-size: 0.78rem; color: var(--rt-t3); font-style: italic; margin-top: 0.35rem; line-height: 1.55; padding-left: calc(38px + 0.85rem); }
+.rt-dnf-label  {
+  font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase;
+  background: #7f1d1d; color: white; padding: 0.15em 0.45em;
+  border-radius: 3px; margin-left: 0.4rem; vertical-align: middle;
+}
+
+/* ── STATUS TABS ── */
+.rt-status-tabs { display: flex; border-bottom: 2px solid var(--rt-border); gap: 0; }
+.rt-status-tab {
+  font-family: var(--rt-font-body); font-size: 0.8rem; font-weight: 500;
+  padding: 0.55rem 1.1rem; background: none; border: none;
+  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  cursor: pointer; color: var(--rt-t3);
+  transition: color var(--rt-fast), border-color var(--rt-fast);
+}
+.rt-status-tab:hover { color: var(--rt-navy); }
+.rt-status-tab.active { color: var(--rt-navy); border-bottom-color: var(--rt-amber); font-weight: 600; }
+
+/* ── SORT / FILTER ── */
+.rt-filter-select {
+  font-family: var(--rt-font-body); font-size: 0.78rem;
+  padding: 0.4rem 0.7rem; border: 1px solid var(--rt-border-md);
+  background: var(--rt-white); color: var(--rt-t2);
+  border-radius: var(--rt-r4); appearance: none; cursor: pointer;
+}
+
+/* ── BUTTONS ── */
+.rt-ghost-btn {
+  font-family: var(--rt-font-body); font-size: 0.78rem; font-weight: 600;
+  color: var(--rt-amber); background: var(--rt-amber-pale); border: 1.5px solid rgba(200,137,26,0.2);
+  padding: 0.45rem 0.9rem; border-radius: var(--rt-r4); cursor: pointer;
+  transition: all var(--rt-fast) var(--rt-ease); white-space: nowrap;
+}
+.rt-ghost-btn:hover { background: var(--rt-amber); color: #fff; border-color: var(--rt-amber); }
+
+.rt-submit-btn {
+  font-family: var(--rt-font-body); font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.02em; padding: 0.9rem 1.5rem;
+  background: var(--rt-navy); color: white; border: none;
+  border-radius: var(--rt-r3); cursor: pointer; width: 100%;
+  transition: background var(--rt-fast) var(--rt-ease);
+}
+.rt-submit-btn:hover { background: var(--rt-navy-light); }
+.rt-submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.rt-finish-btn {
+  font-family: var(--rt-font-body); font-size: 0.72rem; font-weight: 700;
+  padding: 0.4rem 0.85rem; background: var(--rt-navy); color: white;
+  border: none; border-radius: var(--rt-r4); cursor: pointer;
+  transition: background var(--rt-fast); white-space: nowrap;
+}
+.rt-finish-btn:hover { background: var(--rt-navy-light); }
+
+.rt-delete {
+  background: none; border: none; font-size: 1rem; color: var(--rt-t3);
+  cursor: pointer; padding: 0.15rem 0.3rem; border-radius: 4px;
+  transition: color var(--rt-fast), background var(--rt-fast);
+}
+.rt-delete:hover { color: #c0392b; background: rgba(192,57,43,0.08); }
+.rt-delete--quiet { opacity: 0.5; }
+
+.btn-text-link {
+  background: none; border: none; color: var(--rt-amber); font-family: var(--rt-font-body);
+  font-size: inherit; cursor: pointer; text-decoration: underline; padding: 0;
+  transition: color var(--rt-fast);
+}
+.btn-text-link:hover { color: var(--rt-navy); }
+
+/* ── ADD BOOK FORM ── */
+.rt-import-row {
+  display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  padding: 0.85rem 1.1rem;
+  background: var(--rt-white); border-radius: var(--rt-r2);
+  border: 1.5px dashed var(--rt-border-md);
+}
+.rt-import-label { font-size: 0.85rem; font-weight: 600; color: var(--rt-navy); }
+.rt-import-hint  { font-size: 0.73rem; color: var(--rt-t3); flex: 1 1 100%; margin-top: 0.1rem; }
+.rt-import-status {
+  padding: 0.75rem 1rem; font-size: 0.84rem; border-radius: var(--rt-r3);
+  margin-bottom: 0.5rem;
+}
+.rt-import-status--loading { background: #eff6ff; color: #1d4ed8; border-left: 3px solid #3b82f6; }
+.rt-import-status--success { background: #f0fdf4; color: #166534; border-left: 3px solid #22c55e; }
+.rt-import-status--error   { background: #fef2f2; color: #991b1b; border-left: 3px solid #ef4444; }
+
+.rt-form-card {
+  background: var(--rt-white); border-radius: var(--rt-r2);
+  padding: 1.5rem; box-shadow: var(--rt-s1);
+}
+.rt-form-row { display: flex; flex-direction: column; gap: 0; margin-bottom: 1.1rem; }
+.rt-form-row--2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.1rem; }
+.rt-form-row:last-child { margin-bottom: 0; }
+.rt-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.rt-field label {
+  font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--rt-t3); font-weight: 600;
+}
+.rt-required { color: var(--rt-amber); }
+.rt-optional { font-weight: 400; color: var(--rt-t3); text-transform: none; letter-spacing: 0; font-size: 0.85em; }
+
+.rt-field input:not([type="radio"]):not([type="checkbox"]),
+.rt-field select,
+.rt-field textarea {
+  font-family: var(--rt-font-body); font-size: 0.9rem; width: 100%;
+  padding: 0.7rem 0.9rem; border: 1.5px solid var(--rt-border-md);
+  background: var(--rt-cream); color: var(--rt-t1);
+  border-radius: var(--rt-r4); appearance: none;
+  transition: border-color var(--rt-fast), background var(--rt-fast);
+}
+.rt-field input:not([type="radio"]):not([type="checkbox"]):focus,
+.rt-field select:focus,
+.rt-field textarea:focus {
+  outline: none; border-color: var(--rt-navy); background: var(--rt-white);
+}
+.rt-field textarea { resize: vertical; min-height: 80px; }
+.rt-input-error { border-color: #c0392b !important; animation: rt-shake 0.3s ease; }
+@keyframes rt-shake {
+  0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)}
+}
+
+.rt-status-toggle { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.2rem; }
+.rt-toggle-opt {
+  display: flex; align-items: center; gap: 0.55rem;
+  font-size: 0.85rem; color: var(--rt-t2); cursor: pointer;
+}
+.rt-toggle-opt input { accent-color: var(--rt-navy); width: 14px; height: 14px; cursor: pointer; }
+
+.rt-add-success {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; color: var(--rt-teal); padding: 0.75rem 0 0;
+}
+
+/* ── STARS ── */
+.rt-stars { display: flex; gap: 4px; }
+.rt-stars--large .rt-star { font-size: 1.9rem; }
+.rt-star {
+  background: none; border: none; font-size: 1.5rem; cursor: pointer;
+  color: var(--rt-cream-md); padding: 0; line-height: 1;
+  transition: color var(--rt-fast), transform var(--rt-fast);
+}
+.rt-star.active, .rt-star.hover { color: var(--rt-amber); }
+.rt-star:hover { transform: scale(1.15); }
+
+/* ── TBR ── */
+.rt-tbr-add {
+  display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+}
+.rt-tbr-input {
+  flex: 1; min-width: 140px; font-family: var(--rt-font-body); font-size: 0.88rem;
+  padding: 0.65rem 0.85rem; border: 1.5px solid var(--rt-border-md);
+  background: var(--rt-white); color: var(--rt-t1); border-radius: var(--rt-r4);
+  transition: border-color var(--rt-fast);
+}
+.rt-tbr-input:focus { outline: none; border-color: var(--rt-navy); }
+.rt-tbr-add-btn {
+  font-family: var(--rt-font-body); font-size: 0.82rem; font-weight: 700;
+  padding: 0.65rem 1.25rem; background: var(--rt-navy); color: white;
+  border: none; border-radius: var(--rt-r4); cursor: pointer; white-space: nowrap;
+  transition: background var(--rt-fast);
+}
+.rt-tbr-add-btn:hover { background: var(--rt-navy-light); }
+.rt-start-reading-btn {
+  font-family: var(--rt-font-body); font-size: 0.72rem; font-weight: 600;
+  padding: 0.3rem 0.8rem; background: rgba(26,39,68,0.06);
+  color: var(--rt-navy); border: 1.5px solid rgba(26,39,68,0.14);
+  border-radius: var(--rt-r4); cursor: pointer; white-space: nowrap;
+  transition: all var(--rt-fast);
+}
+.rt-start-reading-btn:hover { background: var(--rt-navy); color: white; border-color: var(--rt-navy); }
+
+/* ── RECS / DISCOVER ── */
+.rt-recs-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 1rem; margin-bottom: 0.5rem;
+}
+.rt-ai-badge {
+  background: linear-gradient(135deg, var(--rt-amber), #a06010);
+  color: white; font-size: 0.58rem; font-weight: 700;
+  letter-spacing: 0.12em; padding: 0.3em 0.65em;
+  border-radius: 4px; flex-shrink: 0; margin-top: 0.2rem;
+}
+
+/* Locked state */
+.rt-recs-locked {
+  background: var(--rt-white); border-radius: var(--rt-r2);
+  padding: 2rem; text-align: center; box-shadow: var(--rt-s1);
+  border: 1.5px dashed var(--rt-border-md);
+}
+.rt-recs-locked-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--rt-amber-pale); display: flex; align-items: center;
+  justify-content: center; font-size: 1.4rem; margin: 0 auto 0.9rem;
+}
+.rt-recs-locked h3 {
+  font-family: var(--rt-font-display); font-size: 1.05rem; font-weight: 700;
+  color: var(--rt-navy); margin-bottom: 0.4rem;
+}
+.rt-recs-locked p { font-size: 0.83rem; color: var(--rt-t3); line-height: 1.6; margin-bottom: 1.1rem; }
+
+/* Generate button state */
+.rt-recs-generate {
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-light));
+  border-radius: var(--rt-r2); padding: 1.25rem 1.5rem;
+  position: relative; overflow: hidden;
+}
+.rt-recs-generate::before {
+  content: '';
+  position: absolute; top: -20px; right: -20px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(232,168,48,0.18) 0%, transparent 70%);
+}
+.rt-recs-generate-header {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 0.6rem; position: relative; z-index: 1;
+}
+.rt-recs-generate-icon {
+  width: 22px; height: 22px;
+  background: linear-gradient(135deg, var(--rt-amber-lt), #a05a0a);
+  border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 700; color: #fff; flex-shrink: 0;
+}
+.rt-recs-generate h3 {
+  font-family: var(--rt-font-display); font-size: 1rem; font-weight: 700;
+  color: #fff; flex: 1;
+}
+.rt-recs-generate-sub {
+  font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.55;
+  margin-bottom: 1rem; position: relative; z-index: 1;
+}
+.rt-recs-generate-btn {
+  background: var(--rt-amber-lt); color: var(--rt-navy);
+  border: none; border-radius: var(--rt-r3);
+  padding: 0.85rem 1.25rem; font-family: var(--rt-font-body);
+  font-size: 0.88rem; font-weight: 700; width: 100%; cursor: pointer;
+  transition: background var(--rt-fast); position: relative; z-index: 1;
+}
+.rt-recs-generate-btn:hover { background: var(--rt-amber); color: #fff; }
+.rt-recs-generate-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Queue progress bar */
+.rt-recs-progress {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+.rt-recs-progress-dot {
+  height: 5px; border-radius: 99px;
+  flex: 1; background: var(--rt-cream-md);
+  transition: background var(--rt-med);
+}
+.rt-recs-progress-dot.done { background: var(--rt-navy); }
+.rt-recs-progress-label { font-size: 0.68rem; color: var(--rt-t3); white-space: nowrap; }
+
+/* Individual rec card */
+.rt-rec-card {
+  background: var(--rt-white); border-radius: var(--rt-r2);
+  overflow: hidden; box-shadow: var(--rt-s2);
+}
+.rt-rec-card-top {
+  background: linear-gradient(160deg, var(--rt-navy), var(--rt-navy-mid));
+  padding: 1.1rem 1.25rem; display: flex; gap: 1rem; align-items: flex-start;
+}
+.rt-rec-cover {
+  width: 56px; height: 80px; border-radius: 8px;
+  object-fit: cover; flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+}
+.rt-rec-cover--placeholder {
+  width: 56px; height: 80px; border-radius: 8px;
+  flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.28);
+  background: linear-gradient(135deg, var(--rt-navy-light), #3a4a7a);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.rt-rec-why {
+  font-size: 0.62rem; font-weight: 700; color: var(--rt-amber-lt);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem;
+}
+.rt-rec-title {
+  font-family: var(--rt-font-display); font-size: 1.1rem; font-weight: 700;
+  color: #fff; margin-bottom: 0.2rem; line-height: 1.25;
+}
+.rt-rec-author { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-bottom: 0.6rem; }
+.rt-rec-quote { font-size: 0.78rem; color: rgba(255,255,255,0.35); font-style: italic; line-height: 1.5; }
+.rt-rec-card-body { padding: 1rem 1.25rem; }
+.rt-rec-desc { font-size: 0.84rem; color: var(--rt-t2); line-height: 1.6; margin-bottom: 0.9rem; }
+.rt-rec-actions { display: flex; gap: 0.6rem; }
+.rt-rec-add-btn {
+  flex: 1; background: var(--rt-navy); color: white;
+  border: none; border-radius: var(--rt-r3); padding: 0.7rem 1rem;
+  font-family: var(--rt-font-body); font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; transition: background var(--rt-fast); text-align: center;
+}
+.rt-rec-add-btn:hover { background: var(--rt-navy-light); }
+.rt-rec-add-btn:disabled { background: var(--rt-surface); color: var(--rt-t3); cursor: default; }
+.rt-rec-dismiss-btn {
+  background: rgba(180,40,40,0.07); color: #b42828;
+  border: none; border-radius: var(--rt-r3); padding: 0.7rem 1rem;
+  font-family: var(--rt-font-body); font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; transition: background var(--rt-fast);
+}
+.rt-rec-dismiss-btn:hover { background: rgba(180,40,40,0.14); }
+
+.rt-recs-hint {
+  text-align: center; font-size: 0.73rem; color: var(--rt-t3);
+  margin: 0.6rem 0 1rem; line-height: 1.55;
+}
+
+/* All done state */
+.rt-recs-done {
+  background: var(--rt-white); border-radius: var(--rt-r2);
+  padding: 1.5rem; text-align: center; box-shadow: var(--rt-s1);
+}
+.rt-recs-done-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+.rt-recs-done h3 {
+  font-family: var(--rt-font-display); font-size: 1rem; font-weight: 700;
+  color: var(--rt-navy); margin-bottom: 0.35rem;
+}
+.rt-recs-done p { font-size: 0.82rem; color: var(--rt-t3); line-height: 1.6; margin-bottom: 1rem; }
+.rt-recs-done-sub { font-size: 0.7rem; color: var(--rt-t3); margin-top: 0.5rem; }
+
+/* Output / legacy list display */
+.rt-ai-output { margin-top: 1rem; }
+.rt-ai-response { display: flex; flex-direction: column; gap: 0.5rem; }
+.rt-rec-item {
+  background: var(--rt-white); border-radius: var(--rt-r3);
+  padding: 1rem 1.1rem; box-shadow: var(--rt-s1);
+}
+.rt-rec-text { font-size: 0.88rem; line-height: 1.75; color: var(--rt-t2); margin-bottom: 0.6rem; }
+.rt-rec-text strong { color: var(--rt-navy); }
+.rt-rec-footer { font-size: 0.83rem; color: var(--rt-teal); font-style: italic; margin-top: 0.5rem; }
+.rt-ai-msg { font-size: 0.85rem; color: var(--rt-t3); text-align: center; padding: 1.5rem 0; }
+.rt-ai-note { font-size: 0.68rem; color: var(--rt-t3); margin-top: 0.75rem; line-height: 1.6; }
+.rt-ai-loading { display: flex; gap: 6px; justify-content: center; padding: 2rem; }
+.rt-ai-loading span {
+  width: 8px; height: 8px; background: var(--rt-navy);
+  border-radius: 50%; animation: rt-bounce 1.1s ease-in-out infinite;
+}
+.rt-ai-loading span:nth-child(2) { animation-delay: 0.18s; }
+.rt-ai-loading span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes rt-bounce {
+  0%,80%,100%{transform:translateY(0);opacity:.35} 40%{transform:translateY(-9px);opacity:1}
+}
+
+/* Trending section */
+.rt-trending-section { display: flex; flex-direction: column; gap: 0.75rem; }
+.rt-trending-item {
+  background: var(--rt-white); border-radius: var(--rt-r3);
+  padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.85rem;
+  box-shadow: var(--rt-s1);
+}
+.rt-trending-cov {
+  width: 38px; height: 54px; border-radius: 5px; object-fit: cover;
+  flex-shrink: 0; box-shadow: 0 2px 8px rgba(26,39,68,0.14);
+}
+.rt-trending-cov--ph {
+  width: 38px; height: 54px; border-radius: 5px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(26,39,68,0.14);
+}
+.rt-trending-info { flex: 1; min-width: 0; }
+.rt-trending-label { font-size: 0.6rem; font-weight: 700; color: var(--rt-t3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+.rt-trending-title { font-size: 0.88rem; font-weight: 600; color: var(--rt-navy); margin-bottom: 0.1rem; }
+.rt-trending-author { font-size: 0.73rem; color: var(--rt-t3); }
+
+/* ── ACCOUNT ── */
+.rt-account-hero {
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-light));
+  border-radius: var(--rt-r2); padding: 2rem 1.5rem;
+  text-align: center; position: relative; overflow: hidden;
+}
+.rt-account-hero::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(232,168,48,0.16) 0%, transparent 65%);
+}
+.rt-account-hero-icon { font-size: 2.2rem; margin-bottom: 0.75rem; opacity: 0.8; position: relative; z-index: 1; }
+.rt-account-hero h2 {
+  font-family: var(--rt-font-display); font-size: 1.4rem; font-weight: 700;
+  color: #fff; margin-bottom: 0.4rem; position: relative; z-index: 1;
+}
+.rt-account-hero .rt-panel-sub { color: rgba(255,255,255,0.5); position: relative; z-index: 1; }
+
+.rt-benefits-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.6rem; margin-top: 1.1rem; position: relative; z-index: 1;
+}
+.rt-benefit {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--rt-r3); padding: 0.75rem; text-align: left;
+}
+.rt-benefit-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+.rt-benefit strong { display: block; font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 0.15rem; }
+.rt-benefit p { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin: 0; line-height: 1.45; }
+
+.rt-auth-tabs { display: flex; border-bottom: 2px solid var(--rt-border); margin-bottom: 1.25rem; }
+.rt-auth-tab {
+  flex: 1; background: none; border: none;
+  padding: 0.65rem 0; font-family: var(--rt-font-body);
+  font-size: 0.85rem; font-weight: 500; color: var(--rt-t3);
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px;
+  transition: color var(--rt-fast), border-color var(--rt-fast);
+}
+.rt-auth-tab.active { color: var(--rt-navy); border-bottom-color: var(--rt-amber); font-weight: 700; }
+
+.rt-auth-card { display: flex; flex-direction: column; gap: 0.9rem; }
+.rt-auth-msg { font-size: 0.83rem; margin-top: 0.25rem; padding: 0.65rem 0.9rem; border-radius: var(--rt-r4); }
+.rt-auth-msg--success { background: #f0fdf4; color: #166534; border-left: 3px solid #22c55e; }
+.rt-auth-msg--error   { background: #fef2f2; color: #991b1b; border-left: 3px solid #ef4444; }
+
+.rt-profile-card {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.1rem 1.25rem; background: var(--rt-white);
+  border-radius: var(--rt-r2); box-shadow: var(--rt-s1);
+}
+.rt-profile-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; color: white; flex-shrink: 0;
+}
+.rt-profile-email { font-size: 0.9rem; font-weight: 600; color: var(--rt-navy); }
+.rt-profile-joined { font-size: 0.75rem; color: var(--rt-t3); margin-top: 0.15rem; }
+.rt-profile-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem; margin-top: 0.25rem;
+}
+.rt-profile-stat {
+  background: var(--rt-cream); border-radius: var(--rt-r3);
+  padding: 0.7rem 0.6rem; text-align: center;
+}
+.rt-profile-stat-n {
+  font-family: var(--rt-font-display); font-size: 1.5rem; font-weight: 700;
+  color: var(--rt-navy); line-height: 1;
+}
+.rt-profile-stat-l { font-size: 0.58rem; color: var(--rt-t3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.2rem; }
+
+/* ── MODAL ── */
+.rt-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 500; display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.rt-modal {
+  background: var(--rt-white); width: 100%; max-width: 460px;
+  border-radius: var(--rt-r2); padding: 1.75rem;
+  position: relative; max-height: 90vh; overflow-y: auto;
+  box-shadow: var(--rt-s3);
+}
+.rt-modal-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 1.5rem; gap: 1rem;
+}
+.rt-modal-header h3 {
+  font-family: var(--rt-font-display); font-size: 1.25rem;
+  font-weight: 700; color: var(--rt-navy); line-height: 1.25;
+}
+.rt-modal-close {
+  background: none; border: none; font-size: 1.4rem;
+  color: var(--rt-t3); cursor: pointer; line-height: 1; padding: 0;
+  transition: color var(--rt-fast);
+}
+.rt-modal-close:hover { color: var(--rt-navy); }
+.rt-modal-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.rt-modal-btn {
+  font-family: var(--rt-font-body); font-size: 0.84rem; font-weight: 700;
+  padding: 0.75rem 1rem; border: none; border-radius: var(--rt-r3);
+  cursor: pointer; transition: all var(--rt-fast); flex: 1; min-width: 110px;
+}
+.rt-modal-btn--read   { background: var(--rt-navy); color: white; }
+.rt-modal-btn--read:hover   { background: var(--rt-navy-light); }
+.rt-modal-btn--dnf    { background: #7f1d1d; color: white; }
+.rt-modal-btn--dnf:hover    { background: #991b1b; }
+.rt-modal-btn--cancel { background: var(--rt-surface); color: var(--rt-t2); }
+.rt-modal-btn--cancel:hover { background: var(--rt-cream-md); }
+
+/* ── FLASH ── */
+.rt-flash {
+  position: sticky; top: 108px; z-index: 150;
+  background: var(--rt-navy); color: white;
+  text-align: center; font-size: 0.84rem; font-weight: 600;
+  padding: 0.7rem 1rem; border-radius: var(--rt-r3); margin: 0.5rem 1.5rem;
+  animation: rt-flash-in 0.2s ease, rt-flash-out 0.4s ease 2.6s forwards;
+}
+@keyframes rt-flash-in  { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes rt-flash-out { from{opacity:1} to{opacity:0} }
+
+/* ── EMPTY STATES ── */
+.rt-empty { display: none; flex-direction: column; align-items: center; padding: 2.5rem 1rem; color: var(--rt-t3); gap: 0.5rem; }
+.rt-empty--inline { display: none; align-items: flex-start; padding: 1rem 0; }
+.rt-empty--inline p { font-size: 0.85rem; color: var(--rt-t3); }
+.rt-empty-icon { font-size: 1.8rem; }
+
+/* ── OPEN LIBRARY DROPDOWN ── */
+.rt-ol-dropdown {
+  position: absolute; top: calc(100% + 2px); left: 0; right: 0;
+  background: var(--rt-white); border: 1.5px solid var(--rt-border-md);
+  border-radius: var(--rt-r3); box-shadow: var(--rt-s3);
+  z-index: 200; max-height: 320px; overflow-y: auto;
+}
+.rt-ol-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem 0.9rem; cursor: pointer;
+  border-bottom: 1px solid var(--rt-border);
+  transition: background var(--rt-fast);
+}
+.rt-ol-item:last-child { border-bottom: none; }
+.rt-ol-item:hover, .rt-ol-item.focused { background: var(--rt-cream); }
+.rt-ol-cover { width: 32px; height: 46px; object-fit: cover; flex-shrink: 0; border-radius: 3px; }
+.rt-ol-cover--placeholder {
+  width: 32px; height: 46px; display: flex; align-items: center; justify-content: center;
+  background: var(--rt-surface); font-size: 1rem; flex-shrink: 0; border-radius: 3px;
+}
+.rt-ol-title { font-size: 0.87rem; font-weight: 600; color: var(--rt-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rt-ol-meta  { font-size: 0.74rem; color: var(--rt-t3); margin-top: 0.1rem; }
+
+/* ── PASSWORD RESET OVERLAY ── */
+.rt-reset-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  z-index: 1000; display: flex; align-items: center;
+  justify-content: center; padding: 1.5rem;
+}
+.rt-reset-modal {
+  background: var(--rt-white); border-radius: var(--rt-r2);
+  padding: 2rem; width: 100%; max-width: 420px; text-align: center;
+  box-shadow: var(--rt-s3);
+}
+.rt-reset-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.rt-reset-modal .rt-field { text-align: left; }
+
+/* ── INSTALL STRIP ── */
+.rt-install-strip { background: var(--rt-navy); padding: 0.85rem 2rem; }
+.rt-install-strip-inner {
+  max-width: 860px; margin: 0 auto; display: flex; align-items: center;
+  justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+  font-size: 0.8rem; color: rgba(255,255,255,0.7);
+}
+.rt-install-strip strong { color: white; }
+.rt-install-btn {
+  background: var(--rt-amber-lt); color: var(--rt-navy); border: none;
+  font-family: var(--rt-font-body); font-size: 0.75rem; font-weight: 700;
+  padding: 0.4rem 1rem; border-radius: var(--rt-r4); cursor: pointer;
+  transition: background var(--rt-fast);
+}
+.rt-install-btn:hover { background: var(--rt-amber); color: #fff; }
+.rt-ios-hint { font-size: 0.72rem; color: rgba(255,255,255,0.45); font-style: italic; }
+
+/* ── BOTTOM NAV (mobile only, hidden on desktop) ── */
+.rt-bottom-nav { display: none; }
+
+/* ══════════════════════════════════════════════
+   DESKTOP SIDEBAR LAYOUT (≥1024px)
+══════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  .rt-app {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 0;
+    align-items: start;
+  }
+  .rt-tabbar-wrap { display: none; }
+  .rt-sidebar {
+    display: flex; flex-direction: column;
+    background: var(--rt-white); border-right: 1px solid var(--rt-border);
+    min-height: 80vh; padding: 1.5rem 0;
+    position: sticky; top: 68px;
+  }
+  .rt-sidebar-label {
+    font-size: 0.58rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--rt-t3);
+    padding: 0 1rem; margin-bottom: 0.35rem; margin-top: 0.75rem;
+  }
+  .rt-sidebar-item {
+    display: flex; align-items: center; gap: 0.65rem;
+    padding: 0.7rem 1rem; cursor: pointer; position: relative;
+    transition: background var(--rt-fast);
+    font-family: var(--rt-font-body);
+    font-size: 0.82rem; font-weight: 500; color: var(--rt-t3);
+    background: none; border: none; width: 100%; text-align: left;
+  }
+  .rt-sidebar-item:hover { background: var(--rt-cream); color: var(--rt-navy); }
+  .rt-sidebar-item.active {
+    background: rgba(26,39,68,0.06); color: var(--rt-navy); font-weight: 600;
+  }
+  .rt-sidebar-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .rt-sidebar-divider { height: 1px; background: var(--rt-border); margin: 0.5rem 1rem; }
+  .rt-sidebar-badge {
+    margin-left: auto; background: var(--rt-amber-lt); color: var(--rt-navy);
+    border-radius: 99px; font-size: 0.6rem; font-weight: 700;
+    padding: 1px 6px; min-width: 16px; text-align: center;
+  }
+  .rt-panels { padding: 0 2rem; max-width: none; }
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE (≤700px)
+══════════════════════════════════════════════ */
+@media (max-width: 700px) {
+  .rt-tabbar-wrap { display: none; }
+  .rt-sidebar     { display: none; }
+
+  .rt-bottom-nav {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 200; background: var(--rt-white);
+    border-top: 1px solid var(--rt-border);
+    height: 64px; box-shadow: 0 -4px 20px rgba(26,39,68,0.1);
+  }
+  .rt-nav-btn {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 3px; background: none; border: none;
+    border-top: 2px solid transparent; cursor: pointer; padding: 0.4rem 0.2rem;
+    color: var(--rt-t3); font-family: var(--rt-font-body);
+    transition: color var(--rt-fast);
+  }
+  .rt-nav-btn svg { width: 20px; height: 20px; }
+  .rt-nav-btn:hover { color: var(--rt-navy); }
+  .rt-nav-btn.active { color: var(--rt-navy); border-top-color: var(--rt-amber); }
+  .rt-nav-icon { font-size: 1.1rem; line-height: 1; }
+  .rt-nav-label { font-size: 0.55rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
+
+  .rt-app { padding-bottom: 64px; }
+  .rt-panels { padding: 0 1rem; }
+  .rt-stats-grid { grid-template-columns: 1fr 1fr; }
+  .rt-stat-goal { grid-column: 1 / -1; }
+  .rt-form-row--2 { grid-template-columns: 1fr; }
+  .rt-form-card { padding: 1.1rem; }
+  .rt-reading-card { flex-direction: column; }
+  .rt-reading-card-actions { flex-direction: row; width: 100%; justify-content: space-between; }
+  .rt-modal { padding: 1.4rem; }
+  .rt-modal-actions { flex-direction: column; }
+  .rt-modal-btn { flex: none; width: 100%; }
+  .rt-benefits-grid { grid-template-columns: 1fr; }
+  .rt-profile-stats { grid-template-columns: repeat(2, 1fr); }
+  .rt-recs-header { flex-direction: column; }
+  .rt-tbr-add { flex-direction: column; }
+  .rt-tbr-add-btn { width: 100%; text-align: center; }
+}
+
+@media (min-width: 701px) and (max-width: 1023px) {
+  /* Tablet: show desktop tab bar, hide bottom nav */
+  .rt-sidebar { display: none; }
+  .rt-app { padding-bottom: 2rem; }
+}
+</style>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
 <div class="rt-hero">
   <div class="rt-hero-inner">
     <div class="tool-label">
@@ -16,58 +961,77 @@ permalink: /tools/reading-tracker/
   </div>
 </div>
 
-<!-- STICKY TAB BAR -->
+<!-- DESKTOP TAB BAR (tablet + wide) -->
 <div class="rt-tabbar-wrap" id="rt-tabbar-wrap">
   <div class="rt-tabbar">
-    <button class="rt-tab active" data-tab="home"      onclick="switchTab('home')">
-      <span class="rt-tab-icon">◈</span> Home
+    <button class="rt-tab active" data-tab="home"    onclick="switchTab('home')">
+      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Home
     </button>
-    <button class="rt-tab" data-tab="add"       onclick="switchTab('add')">
-      <span class="rt-tab-icon">＋</span> Add book
+    <button class="rt-tab" data-tab="add"    onclick="switchTab('add')">
+      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Add Book
     </button>
-    <button class="rt-tab" data-tab="tbr"       onclick="switchTab('tbr')">
-      <span class="rt-tab-icon">🔖</span> TBR
+    <button class="rt-tab" data-tab="tbr"    onclick="switchTab('tbr')">
+      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      My List
     </button>
-    <button class="rt-tab" data-tab="recs"      onclick="switchTab('recs')">
-      <span class="rt-tab-icon">✦</span> Recs
+    <button class="rt-tab" data-tab="recs"   onclick="switchTab('recs')">
+      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Discover
     </button>
     <button class="rt-tab" data-tab="account" onclick="switchTab('account')">
-      <span class="rt-tab-icon">◉</span> Account
+      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
+      Account
     </button>
   </div>
 </div>
 
-<!-- PANELS -->
+<!-- APP SHELL -->
 <div class="rt-app">
+
+  <!-- DESKTOP SIDEBAR (hidden on mobile/tablet via CSS) -->
+  <nav class="rt-sidebar" id="rt-sidebar">
+    <div class="rt-sidebar-label">My Reading</div>
+    <button class="rt-sidebar-item active" data-tab="home" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Home
+    </button>
+    <button class="rt-sidebar-item" data-tab="add" onclick="switchTab('add')">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Add Book
+    </button>
+    <button class="rt-sidebar-item" data-tab="tbr" onclick="switchTab('tbr')">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      My List
+    </button>
+    <button class="rt-sidebar-item" data-tab="recs" onclick="switchTab('recs')">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Discover
+    </button>
+    <div class="rt-sidebar-divider"></div>
+    <div class="rt-sidebar-label">Account</div>
+    <button class="rt-sidebar-item" data-tab="account" onclick="switchTab('account')">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
+      Account
+    </button>
+  </nav>
+
+  <!-- PANELS -->
   <div class="rt-panels">
 
     <!-- ══════════════════════════════════
-         HOME / DASHBOARD
+         HOME
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-home" data-tab="home">
       <div class="rt-panel-inner">
 
-        <!-- Sign-in nudge — only shown when logged out -->
         <div class="rt-signin-cta" id="rt-signin-cta" style="display:none;">
           <div class="rt-signin-cta-text">
             <strong>Sync your reading list</strong>
             <span>Create a free account to access your books on any device.</span>
           </div>
           <button class="rt-signin-cta-btn" onclick="switchTab('account')" type="button">Sign up free →</button>
-        </div>
-
-        <!-- Currently reading -->
-        <div class="rt-home-section">
-          <div class="rt-home-section-header">
-            <h2 class="rt-section-heading">Currently reading</h2>
-            <button class="rt-ghost-btn" onclick="switchTab('add')">+ Start a new book</button>
-          </div>
-
-          <div id="rt-home-reading-list"></div>
-
-          <div class="rt-empty rt-empty--inline" id="rt-home-reading-empty">
-            <p>Nothing in progress yet. <button class="btn-text-link" onclick="switchTab('add')">Start reading something →</button></p>
-          </div>
         </div>
 
         <!-- Stats -->
@@ -80,7 +1044,7 @@ permalink: /tools/reading-tracker/
                 <span class="rt-goal-current" id="rt-goal-count">0</span>
                 <span class="rt-goal-sep">/</span>
                 <input type="number" class="rt-goal-input" id="rt-goal-target" value="12" min="1" max="365" aria-label="Yearly goal">
-                <span class="rt-goal-unit">this year</span>
+                <span class="rt-goal-unit">books this year</span>
               </div>
               <div class="rt-goal-bar-wrap">
                 <div class="rt-goal-bar"><div class="rt-goal-fill" id="rt-goal-fill" style="width:0%"></div></div>
@@ -105,11 +1069,23 @@ permalink: /tools/reading-tracker/
           </div>
         </div>
 
+        <!-- Currently reading -->
+        <div class="rt-home-section">
+          <div class="rt-home-section-header">
+            <h2 class="rt-section-heading">Currently reading</h2>
+            <button class="rt-ghost-btn" onclick="switchTab('add')">+ Start a book</button>
+          </div>
+          <div id="rt-home-reading-list"></div>
+          <div class="rt-empty rt-empty--inline" id="rt-home-reading-empty">
+            <p>Nothing in progress. <button class="btn-text-link" onclick="switchTab('add')">Start reading something →</button></p>
+          </div>
+        </div>
+
         <!-- Reading history -->
         <div class="rt-home-section">
           <div class="rt-home-section-header">
             <h2 class="rt-section-heading">Reading history</h2>
-            <div style="display:flex;gap:0.5rem;">
+            <div style="display:flex;gap:0.5rem;align-items:center;">
               <select class="rt-filter-select" id="rt-home-sort">
                 <option value="newest">Newest first</option>
                 <option value="rating-high">Top rated</option>
@@ -117,12 +1093,10 @@ permalink: /tools/reading-tracker/
               </select>
             </div>
           </div>
-
           <div class="rt-status-tabs">
             <button class="rt-status-tab active" data-status="read" onclick="setHomeFilter('read',this)">Finished</button>
-            <button class="rt-status-tab" data-status="dnf"  onclick="setHomeFilter('dnf',this)">DNF</button>
+            <button class="rt-status-tab" data-status="dnf" onclick="setHomeFilter('dnf',this)">DNF</button>
           </div>
-
           <div id="rt-history-list"></div>
           <div class="rt-empty rt-empty--inline" id="rt-history-empty">
             <p id="rt-history-empty-msg">No finished books yet. <button class="btn-text-link" onclick="switchTab('add')">Log your first read →</button></p>
@@ -137,15 +1111,16 @@ permalink: /tools/reading-tracker/
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-add" data-tab="add" style="display:none;">
       <div class="rt-panel-inner">
-        <h2 class="rt-section-heading">Add a book</h2>
-        <p class="rt-panel-sub">Adding a book will mark it as currently reading. Fill in rating and notes when you're done.</p>
+        <div>
+          <h2 class="rt-section-heading">Add a book</h2>
+          <p class="rt-panel-sub">Search by title or author — we'll pull cover art and details from Open Library automatically.</p>
+        </div>
 
-        <!-- CSV Import -->
         <div class="rt-import-row">
-          <label class="rt-import-label" for="rt-csv-file">📥 Import from Goodreads</label>
+          <span class="rt-import-label">📥 Import from Goodreads</span>
           <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
           <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
-          <span class="rt-import-hint">Export your library from Goodreads → My Books → Export</span>
+          <span class="rt-import-hint">Export your library: Goodreads → My Books → Export library. We'll match each book to Open Library automatically.</span>
         </div>
         <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
 
@@ -168,34 +1143,20 @@ permalink: /tools/reading-tracker/
               <label for="rt-genre">Genre</label>
               <select id="rt-genre">
                 <option value="">— select —</option>
-                <option value="Fantasy">Fantasy</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Horror">Horror</option>
-                <option value="Romance">Romance</option>
-                <option value="Dystopian">Dystopian</option>
-                <option value="Literary Fiction">Literary Fiction</option>
-                <option value="Historical Fiction">Historical Fiction</option>
-                <option value="Thriller">Thriller</option>
-                <option value="Non-Fiction">Non-Fiction</option>
-                <option value="Short Stories">Short Stories</option>
-                <option value="Other">Other</option>
+                <option>Fantasy</option><option>Science Fiction</option><option>Horror</option>
+                <option>Romance</option><option>Dystopian</option><option>Literary Fiction</option>
+                <option>Historical Fiction</option><option>Thriller</option>
+                <option>Non-Fiction</option><option>Short Stories</option><option>Other</option>
               </select>
             </div>
           </div>
-
           <div class="rt-form-row rt-form-row--2">
             <div class="rt-field">
               <label>Status</label>
               <div class="rt-status-toggle">
-                <label class="rt-toggle-opt">
-                  <input type="radio" name="rt-status" value="reading" checked> Currently reading
-                </label>
-                <label class="rt-toggle-opt">
-                  <input type="radio" name="rt-status" value="read"> Already finished
-                </label>
-                <label class="rt-toggle-opt">
-                  <input type="radio" name="rt-status" value="tbr"> Add to TBR
-                </label>
+                <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="reading" checked> Currently reading</label>
+                <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="read"> Already finished</label>
+                <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="tbr"> Add to My List</label>
               </div>
             </div>
             <div class="rt-field">
@@ -203,8 +1164,6 @@ permalink: /tools/reading-tracker/
               <input type="date" id="rt-date">
             </div>
           </div>
-
-          <!-- Shown only when "already finished" -->
           <div class="rt-form-row" id="rt-rating-row" style="display:none;">
             <div class="rt-field">
               <label>Rating</label>
@@ -217,18 +1176,15 @@ permalink: /tools/reading-tracker/
               </div>
             </div>
           </div>
-
           <div class="rt-form-row" id="rt-notes-row" style="display:none;">
             <div class="rt-field">
-              <label for="rt-notes">Notes <span class="rt-optional">(optional — helps personalise your recommendations)</span></label>
+              <label for="rt-notes">Notes <span class="rt-optional">(private — helps personalise your AI recommendations)</span></label>
               <textarea id="rt-notes" rows="3" placeholder="What did you think?"></textarea>
             </div>
           </div>
-
           <div class="rt-form-row">
             <button class="rt-submit-btn" id="rt-add-btn" type="button">Add book</button>
           </div>
-
           <div class="rt-add-success" id="rt-add-success" style="display:none;">
             <span>✓</span>&nbsp;<span id="rt-add-success-msg">Added!</span>
             <button class="btn-text-link" onclick="switchTab('home')">Back to home →</button>
@@ -238,28 +1194,28 @@ permalink: /tools/reading-tracker/
     </div>
 
     <!-- ══════════════════════════════════
-         TBR
+         MY LIST (TBR)
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-tbr" data-tab="tbr" style="display:none;">
       <div class="rt-panel-inner">
-        <h2 class="rt-section-heading">To be read</h2>
-        <p class="rt-panel-sub">Books you want to read next. Hit "Start reading" to move one to your current reads.</p>
-
+        <div>
+          <h2 class="rt-section-heading">My List</h2>
+          <p class="rt-panel-sub">Books you want to read next. Hit "Start reading" to move one to your current reads.</p>
+        </div>
         <div class="rt-tbr-add">
-          <input type="text" id="rt-tbr-title"  class="rt-tbr-input" placeholder="Book title..." autocomplete="off">
+          <input type="text" id="rt-tbr-title" class="rt-tbr-input" placeholder="Book title…" autocomplete="off">
           <input type="text" id="rt-tbr-author" class="rt-tbr-input" placeholder="Author (optional)" autocomplete="off">
           <button class="rt-tbr-add-btn" id="rt-tbr-add-btn" type="button">+ Add</button>
         </div>
-
         <div id="rt-tbr-list"></div>
         <div class="rt-empty rt-empty--inline" id="rt-tbr-empty">
-          <p>Your TBR pile is empty — <button class="btn-text-link" onclick="switchTab('recs')">get some recommendations →</button></p>
+          <p>Your list is empty — <button class="btn-text-link" onclick="switchTab('recs')">get some recommendations →</button></p>
         </div>
       </div>
     </div>
 
     <!-- ══════════════════════════════════
-         RECS
+         DISCOVER / RECS
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-recs" data-tab="recs" style="display:none;">
       <div class="rt-panel-inner">
@@ -267,72 +1223,102 @@ permalink: /tools/reading-tracker/
           <div>
             <div class="section-label" style="margin-bottom:0.4rem;">Powered by Claude</div>
             <h2 class="rt-section-heading" style="margin-bottom:0.3rem;">What should I read next?</h2>
-            <p class="rt-panel-sub">Claude reads your full history — ratings, DNFs, genres, notes — and recommends books matched to your actual taste. The more you log, the better it gets.</p>
+            <p class="rt-panel-sub">Claude reads your full history — ratings, DNFs, genres, notes — and recommends books matched to your actual taste.</p>
           </div>
           <div class="rt-ai-badge">AI</div>
         </div>
-        <button class="rt-submit-btn" id="rt-ai-btn" type="button">✦ Get recommendations</button>
+
+        <!-- Logged out: locked -->
+        <div id="rt-recs-locked" style="display:none;">
+          <div class="rt-recs-locked">
+            <div class="rt-recs-locked-icon">✦</div>
+            <h3>AI Recommendations</h3>
+            <p>Sign in so Claude can read your reading history and find books matched to your actual taste.</p>
+            <button class="rt-submit-btn" onclick="switchTab('account')" type="button">Create account to unlock →</button>
+          </div>
+        </div>
+
+        <!-- Logged in: generate button -->
+        <div id="rt-recs-generate-wrap">
+          <div class="rt-recs-generate">
+            <div class="rt-recs-generate-header">
+              <div class="rt-recs-generate-icon">✦</div>
+              <h3>AI Recommendations</h3>
+              <span style="font-size:0.68rem;color:rgba(255,255,255,0.28);margin-left:auto;">Claude</span>
+            </div>
+            <p class="rt-recs-generate-sub" id="rt-recs-sub">Claude will read your full reading history — books, ratings, DNFs, genres and notes — and find 4 books matched to your actual taste.</p>
+            <button class="rt-recs-generate-btn" id="rt-ai-btn" type="button">✦ Get my 4 recommendations</button>
+          </div>
+        </div>
+
+        <!-- Queue: progress + active rec card -->
+        <div id="rt-recs-queue" style="display:none;">
+          <div class="rt-recs-progress" id="rt-recs-progress">
+            <div class="rt-recs-progress-dot done" id="rt-prog-0"></div>
+            <div class="rt-recs-progress-dot" id="rt-prog-1"></div>
+            <div class="rt-recs-progress-dot" id="rt-prog-2"></div>
+            <div class="rt-recs-progress-dot" id="rt-prog-3"></div>
+            <span class="rt-recs-progress-label" id="rt-prog-label">1 of 4</span>
+          </div>
+          <div id="rt-rec-card-wrap"></div>
+          <p class="rt-recs-hint" id="rt-recs-hint"></p>
+        </div>
+
+        <!-- All done -->
+        <div id="rt-recs-done" style="display:none;">
+          <div class="rt-recs-done">
+            <div class="rt-recs-done-icon">✓</div>
+            <h3>All recommendations actioned</h3>
+            <p>The more you read and rate, the better Claude gets at matching your taste.</p>
+            <button class="rt-recs-generate-btn" id="rt-ai-more-btn" type="button" style="background:var(--rt-navy);color:#fff;">✦ Get 4 more recommendations</button>
+            <p class="rt-recs-done-sub">Claude will use your updated reading history</p>
+          </div>
+        </div>
+
+        <!-- Legacy output (kept for compatibility) -->
         <div class="rt-ai-output" id="rt-ai-output" style="display:none;"></div>
         <p class="rt-ai-note" id="rt-ai-note" style="display:none;">Recommendations generated by Claude (Anthropic). Not affiliated with any retailer.</p>
+
       </div>
     </div>
 
-    <!-- ══════════════════════════════════
-         SAVE LIST (coming soon)
-    ══════════════════════════════════ -->
     <!-- ══════════════════════════════════
          ACCOUNT
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-account" data-tab="account" style="display:none;">
       <div class="rt-panel-inner">
 
-        <!-- LOGGED OUT: benefits + auth forms -->
+        <!-- LOGGED OUT -->
         <div id="rt-auth-loggedout">
-
-          <!-- Benefits hero -->
           <div class="rt-account-hero">
             <div class="rt-account-hero-icon">☁</div>
-            <h2 class="rt-section-heading" style="margin-bottom:0.4rem;">Your reading life, everywhere</h2>
+            <h2>Your reading life, everywhere</h2>
             <p class="rt-panel-sub">Create a free account to unlock everything.</p>
             <div class="rt-benefits-grid">
               <div class="rt-benefit">
                 <span class="rt-benefit-icon">✦</span>
-                <div>
-                  <strong>AI recommendations</strong>
-                  <p>Claude reads your full history and finds books matched to your actual taste.</p>
-                </div>
+                <div><strong>AI recommendations</strong><p>Claude reads your full history and finds books matched to your taste.</p></div>
               </div>
               <div class="rt-benefit">
                 <span class="rt-benefit-icon">☁</span>
-                <div>
-                  <strong>Sync across devices</strong>
-                  <p>Your reading list lives in the cloud — phone, tablet, laptop, all in sync.</p>
-                </div>
+                <div><strong>Sync everywhere</strong><p>Phone, tablet, laptop — all in sync automatically.</p></div>
               </div>
               <div class="rt-benefit">
-                <span class="rt-benefit-icon">◈</span>
-                <div>
-                  <strong>Reading stats</strong>
-                  <p>Track your yearly goal, favourite genres, and reading streaks over time.</p>
-                </div>
+                <span class="rt-benefit-icon">💬</span>
+                <div><strong>Book conversations</strong><p>Chat with friends about books you're both reading. Coming soon.</p></div>
               </div>
               <div class="rt-benefit">
                 <span class="rt-benefit-icon">🔖</span>
-                <div>
-                  <strong>TBR pile</strong>
-                  <p>Save books to read later and never forget a recommendation.</p>
-                </div>
+                <div><strong>My List</strong><p>Save books to read later and never forget a recommendation.</p></div>
               </div>
             </div>
           </div>
 
-          <!-- Auth toggle: signup / login -->
-          <div class="rt-auth-tabs">
+          <div class="rt-auth-tabs" style="margin-top:1.25rem;">
             <button class="rt-auth-tab active" id="rt-tab-signup" onclick="showAuthForm('signup')">Create account</button>
             <button class="rt-auth-tab" id="rt-tab-login" onclick="showAuthForm('login')">Sign in</button>
           </div>
 
-          <!-- Sign up form -->
           <div class="rt-auth-card" id="rt-form-signup">
             <div class="rt-field">
               <label for="rt-signup-email">Email</label>
@@ -350,7 +1336,6 @@ permalink: /tools/reading-tracker/
             <p id="rt-signup-msg" style="display:none;" class="rt-auth-msg"></p>
           </div>
 
-          <!-- Sign in form -->
           <div class="rt-auth-card" id="rt-form-login" style="display:none;">
             <div class="rt-field">
               <label for="rt-login-email">Email</label>
@@ -361,80 +1346,55 @@ permalink: /tools/reading-tracker/
               <input type="password" id="rt-login-password" placeholder="Your password" autocomplete="current-password">
             </div>
             <button class="rt-submit-btn" id="rt-login-btn" type="button" onclick="doLogin()">Sign in →</button>
+            <button class="btn-text-link" type="button" onclick="doForgotPassword()" style="font-size:0.8rem;margin-top:0.25rem;">Forgot password?</button>
             <p id="rt-login-msg" style="display:none;" class="rt-auth-msg"></p>
-            <button class="btn-text-link" style="margin-top:0.75rem; font-size:0.82rem;" onclick="doForgotPassword()">Forgot password?</button>
           </div>
-
         </div>
 
-        <!-- LOGGED IN: profile -->
+        <!-- LOGGED IN -->
         <div id="rt-auth-loggedin" style="display:none;">
           <div class="rt-profile-card">
-            <div class="rt-profile-avatar" id="rt-profile-avatar">◉</div>
-            <div class="rt-profile-info">
+            <div class="rt-profile-avatar">📚</div>
+            <div style="flex:1;min-width:0;">
               <div class="rt-profile-email" id="rt-auth-email"></div>
               <div class="rt-profile-joined" id="rt-profile-joined"></div>
             </div>
+            <button class="rt-ghost-btn" onclick="signOut()" type="button">Sign out</button>
           </div>
-
-          <!-- Profile stats summary -->
-          <div class="rt-stats-grid" style="margin-bottom:1.5rem;">
-            <div class="rt-stat-card">
-              <div class="rt-stat-label">Books read</div>
-              <div class="rt-stat-number" id="rt-profile-read">0</div>
-            </div>
-            <div class="rt-stat-card">
-              <div class="rt-stat-label">TBR pile</div>
-              <div class="rt-stat-number" id="rt-profile-tbr">0</div>
-            </div>
-            <div class="rt-stat-card">
-              <div class="rt-stat-label">Favourites</div>
-              <div class="rt-stat-number" id="rt-profile-fav">0</div>
-            </div>
-            <div class="rt-stat-card">
-              <div class="rt-stat-label">DNF</div>
-              <div class="rt-stat-number" id="rt-profile-dnf">0</div>
-            </div>
+          <div class="rt-profile-stats">
+            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
+            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-tbr">0</div><div class="rt-profile-stat-l">My List</div></div>
+            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-fav">0</div><div class="rt-profile-stat-l">5★ reads</div></div>
+            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-dnf">0</div><div class="rt-profile-stat-l">DNF</div></div>
           </div>
-
-          <!-- Coming soon: community -->
-          <div class="rt-community-teaser">
-            <div class="rt-community-teaser-icon">👥</div>
-            <h3 class="rt-section-heading" style="margin-bottom:0.4rem;">Community — coming soon</h3>
-            <p style="font-size:0.88rem; color:var(--ink-soft);">Follow friends, share reviews, and see what your reading circle is into. Book clubs, reading challenges, and more — all in one place.</p>
-          </div>
-
-          <button class="rt-ghost-btn" type="button" onclick="signOut()" style="margin-top:1.5rem; width:100%;">Sign out</button>
         </div>
 
       </div>
     </div>
 
-  </div>
-</div>
+  </div><!-- /rt-panels -->
+</div><!-- /rt-app -->
 
-<!-- ══════════════════════════════════
-     MOBILE BOTTOM NAV
-══════════════════════════════════ -->
-<nav class="rt-bottom-nav" aria-label="Tracker navigation">
+<!-- MOBILE BOTTOM NAV -->
+<nav class="rt-bottom-nav" id="rt-bottom-nav" aria-label="Main navigation">
   <button class="rt-nav-btn active" data-tab="home" onclick="switchTab('home')">
-    <span class="rt-nav-icon">◈</span>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span class="rt-nav-label">Home</span>
   </button>
   <button class="rt-nav-btn" data-tab="add" onclick="switchTab('add')">
-    <span class="rt-nav-icon">＋</span>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
     <span class="rt-nav-label">Add</span>
   </button>
   <button class="rt-nav-btn" data-tab="tbr" onclick="switchTab('tbr')">
-    <span class="rt-nav-icon">🔖</span>
-    <span class="rt-nav-label">TBR</span>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="rt-nav-label">My List</span>
   </button>
   <button class="rt-nav-btn" data-tab="recs" onclick="switchTab('recs')">
-    <span class="rt-nav-icon">✦</span>
-    <span class="rt-nav-label">Recs</span>
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span class="rt-nav-label">Discover</span>
   </button>
   <button class="rt-nav-btn" data-tab="account" onclick="switchTab('account')">
-    <span class="rt-nav-icon">◉</span>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
     <span class="rt-nav-label">Account</span>
   </button>
 </nav>
@@ -447,8 +1407,7 @@ permalink: /tools/reading-tracker/
       <button class="rt-modal-close" id="rt-modal-close" aria-label="Close" type="button">×</button>
     </div>
     <input type="hidden" id="rt-modal-book-id">
-
-    <div class="rt-field" style="margin-bottom:1rem;">
+    <div class="rt-field" style="margin-bottom:1.1rem;">
       <label>Rating <span class="rt-optional">(optional)</span></label>
       <div class="rt-stars rt-stars--large" id="rt-modal-stars" role="radiogroup">
         <button class="rt-star" data-val="1" type="button">★</button>
@@ -458,21 +1417,18 @@ permalink: /tools/reading-tracker/
         <button class="rt-star" data-val="5" type="button">★</button>
       </div>
     </div>
-
-    <div class="rt-field" style="margin-bottom:1rem;">
-      <label for="rt-modal-notes">Notes <span class="rt-optional">(helps personalise your recommendations)</span></label>
-      <textarea id="rt-modal-notes" rows="3" placeholder="What did you think? Even a few words helps..."></textarea>
+    <div class="rt-field" style="margin-bottom:1.1rem;">
+      <label for="rt-modal-notes">Notes <span class="rt-optional">(private — helps personalise recommendations)</span></label>
+      <textarea id="rt-modal-notes" rows="3" placeholder="What did you think? Even a few words helps…"></textarea>
     </div>
-
     <div class="rt-field" style="margin-bottom:1.5rem;">
       <label for="rt-modal-date">Date finished</label>
       <input type="date" id="rt-modal-date">
     </div>
-
     <div class="rt-modal-actions">
-      <button class="rt-modal-btn rt-modal-btn--read"   id="rt-modal-mark-read"  type="button">✓ Mark as read</button>
-      <button class="rt-modal-btn rt-modal-btn--dnf"    id="rt-modal-mark-dnf"   type="button">Did not finish</button>
-      <button class="rt-modal-btn rt-modal-btn--cancel" id="rt-modal-cancel"     type="button">Cancel</button>
+      <button class="rt-modal-btn rt-modal-btn--read"   id="rt-modal-mark-read" type="button">✓ Mark as read</button>
+      <button class="rt-modal-btn rt-modal-btn--dnf"    id="rt-modal-mark-dnf"  type="button">Did not finish</button>
+      <button class="rt-modal-btn rt-modal-btn--cancel" id="rt-modal-cancel"    type="button">Cancel</button>
     </div>
   </div>
 </div>
@@ -481,13 +1437,13 @@ permalink: /tools/reading-tracker/
 <div class="rt-reset-overlay" id="rt-reset-overlay" style="display:none;">
   <div class="rt-reset-modal">
     <div class="rt-reset-icon">🔑</div>
-    <h2 class="rt-section-heading">Choose a new password</h2>
-    <p style="font-size:0.88rem; color:var(--ink-soft); margin-bottom:1.25rem;">Enter a new password for your Cabbage Tree Books account.</p>
-    <div class="rt-field" style="margin-bottom:0.9rem;">
+    <h2 class="rt-section-heading" style="margin-bottom:0.75rem;">Choose a new password</h2>
+    <p style="font-size:0.85rem;color:var(--rt-t3);margin-bottom:1.25rem;line-height:1.6;">Enter a new password for your account.</p>
+    <div class="rt-field" style="margin-bottom:0.9rem;text-align:left;">
       <label for="rt-reset-password">New password <span class="rt-optional">(min 8 characters)</span></label>
       <input type="password" id="rt-reset-password" placeholder="Choose a new password" autocomplete="new-password">
     </div>
-    <div class="rt-field" style="margin-bottom:1.25rem;">
+    <div class="rt-field" style="margin-bottom:1.25rem;text-align:left;">
       <label for="rt-reset-confirm">Confirm password</label>
       <input type="password" id="rt-reset-confirm" placeholder="Repeat your new password" autocomplete="new-password">
     </div>
@@ -507,31 +1463,26 @@ permalink: /tools/reading-tracker/
   </div>
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 'use strict';
 // ─────────────────────────────────────────────────────────────
 // SUPABASE CLIENT
 // ─────────────────────────────────────────────────────────────
-const SUPABASE_URL     = 'https://faykquqgjndphmizwxts.supabase.co';
-const SUPABASE_ANON    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZheWtxdXFnam5kcGhtaXp3eHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1Mjk4NjYsImV4cCI6MjA4ODEwNTg2Nn0.OiXN7nNB2O6stDXUj6Y_usNb6w4aOVsxQqF-bF_OZno';
-const sb               = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-let   currentUser      = null;
+const SUPABASE_URL  = 'https://faykquqgjndphmizwxts.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZheWtxdXFnam5kcGhtaXp3eHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1Mjk4NjYsImV4cCI6MjA4ODEwNTg2Nn0.OiXN7nNB2O6stDXUj6Y_usNb6w4aOVsxQqF-bF_OZno';
+const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+let   currentUser   = null;
 
-// Auth state listener — runs on page load and whenever login/logout happens
 sb.auth.onAuthStateChange(async (event, session) => {
   currentUser = session?.user || null;
   renderAuthUI();
-
   if (event === 'PASSWORD_RECOVERY') {
-    // User clicked the reset link in their email — show the new password form
     document.getElementById('rt-reset-overlay').style.display = 'flex';
     return;
   }
-
-  if (currentUser) {
-    await syncFromCloud();
-  }
+  if (currentUser) await syncFromCloud();
 });
 
 async function doResetPassword() {
@@ -539,10 +1490,8 @@ async function doResetPassword() {
   const confirm  = document.getElementById('rt-reset-confirm').value;
   const msgEl    = document.getElementById('rt-reset-msg');
   const btn      = document.getElementById('rt-reset-btn');
-
   if (password.length < 8) { showMsg(msgEl, 'Password must be at least 8 characters.', 'error'); return; }
-  if (password !== confirm)  { showMsg(msgEl, 'Passwords don\'t match.', 'error'); return; }
-
+  if (password !== confirm)  { showMsg(msgEl, "Passwords don't match.", 'error'); return; }
   btn.disabled = true; btn.textContent = 'Saving…';
   const { error } = await sb.auth.updateUser({ password });
   if (error) {
@@ -552,7 +1501,7 @@ async function doResetPassword() {
     showMsg(msgEl, '✓ Password updated! Signing you in…', 'success');
     setTimeout(() => {
       document.getElementById('rt-reset-overlay').style.display = 'none';
-      showFlash('Password updated — you\'re signed in!');
+      showFlash("Password updated — you're signed in!");
     }, 1500);
   }
 }
@@ -563,8 +1512,13 @@ function renderAuthUI() {
   const emailEl   = document.getElementById('rt-auth-email');
   const joinedEl  = document.getElementById('rt-profile-joined');
   const ctaEl     = document.getElementById('rt-signin-cta');
+  const lockedEl  = document.getElementById('rt-recs-locked');
+  const genWrap   = document.getElementById('rt-recs-generate-wrap');
   if (!loggedIn || !loggedOut) return;
   if (ctaEl) ctaEl.style.display = currentUser ? 'none' : 'flex';
+  // Show/hide recs locked state
+  if (lockedEl) lockedEl.style.display = currentUser ? 'none' : 'block';
+  if (genWrap)  genWrap.style.display  = currentUser ? 'block' : 'none';
   if (currentUser) {
     loggedIn.style.display  = 'block';
     loggedOut.style.display = 'none';
@@ -573,7 +1527,6 @@ function renderAuthUI() {
       const d = new Date(currentUser.created_at || currentUser.email);
       joinedEl.textContent = isNaN(d) ? '' : 'Member since ' + d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
     }
-    // Update profile stats
     const readCount = getBooks('read').length;
     const tbrCount  = getBooks('tbr').length;
     const favCount  = getBooks('read').filter(b => b.rating === 5).length;
@@ -590,8 +1543,8 @@ function renderAuthUI() {
 }
 
 function showAuthForm(which) {
-  document.getElementById('rt-form-signup').style.display = which === 'signup' ? 'block' : 'none';
-  document.getElementById('rt-form-login').style.display  = which === 'login'  ? 'block' : 'none';
+  document.getElementById('rt-form-signup').style.display = which === 'signup' ? 'flex' : 'none';
+  document.getElementById('rt-form-login').style.display  = which === 'login'  ? 'flex' : 'none';
   document.getElementById('rt-tab-signup').classList.toggle('active', which === 'signup');
   document.getElementById('rt-tab-login').classList.toggle('active',  which === 'login');
 }
@@ -602,24 +1555,20 @@ async function doSignup() {
   const confirm  = document.getElementById('rt-signup-confirm').value;
   const msgEl    = document.getElementById('rt-signup-msg');
   const btn      = document.getElementById('rt-signup-btn');
-
   msgEl.style.display = 'none';
   if (!email || !password) { showMsg(msgEl, 'Please fill in all fields.', 'error'); return; }
   if (password.length < 8) { showMsg(msgEl, 'Password must be at least 8 characters.', 'error'); return; }
-  if (password !== confirm) { showMsg(msgEl, 'Passwords don\'t match.', 'error'); return; }
-
+  if (password !== confirm) { showMsg(msgEl, "Passwords don't match.", 'error'); return; }
   btn.disabled = true; btn.textContent = 'Creating account…';
   const { data, error } = await sb.auth.signUp({ email, password });
   if (error) {
     showMsg(msgEl, error.message, 'error');
     btn.disabled = false; btn.textContent = 'Create free account →';
   } else if (data.user && !data.session) {
-    // Email confirmation required — tell them clearly and switch to login tab
     showMsg(msgEl, '✓ Account created! Check your email for a confirmation link, then come back and sign in.', 'success');
     btn.disabled = false; btn.textContent = 'Create free account →';
     setTimeout(() => showAuthForm('login'), 3000);
   } else {
-    // Auto-confirmed (email confirmation disabled in Supabase)
     btn.textContent = '✓ Done!';
     showFlash('Account created — welcome!');
   }
@@ -630,9 +1579,7 @@ async function doLogin() {
   const password = document.getElementById('rt-login-password').value;
   const msgEl    = document.getElementById('rt-login-msg');
   const btn      = document.getElementById('rt-login-btn');
-
   if (!email || !password) { showMsg(msgEl, 'Please enter your email and password.', 'error'); return; }
-
   btn.disabled = true; btn.textContent = 'Signing in…';
   const { error } = await sb.auth.signInWithPassword({ email, password });
   if (error) {
@@ -648,9 +1595,7 @@ async function doForgotPassword() {
   const email = document.getElementById('rt-login-email').value.trim();
   const msgEl = document.getElementById('rt-login-msg');
   if (!email) { showMsg(msgEl, 'Enter your email above first.', 'error'); return; }
-  const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.href
-  });
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
   showMsg(msgEl, error ? error.message : '✓ Password reset email sent — check your inbox.', error ? 'error' : 'success');
 }
 
@@ -661,15 +1606,10 @@ function showMsg(el, text, type) {
 }
 
 async function signOut() {
-  // Clear local session directly — avoids sb.auth.signOut() hanging on bad session state
   try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 1500))]); } catch(e) {}
-  // Always clear regardless of whether Supabase responded
   const key = Object.keys(localStorage).find(k => k.startsWith('sb-') && k.endsWith('-auth-token'));
   if (key) localStorage.removeItem(key);
-  currentUser = null;
-  books = [];
-  save();
-  location.reload();
+  currentUser = null; books = []; save(); location.reload();
 }
 
 // ── Cloud sync ────────────────────────────────────────────────
@@ -680,7 +1620,6 @@ async function syncFromCloud() {
     .select('*, books(title, author, cover_id, ol_key)')
     .eq('user_id', currentUser.id);
   if (error) { console.error('Sync error:', error.message); return; }
-  // Always replace local data with cloud data (even if empty — cloud is source of truth)
   books = (data || []).map(e => ({
     id:          e.id,
     cloudId:     e.id,
@@ -702,42 +1641,24 @@ async function syncFromCloud() {
 
 async function saveBookToCloud(book) {
   if (!currentUser) return;
-
   let bookId = null;
-
-  // Upsert into canonical books table if we have an OL key
   if (book.olKey) {
-    const bookRecord = {
-      ol_key:   book.olKey,
-      title:    book.title,
-      author:   book.author,
-      cover_id: book.coverId || null
-    };
-    // Store Goodreads book ID for dedup on re-import
+    const bookRecord = { ol_key: book.olKey, title: book.title, author: book.author, cover_id: book.coverId || null };
     if (book.goodreadsId) bookRecord.goodreads_book_id = book.goodreadsId;
-
-    const { data, error } = await sb
-      .from('books')
-      .upsert(bookRecord, { onConflict: 'ol_key' })
-      .select('id')
-      .single();
+    const { data, error } = await sb.from('books').upsert(bookRecord, { onConflict: 'ol_key' }).select('id').single();
     if (!error) bookId = data?.id;
   }
-
-  // Upsert the reading entry
   const entry = {
-    user_id:      currentUser.id,
-    book_id:      bookId,
-    title_manual: bookId ? null : book.title,
-    author_manual:bookId ? null : (book.author || null),
-    status:       book.status,
-    rating:       book.rating || null,
-    notes:        book.notes  || null,
-    date_finished:book.date   || null,
-    date_started: book.dateStarted || null
+    user_id:       currentUser.id,
+    book_id:       bookId,
+    title_manual:  bookId ? null : book.title,
+    author_manual: bookId ? null : (book.author || null),
+    status:        book.status,
+    rating:        book.rating || null,
+    notes:         book.notes  || null,
+    date_finished: book.date   || null,
+    date_started:  book.dateStarted || null
   };
-
-  // If we already have a cloudId, update that row; otherwise insert
   if (book.cloudId) {
     await sb.from('reading_entries').update(entry).eq('id', book.cloudId);
   } else {
@@ -754,13 +1675,9 @@ async function deleteBookFromCloud(book) {
 
 // ─────────────────────────────────────────────────────────────
 // DATA MODEL
-// book = { id, title, author, genre, status, rating, notes,
-//          date (finished), dateStarted, added }
-// status: 'tbr' | 'reading' | 'read' | 'dnf'
 // ─────────────────────────────────────────────────────────────
 const SK = 'ctb_tracker_v2';
 const GK = 'ctb_reading_goal_v1';
-
 let books       = [];
 let modalRating = 0;
 let addRating   = 0;
@@ -772,7 +1689,6 @@ function loadGoal()  { try { return parseInt(localStorage.getItem(GK)) || 12; } 
 
 function load() {
   try { books = JSON.parse(localStorage.getItem(SK)) || []; } catch(e){ books = []; }
-  // Migrate from old key
   if (!books.length) {
     try {
       const old = JSON.parse(localStorage.getItem('ctb_reading_tracker_v1'));
@@ -790,40 +1706,21 @@ function esc(s) {
 }
 function fmtDate(s) {
   if (!s) return '';
-  return new Date(s + 'T12:00:00').toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
-}
-
-// ─────────────────────────────────────────────────────────────
-// TAB SWITCHING — syncs both top bar and bottom nav
-// ─────────────────────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.rt-panel').forEach(p => p.style.display = 'none');
-  document.querySelectorAll('.rt-tab, .rt-nav-btn').forEach(b => b.classList.remove('active'));
-
-  const panel = document.getElementById('rt-panel-' + name);
-  if (panel) panel.style.display = 'block';
-  document.querySelectorAll(`[data-tab="${name}"]`).forEach(b => b.classList.add('active'));
-
-  if (name === 'home') { updateStats(); renderHomeReading(); renderHistory(); }
-  if (name === 'tbr')  { renderTBR(); }
-  if (name === 'account') { renderAuthUI(); }
-
-  // Scroll to top of app
-  const wrap = document.querySelector('.rt-tabbar-wrap');
-  if (wrap) window.scrollTo({ top: wrap.offsetTop - 10, behavior: 'smooth' });
+  const d = new Date(s);
+  if (isNaN(d)) return s;
+  return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
 }
 
 // ─────────────────────────────────────────────────────────────
 // STATS
 // ─────────────────────────────────────────────────────────────
 function updateStats() {
-  const year = new Date().getFullYear();
+  const year  = new Date().getFullYear();
   const read  = getBooks('read');
   const ty    = read.filter(b => b.date && new Date(b.date).getFullYear() === year);
   const fav   = read.filter(b => b.rating === 5);
-  const goal  = parseInt(document.getElementById('rt-goal-target').value) || 12;
+  const goal  = loadGoal();
   const pct   = Math.min(100, Math.round((ty.length / goal) * 100));
-
   document.getElementById('rt-year-label').textContent  = year;
   document.getElementById('rt-total').textContent       = read.length;
   document.getElementById('rt-this-year').textContent   = ty.length;
@@ -838,19 +1735,39 @@ gi.value = loadGoal();
 gi.addEventListener('change', function() { saveGoal(this.value); updateStats(); });
 
 // ─────────────────────────────────────────────────────────────
+// TAB SWITCHING
+// ─────────────────────────────────────────────────────────────
+function switchTab(name) {
+  // Panels
+  document.querySelectorAll('.rt-panel').forEach(p => {
+    p.style.display = p.dataset.tab === name ? 'block' : 'none';
+  });
+  // Desktop tab bar
+  document.querySelectorAll('.rt-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  // Desktop sidebar
+  document.querySelectorAll('.rt-sidebar-item').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  // Mobile bottom nav
+  document.querySelectorAll('.rt-nav-btn').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+
+  if (name === 'tbr') renderTBR();
+  window.scrollTo({ top: document.querySelector('.rt-hero').offsetHeight, behavior: 'smooth' });
+}
+
+// ─────────────────────────────────────────────────────────────
 // HOME — CURRENTLY READING
 // ─────────────────────────────────────────────────────────────
 function renderHomeReading() {
   const reading = getBooks('reading');
   const list    = document.getElementById('rt-home-reading-list');
   const empty   = document.getElementById('rt-home-reading-empty');
-
   empty.style.display = reading.length ? 'none' : 'flex';
   list.innerHTML = reading.map(b => {
     const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
     return `
     <div class="rt-reading-card">
-      ${coverUrl ? `<img src="${coverUrl}" class="rt-reading-cover" alt="Cover of ${esc(b.title)}" loading="lazy">` : '<div class="rt-reading-cover rt-reading-cover--placeholder">📖</div>'}
+      ${coverUrl
+        ? `<img src="${coverUrl}" class="rt-reading-cover" alt="Cover of ${esc(b.title)}" loading="lazy">`
+        : '<div class="rt-reading-cover rt-reading-cover--placeholder">📖</div>'}
       <div class="rt-reading-card-body">
         <div class="rt-reading-badge">Currently reading</div>
         <div class="rt-reading-title">${esc(b.title)}</div>
@@ -865,16 +1782,14 @@ function renderHomeReading() {
   }).join('');
 }
 
-// Event delegation for home reading list
 document.getElementById('rt-home-reading-list').addEventListener('click', function(e) {
   const finBtn = e.target.closest('.rt-finish-btn');
-  if (finBtn) {
-    openModal(Number(finBtn.dataset.id));
-    return;
-  }
+  if (finBtn) { openModal(Number(finBtn.dataset.id) || finBtn.dataset.id); return; }
   const delBtn = e.target.closest('[data-action="remove-reading"]');
   if (delBtn && confirm('Remove from currently reading?')) {
-    books = books.filter(b => b.id !== Number(delBtn.dataset.id));
+    const book = books.find(b => String(b.id) === String(delBtn.dataset.id));
+    if (book) deleteBookFromCloud(book);
+    books = books.filter(b => String(b.id) !== String(delBtn.dataset.id));
     save(); renderHomeReading();
   }
 });
@@ -899,17 +1814,17 @@ function renderHistory() {
     if (so === 'title')       return a.title.localeCompare(b.title);
     return 0;
   });
-
   const el    = document.getElementById('rt-history-list');
   const empty = document.getElementById('rt-history-empty');
   empty.style.display = list.length ? 'none' : 'flex';
   if (!list.length) { el.innerHTML = ''; return; }
-
   el.innerHTML = list.map(b => {
     const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
     return `
     <div class="rt-book-item ${b.status==='dnf' ? 'rt-book-item--dnf' : ''}">
-      ${coverUrl ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">` : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
+      ${coverUrl
+        ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">`
+        : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
       <div class="rt-book-main">
         <div class="rt-book-info">
           <div class="rt-book-title">${esc(b.title)}${b.status==='dnf' ? ' <span class="rt-dnf-label">DNF</span>' : ''}</div>
@@ -930,19 +1845,17 @@ function renderHistory() {
 document.getElementById('rt-history-list').addEventListener('click', function(e) {
   const btn = e.target.closest('[data-action="remove-hist"]');
   if (btn && confirm('Remove this book from your history?')) {
-    const book = books.find(b => b.id === Number(btn.dataset.id) || b.id === btn.dataset.id);
+    const book = books.find(b => String(b.id) === String(btn.dataset.id));
     if (book) deleteBookFromCloud(book);
-    books = books.filter(b => b.id !== Number(btn.dataset.id) && b.id !== btn.dataset.id);
+    books = books.filter(b => String(b.id) !== String(btn.dataset.id));
     save(); renderHistory(); updateStats();
   }
 });
-
 document.getElementById('rt-home-sort').addEventListener('change', renderHistory);
 
 // ─────────────────────────────────────────────────────────────
 // ADD BOOK
 // ─────────────────────────────────────────────────────────────
-// Show/hide rating+notes based on status selection
 document.querySelectorAll('input[name="rt-status"]').forEach(radio => {
   radio.addEventListener('change', function() {
     const isRead = this.value === 'read';
@@ -951,7 +1864,6 @@ document.querySelectorAll('input[name="rt-status"]').forEach(radio => {
   });
 });
 
-// Star rating for add form
 function setAddStars(v) {
   addRating = v;
   document.querySelectorAll('#rt-star-input .rt-star').forEach((s,i) => s.classList.toggle('active', i < v));
@@ -964,8 +1876,7 @@ addStarWrap.addEventListener('click', e => {
 });
 addStarWrap.addEventListener('mouseover', e => {
   const b = e.target.closest('.rt-star'); if (!b) return;
-  const v = parseInt(b.dataset.val);
-  document.querySelectorAll('#rt-star-input .rt-star').forEach((s,i) => s.classList.toggle('hover', i < v));
+  document.querySelectorAll('#rt-star-input .rt-star').forEach((s,i) => s.classList.toggle('hover', i < parseInt(b.dataset.val)));
 });
 addStarWrap.addEventListener('mouseleave', () =>
   document.querySelectorAll('#rt-star-input .rt-star').forEach(s => s.classList.remove('hover')));
@@ -974,33 +1885,27 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   const titleEl = document.getElementById('rt-title');
   const title   = titleEl.value.trim();
   if (!title) {
-    titleEl.focus();
-    titleEl.classList.add('rt-input-error');
-    setTimeout(() => titleEl.classList.remove('rt-input-error'), 1500);
-    return;
+    titleEl.focus(); titleEl.classList.add('rt-input-error');
+    setTimeout(() => titleEl.classList.remove('rt-input-error'), 1500); return;
   }
-  const status  = document.querySelector('input[name="rt-status"]:checked').value;
+  const status     = document.querySelector('input[name="rt-status"]:checked').value;
   const coverIdRaw = document.getElementById('rt-ol-cover-id').value;
   const olKeyRaw   = document.getElementById('rt-ol-key').value;
   const book = {
-    id:          uid(),
-    title,
+    id:          uid(), title,
     author:      document.getElementById('rt-author').value.trim(),
     genre:       document.getElementById('rt-genre').value,
     status,
     rating:      status === 'read' ? addRating || null : null,
-    notes:       status === 'read' ? document.getElementById('rt-notes').value.trim() : null,
+    notes:       status === 'read' ? document.getElementById('rt-notes').value.trim() || null : null,
     date:        status === 'read' ? (document.getElementById('rt-date').value || new Date().toISOString().split('T')[0]) : null,
     dateStarted: status === 'reading' ? new Date().toISOString().split('T')[0] : null,
     added:       new Date().toISOString(),
     coverId:     coverIdRaw ? parseInt(coverIdRaw) : null,
-    olKey:       olKeyRaw   || null
+    olKey:       olKeyRaw || null
   };
-  books.unshift(book);
-  save();
-  saveBookToCloud(book); // sync to Supabase if logged in
-
-  // Reset form
+  books.unshift(book); save();
+  saveBookToCloud(book);
   ['rt-title','rt-author','rt-notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('rt-ol-cover-id').value = '';
   document.getElementById('rt-ol-key').value = '';
@@ -1009,8 +1914,8 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   document.getElementById('rt-rating-row').style.display = 'none';
   document.getElementById('rt-notes-row').style.display  = 'none';
   setAddStars(0);
-
-  const msgs = { reading:'Started! You can mark it as finished from the Home tab.', read:'Logged!', tbr:'Added to your TBR pile.' };
+  updateStats(); renderHomeReading(); renderHistory();
+  const msgs = { reading:'Started! Mark it finished from the Home tab.', read:'Logged!', tbr:'Added to My List.' };
   const s = document.getElementById('rt-add-success');
   document.getElementById('rt-add-success-msg').textContent = msgs[status] || 'Added!';
   s.style.display = 'flex';
@@ -1018,19 +1923,20 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
 });
 
 // ─────────────────────────────────────────────────────────────
-// TBR
+// TBR / MY LIST
 // ─────────────────────────────────────────────────────────────
 function renderTBR() {
   const tbr   = getBooks('tbr');
   const list  = document.getElementById('rt-tbr-list');
   const empty = document.getElementById('rt-tbr-empty');
   empty.style.display = tbr.length ? 'none' : 'flex';
-
   list.innerHTML = tbr.map(b => {
     const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
     return `
     <div class="rt-book-item">
-      ${coverUrl ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">` : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
+      ${coverUrl
+        ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">`
+        : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
       <div class="rt-book-main">
         <div class="rt-book-info">
           <div class="rt-book-title">${esc(b.title)}</div>
@@ -1062,15 +1968,19 @@ document.getElementById('rt-tbr-author').addEventListener('keydown', e => { if(e
 document.getElementById('rt-tbr-list').addEventListener('click', function(e) {
   const startBtn = e.target.closest('.rt-start-reading-btn');
   if (startBtn) {
-    const book = books.find(b => b.id === Number(startBtn.dataset.id));
-    if (book) { book.status = 'reading'; book.dateStarted = new Date().toISOString().split('T')[0]; save(); renderTBR(); }
+    const book = books.find(b => String(b.id) === String(startBtn.dataset.id));
+    if (book) { book.status = 'reading'; book.dateStarted = new Date().toISOString().split('T')[0]; save(); renderTBR(); saveBookToCloud(book); }
     return;
   }
   const delBtn = e.target.closest('[data-action="remove-tbr"]');
-  if (delBtn) { books = books.filter(b => b.id !== Number(delBtn.dataset.id)); save(); renderTBR(); }
+  if (delBtn) {
+    const book = books.find(b => String(b.id) === String(delBtn.dataset.id));
+    if (book) deleteBookFromCloud(book);
+    books = books.filter(b => String(b.id) !== String(delBtn.dataset.id));
+    save(); renderTBR();
+  }
 });
 
-// Add to TBR from recommendations
 function addRecToTBR(title, author) {
   if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
     alert(`"${title}" is already in your list.`); return;
@@ -1083,28 +1993,23 @@ function addRecToTBR(title, author) {
 // FINISH MODAL
 // ─────────────────────────────────────────────────────────────
 function openModal(bookId) {
-  const book = books.find(b => b.id === bookId);
-  if (!book) { console.warn('Book not found:', bookId, books.map(b=>b.id)); return; }
-
-  document.getElementById('rt-modal-book-id').value   = bookId;
+  const book = books.find(b => String(b.id) === String(bookId));
+  if (!book) { console.warn('Book not found:', bookId); return; }
+  document.getElementById('rt-modal-book-id').value     = bookId;
   document.getElementById('rt-modal-title').textContent = `"${book.title}"`;
-  document.getElementById('rt-modal-notes').value     = '';
-  document.getElementById('rt-modal-date').value      = new Date().toISOString().split('T')[0];
+  document.getElementById('rt-modal-notes').value       = '';
+  document.getElementById('rt-modal-date').value        = new Date().toISOString().split('T')[0];
   setModalStars(0);
   document.getElementById('rt-modal-overlay').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
-
 function closeModal() {
   document.getElementById('rt-modal-overlay').style.display = 'none';
   document.body.style.overflow = '';
 }
-
 document.getElementById('rt-modal-close').addEventListener('click',  closeModal);
 document.getElementById('rt-modal-cancel').addEventListener('click', closeModal);
-document.getElementById('rt-modal-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+document.getElementById('rt-modal-overlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
 function setModalStars(v) {
   modalRating = v;
@@ -1113,171 +2018,208 @@ function setModalStars(v) {
 const ms = document.getElementById('rt-modal-stars');
 ms.addEventListener('click', e => {
   const b = e.target.closest('.rt-star'); if (!b) return;
-  const v = parseInt(b.dataset.val);
-  setModalStars(modalRating === v ? 0 : v);
+  const v = parseInt(b.dataset.val); setModalStars(modalRating === v ? 0 : v);
 });
 ms.addEventListener('mouseover', e => {
   const b = e.target.closest('.rt-star'); if (!b) return;
-  const v = parseInt(b.dataset.val);
-  document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i) => s.classList.toggle('hover', i < v));
+  document.querySelectorAll('#rt-modal-stars .rt-star').forEach((s,i) => s.classList.toggle('hover', i < parseInt(b.dataset.val)));
 });
-ms.addEventListener('mouseleave', () =>
-  document.querySelectorAll('#rt-modal-stars .rt-star').forEach(s => s.classList.remove('hover')));
+ms.addEventListener('mouseleave', () => document.querySelectorAll('#rt-modal-stars .rt-star').forEach(s => s.classList.remove('hover')));
 
 function finishBook(status) {
-  const id   = Number(document.getElementById('rt-modal-book-id').value);
-  const book = books.find(b => b.id === id);
+  const id   = document.getElementById('rt-modal-book-id').value;
+  const book = books.find(b => String(b.id) === String(id));
   if (!book) { closeModal(); return; }
-
   book.status = status;
   book.date   = document.getElementById('rt-modal-date').value || new Date().toISOString().split('T')[0];
-  if (status === 'read') {
-    book.rating = modalRating || null;
-    book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
-  } else {
-    book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
-  }
-  save();
-  saveBookToCloud(book); // sync to Supabase if logged in
-  closeModal();
-  renderHomeReading();
-  updateStats();
-
-  // Flash confirmation
-  const label = status === 'read' ? `✓ "${book.title}" marked as finished!` : `"${book.title}" marked as DNF.`;
-  showFlash(label);
+  book.notes  = document.getElementById('rt-modal-notes').value.trim() || null;
+  if (status === 'read') book.rating = modalRating || null;
+  save(); saveBookToCloud(book); closeModal();
+  renderHomeReading(); updateStats();
+  showFlash(status === 'read' ? `✓ "${book.title}" marked as finished!` : `"${book.title}" marked as DNF.`);
 }
-
 document.getElementById('rt-modal-mark-read').addEventListener('click', () => finishBook('read'));
 document.getElementById('rt-modal-mark-dnf').addEventListener('click',  () => finishBook('dnf'));
 
 function showFlash(msg) {
   const f = document.createElement('div');
   f.className = 'rt-flash'; f.textContent = msg;
-  document.querySelector('.rt-app').prepend(f);
+  document.querySelector('.rt-panels').prepend(f);
   setTimeout(() => f.remove(), 3200);
 }
 
 // ─────────────────────────────────────────────────────────────
 // AI RECOMMENDATIONS
 // ─────────────────────────────────────────────────────────────
-document.getElementById('rt-ai-btn').addEventListener('click', async function() {
+// Queue state: array of {title, author, desc, why} once fetched
+let recQueue = [];
+let recIdx   = 0;
+
+function buildRecsPrompt() {
   const read    = getBooks('read');
   const reading = getBooks('reading');
-
-  if (!read.length && !reading.length) {
-    const o = document.getElementById('rt-ai-output');
-    o.style.display = 'block';
-    o.innerHTML = '<p class="rt-ai-msg">Log some books first — Claude needs your reading history to make good recommendations!</p>';
-    return;
-  }
-
-  const btn    = this;
-  btn.disabled = true; btn.textContent = '✦ Thinking...';
-  const output = document.getElementById('rt-ai-output');
-  const note   = document.getElementById('rt-ai-note');
-  output.style.display = 'block';
-  output.innerHTML = '<div class="rt-ai-loading"><span></span><span></span><span></span></div>';
-  note.style.display = 'none';
-
+  const dnf     = getBooks('dnf').slice(0, 4);
+  const tbr     = getBooks('tbr').slice(0, 5);
+  const genres  = [...new Set(books.map(b => b.genre).filter(Boolean))];
   const topRated = read.filter(b => b.rating >= 4).slice(0, 8);
   const sample   = topRated.length ? topRated : read.slice(0, 6);
-  const dnf      = getBooks('dnf').slice(0, 4);
-  const tbr      = getBooks('tbr').slice(0, 5);
-  const genres   = [...new Set(books.map(b => b.genre).filter(Boolean))];
+  const fmt = b => `"${b.title}"${b.author?` by ${b.author}`:''}${b.genre?` (${b.genre})`:''}${b.rating?` ${b.rating}/5★`:''}${b.notes?` — "${b.notes}"`:''}`;
+  return `You are a deeply well-read friend. Here is someone's reading history:
 
-  const fmt = b => `"${b.title}"${b.author ? ` by ${b.author}` : ''}${b.genre ? ` (${b.genre})` : ''}${b.rating ? ` ${b.rating}/5★` : ''}${b.notes ? ` — "${b.notes}"` : ''}`;
-
-  const prompt = `You are a knowledgeable book recommender. Here is a reader's reading history:
-
-ENJOYED (rated 4-5★):
+LOVED (4-5★):
 ${sample.map(fmt).join('\n') || 'None yet'}
 
 CURRENTLY READING:
 ${reading.map(fmt).join('\n') || 'Nothing'}
 
 DID NOT FINISH:
-${dnf.map(b => `"${b.title}"${b.notes ? ` — reason: "${b.notes}"` : ''}`).join('\n') || 'None'}
+${dnf.map(b => `"${b.title}"${b.author?` by ${b.author}`:''}`).join('\n') || 'None'}
 
-WANTS TO READ (TBR pile):
+WANTS TO READ:
 ${tbr.map(b => b.title).join(', ') || 'Empty'}
 
-Genres they read: ${genres.join(', ') || 'mixed'}. Total books finished: ${read.length}.
+Genres they read: ${genres.join(', ') || 'mixed'}. Total finished: ${read.length}.
 
-Recommend exactly 4 books. For each: bold the title and author, one sentence why it fits their specific taste referencing something they've actually read, one sentence on what makes it special. Number 1–4.
-${tbr.length ? 'After your 4 recommendations, add a single line: "From your TBR list, I\'d start with: [title]" — pick whichever TBR book best matches their taste.' : ''}
-Warm and direct, like a well-read friend.`;
-
-  try {
-    // Route through Supabase Edge Function to keep API key server-side
-    // Deploy the edge function from the guide — see supabase-setup-guide.docx
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/recommendations`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${SUPABASE_ANON}`
-      },
-      body: JSON.stringify({ prompt })
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const text = data.text || data.content?.find(c => c.type === 'text')?.text || '';
-    if (!text) throw new Error('empty');
-
-    // Render with Add to TBR buttons on numbered items
-    const lines = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    const paras = lines.split(/\n\n+/).filter(p => p.trim());
-
-    const html = paras.map(p => {
-      const trimmed = p.trim();
-      const isNum = /^\d+[\.\)]/.test(trimmed);
-
-      if (isNum) {
-        // Extract the first line (title line) vs rest (description)
-        const firstNewline = trimmed.indexOf('\n');
-        const titleLine = firstNewline > -1 ? trimmed.slice(0, firstNewline).trim() : trimmed;
-        const descLines = firstNewline > -1 ? trimmed.slice(firstNewline).trim() : '';
-
-        // Strip the number prefix: "1. " or "1) "
-        const titleRaw = titleLine.replace(/^\d+[\.\)]\s*/, '').trim();
-
-        // Extract title and author — handle "Title by Author" 
-        let titlePart  = '';
-        let authorPart = '';
-        // Remove any bold markers
-        const titleClean = titleRaw.replace(/<\/?strong>/g, '').replace(/["""*]/g, '').trim();
-        if (titleClean.includes(' by ')) {
-          titlePart  = titleClean.split(' by ')[0].trim();
-          authorPart = titleClean.split(' by ').slice(1).join(' by ').trim();
-        } else {
-          titlePart = titleClean;
-        }
-
-        const safeTitle  = titlePart.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-        const safeAuthor = authorPart.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-
-        const addBtn = titlePart
-          ? `<button class="rt-rec-add-btn" onclick="addRecToTBR('${safeTitle}','${safeAuthor}');this.textContent='✓ Added';this.disabled=true;" type="button">+ Add to TBR</button>`
-          : '';
-
-        const formattedTitle = `<strong>${titleRaw}</strong>`;
-        const formattedDesc  = descLines.replace(/\n/g, '<br>');
-
-        return `<div class="rt-rec-item">
-          <div class="rt-rec-text">${formattedTitle}${formattedDesc ? `<br>${formattedDesc}` : ''}</div>
-          ${addBtn}
-        </div>`;
-      }
-
-      return `<p class="rt-rec-footer">${trimmed.replace(/\n/g, '<br>')}</p>`;
-    }).join('');
-
-    output.innerHTML = `<div class="rt-ai-response">${html}</div>`;
-    note.style.display = 'block';
-  } catch(err) {
-    output.innerHTML = '<p class="rt-ai-msg">Couldn\'t get recommendations right now — please try again.</p>';
+Recommend exactly 4 books. Respond ONLY with valid JSON — no markdown, no preamble. Format:
+[
+  {
+    "title": "Book Title",
+    "author": "Author Name",
+    "why": "One sentence referencing something they actually read",
+    "desc": "One sentence on what makes this book special"
   }
-  btn.disabled = false; btn.textContent = '✦ Get new recommendations';
+]`;
+}
+
+async function fetchRecs() {
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/recommendations`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON}` },
+    body: JSON.stringify({ prompt: buildRecsPrompt() })
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  const text = data.text || data.content?.find(c => c.type === 'text')?.text || '';
+  if (!text) throw new Error('empty response');
+  // Strip any markdown fences
+  const clean = text.replace(/```json|```/g, '').trim();
+  return JSON.parse(clean);
+}
+
+function renderRecCard(rec, idx, total) {
+  // Update progress dots
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById(`rt-prog-${i}`);
+    if (dot) dot.classList.toggle('done', i <= idx);
+  }
+  document.getElementById('rt-prog-label').textContent = `${idx + 1} of ${total}`;
+
+  const wrap = document.getElementById('rt-rec-card-wrap');
+  const safeTitle  = rec.title.replace(/'/g, "\\'");
+  const safeAuthor = (rec.author || '').replace(/'/g, "\\'");
+  wrap.innerHTML = `
+  <div class="rt-rec-card">
+    <div class="rt-rec-card-top">
+      <div class="rt-rec-cover--placeholder">📚</div>
+      <div style="flex:1;min-width:0;">
+        <div class="rt-rec-why">Why you'll love it</div>
+        <div class="rt-rec-title">${esc(rec.title)}</div>
+        <div class="rt-rec-author">by ${esc(rec.author || '')}</div>
+        <div class="rt-rec-quote">${esc(rec.why || '')}</div>
+      </div>
+    </div>
+    <div class="rt-rec-card-body">
+      <p class="rt-rec-desc">${esc(rec.desc || '')}</p>
+      <div class="rt-rec-actions">
+        <button class="rt-rec-add-btn" id="rt-rec-add-${idx}" type="button"
+          onclick="addRecToTBRAndNext('${safeTitle}','${safeAuthor}',${idx})">
+          + Add to My List
+        </button>
+        <button class="rt-rec-dismiss-btn" type="button" onclick="nextRec(${idx})">
+          Skip →
+        </button>
+      </div>
+    </div>
+  </div>`;
+
+  // Try to fetch cover from OL
+  fetchOLCover(rec.title, rec.author).then(coverId => {
+    if (!coverId) return;
+    const ph = wrap.querySelector('.rt-rec-cover--placeholder');
+    if (ph) {
+      const img = document.createElement('img');
+      img.src = `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`;
+      img.className = 'rt-rec-cover';
+      img.alt = rec.title;
+      ph.replaceWith(img);
+    }
+  });
+}
+
+async function fetchOLCover(title, author) {
+  try {
+    const q = author ? `${title} ${author.split(',')[0]}` : title;
+    const res = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&fields=cover_i&limit=1`);
+    const data = await res.json();
+    return data.docs?.[0]?.cover_i || null;
+  } catch(e) { return null; }
+}
+
+function addRecToTBRAndNext(title, author, idx) {
+  addRecToTBR(title, author);
+  const btn = document.getElementById(`rt-rec-add-${idx}`);
+  if (btn) { btn.textContent = '✓ Added'; btn.disabled = true; }
+  setTimeout(() => nextRec(idx), 800);
+}
+
+function nextRec(idx) {
+  recIdx = idx + 1;
+  if (recIdx >= recQueue.length) {
+    document.getElementById('rt-recs-queue').style.display = 'none';
+    document.getElementById('rt-recs-done').style.display = 'block';
+  } else {
+    renderRecCard(recQueue[recIdx], recIdx, recQueue.length);
+  }
+}
+
+async function startRecs() {
+  const btn = document.getElementById('rt-ai-btn');
+  const read    = getBooks('read');
+  const reading = getBooks('reading');
+  if (!read.length && !reading.length) {
+    document.getElementById('rt-recs-generate-wrap').style.display = 'none';
+    const msg = document.createElement('p');
+    msg.className = 'rt-ai-msg';
+    msg.textContent = 'Log some books first — Claude needs your reading history to make good recommendations!';
+    document.getElementById('rt-panel-recs').querySelector('.rt-panel-inner').appendChild(msg);
+    return;
+  }
+  if (btn) { btn.disabled = true; btn.textContent = '✦ Finding your books…'; }
+  try {
+    recQueue = await fetchRecs();
+    recIdx   = 0;
+    document.getElementById('rt-recs-generate-wrap').style.display = 'none';
+    document.getElementById('rt-recs-queue').style.display = 'block';
+    document.getElementById('rt-recs-done').style.display  = 'none';
+    renderRecCard(recQueue[0], 0, recQueue.length);
+  } catch(err) {
+    // Fall back to legacy list display
+    if (btn) { btn.disabled = false; btn.textContent = '✦ Get recommendations'; }
+    const output = document.getElementById('rt-ai-output');
+    output.style.display = 'block';
+    output.innerHTML = '<p class="rt-ai-msg">Couldn\'t get recommendations right now — please try again in a moment.</p>';
+    console.error('Recs error:', err);
+  }
+}
+
+document.getElementById('rt-ai-btn').addEventListener('click', startRecs);
+
+const moreBtn = document.getElementById('rt-ai-more-btn');
+if (moreBtn) moreBtn.addEventListener('click', async function() {
+  document.getElementById('rt-recs-done').style.display = 'none';
+  document.getElementById('rt-recs-generate-wrap').style.display = 'block';
+  const btn = document.getElementById('rt-ai-btn');
+  if (btn) { btn.disabled = false; btn.textContent = '✦ Get 4 more recommendations'; }
 });
 
 // ─────────────────────────────────────────────────────────────
@@ -1285,9 +2227,8 @@ Warm and direct, like a well-read friend.`;
 // ─────────────────────────────────────────────────────────────
 let olTimer = null;
 let olSelected = false;
-
-const titleInput  = document.getElementById('rt-title');
-const olDropdown  = document.getElementById('rt-ol-dropdown');
+const titleInput = document.getElementById('rt-title');
+const olDropdown = document.getElementById('rt-ol-dropdown');
 
 titleInput.addEventListener('input', function() {
   const q = this.value.trim();
@@ -1300,7 +2241,7 @@ titleInput.addEventListener('input', function() {
 });
 
 titleInput.addEventListener('keydown', function(e) {
-  const items = olDropdown.querySelectorAll('.rt-ol-item');
+  const items  = olDropdown.querySelectorAll('.rt-ol-item');
   const active = olDropdown.querySelector('.rt-ol-item.focused');
   if (e.key === 'Escape') { olDropdown.style.display = 'none'; return; }
   if (!items.length) return;
@@ -1314,8 +2255,8 @@ titleInput.addEventListener('keydown', function(e) {
     const prev = active ? (active.previousElementSibling || items[items.length-1]) : items[items.length-1];
     if (active) active.classList.remove('focused');
     prev.classList.add('focused');
-  } else if (e.key === 'Enter') {
-    if (active) { e.preventDefault(); active.click(); }
+  } else if (e.key === 'Enter' && active) {
+    e.preventDefault(); active.click();
   }
 });
 
@@ -1325,274 +2266,167 @@ document.addEventListener('click', function(e) {
 
 async function searchOpenLibrary(q) {
   try {
-    const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&fields=key,title,author_name,first_publish_year,cover_i,subject&limit=6&language=eng`;
+    const url  = `https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&fields=key,title,author_name,first_publish_year,cover_i&limit=6&language=eng`;
     const res  = await fetch(url);
     const data = await res.json();
     renderOLDropdown(data.docs || []);
-  } catch(e) {
-    olDropdown.style.display = 'none';
-  }
+  } catch(e) { olDropdown.style.display = 'none'; }
 }
 
 function renderOLDropdown(docs) {
   if (!docs.length) { olDropdown.style.display = 'none'; return; }
   olDropdown.innerHTML = docs.map(d => {
-    const title   = d.title || '';
-    const author  = (d.author_name || [])[0] || '';
-    const year    = d.first_publish_year || '';
-    const coverId = d.cover_i || '';
-    const olKey   = d.key || '';
+    const title    = d.title || '';
+    const author   = (d.author_name || [])[0] || '';
+    const year     = d.first_publish_year || '';
+    const coverId  = d.cover_i || '';
+    const olKey    = d.key || '';
     const coverUrl = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-S.jpg` : '';
     return `<div class="rt-ol-item" data-title="${esc(title)}" data-author="${esc(author)}" data-cover="${coverId}" data-olkey="${esc(olKey)}">
-      ${coverUrl ? `<img src="${coverUrl}" class="rt-ol-cover" alt="" loading="lazy">` : '<div class="rt-ol-cover rt-ol-cover--placeholder">📖</div>'}
-      <div class="rt-ol-info">
+      ${coverUrl
+        ? `<img src="${coverUrl}" class="rt-ol-cover" alt="" loading="lazy">`
+        : '<div class="rt-ol-cover--placeholder">📖</div>'}
+      <div>
         <div class="rt-ol-title">${esc(title)}</div>
         <div class="rt-ol-meta">${esc(author)}${year ? ` · ${year}` : ''}</div>
       </div>
     </div>`;
   }).join('');
   olDropdown.style.display = 'block';
-
   olDropdown.querySelectorAll('.rt-ol-item').forEach(item => {
     item.addEventListener('click', function() {
       titleInput.value = this.dataset.title;
-      document.getElementById('rt-author').value        = this.dataset.author;
-      document.getElementById('rt-ol-cover-id').value   = this.dataset.cover;
-      document.getElementById('rt-ol-key').value        = this.dataset.olkey;
+      document.getElementById('rt-author').value      = this.dataset.author;
+      document.getElementById('rt-ol-cover-id').value = this.dataset.cover;
+      document.getElementById('rt-ol-key').value      = this.dataset.olkey;
       olDropdown.style.display = 'none';
       olSelected = true;
     });
   });
 }
 
-// Patch uid to include cover data when saving
-const _origAddBtn = document.getElementById('rt-add-btn');
-_origAddBtn.addEventListener('click', function() {
-  // cover_id gets picked up in the existing add handler via the hidden field
-  // We patch into the book object after creation
-}, true); // capture phase — runs before the existing click handler
-
-// Override save to include cover_id from hidden field
-const _origSave = save;
-// We inject cover_id into the book object inside the existing add handler:
-// (we do this by monkey-patching — the hidden field is read at add time)
-
 // ─────────────────────────────────────────────────────────────
-// GOODREADS CSV IMPORT  (v2 — with Open Library key matching)
+// GOODREADS CSV IMPORT (v2 — with OL matching)
 // ─────────────────────────────────────────────────────────────
 document.getElementById('rt-csv-file').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
+  const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = function(ev) { processGoodreadsCSV(ev.target.result); };
   reader.readAsText(file);
-  this.value = ''; // allow re-import of same file
+  this.value = '';
 });
 
-// ── OL matching ──────────────────────────────────────────────
-// Query Open Library for a single book and return { olKey, coverId } or null.
-// We try "title + author" first, then fall back to title-only if no match.
-// Normalise both strings before comparing so minor punctuation differences
-// (e.g. "The Name of the Wind" vs "Name of the Wind, The") still match.
-
 function normaliseTitle(s) {
-  return s
-    .toLowerCase()
-    .replace(/^(a |an |the )/i, '')   // strip leading articles
-    .replace(/[^a-z0-9 ]/g, '')       // strip punctuation
-    .replace(/\s+/g, ' ')
-    .trim();
+  return s.toLowerCase().replace(/^(a |an |the )/i,'').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
 }
 
 async function matchBookToOL(title, author) {
-  // Build a focused query: title + author gives the highest precision
-  const query = author
-    ? `${title} ${author.split(',')[0].trim()}` // "first last" only, skip "last, first" format
-    : title;
-
+  const query = author ? `${title} ${author.split(',')[0].trim()}` : title;
   try {
-    const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&fields=key,title,author_name,cover_i&limit=5&language=eng`;
-    const res  = await fetch(url);
-    if (!res.ok) return null;
+    const url  = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&fields=key,title,author_name,cover_i&limit=5&language=eng`;
+    const res  = await fetch(url); if (!res.ok) return null;
     const data = await res.json();
-    const docs = data.docs || [];
-    if (!docs.length) return null;
-
+    const docs = data.docs || []; if (!docs.length) return null;
     const normTarget = normaliseTitle(title);
-
-    // Find the first result whose normalised title matches
     const match = docs.find(d => normaliseTitle(d.title || '') === normTarget);
-    const best  = match || docs[0]; // fall back to top result if no exact match
-
-    // Reject the top result if titles are wildly different (edit distance heuristic)
+    const best  = match || docs[0];
     if (!match) {
-      const resultNorm = normaliseTitle(best.title || '');
-      // Simple contains-check: if neither contains the other, skip
-      if (!resultNorm.includes(normTarget.split(' ')[0]) &&
-          !normTarget.includes(resultNorm.split(' ')[0])) {
-        return null;
-      }
+      const rn = normaliseTitle(best.title || '');
+      if (!rn.includes(normTarget.split(' ')[0]) && !normTarget.includes(rn.split(' ')[0])) return null;
     }
-
-    return {
-      olKey:   best.key   || null,   // e.g. "/works/OL8479867W"
-      coverId: best.cover_i || null, // numeric cover ID
-      olTitle: best.title  || title, // OL's canonical title (use for dedup)
-      olAuthor:(best.author_name || [])[0] || author
-    };
-  } catch(e) {
-    return null; // network error — carry on without OL data
-  }
+    return { olKey: best.key || null, coverId: best.cover_i || null };
+  } catch(e) { return null; }
 }
 
-// ── Rate-limited batch runner ─────────────────────────────────
-// OL asks for ≤1 req/sec. We run 3 in parallel with a 350ms gap
-// between batches — fast enough for 100 books (~12 sec total).
 async function batchMatchOL(bookList, onProgress) {
-  const BATCH = 3;
-  const DELAY = 400; // ms between batches
+  const BATCH = 3, DELAY = 400;
   const results = new Array(bookList.length).fill(null);
-
   for (let i = 0; i < bookList.length; i += BATCH) {
-    const slice   = bookList.slice(i, i + BATCH);
-    const matches = await Promise.all(
-      slice.map(b => matchBookToOL(b.title, b.author))
-    );
+    const slice = bookList.slice(i, i + BATCH);
+    const matches = await Promise.all(slice.map(b => matchBookToOL(b.title, b.author)));
     matches.forEach((m, j) => { results[i + j] = m; });
     onProgress(Math.min(i + BATCH, bookList.length), bookList.length);
-    if (i + BATCH < bookList.length) {
-      await new Promise(r => setTimeout(r, DELAY));
-    }
+    if (i + BATCH < bookList.length) await new Promise(r => setTimeout(r, DELAY));
   }
   return results;
 }
 
-// ── Main importer ─────────────────────────────────────────────
 async function processGoodreadsCSV(csvText) {
   const statusEl = document.getElementById('rt-import-status');
   statusEl.style.display = 'block';
   statusEl.className = 'rt-import-status rt-import-status--loading';
   statusEl.textContent = 'Reading CSV…';
-
   try {
-    const rows = parseCSV(csvText);
-    if (!rows.length) throw new Error('No rows found');
-
-    // Map Goodreads columns (case-insensitive header matching)
+    const rows = parseCSV(csvText); if (!rows.length) throw new Error('No rows found');
     const headers = rows[0].map(h => h.toLowerCase().trim());
     const col = name => headers.findIndex(h => h.includes(name));
-
-    const iTitle     = col('title');
-    const iBookId    = col('book id');                              // Goodreads numeric ID
-    const iAuthor    = headers.findIndex(h => h === 'author');      // exact — avoids 'author l-f'
-    const iShelf     = col('exclusive shelf');
-    const iRating    = col('my rating');
+    const iTitle    = col('title');
+    const iBookId   = col('book id');
+    const iAuthor   = headers.findIndex(h => h === 'author');
+    const iShelf    = col('exclusive shelf');
+    const iRating   = col('my rating');
     const iDateRead  = col('date read');
     const iDateAdded = col('date added');
-    const iReview    = col('my review');
-
+    const iReview   = col('my review');
     if (iTitle === -1) throw new Error('Could not find Title column — is this a Goodreads CSV?');
 
-    // ── Parse rows into raw book objects ──────────────────────
-    const toImport = [];
-    let skipped = 0;
-
+    const toImport = []; let skipped = 0;
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
       if (!row[iTitle] || !row[iTitle].trim()) continue;
-
       const title  = row[iTitle].trim();
-      const author = iAuthor  >= 0 ? row[iAuthor].trim()  : '';
+      const author = iAuthor  >= 0 ? row[iAuthor].trim() : '';
       const shelf  = iShelf   >= 0 ? row[iShelf].trim().toLowerCase() : '';
       const rating = iRating  >= 0 ? parseInt(row[iRating]) || null : null;
       const grId   = iBookId  >= 0 ? row[iBookId].trim() : null;
-      const dateRead   = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
-      const dateAdded  = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
+      const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
+      const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
       const notes  = iReview  >= 0 ? (row[iReview] || '').trim() || null : null;
-
-      // Skip exact title duplicates already in the local list
-      if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
-        skipped++; continue;
-      }
-
+      if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) { skipped++; continue; }
       let status = 'read';
-      if      (shelf === 'to-read')          status = 'tbr';
+      if      (shelf === 'to-read')           status = 'tbr';
       else if (shelf === 'currently-reading') status = 'reading';
-      else if (shelf === 'read')             status = 'read';
-
-      toImport.push({
-        id:          uid(),
-        title,
-        author,
-        status,
+      toImport.push({ id:uid(), title, author, status,
         rating:      status === 'read' ? rating : null,
         notes:       status === 'read' ? notes  : null,
         date:        status === 'read' ? dateRead : null,
         dateStarted: status === 'reading' ? (dateAdded || null) : null,
         added:       dateAdded || new Date().toISOString(),
-        source:      'goodreads',
-        goodreadsId: grId || null,
-        // OL fields — filled in next step
-        olKey:   null,
-        coverId: null
-      });
+        source: 'goodreads', goodreadsId: grId || null, olKey: null, coverId: null });
     }
 
     if (!toImport.length && skipped > 0) {
       statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.textContent = `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list — nothing new to import.`;
-      return;
+      statusEl.textContent = `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list.`; return;
     }
-    if (!toImport.length) throw new Error('No valid book rows found in this CSV.');
+    if (!toImport.length) throw new Error('No valid book rows found.');
 
-    // ── OL matching pass ──────────────────────────────────────
     statusEl.innerHTML = `Matching ${toImport.length} book${toImport.length !== 1 ? 's' : ''} against Open Library… <span id="rt-import-progress">(0/${toImport.length})</span>`;
-
     const olResults = await batchMatchOL(toImport, (done, total) => {
       const p = document.getElementById('rt-import-progress');
       if (p) p.textContent = `(${done}/${total})`;
     });
-
     let matched = 0;
-    olResults.forEach((ol, i) => {
-      if (ol) {
-        toImport[i].olKey   = ol.olKey;
-        toImport[i].coverId = ol.coverId;
-        matched++;
-      }
-    });
-
-    // ── Merge into local books array ──────────────────────────
+    olResults.forEach((ol, i) => { if (ol) { toImport[i].olKey = ol.olKey; toImport[i].coverId = ol.coverId; matched++; } });
     toImport.forEach(b => books.push(b));
-    save();
-    updateStats(); renderHomeReading(); renderHistory();
+    save(); updateStats(); renderHomeReading(); renderHistory();
 
-    // ── Cloud sync ────────────────────────────────────────────
     statusEl.className = 'rt-import-status rt-import-status--loading';
-    statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched to Open Library). ${currentUser ? 'Syncing to cloud…' : ''}`;
-
+    statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). ${currentUser ? 'Syncing to cloud…' : ''}`;
     if (currentUser) {
-      // Sync in batches of 10 to avoid overwhelming Supabase
       const SYNC_BATCH = 10;
-      for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
+      for (let i = 0; i < toImport.length; i += SYNC_BATCH)
         await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
-      }
       statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML =
-        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
-        (skipped  ? ` (${skipped} skipped — already in list)` : '') +
-        ` · <strong>${matched}</strong> matched to Open Library` +
-        ` · synced to cloud.` +
-        ` <button class="btn-text-link" onclick="switchTab('home')">View your library →</button>`;
+      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
+        ` <button class="btn-text-link" onclick="switchTab('home')">View library →</button>`;
     } else {
       statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML =
-        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
-        (skipped ? ` (${skipped} skipped — already in list)` : '') +
-        ` · <strong>${matched}</strong> matched to Open Library.` +
+      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library.` +
         ` <button class="btn-text-link" onclick="switchTab('account')">Sign in to sync →</button>`;
     }
-
   } catch(err) {
     statusEl.className = 'rt-import-status rt-import-status--error';
     statusEl.textContent = `Import failed: ${err.message}`;
@@ -1600,23 +2434,16 @@ async function processGoodreadsCSV(csvText) {
 }
 
 function parseCSV(text) {
-  const rows = [];
-  let row = [], cell = '', inQuote = false;
+  const rows = []; let row = [], cell = '', inQuote = false;
   for (let i = 0; i < text.length; i++) {
     const c = text[i];
-    if (c === '"') {
-      if (inQuote && text[i+1] === '"') { cell += '"'; i++; }
-      else inQuote = !inQuote;
-    } else if (c === ',' && !inQuote) {
-      row.push(cell); cell = '';
-    } else if ((c === '\n' || c === '\r') && !inQuote) {
+    if (c === '"') { if (inQuote && text[i+1] === '"') { cell += '"'; i++; } else inQuote = !inQuote; }
+    else if (c === ',' && !inQuote) { row.push(cell); cell = ''; }
+    else if ((c === '\n' || c === '\r') && !inQuote) {
       if (c === '\r' && text[i+1] === '\n') i++;
       row.push(cell); cell = '';
-      if (row.some(c => c)) rows.push(row);
-      row = [];
-    } else {
-      cell += c;
-    }
+      if (row.some(c => c)) rows.push(row); row = [];
+    } else { cell += c; }
   }
   if (cell || row.length) { row.push(cell); if (row.some(c => c)) rows.push(row); }
   return rows;
@@ -1624,7 +2451,6 @@ function parseCSV(text) {
 
 function parseGRDate(str) {
   if (!str || !str.trim()) return null;
-  // Goodreads format: "2023/01/15" or "2023/01/15"
   const m = str.trim().match(/(\d{4})\/(\d{2})\/(\d{2})/);
   if (m) return `${m[1]}-${m[2]}-${m[3]}`;
   return null;
@@ -1650,10 +2476,10 @@ document.getElementById('rt-install-btn').addEventListener('click', async functi
 // STICKY TAB BAR
 // ─────────────────────────────────────────────────────────────
 (function() {
-  const wrap   = document.getElementById('rt-tabbar-wrap');
-  const heroH  = () => document.querySelector('.rt-hero').offsetHeight;
+  const wrap  = document.getElementById('rt-tabbar-wrap');
+  const heroH = () => document.querySelector('.rt-hero').offsetHeight;
   window.addEventListener('scroll', function() {
-    wrap.classList.toggle('rt-tabbar--stuck', window.scrollY >= heroH());
+    if (wrap) wrap.classList.toggle('rt-tabbar--stuck', window.scrollY >= heroH());
   }, {passive: true});
 })();
 
@@ -1664,4 +2490,6 @@ load();
 updateStats();
 renderHomeReading();
 renderHistory();
+// Initialise recs panel state (locked if not signed in)
+renderAuthUI();
 </script>
