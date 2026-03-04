@@ -852,17 +852,54 @@ permalink: /tools/reading-tracker/
 
 .rt-sheet-date { width: 100%; margin-bottom: 1.1rem; }
 
-/* DNF option */
-.rt-dnf-toggle {
-  display: flex; align-items: center; gap: 0.65rem;
-  padding: 0.7rem 0.9rem; border: 1.5px solid var(--rt-border-md);
-  border-radius: var(--rt-r3); cursor: pointer; margin-bottom: 1.1rem;
-  transition: border-color var(--rt-fast), background var(--rt-fast);
+/* ── DNF pill toggle (compact, top-right of step 1) ── */
+.rt-step1-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 0.85rem;
 }
-.rt-dnf-toggle:hover { border-color: #b42828; background: rgba(180,40,40,0.04); }
-.rt-dnf-toggle.active { border-color: #b42828; background: rgba(180,40,40,0.06); }
-.rt-dnf-toggle input { accent-color: #b42828; width: 15px; height: 15px; cursor: pointer; }
-.rt-dnf-toggle span { font-size: 0.84rem; color: var(--rt-t2); }
+.rt-dnf-pill {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.75rem; border-radius: 99px; cursor: pointer;
+  border: 1.5px solid var(--rt-border-md); background: transparent;
+  font-size: 0.75rem; font-weight: 600; color: var(--rt-t3);
+  transition: all var(--rt-fast) var(--rt-ease); user-select: none;
+}
+.rt-dnf-pill:hover { border-color: #b42828; color: #b42828; background: rgba(180,40,40,0.05); }
+.rt-dnf-pill.active { border-color: #b42828; color: #b42828; background: rgba(180,40,40,0.08); }
+.rt-dnf-pill input { display: none; }
+.rt-dnf-pill-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--rt-border-md); transition: background var(--rt-fast); flex-shrink: 0;
+}
+.rt-dnf-pill.active .rt-dnf-pill-dot { background: #b42828; }
+
+/* ── Step 2: divider between public/private sections ── */
+.rt-write-divider {
+  display: flex; align-items: center; gap: 0.6rem; margin: 0.9rem 0;
+}
+.rt-write-divider::before, .rt-write-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--rt-border);
+}
+.rt-write-divider span {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rt-t3); white-space: nowrap;
+}
+
+/* ── Edit mode: no step dots ── */
+.rt-sheet--edit .rt-sheet-steps { display: none; }
+.rt-sheet-edit-badge {
+  display: none; font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--rt-amber); background: var(--rt-amber-pale);
+  border: 1px solid rgba(200,137,26,0.2); border-radius: 99px;
+  padding: 0.2em 0.65em;
+}
+.rt-sheet--edit .rt-sheet-edit-badge { display: inline-block; }
+
+/* book item clickable in history */
+.rt-book-item { cursor: default; }
+.rt-book-item--editable { cursor: pointer; }
+.rt-book-item--editable:hover .rt-book-title { color: var(--rt-amber); }
 
 /* ── Step 2: Write ── */
 .rt-review-section { margin-bottom: 1.25rem; }
@@ -1107,16 +1144,33 @@ permalink: /tools/reading-tracker/
 }
 
 /* ── Genre breakdown chart ── */
-.rt-genre-chart { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 0.5rem; }
-.rt-genre-row { display: flex; align-items: center; gap: 0.65rem; }
-.rt-genre-name {
-  font-size: 0.72rem; font-weight: 500; color: var(--rt-t2);
-  width: 90px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+/* ── Genre pie chart — lives inside a stat card ── */
+.rt-stat-card--genre {
+  grid-column: span 2;   /* same row as This Year + All Time + Favourites */
+  display: flex; flex-direction: column;
 }
-.rt-genre-bar-wrap { flex: 1; height: 7px; background: var(--rt-cream-md); border-radius: 99px; overflow: hidden; }
-.rt-genre-bar-fill { height: 100%; border-radius: 99px; transition: width 0.6s var(--rt-ease); }
-.rt-genre-count { font-size: 0.68rem; color: var(--rt-t3); flex-shrink: 0; min-width: 1.5rem; text-align: right; }
-.rt-genre-empty { font-size: 0.8rem; color: var(--rt-t3); padding: 0.5rem 0; font-style: italic; }
+.rt-genre-pie-wrap {
+  display: flex; align-items: center; gap: 0.9rem; flex: 1; margin-top: 0.4rem;
+}
+.rt-genre-pie { flex-shrink: 0; }
+.rt-genre-legend { flex: 1; display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+.rt-genre-legend-item {
+  display: flex; align-items: center; gap: 0.4rem; min-width: 0;
+}
+.rt-genre-legend-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+.rt-genre-legend-name {
+  font-size: 0.68rem; color: var(--rt-t2); font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;
+}
+.rt-genre-legend-pct {
+  font-size: 0.65rem; color: var(--rt-t3); flex-shrink: 0;
+}
+.rt-genre-empty {
+  font-size: 0.72rem; color: var(--rt-t3); font-style: italic;
+  margin-top: 0.4rem; line-height: 1.5;
+}
 
 @media (max-width: 700px) {
   .rt-tabbar-wrap { display: none; }
@@ -1145,6 +1199,7 @@ permalink: /tools/reading-tracker/
   .rt-panels { padding: 0 1rem; }
   .rt-stats-grid { grid-template-columns: 1fr 1fr; }
   .rt-stat-goal { grid-column: 1 / -1; }
+  .rt-stat-card--genre { grid-column: 1 / -1; }
   .rt-form-row--2 { grid-template-columns: 1fr; }
   .rt-form-card { padding: 1.1rem; }
   .rt-reading-card { flex-direction: column; }
@@ -1284,14 +1339,12 @@ permalink: /tools/reading-tracker/
               <div class="rt-stat-number" id="rt-favourites">0</div>
               <div class="rt-stat-sub">5★ reads</div>
             </div>
-          </div>
-        </div>
-
-        <!-- Genre breakdown -->
-        <div class="rt-home-section">
-          <h2 class="rt-section-heading">Genres read this year</h2>
-          <div id="rt-genre-chart" class="rt-genre-chart">
-            <p class="rt-genre-empty">Log some finished books to see your genre breakdown.</p>
+            <div class="rt-stat-card rt-stat-card--genre">
+              <div class="rt-stat-label">Genres this year</div>
+              <div id="rt-genre-chart" class="rt-genre-pie-wrap">
+                <p class="rt-genre-empty">Log finished books to see your genre breakdown.</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1662,7 +1715,14 @@ permalink: /tools/reading-tracker/
 
         <!-- ── STEP 1: Rate ── -->
         <div class="rt-sheet-slide" id="rt-slide-0">
-          <div class="rt-step-label">How many stars?</div>
+          <div class="rt-step1-header">
+            <div class="rt-step-label" style="margin-bottom:0;">How many stars?</div>
+            <label class="rt-dnf-pill" id="rt-dnf-toggle">
+              <input type="checkbox" id="rt-dnf-check">
+              <div class="rt-dnf-pill-dot"></div>
+              <span>DNF</span>
+            </label>
+          </div>
           <div class="rt-sheet-stars" id="rt-sheet-stars" role="radiogroup" aria-label="Star rating">
             <button class="rt-sheet-star" data-val="1" type="button" aria-label="1 star">★</button>
             <button class="rt-sheet-star" data-val="2" type="button" aria-label="2 stars">★</button>
@@ -1670,26 +1730,16 @@ permalink: /tools/reading-tracker/
             <button class="rt-sheet-star" data-val="4" type="button" aria-label="4 stars">★</button>
             <button class="rt-sheet-star" data-val="5" type="button" aria-label="5 stars">★</button>
           </div>
-
           <div class="rt-review-field">
             <label for="rt-sheet-date">Date finished</label>
-            <input type="date" id="rt-sheet-date" class="rt-field input" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;">
+            <input type="date" id="rt-sheet-date" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;">
           </div>
-
-          <label class="rt-dnf-toggle" id="rt-dnf-toggle">
-            <input type="checkbox" id="rt-dnf-check">
-            <span>Did not finish (DNF)</span>
-          </label>
         </div>
 
         <!-- ── STEP 2: Write ── -->
         <div class="rt-sheet-slide" id="rt-slide-1">
 
-          <div class="rt-review-field">
-            <label for="rt-sheet-notes">Private notes <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(only you can see this — feeds your AI recommendations)</span></label>
-            <textarea id="rt-sheet-notes" rows="3" placeholder="What did you think? Even a few words helps Claude find your next book…"></textarea>
-          </div>
-
+          <!-- Share toggle FIRST — clearly separate from private notes -->
           <div class="rt-share-toggle-row" id="rt-share-toggle-row">
             <div class="rt-share-toggle-text">
               <strong>Share a review</strong>
@@ -1700,12 +1750,19 @@ permalink: /tools/reading-tracker/
               <div class="rt-toggle-track"></div>
             </label>
           </div>
-
           <div class="rt-review-public-wrap" id="rt-review-public-wrap">
-            <div class="rt-review-field">
-              <label for="rt-sheet-review">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public — friends can comment)</span></label>
-              <textarea id="rt-sheet-review" rows="4" placeholder="Write something others would find useful…"></textarea>
+            <div class="rt-review-field" style="margin-bottom:0.25rem;">
+              <label for="rt-sheet-review">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public)</span></label>
+              <textarea id="rt-sheet-review" rows="3" placeholder="Write something others would find useful…"></textarea>
             </div>
+          </div>
+
+          <!-- Divider makes clear below is separate / private -->
+          <div class="rt-write-divider"><span>🔒 Private notes</span></div>
+
+          <div class="rt-review-field">
+            <label for="rt-sheet-notes">Only you can see this <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">— helps Claude recommend books</span></label>
+            <textarea id="rt-sheet-notes" rows="3" placeholder="What did you think? Even a few words helps…"></textarea>
           </div>
         </div>
 
@@ -1723,6 +1780,50 @@ permalink: /tools/reading-tracker/
             <div id="rt-done-public-badge" style="display:none;">
               <span class="rt-done-public-badge">✦ Review shared to your feed</span>
             </div>
+          </div>
+        </div>
+
+        <!-- ── EDIT SLIDE (slide 3) — pre-populated, no step dots ── -->
+        <div class="rt-sheet-slide" id="rt-slide-edit">
+          <div class="rt-step1-header" style="margin-bottom:0.5rem;">
+            <div class="rt-step-label" style="margin-bottom:0;">Rating</div>
+            <label class="rt-dnf-pill" id="rt-dnf-toggle-edit">
+              <input type="checkbox" id="rt-dnf-check-edit">
+              <div class="rt-dnf-pill-dot"></div>
+              <span>DNF</span>
+            </label>
+          </div>
+          <div class="rt-sheet-stars" id="rt-sheet-stars-edit" role="radiogroup" aria-label="Star rating">
+            <button class="rt-sheet-star" data-val="1" type="button">★</button>
+            <button class="rt-sheet-star" data-val="2" type="button">★</button>
+            <button class="rt-sheet-star" data-val="3" type="button">★</button>
+            <button class="rt-sheet-star" data-val="4" type="button">★</button>
+            <button class="rt-sheet-star" data-val="5" type="button">★</button>
+          </div>
+          <div class="rt-review-field" style="margin-bottom:0.85rem;">
+            <label for="rt-sheet-date-edit">Date finished</label>
+            <input type="date" id="rt-sheet-date-edit" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;">
+          </div>
+          <div class="rt-share-toggle-row">
+            <div class="rt-share-toggle-text">
+              <strong>Share a review</strong>
+              <span>Friends can see this and comment</span>
+            </div>
+            <label class="rt-toggle-switch">
+              <input type="checkbox" id="rt-share-check-edit">
+              <div class="rt-toggle-track"></div>
+            </label>
+          </div>
+          <div class="rt-review-public-wrap" id="rt-review-public-wrap-edit">
+            <div class="rt-review-field" style="margin-bottom:0.25rem;">
+              <label for="rt-sheet-review-edit">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public)</span></label>
+              <textarea id="rt-sheet-review-edit" rows="2" placeholder="Write something others would find useful…"></textarea>
+            </div>
+          </div>
+          <div class="rt-write-divider"><span>🔒 Private notes</span></div>
+          <div class="rt-review-field">
+            <label for="rt-sheet-notes-edit">Only you can see this</label>
+            <textarea id="rt-sheet-notes-edit" rows="2" placeholder="What did you think?"></textarea>
           </div>
         </div>
 
@@ -2056,47 +2157,67 @@ gi.value = loadGoal();
 gi.addEventListener('change', function() { saveGoal(this.value); updateStats(); renderGenreChart(); });
 
 // ─────────────────────────────────────────────────────────────
-// GENRE CHART
+// GENRE PIE CHART
 // ─────────────────────────────────────────────────────────────
 const GENRE_COLOURS = [
-  '#1a2744','#2A6E69','#c8891a','#5c6bc0','#7b3fa0',
-  '#b43a3a','#2e7d52','#7a5c2e'
+  '#1a2744','#c8891a','#2A6E69','#5c6bc0','#b43a3a',
+  '#7b3fa0','#2e7d52','#7a5c2e'
 ];
 
 function renderGenreChart() {
-  const year  = new Date().getFullYear();
-  const read  = getBooks('read').filter(b => b.date && new Date(b.date).getFullYear() === year);
-  const el    = document.getElementById('rt-genre-chart');
+  const year = new Date().getFullYear();
+  const read = getBooks('read').filter(b => b.date && new Date(b.date).getFullYear() === year);
+  const el   = document.getElementById('rt-genre-chart');
   if (!el) return;
 
-  // Count genres
   const counts = {};
   read.forEach(b => {
     const g = (b.genre || '').trim() || 'Untagged';
     counts[g] = (counts[g] || 0) + 1;
   });
 
-  const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+  const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 6);
 
   if (!sorted.length) {
-    el.innerHTML = '<p class="rt-genre-empty">Log some finished books to see your genre breakdown.</p>';
+    el.innerHTML = '<p class="rt-genre-empty">Log finished books to see your genre breakdown.</p>';
     return;
   }
 
-  const max = sorted[0][1];
-  // Show top 5
-  el.innerHTML = sorted.slice(0, 5).map(([genre, count], i) => {
-    const pct   = Math.round((count / max) * 100);
+  const total = sorted.reduce((s, [, c]) => s + c, 0);
+  const SIZE  = 72, R = 28, CX = SIZE / 2, CY = SIZE / 2;
+
+  // Build SVG pie slices
+  let angle = -Math.PI / 2; // start at top
+  const slices = sorted.map(([genre, count], i) => {
+    const slice  = (count / total) * 2 * Math.PI;
+    const x1     = CX + R * Math.cos(angle);
+    const y1     = CY + R * Math.sin(angle);
+    angle       += slice;
+    const x2     = CX + R * Math.cos(angle);
+    const y2     = CY + R * Math.sin(angle);
+    const large  = slice > Math.PI ? 1 : 0;
     const colour = GENRE_COLOURS[i % GENRE_COLOURS.length];
-    return `
-    <div class="rt-genre-row">
-      <span class="rt-genre-name" title="${esc(genre)}">${esc(genre)}</span>
-      <div class="rt-genre-bar-wrap">
-        <div class="rt-genre-bar-fill" style="width:${pct}%;background:${colour};"></div>
-      </div>
-      <span class="rt-genre-count">${count}</span>
+    // For a single slice (100%), draw a full circle instead
+    if (sorted.length === 1) return `<circle cx="${CX}" cy="${CY}" r="${R}" fill="${colour}"/>`;
+    return `<path d="M${CX},${CY} L${x1},${y1} A${R},${R} 0 ${large},1 ${x2},${y2} Z" fill="${colour}"/>`;
+  });
+
+  const svg = `<svg class="rt-genre-pie" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" aria-hidden="true">
+    ${slices.join('')}
+    <circle cx="${CX}" cy="${CY}" r="12" fill="white"/>
+  </svg>`;
+
+  const legend = sorted.map(([genre, count], i) => {
+    const pct    = Math.round((count / total) * 100);
+    const colour = GENRE_COLOURS[i % GENRE_COLOURS.length];
+    return `<div class="rt-genre-legend-item">
+      <div class="rt-genre-legend-dot" style="background:${colour};"></div>
+      <span class="rt-genre-legend-name" title="${esc(genre)}">${esc(genre)}</span>
+      <span class="rt-genre-legend-pct">${pct}%</span>
     </div>`;
   }).join('');
+
+  el.innerHTML = `${svg}<div class="rt-genre-legend">${legend}</div>`;
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -2186,7 +2307,7 @@ function renderHistory() {
   el.innerHTML = list.map(b => {
     const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
     return `
-    <div class="rt-book-item ${b.status==='dnf' ? 'rt-book-item--dnf' : ''}">
+    <div class="rt-book-item rt-book-item--editable ${b.status==='dnf' ? 'rt-book-item--dnf' : ''}" data-id="${b.id}" data-action="edit-book">
       ${coverUrl
         ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">`
         : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
@@ -2208,13 +2329,18 @@ function renderHistory() {
 }
 
 document.getElementById('rt-history-list').addEventListener('click', function(e) {
-  const btn = e.target.closest('[data-action="remove-hist"]');
-  if (btn && confirm('Remove this book from your history?')) {
-    const book = books.find(b => String(b.id) === String(btn.dataset.id));
+  const delBtn = e.target.closest('[data-action="remove-hist"]');
+  if (delBtn) {
+    if (!confirm('Remove this book from your history?')) return;
+    const book = books.find(b => String(b.id) === String(delBtn.dataset.id));
     if (book) deleteBookFromCloud(book);
-    books = books.filter(b => String(b.id) !== String(btn.dataset.id));
-    save(); renderHistory(); updateStats();
+    books = books.filter(b => String(b.id) !== String(delBtn.dataset.id));
+    save(); renderHistory(); updateStats(); renderGenreChart();
+    return;
   }
+  // Click anywhere else on the item → edit
+  const item = e.target.closest('[data-action="edit-book"]');
+  if (item) openEditSheet(item.dataset.id);
 });
 document.getElementById('rt-home-sort').addEventListener('change', renderHistory);
 
@@ -2467,7 +2593,7 @@ sheetStarsEl.addEventListener('mouseover', e => {
 sheetStarsEl.addEventListener('mouseleave', () =>
   document.querySelectorAll('#rt-sheet-stars .rt-sheet-star').forEach(s => s.classList.remove('hover')));
 
-// DNF toggle styling
+// DNF pill toggle styling
 document.getElementById('rt-dnf-check').addEventListener('change', function() {
   document.getElementById('rt-dnf-toggle').classList.toggle('active', this.checked);
 });
@@ -2476,6 +2602,102 @@ document.getElementById('rt-dnf-check').addEventListener('change', function() {
 document.getElementById('rt-share-check').addEventListener('change', function() {
   document.getElementById('rt-review-public-wrap').classList.toggle('visible', this.checked);
 });
+document.getElementById('rt-share-check-edit').addEventListener('change', function() {
+  document.getElementById('rt-review-public-wrap-edit').classList.toggle('visible', this.checked);
+});
+document.getElementById('rt-dnf-check-edit').addEventListener('change', function() {
+  document.getElementById('rt-dnf-toggle-edit').classList.toggle('active', this.checked);
+});
+
+// Edit star interactions (separate star group)
+let editRating = 0;
+function setEditStars(v) {
+  editRating = v;
+  document.querySelectorAll('#rt-sheet-stars-edit .rt-sheet-star')
+    .forEach((s,i) => s.classList.toggle('active', i < v));
+}
+const editStarsEl = document.getElementById('rt-sheet-stars-edit');
+editStarsEl.addEventListener('click', e => {
+  const b = e.target.closest('.rt-sheet-star'); if (!b) return;
+  const v = parseInt(b.dataset.val);
+  setEditStars(editRating === v ? 0 : v);
+});
+editStarsEl.addEventListener('mouseover', e => {
+  const b = e.target.closest('.rt-sheet-star'); if (!b) return;
+  document.querySelectorAll('#rt-sheet-stars-edit .rt-sheet-star')
+    .forEach((s,i) => s.classList.toggle('hover', i < parseInt(b.dataset.val)));
+});
+editStarsEl.addEventListener('mouseleave', () =>
+  document.querySelectorAll('#rt-sheet-stars-edit .rt-sheet-star').forEach(s => s.classList.remove('hover')));
+
+// ── EDIT SHEET ──
+function openEditSheet(bookId) {
+  const book = books.find(b => String(b.id) === String(bookId));
+  if (!book) return;
+  sheetBookId = bookId;
+
+  // Populate header
+  document.getElementById('rt-sheet-title').textContent  = book.title;
+  document.getElementById('rt-sheet-author').textContent = book.author || '';
+  const ph  = document.getElementById('rt-sheet-cover-ph');
+  const img = document.getElementById('rt-sheet-cover-img');
+  if (book.coverId) {
+    img.src = `https://covers.openlibrary.org/b/id/${book.coverId}-M.jpg`;
+    img.style.display = 'block'; ph.style.display = 'none';
+  } else {
+    img.style.display = 'none'; ph.style.display = 'flex';
+  }
+
+  // Pre-populate edit slide fields
+  editRating = book.rating || 0;
+  setEditStars(editRating);
+  document.getElementById('rt-sheet-date-edit').value         = book.date || new Date().toISOString().split('T')[0];
+  document.getElementById('rt-dnf-check-edit').checked        = book.status === 'dnf';
+  document.getElementById('rt-dnf-toggle-edit').classList.toggle('active', book.status === 'dnf');
+  document.getElementById('rt-sheet-notes-edit').value        = book.notes || '';
+  document.getElementById('rt-sheet-review-edit').value       = book.reviewBody || '';
+  const isPublic = !!(book.reviewPublic && book.reviewBody);
+  document.getElementById('rt-share-check-edit').checked      = isPublic;
+  document.getElementById('rt-review-public-wrap-edit').classList.toggle('visible', isPublic);
+
+  // Switch sheet to edit mode: hide step dots, go to edit slide
+  const sheet = document.getElementById('rt-sheet');
+  sheet.classList.add('rt-sheet--edit');
+  // Slide to the edit slide (index 3 in the flex row)
+  document.getElementById('rt-sheet-slides').style.transform = 'translateX(-300%)';
+
+  // Footer: Cancel + Save
+  const footer = document.getElementById('rt-sheet-footer');
+  footer.innerHTML = `
+    <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-edit-cancel" type="button">Cancel</button>
+    <button class="rt-sheet-btn rt-sheet-btn--primary"   id="rt-edit-save"   type="button">Save changes</button>`;
+  document.getElementById('rt-edit-cancel').onclick = closeModal;
+  document.getElementById('rt-edit-save').onclick   = saveEdits;
+
+  // Open overlay
+  const overlay = document.getElementById('rt-sheet-overlay');
+  overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+}
+
+function saveEdits() {
+  const book = books.find(b => String(b.id) === String(sheetBookId));
+  if (!book) { closeModal(); return; }
+  const isDnf = document.getElementById('rt-dnf-check-edit').checked;
+  book.status       = isDnf ? 'dnf' : 'read';
+  book.rating       = isDnf ? null : (editRating || null);
+  book.date         = document.getElementById('rt-sheet-date-edit').value || book.date;
+  book.notes        = document.getElementById('rt-sheet-notes-edit').value.trim() || null;
+  const isPublic    = document.getElementById('rt-share-check-edit').checked;
+  const reviewText  = document.getElementById('rt-sheet-review-edit').value.trim();
+  book.reviewBody   = (isPublic && reviewText) ? reviewText : null;
+  book.reviewPublic = isPublic && !!reviewText;
+  save(); saveBookToCloud(book);
+  renderHistory(); updateStats(); renderGenreChart();
+  closeModal();
+  showFlash(`"${book.title}" updated.`);
+}
 
 // Close on overlay click
 document.getElementById('rt-sheet-overlay').addEventListener('click', function(e) {
@@ -2530,6 +2752,11 @@ function closeModal() {
   sheet.classList.remove('open');
   overlay.classList.remove('open');
   document.body.style.overflow = '';
+  // Reset edit mode after transition
+  setTimeout(() => {
+    sheet.classList.remove('rt-sheet--edit');
+    document.getElementById('rt-sheet-slides').style.transform = 'translateX(0)';
+  }, 380);
   renderGenreChart();
 }
 
