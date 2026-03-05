@@ -1253,7 +1253,9 @@ permalink: /tools/reading-tracker/
   display: flex; flex-direction: column;
   box-shadow: var(--rt-s3);
   overflow: hidden;
-  animation: rt-modal-slidein 0.26s var(--rt-ease) forwards;
+}
+.rt-add-overlay.open .rt-add-modal {
+  animation: rt-modal-slidein 0.26s var(--rt-ease) both;
 }
 @keyframes rt-modal-slidein {
   from { transform: translateY(20px) scale(0.97); opacity: 0; }
@@ -1359,14 +1361,14 @@ permalink: /tools/reading-tracker/
 @media (max-width: 700px) {
   .rt-community-features { grid-template-columns: 1fr; }
   .rt-add-overlay { padding: 0; align-items: flex-end; }
-  .rt-add-modal {
+  .rt-add-overlay.open .rt-add-modal {
     border-radius: var(--rt-r1) var(--rt-r1) 0 0;
     max-height: 94vh;
-    animation: rt-modal-slideup 0.3s var(--rt-ease) forwards;
+    animation: rt-modal-slideup 0.3s var(--rt-ease) both;
   }
   @keyframes rt-modal-slideup {
-    from { transform: translateY(100%); opacity: 1; }
-    to   { transform: translateY(0);    opacity: 1; }
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
   }
   .rt-tbr-header { flex-direction: column; gap: 0.75rem; }
   .rt-tbr-header-add-btn { width: 100% !important; text-align: center; }
@@ -1805,7 +1807,7 @@ permalink: /tools/reading-tracker/
 <!-- ══════════════════════════════════════════════
      ADD BOOK MODAL
 ══════════════════════════════════════════════ -->
-<div class="rt-add-overlay" id="rt-add-overlay" role="dialog" aria-modal="true" aria-label="Add a book">
+<div class="rt-add-overlay" id="rt-add-overlay" role="dialog" aria-modal="true" aria-label="Add a book" style="display:none;">
   <div class="rt-add-modal" id="rt-add-modal">
 
     <div class="rt-add-modal-header">
@@ -2579,13 +2581,17 @@ function openAddModal(defaultStatus) {
       document.getElementById('rt-notes-row').style.display  = 'flex';
     }
   }
-  document.getElementById('rt-add-overlay').classList.add('open');
+  const overlay = document.getElementById('rt-add-overlay');
+  overlay.style.display = 'flex';
+  overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('rt-title').focus(), 250);
 }
 
 function closeAddModal() {
-  document.getElementById('rt-add-overlay').classList.remove('open');
+  const overlay = document.getElementById('rt-add-overlay');
+  overlay.classList.remove('open');
+  overlay.style.display = 'none';
   document.body.style.overflow = '';
 }
 
@@ -2596,6 +2602,8 @@ document.getElementById('rt-add-overlay').addEventListener('click', function(e) 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && document.getElementById('rt-add-overlay').classList.contains('open')) closeAddModal();
 });
+// Move modal to body so position:fixed is never broken by parent transforms/overflow
+document.body.appendChild(document.getElementById('rt-add-overlay'));
 
 // ─────────────────────────────────────────────────────────────
 // ADD BOOK
