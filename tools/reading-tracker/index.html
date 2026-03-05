@@ -730,8 +730,9 @@ permalink: /tools/reading-tracker/
   gap: 0.6rem; margin-top: 0.25rem;
 }
 .rt-profile-stat {
-  background: var(--rt-cream); border-radius: var(--rt-r3);
-  padding: 0.7rem 0.6rem; text-align: center;
+  background: #ffffff; border-radius: 10px;
+  padding: 0.9rem 0.6rem; text-align: center;
+  box-shadow: 0 2px 10px rgba(26,39,68,0.07);
 }
 .rt-profile-stat-n {
   font-family: var(--rt-font-display); font-size: 1.5rem; font-weight: 700;
@@ -1231,35 +1232,27 @@ permalink: /tools/reading-tracker/
 
 /* ── ADD BOOK MODAL ── */
 .rt-add-overlay {
-  position: fixed; inset: 0;
+  position: fixed !important;
+  top: 0 !important; left: 0 !important;
+  width: 100% !important; height: 100% !important;
   background: rgba(10,14,28,0.65);
-  z-index: 500;
-  display: none; align-items: center; justify-content: center;
+  z-index: 9999;
+  display: none !important;
+  align-items: center; justify-content: center;
   padding: 1.5rem;
 }
 .rt-add-overlay.open {
-  display: flex;
-  animation: rt-overlay-fadein 0.22s var(--rt-ease) forwards;
-}
-@keyframes rt-overlay-fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  display: flex !important;
 }
 .rt-add-modal {
-  background: var(--rt-white);
-  border-radius: var(--rt-r1);
+  background: #fff;
+  border-radius: 18px;
   width: 100%; max-width: 520px;
   max-height: 90vh;
   display: flex; flex-direction: column;
-  box-shadow: var(--rt-s3);
+  box-shadow: 0 8px 32px rgba(26,39,68,0.18);
   overflow: hidden;
-}
-.rt-add-overlay.open .rt-add-modal {
-  animation: rt-modal-slidein 0.26s var(--rt-ease) both;
-}
-@keyframes rt-modal-slidein {
-  from { transform: translateY(20px) scale(0.97); opacity: 0; }
-  to   { transform: translateY(0) scale(1);       opacity: 1; }
+  transform: translateY(0);
 }
 .rt-add-modal-header {
   display: flex; align-items: flex-start;
@@ -1314,9 +1307,10 @@ permalink: /tools/reading-tracker/
 
 /* ── COMMUNITY COMING SOON ── */
 .rt-community-coming-soon {
-  background: var(--rt-white); border-radius: var(--rt-r1);
+  background: #ffffff; border-radius: 18px;
   padding: 2.5rem 2rem; text-align: center;
-  box-shadow: var(--rt-s2); position: relative; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(26,39,68,0.11);
+  position: relative; overflow: hidden;
 }
 .rt-community-cs-glow {
   position: absolute; top: -80px; right: -80px;
@@ -1346,8 +1340,8 @@ permalink: /tools/reading-tracker/
 }
 .rt-community-feature {
   display: flex; gap: 0.75rem; align-items: flex-start;
-  background: var(--rt-cream); border-radius: var(--rt-r3);
-  padding: 1rem; border: 1px solid var(--rt-border);
+  background: #f0ede6; border-radius: 10px;
+  padding: 1rem; border: 1px solid rgba(26,39,68,0.10);
 }
 .rt-community-feature-icon { font-size: 1.2rem; flex-shrink: 0; line-height: 1.4; }
 .rt-community-feature strong {
@@ -1594,26 +1588,37 @@ permalink: /tools/reading-tracker/
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-tbr" data-tab="tbr" style="display:none;">
       <div class="rt-panel-inner">
-        <div class="rt-tbr-header">
-          <div>
-            <h2 class="rt-section-heading">My List</h2>
-            <p class="rt-panel-sub">Your reading queue — save books you want to read, then hit "Start reading" when you're ready.</p>
-          </div>
-          <button class="rt-submit-btn rt-tbr-header-add-btn" onclick="openAddModal('tbr')" type="button">+ Add book</button>
-        </div>
-        <div id="rt-tbr-list"></div>
-        <div class="rt-empty" id="rt-tbr-empty" style="display:none;">
-          <div class="rt-tbr-empty-icon">🔖</div>
-          <p class="rt-tbr-empty-title">Your list is empty</p>
-          <p class="rt-tbr-empty-sub">Save books you want to read next, or import your whole Goodreads library in one go.</p>
-          <div class="rt-tbr-empty-actions">
-            <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
-            <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">📥 Import from Goodreads</button>
+
+        <!-- Header card -->
+        <div style="background:#fff;border-radius:18px;padding:1.25rem 1.5rem;box-shadow:0 4px 20px rgba(26,39,68,0.11);">
+          <div class="rt-tbr-header">
+            <div>
+              <h2 class="rt-section-heading">My List</h2>
+              <p class="rt-panel-sub">Your reading queue — save books you want to read, then hit "Start reading" when you're ready.</p>
+            </div>
+            <button class="rt-submit-btn rt-tbr-header-add-btn" onclick="openAddModal('tbr')" type="button">+ Add book</button>
           </div>
         </div>
-        <!-- Goodreads file input + status (shared with modal) -->
+
+        <!-- Book list card -->
+        <div style="background:#fff;border-radius:18px;padding:1.25rem 1.5rem;box-shadow:0 4px 20px rgba(26,39,68,0.11);">
+          <h3 style="font-family:var(--rt-font-display);font-size:1rem;font-weight:700;color:var(--rt-navy);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(26,39,68,0.08);">My to-read list</h3>
+          <div id="rt-tbr-list"></div>
+          <div class="rt-empty" id="rt-tbr-empty" style="display:none;">
+            <div class="rt-tbr-empty-icon">🔖</div>
+            <p class="rt-tbr-empty-title">Your list is empty</p>
+            <p class="rt-tbr-empty-sub">Save books you want to read next, or import your whole Goodreads library in one go.</p>
+            <div class="rt-tbr-empty-actions">
+              <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
+              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">📥 Import from Goodreads</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goodreads file input + status -->
         <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
         <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
+
       </div>
     </div>
 
@@ -2602,8 +2607,7 @@ document.getElementById('rt-add-overlay').addEventListener('click', function(e) 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && document.getElementById('rt-add-overlay').classList.contains('open')) closeAddModal();
 });
-// Move modal to body so position:fixed is never broken by parent transforms/overflow
-document.body.appendChild(document.getElementById('rt-add-overlay'));
+
 
 // ─────────────────────────────────────────────────────────────
 // ADD BOOK
