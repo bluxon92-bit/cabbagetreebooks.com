@@ -1230,50 +1230,6 @@ permalink: /tools/reading-tracker/
   .rt-app { padding-bottom: 2rem; }
 }
 
-/* ── ADD BOOK MODAL ── */
-.rt-add-overlay {
-  position: fixed !important;
-  top: 0 !important; left: 0 !important;
-  width: 100% !important; height: 100% !important;
-  background: rgba(10,14,28,0.65);
-  z-index: 9999;
-  display: none !important;
-  align-items: center; justify-content: center;
-  padding: 1.5rem;
-}
-.rt-add-overlay.open {
-  display: flex !important;
-}
-.rt-add-modal {
-  background: #fff;
-  border-radius: 18px;
-  width: 100%; max-width: 520px;
-  max-height: 90vh;
-  display: flex; flex-direction: column;
-  box-shadow: 0 8px 32px rgba(26,39,68,0.18);
-  overflow: hidden;
-  transform: translateY(0);
-}
-.rt-add-modal-header {
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 1rem;
-  padding: 1.25rem 1.5rem 1rem;
-  border-bottom: 1px solid var(--rt-border);
-  flex-shrink: 0;
-}
-.rt-add-modal-body {
-  overflow-y: auto;
-  padding: 1.25rem 1.5rem 1.5rem;
-  flex: 1;
-}
-.rt-add-modal-import {
-  display: flex; align-items: center; gap: 0.75rem;
-  flex-wrap: wrap; margin-top: 1rem;
-  padding: 0.8rem 1rem;
-  background: var(--rt-cream);
-  border-radius: var(--rt-r3);
-  border: 1.5px dashed var(--rt-border-md);
-}
 
 /* ── MY LIST header ── */
 .rt-tbr-header {
@@ -1367,6 +1323,65 @@ permalink: /tools/reading-tracker/
   .rt-tbr-header { flex-direction: column; gap: 0.75rem; }
   .rt-tbr-header-add-btn { width: 100% !important; text-align: center; }
 }
+
+/* ── ADD BOOK SHEET (mirrors rt-sheet-overlay / rt-sheet pattern exactly) ── */
+.rt-add-overlay {
+  position: fixed; inset: 0; background: rgba(10,15,30,0.55);
+  z-index: 500; opacity: 0; pointer-events: none;
+  transition: opacity 0.25s var(--rt-ease);
+}
+.rt-add-overlay.open { opacity: 1; pointer-events: auto; }
+
+.rt-add-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 501;
+  background: var(--rt-white);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 40px rgba(10,15,30,0.18);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  max-height: 92vh; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.rt-add-sheet.open { transform: translateY(0); }
+
+@media (min-width: 640px) {
+  .rt-add-overlay { display: flex; align-items: center; justify-content: center; }
+  .rt-add-sheet {
+    position: relative; left: auto; right: auto; bottom: auto;
+    border-radius: var(--rt-r2); max-width: 480px; width: 100%;
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.32s cubic-bezier(0.32,0.72,0,1), opacity 0.28s var(--rt-ease);
+    opacity: 0; max-height: 88vh;
+  }
+  .rt-add-overlay.open .rt-add-sheet { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.rt-add-sheet-handle {
+  width: 36px; height: 4px; border-radius: 99px;
+  background: var(--rt-cream-md); margin: 10px auto 0; flex-shrink: 0;
+}
+@media (min-width: 640px) { .rt-add-sheet-handle { display: none; } }
+
+.rt-add-sheet-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: 1rem 1.25rem 0.85rem;
+  border-bottom: 1px solid var(--rt-border); flex-shrink: 0;
+}
+.rt-add-sheet-body {
+  overflow-y: auto; padding: 1.25rem 1.25rem 0; flex: 1;
+}
+.rt-add-sheet-footer {
+  display: flex; gap: 0.65rem; padding: 1rem 1.25rem;
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--rt-border); flex-shrink: 0;
+}
+.rt-add-import-row {
+  display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;
+  padding: 0.8rem 1.25rem; margin: 0 -1.25rem;
+  background: var(--rt-cream); border-top: 1px solid var(--rt-border);
+  font-size: 0.78rem; color: var(--rt-t3);
+}
+
 </style>
 
 <!-- ══════════════════════════════════════════════
@@ -1810,18 +1825,99 @@ permalink: /tools/reading-tracker/
 </nav>
 
 <!-- ══════════════════════════════════════════════
-     ADD BOOK MODAL
+     ADD BOOK SHEET
 ══════════════════════════════════════════════ -->
-<div class="rt-add-overlay" id="rt-add-overlay" role="dialog" aria-modal="true" aria-label="Add a book" style="display:none;">
-  <div class="rt-add-modal" id="rt-add-modal">
+<div class="rt-add-overlay" id="rt-add-overlay" role="dialog" aria-modal="true" aria-label="Add a book">
 
-    <div class="rt-add-modal-header">
+  <div class="rt-add-sheet" id="rt-add-sheet">
+
+    <div class="rt-add-sheet-handle"></div>
+
+    <div class="rt-add-sheet-header">
       <div>
-        <h3 style="font-family:var(--rt-font-display);font-size:1.15rem;font-weight:700;color:var(--rt-navy);">Add a book</h3>
-        <p style="font-size:0.78rem;color:var(--rt-t3);margin-top:0.2rem;line-height:1.5;">Search by title — cover art and details fill in automatically.</p>
+        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.2rem;">Add a book</div>
+        <div style="font-family:var(--rt-font-display);font-size:1.05rem;font-weight:700;color:var(--rt-navy);">Search by title or author</div>
       </div>
-      <button class="rt-sheet-close" id="rt-add-modal-close" type="button" aria-label="Close">×</button>
+      <button class="rt-sheet-close" id="rt-add-sheet-close" type="button" aria-label="Close">×</button>
     </div>
+
+    <div class="rt-add-sheet-body">
+      <div class="rt-form-row">
+        <div class="rt-field" style="position:relative;">
+          <label for="rt-title">Title <span class="rt-required">*</span></label>
+          <input type="text" id="rt-title" placeholder="Search by title or author…" autocomplete="off">
+          <div id="rt-ol-dropdown" class="rt-ol-dropdown" style="display:none;"></div>
+          <input type="hidden" id="rt-ol-cover-id">
+          <input type="hidden" id="rt-ol-key">
+        </div>
+      </div>
+      <div class="rt-form-row rt-form-row--2">
+        <div class="rt-field">
+          <label for="rt-author">Author</label>
+          <input type="text" id="rt-author" placeholder="e.g. Brandon Sanderson" autocomplete="off">
+        </div>
+        <div class="rt-field">
+          <label for="rt-genre">Genre</label>
+          <select id="rt-genre">
+            <option value="">— select —</option>
+            <option>Fantasy</option><option>Science Fiction</option><option>Horror</option>
+            <option>Romance</option><option>Dystopian</option><option>Literary Fiction</option>
+            <option>Historical Fiction</option><option>Thriller</option>
+            <option>Non-Fiction</option><option>Short Stories</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="rt-form-row rt-form-row--2">
+        <div class="rt-field">
+          <label>Status</label>
+          <div class="rt-status-toggle">
+            <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="reading" checked> Currently reading</label>
+            <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="read"> Already finished</label>
+            <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="tbr"> Add to My List</label>
+          </div>
+        </div>
+        <div class="rt-field">
+          <label for="rt-date">Date finished</label>
+          <input type="date" id="rt-date">
+        </div>
+      </div>
+      <div class="rt-form-row" id="rt-rating-row" style="display:none;">
+        <div class="rt-field">
+          <label>Rating</label>
+          <div class="rt-stars" id="rt-star-input" role="radiogroup" aria-label="Rating">
+            <button class="rt-star" data-val="1" type="button">★</button>
+            <button class="rt-star" data-val="2" type="button">★</button>
+            <button class="rt-star" data-val="3" type="button">★</button>
+            <button class="rt-star" data-val="4" type="button">★</button>
+            <button class="rt-star" data-val="5" type="button">★</button>
+          </div>
+        </div>
+      </div>
+      <div class="rt-form-row" id="rt-notes-row" style="display:none;">
+        <div class="rt-field">
+          <label for="rt-notes">Notes <span class="rt-optional">(private — helps personalise AI recommendations)</span></label>
+          <textarea id="rt-notes" rows="3" placeholder="What did you think?"></textarea>
+        </div>
+      </div>
+
+      <div class="rt-add-import-row">
+        <span style="font-weight:600;color:var(--rt-t2);">📥 Goodreads import</span>
+        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
+        <span>Goodreads → My Books → Export library.</span>
+      </div>
+    </div>
+
+    <div class="rt-add-success" id="rt-add-success" style="display:none;padding:0.5rem 1.25rem;">
+      <span>✓</span>&nbsp;<span id="rt-add-success-msg">Added!</span>
+    </div>
+
+    <div class="rt-add-sheet-footer">
+      <button class="rt-sheet-btn rt-sheet-btn--secondary" type="button" onclick="closeAddModal()">Cancel</button>
+      <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-add-btn" type="button">Add book</button>
+    </div>
+
+  </div>
+</div>
 
     <div class="rt-add-modal-body">
       <div class="rt-form-row">
@@ -2575,10 +2671,10 @@ function openAddModal(defaultStatus) {
   document.getElementById('rt-notes-row').style.display  = 'none';
   document.getElementById('rt-add-success').style.display = 'none';
   setAddStars(0);
-  olDropdown.style.display = 'none';
-  // Default status radio
+  if (typeof olDropdown !== 'undefined') olDropdown.style.display = 'none';
+  // Set default status radio
   const status = defaultStatus || 'reading';
-  const radio  = document.querySelector(`input[name="rt-status"][value="${status}"]`);
+  const radio = document.querySelector(`input[name="rt-status"][value="${status}"]`);
   if (radio) {
     radio.checked = true;
     if (status === 'read') {
@@ -2586,28 +2682,30 @@ function openAddModal(defaultStatus) {
       document.getElementById('rt-notes-row').style.display  = 'flex';
     }
   }
+  // Open — exactly like the finish sheet
   const overlay = document.getElementById('rt-add-overlay');
-  overlay.style.display = 'flex';
+  const sheet   = document.getElementById('rt-add-sheet');
   overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
   document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('rt-title').focus(), 250);
+  setTimeout(() => document.getElementById('rt-title').focus(), 350);
 }
 
 function closeAddModal() {
   const overlay = document.getElementById('rt-add-overlay');
+  const sheet   = document.getElementById('rt-add-sheet');
+  sheet.classList.remove('open');
   overlay.classList.remove('open');
-  overlay.style.display = 'none';
   document.body.style.overflow = '';
 }
 
-document.getElementById('rt-add-modal-close').addEventListener('click', closeAddModal);
+document.getElementById('rt-add-sheet-close').addEventListener('click', closeAddModal);
 document.getElementById('rt-add-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeAddModal();
 });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && document.getElementById('rt-add-overlay').classList.contains('open')) closeAddModal();
 });
-
 
 // ─────────────────────────────────────────────────────────────
 // ADD BOOK
@@ -2676,7 +2774,7 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   const s = document.getElementById('rt-add-success');
   document.getElementById('rt-add-success-msg').textContent = msgs[status] || 'Added!';
   s.style.display = 'flex';
-  setTimeout(() => { closeAddModal(); s.style.display = 'none'; }, 1800);
+  setTimeout(() => { closeAddModal(); }, 1800);
 });
 
 // ─────────────────────────────────────────────────────────────
