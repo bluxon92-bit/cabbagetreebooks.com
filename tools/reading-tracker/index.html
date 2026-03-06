@@ -3472,9 +3472,12 @@ async function processGoodreadsCSV(csvText) {
     statusEl.className = 'rt-import-status rt-import-status--loading';
     statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). ${currentUser ? 'Syncing to cloud…' : ''}`;
     if (currentUser) {
-      const SYNC_BATCH = 10;
-      for (let i = 0; i < toImport.length; i += SYNC_BATCH)
+      const SYNC_BATCH = 3;
+      for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
         await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
+        statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`;
+        if (i + SYNC_BATCH < toImport.length) await new Promise(r => setTimeout(r, 500));
+      }
       statusEl.className = 'rt-import-status rt-import-status--success';
       statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
         (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
