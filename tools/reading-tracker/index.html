@@ -291,7 +291,7 @@ permalink: /tools/reading-tracker/
   width: 38px; height: 54px; border-radius: 4px; flex-shrink: 0;
   background: var(--rt-surface);
 }
-.rt-book-main { flex: 1; min-width: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
+.rt-book-main { flex: 1; min-width: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap; }
 .rt-book-info { flex: 1; min-width: 0; }
 .rt-book-title { font-weight: 600; font-size: 0.9rem; color: var(--rt-navy); margin-bottom: 0.15rem; }
 .rt-book-author { font-size: 0.75rem; color: var(--rt-t3); }
@@ -299,7 +299,7 @@ permalink: /tools/reading-tracker/
 .rt-book-genre { font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rt-t3); background: var(--rt-surface); padding: 0.2em 0.55em; border-radius: 3px; }
 .rt-book-stars { font-size: 0.82rem; color: var(--rt-amber); letter-spacing: -1px; }
 .rt-book-date  { font-size: 0.7rem; color: var(--rt-t3); }
-.rt-book-notes { font-size: 0.78rem; color: var(--rt-t3); font-style: italic; margin-top: 0.35rem; line-height: 1.55; padding-left: calc(38px + 0.85rem); }
+.rt-book-notes { font-size: 0.78rem; color: var(--rt-t3); font-style: italic; margin-top: 0.35rem; line-height: 1.55; padding-left: calc(38px + 0.85rem); word-break: break-word; }
 .rt-dnf-label  {
   font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase;
   background: #7f1d1d; color: white; padding: 0.15em 0.45em;
@@ -1215,6 +1215,10 @@ permalink: /tools/reading-tracker/
   .rt-form-card { padding: 1.1rem; }
   .rt-reading-card { flex-direction: column; }
   .rt-reading-card-actions { flex-direction: row; width: 100%; justify-content: space-between; }
+  /* On mobile, book meta stacks below the title/author */
+  .rt-book-main { flex-direction: column; gap: 0.4rem; }
+  .rt-book-meta { justify-content: flex-start; }
+  .rt-book-notes { padding-left: 0; margin-top: 0.4rem; }
   /* sheet footer safe area on notched phones */
   .rt-sheet-footer { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
   .rt-benefits-grid { grid-template-columns: 1fr; }
@@ -1310,25 +1314,15 @@ permalink: /tools/reading-tracker/
 
 @media (max-width: 700px) {
   .rt-community-features { grid-template-columns: 1fr; }
-  .rt-add-overlay { padding: 0; align-items: flex-end; }
-  .rt-add-overlay.open .rt-add-modal {
-    border-radius: var(--rt-r1) var(--rt-r1) 0 0;
-    max-height: 94vh;
-    animation: rt-modal-slideup 0.3s var(--rt-ease) both;
-  }
-  @keyframes rt-modal-slideup {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
-  }
   .rt-tbr-header { flex-direction: column; gap: 0.75rem; }
   .rt-tbr-header-add-btn { width: 100% !important; text-align: center; }
 }
 
-/* ── ADD BOOK SHEET (mirrors rt-sheet-overlay / rt-sheet pattern exactly) ── */
+/* ── ADD BOOK SHEET (exact mirror of rt-sheet-overlay / rt-sheet) ── */
 .rt-add-overlay {
   position: fixed; inset: 0; background: rgba(10,15,30,0.55);
   z-index: 500; opacity: 0; pointer-events: none;
-  transition: opacity 0.25s var(--rt-ease);
+  transition: opacity var(--rt-med) var(--rt-ease);
 }
 .rt-add-overlay.open { opacity: 1; pointer-events: auto; }
 
@@ -1466,7 +1460,7 @@ permalink: /tools/reading-tracker/
         <div class="rt-signin-cta" id="rt-signin-cta" style="display:none;">
           <div class="rt-signin-cta-text">
             <strong>Sync your reading list</strong>
-            <span>Create a free account to access your books on any device.</span>
+            <span id="rt-signin-cta-sub">Create a free account to access your books on any device.</span>
           </div>
           <button class="rt-signin-cta-btn" onclick="switchTab('account')" type="button">Sign up free →</button>
         </div>
@@ -1827,38 +1821,39 @@ permalink: /tools/reading-tracker/
 <!-- ══════════════════════════════════════════════
      ADD BOOK SHEET
 ══════════════════════════════════════════════ -->
-<div class="rt-add-overlay" id="rt-add-overlay" role="dialog" aria-modal="true" aria-label="Add a book">
+<div class="rt-sheet-overlay" id="rt-add-overlay" role="dialog" aria-modal="true" aria-label="Add a book">
 
-  <div class="rt-add-sheet" id="rt-add-sheet">
+  <div class="rt-sheet" id="rt-add-sheet">
 
-    <div class="rt-add-sheet-handle"></div>
+    <div class="rt-sheet-handle"></div>
 
-    <div class="rt-add-sheet-header">
-      <div>
+    <div class="rt-sheet-header">
+      <div class="rt-sheet-book-info">
         <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.2rem;">Add a book</div>
-        <div style="font-family:var(--rt-font-display);font-size:1.05rem;font-weight:700;color:var(--rt-navy);">Search by title or author</div>
+        <div class="rt-sheet-book-title">Search by title or author</div>
       </div>
       <button class="rt-sheet-close" id="rt-add-sheet-close" type="button" aria-label="Close">×</button>
     </div>
 
-    <div class="rt-add-sheet-body">
-      <div class="rt-form-row">
+    <div class="rt-sheet-viewport" style="overflow-y:auto;">
+      <div style="padding:1.25rem 1.25rem 0;box-sizing:border-box;width:100%;">
+      <div class="rt-form-row" style="margin-bottom:1.1rem;">
         <div class="rt-field" style="position:relative;">
           <label for="rt-title">Title <span class="rt-required">*</span></label>
-          <input type="text" id="rt-title" placeholder="Search by title or author…" autocomplete="off">
+          <input type="text" id="rt-title" placeholder="Search by title or author…" autocomplete="off" style="width:100%;box-sizing:border-box;">
           <div id="rt-ol-dropdown" class="rt-ol-dropdown" style="display:none;"></div>
           <input type="hidden" id="rt-ol-cover-id">
           <input type="hidden" id="rt-ol-key">
         </div>
       </div>
-      <div class="rt-form-row rt-form-row--2">
+      <div class="rt-form-row rt-form-row--2" style="margin-bottom:1.1rem;gap:0.75rem;">
         <div class="rt-field">
           <label for="rt-author">Author</label>
-          <input type="text" id="rt-author" placeholder="e.g. Brandon Sanderson" autocomplete="off">
+          <input type="text" id="rt-author" placeholder="e.g. Brandon Sanderson" autocomplete="off" style="width:100%;box-sizing:border-box;">
         </div>
         <div class="rt-field">
           <label for="rt-genre">Genre</label>
-          <select id="rt-genre">
+          <select id="rt-genre" style="width:100%;box-sizing:border-box;">
             <option value="">— select —</option>
             <option>Fantasy</option><option>Science Fiction</option><option>Horror</option>
             <option>Romance</option><option>Dystopian</option><option>Literary Fiction</option>
@@ -1867,21 +1862,23 @@ permalink: /tools/reading-tracker/
           </select>
         </div>
       </div>
-      <div class="rt-form-row rt-form-row--2">
+      <div class="rt-form-row" style="margin-bottom:1.1rem;">
         <div class="rt-field">
           <label>Status</label>
-          <div class="rt-status-toggle">
+          <div class="rt-status-toggle" style="margin-top:0.4rem;">
             <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="reading" checked> Currently reading</label>
             <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="read"> Already finished</label>
             <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="tbr"> Add to My List</label>
           </div>
         </div>
+      </div>
+      <div class="rt-form-row" id="rt-date-field" style="display:none;margin-bottom:1.1rem;">
         <div class="rt-field">
           <label for="rt-date">Date finished</label>
           <input type="date" id="rt-date">
         </div>
       </div>
-      <div class="rt-form-row" id="rt-rating-row" style="display:none;">
+      <div class="rt-form-row" id="rt-rating-row" style="display:none;margin-bottom:1.1rem;">
         <div class="rt-field">
           <label>Rating</label>
           <div class="rt-stars" id="rt-star-input" role="radiogroup" aria-label="Rating">
@@ -1893,17 +1890,17 @@ permalink: /tools/reading-tracker/
           </div>
         </div>
       </div>
-      <div class="rt-form-row" id="rt-notes-row" style="display:none;">
+      <div class="rt-form-row" id="rt-notes-row" style="display:none;margin-bottom:1.1rem;">
         <div class="rt-field">
           <label for="rt-notes">Notes <span class="rt-optional">(private — helps personalise AI recommendations)</span></label>
           <textarea id="rt-notes" rows="3" placeholder="What did you think?"></textarea>
         </div>
       </div>
-
-      <div class="rt-add-import-row">
-        <span style="font-weight:600;color:var(--rt-t2);">📥 Goodreads import</span>
+      <div style="display:flex;align-items:center;gap:0.65rem;flex-wrap:wrap;padding:0.85rem 1rem;background:var(--rt-cream);border-radius:var(--rt-r3);border:1.5px dashed var(--rt-border-md);margin-bottom:1.25rem;">
+        <span style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);">📥 Goodreads import</span>
         <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
-        <span>Goodreads → My Books → Export library.</span>
+        <span style="font-size:0.75rem;color:var(--rt-t3);">Goodreads → My Books → Export library.</span>
+      </div>
       </div>
     </div>
 
@@ -1911,83 +1908,9 @@ permalink: /tools/reading-tracker/
       <span>✓</span>&nbsp;<span id="rt-add-success-msg">Added!</span>
     </div>
 
-    <div class="rt-add-sheet-footer">
+    <div class="rt-sheet-footer">
       <button class="rt-sheet-btn rt-sheet-btn--secondary" type="button" onclick="closeAddModal()">Cancel</button>
       <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-add-btn" type="button">Add book</button>
-    </div>
-
-  </div>
-</div>
-
-    <div class="rt-add-modal-body">
-      <div class="rt-form-row">
-        <div class="rt-field" style="position:relative;">
-          <label for="rt-title">Title <span class="rt-required">*</span></label>
-          <input type="text" id="rt-title" placeholder="Search by title or author…" autocomplete="off">
-          <div id="rt-ol-dropdown" class="rt-ol-dropdown" style="display:none;"></div>
-          <input type="hidden" id="rt-ol-cover-id">
-          <input type="hidden" id="rt-ol-key">
-        </div>
-      </div>
-      <div class="rt-form-row rt-form-row--2">
-        <div class="rt-field">
-          <label for="rt-author">Author</label>
-          <input type="text" id="rt-author" placeholder="e.g. Brandon Sanderson" autocomplete="off">
-        </div>
-        <div class="rt-field">
-          <label for="rt-genre">Genre</label>
-          <select id="rt-genre">
-            <option value="">— select —</option>
-            <option>Fantasy</option><option>Science Fiction</option><option>Horror</option>
-            <option>Romance</option><option>Dystopian</option><option>Literary Fiction</option>
-            <option>Historical Fiction</option><option>Thriller</option>
-            <option>Non-Fiction</option><option>Short Stories</option><option>Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="rt-form-row rt-form-row--2">
-        <div class="rt-field">
-          <label>Status</label>
-          <div class="rt-status-toggle">
-            <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="reading" checked> Currently reading</label>
-            <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="read"> Already finished</label>
-            <label class="rt-toggle-opt"><input type="radio" name="rt-status" value="tbr"> Add to My List</label>
-          </div>
-        </div>
-        <div class="rt-field">
-          <label for="rt-date">Date finished</label>
-          <input type="date" id="rt-date">
-        </div>
-      </div>
-      <div class="rt-form-row" id="rt-rating-row" style="display:none;">
-        <div class="rt-field">
-          <label>Rating</label>
-          <div class="rt-stars" id="rt-star-input" role="radiogroup" aria-label="Rating">
-            <button class="rt-star" data-val="1" type="button">★</button>
-            <button class="rt-star" data-val="2" type="button">★</button>
-            <button class="rt-star" data-val="3" type="button">★</button>
-            <button class="rt-star" data-val="4" type="button">★</button>
-            <button class="rt-star" data-val="5" type="button">★</button>
-          </div>
-        </div>
-      </div>
-      <div class="rt-form-row" id="rt-notes-row" style="display:none;">
-        <div class="rt-field">
-          <label for="rt-notes">Notes <span class="rt-optional">(private — helps personalise AI recommendations)</span></label>
-          <textarea id="rt-notes" rows="3" placeholder="What did you think?"></textarea>
-        </div>
-      </div>
-      <div class="rt-form-row">
-        <button class="rt-submit-btn" id="rt-add-btn" type="button">Add book</button>
-      </div>
-      <div class="rt-add-success" id="rt-add-success" style="display:none;">
-        <span>✓</span>&nbsp;<span id="rt-add-success-msg">Added!</span>
-      </div>
-      <div class="rt-add-modal-import">
-        <span class="rt-import-label">📥 Goodreads import</span>
-        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
-        <span class="rt-import-hint">Goodreads → My Books → Export library.</span>
-      </div>
     </div>
 
   </div>
@@ -2210,13 +2133,28 @@ const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 let   currentUser   = null;
 
 sb.auth.onAuthStateChange(async (event, session) => {
+  const wasLoggedOut = !currentUser;
   currentUser = session?.user || null;
   renderAuthUI();
   if (event === 'PASSWORD_RECOVERY') {
     document.getElementById('rt-reset-overlay').style.display = 'flex';
     return;
   }
-  if (currentUser) await syncFromCloud();
+  if (currentUser) {
+    // If user just signed in and had pre-auth books, sync them first
+    if (wasLoggedOut && books.length) {
+      await syncPreAuthBooks();
+    }
+    await syncFromCloud();
+  }
+});
+
+// Warn user if they have books but no account when navigating away
+window.addEventListener('beforeunload', function(e) {
+  if (!currentUser && books.length > 0) {
+    e.preventDefault();
+    e.returnValue = 'You have books saved locally. Create a free account to avoid losing them.';
+  }
 });
 
 async function doResetPassword() {
@@ -2246,10 +2184,18 @@ function renderAuthUI() {
   const emailEl   = document.getElementById('rt-auth-email');
   const joinedEl  = document.getElementById('rt-profile-joined');
   const ctaEl     = document.getElementById('rt-signin-cta');
+  const ctaText   = document.getElementById('rt-signin-cta-sub');
   const lockedEl  = document.getElementById('rt-recs-locked');
   const genWrap   = document.getElementById('rt-recs-generate-wrap');
   if (!loggedIn || !loggedOut) return;
-  if (ctaEl) ctaEl.style.display = currentUser ? 'none' : 'flex';
+  if (ctaEl) {
+    ctaEl.style.display = currentUser ? 'none' : 'flex';
+    if (!currentUser && ctaText) {
+      ctaText.textContent = books.length
+        ? `You have ${books.length} book${books.length !== 1 ? 's' : ''} saved locally — sign up to back them up.`
+        : 'Create a free account to access your books on any device.';
+    }
+  }
   // Show/hide recs locked state
   if (lockedEl) lockedEl.style.display = currentUser ? 'none' : 'block';
   if (genWrap)  genWrap.style.display  = currentUser ? 'block' : 'none';
@@ -2346,65 +2292,96 @@ async function signOut() {
   currentUser = null; books = []; save(); location.reload();
 }
 
-// ── Cloud sync ────────────────────────────────────────────────
-async function syncFromCloud() {
-  if (!currentUser) return;
-  const { data, error } = await sb
-    .from('reading_entries')
-    .select('*, books(title, author, cover_id, ol_key)')
-    .eq('user_id', currentUser.id);
-  if (error) { console.error('Sync error:', error.message); return; }
-  books = (data || []).map(e => ({
-    id:          e.id,
-    cloudId:     e.id,
-    title:       e.books?.title    || e.title_manual  || '',
-    author:      e.books?.author   || e.author_manual || '',
-    coverId:     e.books?.cover_id || null,
-    olKey:       e.books?.ol_key   || null,
-    status:      e.status,
-    rating:      e.rating,
-    notes:       e.notes,
-    date:        e.date_finished,
-    dateStarted: e.date_started,
-    added:       e.added_at
-  }));
-  save();
-  updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
-  if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
+// ── Cloud sync (v3 — books + user_books architecture) ─────────
+
+// Upsert a canonical book record into the `books` table (by ol_key).
+// Returns the book's UUID, or null if no ol_key.
+async function upsertCanonicalBook(book) {
+  if (!book.olKey) return null;
+  const { data, error } = await sb.from('books').upsert(
+    { ol_key: book.olKey, title: book.title, author: book.author || null, cover_id: book.coverId || null },
+    { onConflict: 'ol_key', ignoreDuplicates: false }
+  ).select('id').single();
+  if (error) { console.warn('upsertCanonicalBook:', error.message); return null; }
+  return data?.id || null;
 }
 
+// Save a single book to cloud — create or update the user_books row.
 async function saveBookToCloud(book) {
   if (!currentUser) return;
-  let bookId = null;
-  if (book.olKey) {
-    const bookRecord = { ol_key: book.olKey, title: book.title, author: book.author, cover_id: book.coverId || null };
-    if (book.goodreadsId) bookRecord.goodreads_book_id = book.goodreadsId;
-    const { data, error } = await sb.from('books').upsert(bookRecord, { onConflict: 'ol_key' }).select('id').single();
-    if (!error) bookId = data?.id;
-  }
-  const entry = {
-    user_id:       currentUser.id,
-    book_id:       bookId,
-    title_manual:  bookId ? null : book.title,
-    author_manual: bookId ? null : (book.author || null),
-    status:        book.status,
-    rating:        book.rating || null,
-    notes:         book.notes  || null,
-    date_finished: book.date   || null,
-    date_started:  book.dateStarted || null
+  const bookId = await upsertCanonicalBook(book);
+  const row = {
+    user_id:          currentUser.id,
+    book_id:          bookId,
+    title_manual:     bookId ? null : (book.title || null),
+    author_manual:    bookId ? null : (book.author || null),
+    genre:            book.genre    || null,
+    status:           book.status,
+    rating:           book.rating   || null,
+    notes:            book.notes    || null,
+    date_finished:    book.date     || null,
+    date_started:     book.dateStarted || null,
+    review_body:      book.reviewBody  || null,
+    review_is_public: book.reviewPublic || false,
+    goodreads_id:     book.goodreadsId || null
   };
   if (book.cloudId) {
-    await sb.from('reading_entries').update(entry).eq('id', book.cloudId);
+    const { error } = await sb.from('user_books').update(row).eq('id', book.cloudId).eq('user_id', currentUser.id);
+    if (error) console.warn('saveBookToCloud (update):', error.message);
   } else {
-    const { data } = await sb.from('reading_entries').insert(entry).select('id').single();
-    if (data) book.cloudId = data.id;
+    const { data, error } = await sb.from('user_books').insert(row).select('id').single();
+    if (error) { console.warn('saveBookToCloud (insert):', error.message); return; }
+    if (data) { book.cloudId = data.id; }
   }
   save();
 }
 
 async function deleteBookFromCloud(book) {
   if (!currentUser || !book.cloudId) return;
-  await sb.from('reading_entries').delete().eq('id', book.cloudId);
+  await sb.from('user_books').delete().eq('id', book.cloudId).eq('user_id', currentUser.id);
+}
+
+// Pull everything from cloud and replace local state.
+async function syncFromCloud() {
+  if (!currentUser) return;
+  const { data, error } = await sb
+    .from('user_books')
+    .select('*, books(title, author, cover_id, ol_key)')
+    .eq('user_id', currentUser.id);
+  if (error) { console.error('syncFromCloud:', error.message); return; }
+  books = (data || []).map(e => ({
+    id:            e.id,
+    cloudId:       e.id,
+    title:         e.books?.title    || e.title_manual  || '',
+    author:        e.books?.author   || e.author_manual || '',
+    coverId:       e.books?.cover_id || null,
+    olKey:         e.books?.ol_key   || null,
+    genre:         e.genre      || null,
+    status:        e.status,
+    rating:        e.rating     || null,
+    notes:         e.notes      || null,
+    reviewBody:    e.review_body || null,
+    reviewPublic:  e.review_is_public || false,
+    date:          e.date_finished || null,
+    dateStarted:   e.date_started  || null,
+    goodreadsId:   e.goodreads_id  || null,
+    added:         e.created_at
+  }));
+  save();
+  updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
+  if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
+}
+
+// After signup/login, retroactively sync any books that were added before auth.
+async function syncPreAuthBooks() {
+  if (!currentUser) return;
+  const unsynced = books.filter(b => !b.cloudId);
+  if (!unsynced.length) return;
+  const BATCH = 5;
+  for (let i = 0; i < unsynced.length; i += BATCH) {
+    await Promise.all(unsynced.slice(i, i + BATCH).map(b => saveBookToCloud(b)));
+  }
+  showFlash(`✓ ${unsynced.length} book${unsynced.length !== 1 ? 's' : ''} synced to your account.`);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -2669,6 +2646,7 @@ function openAddModal(defaultStatus) {
   document.getElementById('rt-genre').value = '';
   document.getElementById('rt-rating-row').style.display = 'none';
   document.getElementById('rt-notes-row').style.display  = 'none';
+  document.getElementById('rt-date-field').style.display = 'none';
   document.getElementById('rt-add-success').style.display = 'none';
   setAddStars(0);
   if (typeof olDropdown !== 'undefined') olDropdown.style.display = 'none';
@@ -2678,15 +2656,16 @@ function openAddModal(defaultStatus) {
   if (radio) {
     radio.checked = true;
     if (status === 'read') {
+      document.getElementById('rt-date-field').style.display = 'flex';
       document.getElementById('rt-rating-row').style.display = 'flex';
       document.getElementById('rt-notes-row').style.display  = 'flex';
     }
   }
-  // Open — exactly like the finish sheet
+  // Open — identical to finish sheet open pattern
   const overlay = document.getElementById('rt-add-overlay');
   const sheet   = document.getElementById('rt-add-sheet');
   overlay.classList.add('open');
-  requestAnimationFrame(() => sheet.classList.add('open'));
+  sheet.classList.add('open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('rt-title').focus(), 350);
 }
@@ -2694,8 +2673,8 @@ function openAddModal(defaultStatus) {
 function closeAddModal() {
   const overlay = document.getElementById('rt-add-overlay');
   const sheet   = document.getElementById('rt-add-sheet');
-  sheet.classList.remove('open');
   overlay.classList.remove('open');
+  sheet.classList.remove('open');
   document.body.style.overflow = '';
 }
 
@@ -2713,8 +2692,9 @@ document.addEventListener('keydown', function(e) {
 document.querySelectorAll('input[name="rt-status"]').forEach(radio => {
   radio.addEventListener('change', function() {
     const isRead = this.value === 'read';
-    document.getElementById('rt-rating-row').style.display = isRead ? 'flex' : 'none';
-    document.getElementById('rt-notes-row').style.display  = isRead ? 'flex' : 'none';
+    document.getElementById('rt-date-field').style.display  = isRead ? 'flex' : 'none';
+    document.getElementById('rt-rating-row').style.display  = isRead ? 'flex' : 'none';
+    document.getElementById('rt-notes-row').style.display   = isRead ? 'flex' : 'none';
   });
 });
 
@@ -3113,39 +3093,6 @@ function closeModal() {
   }, 380);
   renderGenreChart();
 }
-
-// Patch saveBookToCloud to include review fields
-const _origSaveBookToCloud = saveBookToCloud;
-saveBookToCloud = async function(book) {
-  if (!currentUser) return;
-  let bookId = null;
-  if (book.olKey) {
-    const bookRecord = { ol_key: book.olKey, title: book.title, author: book.author, cover_id: book.coverId || null };
-    if (book.goodreadsId) bookRecord.goodreads_book_id = book.goodreadsId;
-    const { data, error } = await sb.from('books').upsert(bookRecord, { onConflict: 'ol_key' }).select('id').single();
-    if (!error) bookId = data?.id;
-  }
-  const entry = {
-    user_id:          currentUser.id,
-    book_id:          bookId,
-    title_manual:     bookId ? null : book.title,
-    author_manual:    bookId ? null : (book.author || null),
-    status:           book.status,
-    rating:           book.rating   || null,
-    notes:            book.notes    || null,
-    date_finished:    book.date     || null,
-    date_started:     book.dateStarted || null,
-    review_body:      book.reviewBody  || null,
-    review_is_public: book.reviewPublic || false
-  };
-  if (book.cloudId) {
-    await sb.from('reading_entries').update(entry).eq('id', book.cloudId);
-  } else {
-    const { data } = await sb.from('reading_entries').insert(entry).select('id').single();
-    if (data) book.cloudId = data.id;
-  }
-  save();
-};
 
 // Keep old event listener targets alive (they now point to hidden elements — no-ops)
 document.getElementById('rt-modal-mark-read').addEventListener('click', () => {});
