@@ -2292,10 +2292,11 @@ async function signOut() {
   currentUser = null; books = []; save(); location.reload();
 }
 
-// ── Cloud sync (v3 — books + user_books architecture) ─────────
+// ── Cloud sync — books (canonical) + reading_entries (per-user) ─
 
 // Upsert a canonical book record into the `books` table (by ol_key).
 // Returns the book's UUID, or null if no ol_key.
+// Upsert to canonical books table by ol_key — returns UUID or null.
 async function upsertCanonicalBook(book) {
   if (!book.olKey) return null;
   const { data, error } = await sb.from('books').upsert(
@@ -2306,30 +2307,30 @@ async function upsertCanonicalBook(book) {
   return data?.id || null;
 }
 
-// Save a single book to cloud — create or update the user_books row.
+// Save a single book to cloud — create or update the reading_entries row.
 async function saveBookToCloud(book) {
   if (!currentUser) return;
   const bookId = await upsertCanonicalBook(book);
   const row = {
     user_id:          currentUser.id,
-    book_id:          bookId,
-    title_manual:     bookId ? null : (book.title || null),
+    book_id:          bookId || null,
+    title_manual:     bookId ? null : (book.title  || null),
     author_manual:    bookId ? null : (book.author || null),
-    genre:            book.genre    || null,
     status:           book.status,
-    rating:           book.rating   || null,
-    notes:            book.notes    || null,
-    date_finished:    book.date     || null,
-    date_started:     book.dateStarted || null,
-    review_body:      book.reviewBody  || null,
-    review_is_public: book.reviewPublic || false,
-    goodreads_id:     book.goodreadsId || null
+    rating:           book.rating        || null,
+    notes:            book.notes         || null,
+    date_finished:    book.date          || null,
+    date_started:     book.dateStarted   || null,
+    review_body:      book.reviewBody    || null,
+    review_is_public: book.reviewPublic  || false
   };
   if (book.cloudId) {
-    const { error } = await sb.from('user_books').update(row).eq('id', book.cloudId).eq('user_id', currentUser.id);
+    const { error } = await sb.from('reading_entries')
+      .update(row).eq('id', book.cloudId).eq('user_id', currentUser.id);
     if (error) console.warn('saveBookToCloud (update):', error.message);
   } else {
-    const { data, error } = await sb.from('user_books').insert(row).select('id').single();
+    const { data, error } = await sb.from('reading_entries')
+      .insert(row).select('id').single();
     if (error) { console.warn('saveBookToCloud (insert):', error.message); return; }
     if (data) { book.cloudId = data.id; }
   }
@@ -2338,41 +2339,39 @@ async function saveBookToCloud(book) {
 
 async function deleteBookFromCloud(book) {
   if (!currentUser || !book.cloudId) return;
-  await sb.from('user_books').delete().eq('id', book.cloudId).eq('user_id', currentUser.id);
+  await sb.from('reading_entries').delete().eq('id', book.cloudId).eq('user_id', currentUser.id);
 }
 
 // Pull everything from cloud and replace local state.
 async function syncFromCloud() {
   if (!currentUser) return;
   const { data, error } = await sb
-    .from('user_books')
+    .from('reading_entries')
     .select('*, books(title, author, cover_id, ol_key)')
     .eq('user_id', currentUser.id);
   if (error) { console.error('syncFromCloud:', error.message); return; }
   books = (data || []).map(e => ({
-    id:            e.id,
-    cloudId:       e.id,
-    title:         e.books?.title    || e.title_manual  || '',
-    author:        e.books?.author   || e.author_manual || '',
-    coverId:       e.books?.cover_id || null,
-    olKey:         e.books?.ol_key   || null,
-    genre:         e.genre      || null,
-    status:        e.status,
-    rating:        e.rating     || null,
-    notes:         e.notes      || null,
-    reviewBody:    e.review_body || null,
-    reviewPublic:  e.review_is_public || false,
-    date:          e.date_finished || null,
-    dateStarted:   e.date_started  || null,
-    goodreadsId:   e.goodreads_id  || null,
-    added:         e.created_at
+    id:           e.id,
+    cloudId:      e.id,
+    title:        e.books?.title    || e.title_manual  || '',
+    author:       e.books?.author   || e.author_manual || '',
+    coverId:      e.books?.cover_id || null,
+    olKey:        e.books?.ol_key   || null,
+    status:       e.status,
+    rating:       e.rating          || null,
+    notes:        e.notes           || null,
+    reviewBody:   e.review_body     || null,
+    reviewPublic: e.review_is_public || false,
+    date:         e.date_finished   || null,
+    dateStarted:  e.date_started    || null,
+    added:        e.added_at
   }));
   save();
   updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
   if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
 }
 
-// After signup/login, retroactively sync any books that were added before auth.
+// After signup/login, retroactively sync any books added before auth.
 async function syncPreAuthBooks() {
   if (!currentUser) return;
   const unsynced = books.filter(b => !b.cloudId);
