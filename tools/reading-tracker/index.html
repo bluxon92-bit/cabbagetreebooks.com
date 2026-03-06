@@ -300,6 +300,57 @@ permalink: /tools/reading-tracker/
 .rt-book-stars { font-size: 0.82rem; color: var(--rt-amber); letter-spacing: -1px; }
 .rt-book-date  { font-size: 0.7rem; color: var(--rt-t3); }
 .rt-book-notes { font-size: 0.78rem; color: var(--rt-t3); font-style: italic; margin-top: 0.35rem; line-height: 1.55; padding-left: calc(38px + 0.85rem); word-break: break-word; }
+
+/* ── CARD WRAPPER ── */
+.rt-card {
+  background: var(--rt-white);
+  border-radius: var(--rt-r2);
+  padding: 1.25rem;
+  box-shadow: var(--rt-s1);
+}
+
+/* ── HISTORY CARDS (matches TBR style) ── */
+.rt-hist-card {
+  background: var(--rt-white);
+  border-radius: var(--rt-r2);
+  padding: 1rem;
+  margin-bottom: 0;
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow var(--rt-fast);
+  border-bottom: 1px solid var(--rt-border);
+}
+.rt-hist-card:last-child { border-bottom: none; }
+.rt-hist-card:hover { background: var(--rt-cream); }
+.rt-hist-card--dnf { opacity: 0.65; }
+.rt-hist-card-inner { display: flex; gap: 1rem; align-items: flex-start; }
+.rt-hist-cover {
+  width: 56px; height: 80px; object-fit: cover;
+  border-radius: 6px; flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(26,39,68,0.15);
+}
+.rt-hist-cover--ph {
+  width: 56px; height: 80px; border-radius: 6px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+.rt-hist-cover--ph-0 { background: linear-gradient(135deg, #1a2744 0%, #2A6E69 100%); }
+.rt-hist-cover--ph-1 { background: linear-gradient(135deg, #c8891a 0%, #b43a3a 100%); }
+.rt-hist-cover--ph-2 { background: linear-gradient(135deg, #2A6E69 0%, #5c6bc0 100%); }
+.rt-hist-cover--ph-3 { background: linear-gradient(135deg, #7b3fa0 0%, #1a2744 100%); }
+.rt-hist-cover--ph-4 { background: linear-gradient(135deg, #2e7d52 0%, #5c6bc0 100%); }
+.rt-hist-cover--ph-5 { background: linear-gradient(135deg, #b43a3a 0%, #7a5c2e 100%); }
+.rt-hist-body { flex: 1; min-width: 0; }
+.rt-hist-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.35rem; }
+.rt-hist-notes { font-size: 0.8rem; color: var(--rt-t3); font-style: italic; margin-top: 0.4rem; line-height: 1.5; word-break: break-word; }
+.rt-hist-readmore { background: none; border: none; color: var(--rt-amber); font-size: 0.8rem; font-style: italic; font-weight: 600; cursor: pointer; padding: 0; }
+.rt-hist-delete {
+  position: absolute; top: 0.6rem; right: 0.6rem;
+  background: none; border: none; color: var(--rt-t3);
+  font-size: 1rem; cursor: pointer; padding: 0.2rem 0.4rem;
+  line-height: 1; border-radius: 4px;
+}
+.rt-hist-delete:hover { color: var(--rt-navy); background: var(--rt-surface); }
 .rt-dnf-label  {
   font-size: 0.56rem; letter-spacing: 0.1em; text-transform: uppercase;
   background: #7f1d1d; color: white; padding: 0.15em 0.45em;
@@ -1213,8 +1264,7 @@ permalink: /tools/reading-tracker/
   .rt-stat-card--genre { grid-column: span 1; }
   .rt-form-row--2 { grid-template-columns: 1fr; }
   .rt-form-card { padding: 1.1rem; }
-  .rt-reading-card { flex-direction: column; }
-  .rt-reading-card-actions { flex-direction: row; width: 100%; justify-content: space-between; }
+  .rt-reading-card-actions { flex-direction: row; width: auto; justify-content: flex-end; }
   /* On mobile, book meta stacks below the title/author */
   .rt-book-main { flex-direction: column; gap: 0.4rem; }
   .rt-book-meta { justify-content: flex-start; }
@@ -1267,10 +1317,10 @@ permalink: /tools/reading-tracker/
 
 /* ── COMMUNITY COMING SOON ── */
 .rt-community-coming-soon {
-  background: #ffffff; border-radius: 18px;
-  padding: 2.5rem 2rem; text-align: center;
-  box-shadow: 0 4px 20px rgba(26,39,68,0.11);
-  position: relative; overflow: hidden;
+  background: #ffffff !important; border-radius: 18px !important;
+  padding: 2.5rem 2rem !important; text-align: center !important;
+  box-shadow: 0 4px 20px rgba(26,39,68,0.11) !important;
+  position: relative !important; overflow: hidden !important;
 }
 .rt-community-cs-glow {
   position: absolute; top: -80px; right: -80px;
@@ -1295,13 +1345,13 @@ permalink: /tools/reading-tracker/
   max-width: 420px; margin: 0 auto 2rem;
 }
 .rt-community-features {
-  display: grid; grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: 1fr;
   gap: 0.85rem; text-align: left;
 }
 .rt-community-feature {
-  display: flex; gap: 0.75rem; align-items: flex-start;
-  background: #f0ede6; border-radius: 10px;
-  padding: 1rem; border: 1px solid rgba(26,39,68,0.10);
+  display: flex !important; gap: 0.75rem !important; align-items: flex-start !important;
+  background: #f0ede6 !important; border-radius: 10px !important;
+  padding: 1rem !important; border: 1px solid rgba(26,39,68,0.10) !important;
 }
 .rt-community-feature-icon { font-size: 1.2rem; flex-shrink: 0; line-height: 1.4; }
 .rt-community-feature strong {
@@ -1519,9 +1569,9 @@ permalink: /tools/reading-tracker/
         </div>
 
         <!-- Reading history -->
-        <div class="rt-home-section">
+        <div class="rt-home-section rt-card">
           <div class="rt-home-section-header">
-            <h2 class="rt-section-heading">Reading history</h2>
+            <h2 class="rt-section-heading" style="margin-bottom:0;">Reading history</h2>
             <div style="display:flex;gap:0.5rem;align-items:center;">
               <select class="rt-filter-select" id="rt-home-sort">
                 <option value="newest">Newest first</option>
@@ -1530,11 +1580,11 @@ permalink: /tools/reading-tracker/
               </select>
             </div>
           </div>
-          <div class="rt-status-tabs">
+          <div class="rt-status-tabs" style="margin:0 -1.25rem;padding:0 1.25rem;">
             <button class="rt-status-tab active" data-status="read" onclick="setHomeFilter('read',this)">Finished</button>
             <button class="rt-status-tab" data-status="dnf" onclick="setHomeFilter('dnf',this)">DNF</button>
           </div>
-          <div id="rt-history-list"></div>
+          <div id="rt-history-list" style="margin-top:0.75rem;"></div>
           <div class="rt-empty rt-empty--inline" id="rt-history-empty">
             <p id="rt-history-empty-msg">No finished books yet. <button class="btn-text-link" onclick="openAddModal()">Log your first read →</button></p>
           </div>
@@ -1547,44 +1597,42 @@ permalink: /tools/reading-tracker/
          COMMUNITY
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-community" data-tab="community" style="display:none;">
-      <div class="rt-panel-inner">
-        <div>
-          <h2 class="rt-section-heading">Community</h2>
-          <p class="rt-panel-sub">Reading is better together.</p>
-        </div>
-        <div class="rt-community-coming-soon">
-          <div class="rt-community-cs-glow"></div>
-          <div class="rt-community-cs-badge">Coming soon</div>
-          <div class="rt-community-cs-icon">👥</div>
-          <h3 class="rt-community-cs-title">Your reading circle, all in one place</h3>
-          <p class="rt-community-cs-sub">Recommend books to friends, comment on their reviews, and talk about your favourites — your social reading hub is on its way.</p>
-          <div class="rt-community-features">
-            <div class="rt-community-feature">
-              <div class="rt-community-feature-icon">📚</div>
-              <div>
-                <strong>Recommend to friends</strong>
-                <p>Send books directly to someone's list with a personal note.</p>
+      <div style="display:flex;align-items:flex-start;justify-content:center;padding:0 1.5rem;">
+        <div style="width:100%;max-width:540px;">
+          <div class="rt-community-coming-soon">
+            <div class="rt-community-cs-glow"></div>
+            <div class="rt-community-cs-badge">Coming soon</div>
+            <div class="rt-community-cs-icon">👥</div>
+            <h3 class="rt-community-cs-title">Your reading circle, all in one place</h3>
+            <p class="rt-community-cs-sub">Recommend books to friends, comment on their reviews, and talk about your favourites — your social reading hub is on its way.</p>
+            <div class="rt-community-features">
+              <div class="rt-community-feature">
+                <div class="rt-community-feature-icon">📚</div>
+                <div>
+                  <strong>Recommend to friends</strong>
+                  <p>Send books directly to someone's list with a personal note.</p>
+                </div>
               </div>
-            </div>
-            <div class="rt-community-feature">
-              <div class="rt-community-feature-icon">💬</div>
-              <div>
-                <strong>Comment on reviews</strong>
-                <p>React and reply to friends' reviews when you've read the same book.</p>
+              <div class="rt-community-feature">
+                <div class="rt-community-feature-icon">💬</div>
+                <div>
+                  <strong>Comment on reviews</strong>
+                  <p>React and reply to friends' reviews when you've read the same book.</p>
+                </div>
               </div>
-            </div>
-            <div class="rt-community-feature">
-              <div class="rt-community-feature-icon">🔥</div>
-              <div>
-                <strong>Book chat</strong>
-                <p>Dedicated chat spaces for books you're both reading — spoilers welcome.</p>
+              <div class="rt-community-feature">
+                <div class="rt-community-feature-icon">🔥</div>
+                <div>
+                  <strong>Book chat</strong>
+                  <p>Dedicated chat spaces for books you're both reading — spoilers welcome.</p>
+                </div>
               </div>
-            </div>
-            <div class="rt-community-feature">
-              <div class="rt-community-feature-icon">⭐</div>
-              <div>
-                <strong>Talk about your favourites</strong>
-                <p>Share your all-time top reads and see what the people you follow love most.</p>
+              <div class="rt-community-feature">
+                <div class="rt-community-feature-icon">⭐</div>
+                <div>
+                  <strong>Talk about your favourites</strong>
+                  <p>Share your all-time top reads and see what the people you follow love most.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1904,6 +1952,14 @@ permalink: /tools/reading-tracker/
       </div>
     </div>
 
+    <div id="rt-add-duplicate-warning" style="display:none;margin:0 1.25rem 0.75rem;padding:0.85rem 1rem;background:#fff8ec;border:1.5px solid #f0c060;border-radius:var(--rt-r3);">
+      <div style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);margin-bottom:0.5rem;">📚 <span id="rt-dup-msg"></span></div>
+      <div style="display:flex;gap:0.5rem;">
+        <button type="button" id="rt-dup-reread" style="flex:1;padding:0.5rem;background:var(--rt-navy);color:#fff;border:none;border-radius:var(--rt-r3);font-size:0.85rem;font-weight:600;cursor:pointer;">Start re-reading</button>
+        <button type="button" id="rt-dup-cancel" style="flex:1;padding:0.5rem;background:var(--rt-cream);color:var(--rt-navy);border:1px solid var(--rt-border);border-radius:var(--rt-r3);font-size:0.85rem;font-weight:600;cursor:pointer;">Cancel</button>
+      </div>
+    </div>
+
     <div class="rt-add-success" id="rt-add-success" style="display:none;padding:0.5rem 1.25rem;">
       <span>✓</span>&nbsp;<span id="rt-add-success-msg">Added!</span>
     </div>
@@ -2020,46 +2076,81 @@ permalink: /tools/reading-tracker/
 
         <!-- ── EDIT SLIDE (slide 3) — pre-populated, no step dots ── -->
         <div class="rt-sheet-slide" id="rt-slide-edit">
-          <div class="rt-step1-header" style="margin-bottom:0.5rem;">
-            <div class="rt-step-label" style="margin-bottom:0;">Rating</div>
-            <label class="rt-dnf-pill" id="rt-dnf-toggle-edit">
-              <input type="checkbox" id="rt-dnf-check-edit">
-              <div class="rt-dnf-pill-dot"></div>
-              <span>DNF</span>
-            </label>
-          </div>
-          <div class="rt-sheet-stars" id="rt-sheet-stars-edit" role="radiogroup" aria-label="Star rating">
-            <button class="rt-sheet-star" data-val="1" type="button">★</button>
-            <button class="rt-sheet-star" data-val="2" type="button">★</button>
-            <button class="rt-sheet-star" data-val="3" type="button">★</button>
-            <button class="rt-sheet-star" data-val="4" type="button">★</button>
-            <button class="rt-sheet-star" data-val="5" type="button">★</button>
-          </div>
-          <div class="rt-review-field" style="margin-bottom:0.85rem;">
-            <label for="rt-sheet-date-edit">Date finished</label>
-            <input type="date" id="rt-sheet-date-edit" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;">
-          </div>
-          <div class="rt-share-toggle-row">
-            <div class="rt-share-toggle-text">
-              <strong>Share a review</strong>
-              <span>Friends can see this and comment</span>
+
+          <!-- READ MODE — shown by default -->
+          <div id="rt-view-mode">
+            <div id="rt-view-rating" style="margin-bottom:0.85rem;"></div>
+            <div id="rt-view-date" style="font-size:0.78rem;color:var(--rt-t3);margin-bottom:1rem;"></div>
+            <div id="rt-view-review-wrap" style="display:none;margin-bottom:1rem;">
+              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--rt-amber);margin-bottom:0.5rem;">✦ Shared review</div>
+              <div id="rt-view-review" style="font-size:0.92rem;color:var(--rt-t1);line-height:1.65;"></div>
             </div>
-            <label class="rt-toggle-switch">
-              <input type="checkbox" id="rt-share-check-edit">
-              <div class="rt-toggle-track"></div>
-            </label>
+            <div id="rt-view-notes-wrap" style="display:none;">
+              <div class="rt-write-divider"><span>🔒 Private notes</span></div>
+              <div id="rt-view-notes" style="font-size:0.88rem;color:var(--rt-t2);line-height:1.7;font-style:italic;margin-top:0.75rem;white-space:pre-wrap;"></div>
+            </div>
+            <div id="rt-view-empty" style="display:none;text-align:center;padding:1.5rem 0;color:var(--rt-t3);font-size:0.88rem;">No notes or review yet.<br>Tap Edit to add one.</div>
           </div>
-          <div class="rt-review-public-wrap" id="rt-review-public-wrap-edit">
-            <div class="rt-review-field" style="margin-bottom:0.25rem;">
-              <label for="rt-sheet-review-edit">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public)</span></label>
-              <textarea id="rt-sheet-review-edit" rows="2" placeholder="Write something others would find useful…"></textarea>
+
+          <!-- EDIT MODE — hidden by default -->
+          <div id="rt-edit-mode" style="display:none;">
+            <!-- Status selector — shown for TBR/currently reading books -->
+            <div id="rt-edit-status-row" class="rt-review-field" style="display:none;margin-bottom:1rem;">
+              <label for="rt-edit-status-select" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--rt-t3);">Change status</label>
+              <select id="rt-edit-status-select" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;margin-top:0.4rem;">
+                <option value="tbr">Add to My List</option>
+                <option value="reading">Currently reading</option>
+                <option value="read">Already finished</option>
+              </select>
+            </div>
+            <!-- Fields shown only for "Already finished" -->
+            <div id="rt-edit-finished-fields" style="display:none;">
+              <div class="rt-step1-header" style="margin-bottom:0.5rem;">
+                <div class="rt-step-label" style="margin-bottom:0;">Rating</div>
+                <label class="rt-dnf-pill" id="rt-dnf-toggle-edit">
+                  <input type="checkbox" id="rt-dnf-check-edit">
+                  <div class="rt-dnf-pill-dot"></div>
+                  <span>DNF</span>
+                </label>
+              </div>
+              <div class="rt-sheet-stars" id="rt-sheet-stars-edit" role="radiogroup" aria-label="Star rating">
+                <button class="rt-sheet-star" data-val="1" type="button">★</button>
+                <button class="rt-sheet-star" data-val="2" type="button">★</button>
+                <button class="rt-sheet-star" data-val="3" type="button">★</button>
+                <button class="rt-sheet-star" data-val="4" type="button">★</button>
+                <button class="rt-sheet-star" data-val="5" type="button">★</button>
+              </div>
+              <div class="rt-review-field" style="margin-bottom:0.85rem;">
+                <label for="rt-sheet-date-edit">Date finished</label>
+                <input type="date" id="rt-sheet-date-edit" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;">
+              </div>
+              <div class="rt-share-toggle-row">
+                <div class="rt-share-toggle-text">
+                  <strong>Share a review</strong>
+                  <span>Friends can see this and comment</span>
+                </div>
+                <label class="rt-toggle-switch">
+                  <input type="checkbox" id="rt-share-check-edit">
+                  <div class="rt-toggle-track"></div>
+                </label>
+              </div>
+              <div class="rt-review-public-wrap" id="rt-review-public-wrap-edit">
+                <div class="rt-review-field" style="margin-bottom:0.25rem;">
+                  <label for="rt-sheet-review-edit">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public)</span></label>
+                  <textarea id="rt-sheet-review-edit" rows="3" placeholder="Write something others would find useful…"></textarea>
+                </div>
+              </div>
+            </div>
+            <!-- Notes shown for "Currently reading" and "Already finished" -->
+            <div id="rt-edit-notes-fields" style="display:none;">
+              <div class="rt-write-divider"><span>🔒 Private notes</span></div>
+              <div class="rt-review-field">
+                <label for="rt-sheet-notes-edit">Only you can see this</label>
+                <textarea id="rt-sheet-notes-edit" rows="4" placeholder="What did you think?"></textarea>
+              </div>
             </div>
           </div>
-          <div class="rt-write-divider"><span>🔒 Private notes</span></div>
-          <div class="rt-review-field">
-            <label for="rt-sheet-notes-edit">Only you can see this</label>
-            <textarea id="rt-sheet-notes-edit" rows="2" placeholder="What did you think?"></textarea>
-          </div>
+
         </div>
 
       </div><!-- /slides -->
@@ -2585,6 +2676,9 @@ function setHomeFilter(status, btn) {
   renderHistory();
 }
 
+let historyShowAll = false;
+const HISTORY_PAGE = 20;
+
 function renderHistory() {
   const so   = document.getElementById('rt-home-sort').value;
   let   list = getBooks(histFilter).sort((a,b) => {
@@ -2597,28 +2691,51 @@ function renderHistory() {
   const empty = document.getElementById('rt-history-empty');
   empty.style.display = list.length ? 'none' : 'flex';
   if (!list.length) { el.innerHTML = ''; return; }
-  el.innerHTML = list.map(b => {
-    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+
+  const visible  = historyShowAll ? list : list.slice(0, HISTORY_PAGE);
+  const hasMore  = list.length > HISTORY_PAGE;
+
+  el.innerHTML = visible.map((b, idx) => {
+    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
+    const phClass  = `rt-hist-cover--ph rt-hist-cover--ph-${idx % 6}`;
+    const stars    = b.rating ? `<span class="rt-book-stars">${'★'.repeat(b.rating)}${'☆'.repeat(5-b.rating)}</span>` : '';
+    const date     = b.date   ? `<span class="rt-book-date">${fmtDate(b.date)}</span>` : '';
+    const dnf      = b.status === 'dnf' ? `<span class="rt-dnf-label">DNF</span>` : '';
+    const NOTES_LIMIT = 120;
+    const notesText   = b.notes || '';
+    const notesTrunc  = notesText.length > NOTES_LIMIT
+      ? `${esc(notesText.slice(0, NOTES_LIMIT))}… <button class="rt-hist-readmore" data-id="${b.id}" type="button">read more</button>`
+      : esc(notesText);
+    const notes = notesText ? `<div class="rt-hist-notes">${notesTrunc}</div>` : '';
     return `
-    <div class="rt-book-item rt-book-item--editable ${b.status==='dnf' ? 'rt-book-item--dnf' : ''}" data-id="${b.id}" data-action="edit-book">
-      ${coverUrl
-        ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">`
-        : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
-      <div class="rt-book-main">
-        <div class="rt-book-info">
-          <div class="rt-book-title">${esc(b.title)}${b.status==='dnf' ? ' <span class="rt-dnf-label">DNF</span>' : ''}</div>
+    <div class="rt-hist-card ${b.status==='dnf' ? 'rt-hist-card--dnf' : ''}" data-id="${b.id}" data-action="edit-book">
+      <button class="rt-hist-delete" data-id="${b.id}" data-action="remove-hist" title="Remove" type="button">×</button>
+      <div class="rt-hist-card-inner">
+        ${coverUrl
+          ? `<img src="${coverUrl}" class="rt-hist-cover" alt="" loading="lazy">`
+          : `<div class="${phClass}">📖</div>`}
+        <div class="rt-hist-body">
+          <div class="rt-book-title">${esc(b.title)} ${dnf}</div>
           ${b.author ? `<div class="rt-book-author">${esc(b.author)}</div>` : ''}
-        </div>
-        <div class="rt-book-meta">
-          ${b.genre  ? `<span class="rt-book-genre">${esc(b.genre)}</span>` : ''}
-          ${b.rating ? `<span class="rt-book-stars">${'★'.repeat(b.rating)}${'☆'.repeat(5-b.rating)}</span>` : ''}
-          ${b.date   ? `<span class="rt-book-date">${fmtDate(b.date)}</span>` : ''}
-          <button class="rt-delete" data-id="${b.id}" data-action="remove-hist" title="Remove" type="button">×</button>
+          <div class="rt-hist-meta">${stars}${date}</div>
+          ${notes}
         </div>
       </div>
-      ${b.notes ? `<div class="rt-book-notes">${esc(b.notes)}</div>` : ''}
     </div>`;
   }).join('');
+
+  // Show more / show less
+  const existing = document.getElementById('rt-history-showmore');
+  if (existing) existing.remove();
+  if (hasMore) {
+    const btn = document.createElement('div');
+    btn.id = 'rt-history-showmore';
+    btn.style.cssText = 'text-align:center;padding:1rem 0 0.5rem;';
+    btn.innerHTML = historyShowAll
+      ? `<button type="button" onclick="historyShowAll=false;renderHistory()" style="background:none;border:none;color:var(--rt-amber);font-size:0.85rem;font-weight:600;cursor:pointer;">Show less ↑</button>`
+      : `<button type="button" onclick="historyShowAll=true;renderHistory()" style="background:none;border:none;color:var(--rt-amber);font-size:0.85rem;font-weight:600;cursor:pointer;">Show all ${list.length} books ↓</button>`;
+    el.after(btn);
+  }
 }
 
 document.getElementById('rt-history-list').addEventListener('click', function(e) {
@@ -2631,9 +2748,10 @@ document.getElementById('rt-history-list').addEventListener('click', function(e)
     save(); renderHistory(); updateStats(); renderGenreChart();
     return;
   }
-  // Click anywhere else on the item → edit
-  const item = e.target.closest('[data-action="edit-book"]');
-  if (item) openEditSheet(item.dataset.id);
+  const readMore = e.target.closest('.rt-hist-readmore');
+  if (readMore) { openEditSheet(readMore.dataset.id); return; }
+  const card = e.target.closest('[data-action="edit-book"]');
+  if (card) openEditSheet(card.dataset.id);
 });
 document.getElementById('rt-home-sort').addEventListener('change', renderHistory);
 
@@ -2680,6 +2798,7 @@ function closeAddModal() {
   overlay.classList.remove('open');
   sheet.classList.remove('open');
   document.body.style.overflow = '';
+  document.getElementById('rt-add-duplicate-warning').style.display = 'none';
 }
 
 document.getElementById('rt-add-sheet-close').addEventListener('click', closeAddModal);
@@ -2729,6 +2848,40 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   const status     = document.querySelector('input[name="rt-status"]:checked').value;
   const coverIdRaw = document.getElementById('rt-ol-cover-id').value;
   const olKeyRaw   = document.getElementById('rt-ol-key').value;
+
+  // Duplicate check — match by olKey if available, otherwise by title (case-insensitive)
+  const duplicate = books.find(b =>
+    (olKeyRaw && b.olKey && b.olKey === olKeyRaw) ||
+    (!olKeyRaw && b.title.toLowerCase() === title.toLowerCase())
+  );
+
+  if (duplicate) {
+    const warn = document.getElementById('rt-add-duplicate-warning');
+    document.getElementById('rt-dup-msg').textContent =
+      `"${duplicate.title}" is already in your library. Start re-reading it?`;
+    warn.style.display = 'block';
+
+    document.getElementById('rt-dup-reread').onclick = function() {
+      warn.style.display = 'none';
+      // Move existing entry back to currently reading
+      duplicate.status      = 'reading';
+      duplicate.dateStarted = new Date().toISOString().split('T')[0];
+      duplicate.date        = null;
+      duplicate.rating      = null;
+      save();
+      saveBookToCloud(duplicate);
+      closeAddModal();
+      updateStats(); renderHomeReading(); renderHistory();
+      showFlash(`📖 Re-reading "${duplicate.title}" — moved to Currently Reading.`);
+    };
+
+    document.getElementById('rt-dup-cancel').onclick = function() {
+      warn.style.display = 'none';
+    };
+    return; // Stop here — don't add the book yet
+  }
+
+  // No duplicate — proceed normally
   const book = {
     id:          uid(), title,
     author:      document.getElementById('rt-author').value.trim(),
@@ -2769,13 +2922,14 @@ function renderTBR() {
   const list  = document.getElementById('rt-tbr-list');
   const empty = document.getElementById('rt-tbr-empty');
   empty.style.display = tbr.length ? 'none' : 'flex';
-  list.innerHTML = tbr.map(b => {
-    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+  list.innerHTML = tbr.map((b, idx) => {
+    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
+    const phClass  = `rt-hist-cover--ph rt-hist-cover--ph-${idx % 6}`;
     return `
     <div class="rt-book-item">
       ${coverUrl
         ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">`
-        : '<div class="rt-book-cover rt-book-cover--placeholder"></div>'}
+        : `<div class="${phClass}" style="width:56px;height:80px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📖</div>`}
       <div class="rt-book-main">
         <div class="rt-book-info">
           <div class="rt-book-title">${esc(b.title)}</div>
@@ -2797,8 +2951,7 @@ function renderTBR() {
 document.getElementById('rt-tbr-list').addEventListener('click', function(e) {
   const startBtn = e.target.closest('.rt-start-reading-btn');
   if (startBtn) {
-    const book = books.find(b => String(b.id) === String(startBtn.dataset.id));
-    if (book) { book.status = 'reading'; book.dateStarted = new Date().toISOString().split('T')[0]; save(); renderTBR(); saveBookToCloud(book); }
+    openEditSheet(startBtn.dataset.id);
     return;
   }
   const delBtn = e.target.closest('[data-action="remove-tbr"]');
@@ -2969,6 +3122,45 @@ editStarsEl.addEventListener('mouseleave', () =>
   document.querySelectorAll('#rt-sheet-stars-edit .rt-sheet-star').forEach(s => s.classList.remove('hover')));
 
 // ── EDIT SHEET ──
+function showReadMode() {
+  document.getElementById('rt-view-mode').style.display = 'block';
+  document.getElementById('rt-edit-mode').style.display = 'none';
+  const footer = document.getElementById('rt-sheet-footer');
+  footer.innerHTML = `
+    <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-close" type="button">Close</button>
+    <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-edit-btn" type="button">✏️ Edit</button>`;
+  document.getElementById('rt-view-close').onclick = closeModal;
+  document.getElementById('rt-view-edit-btn').onclick = showEditMode;
+}
+
+function updateEditConditionalFields(status) {
+  const finished = document.getElementById('rt-edit-finished-fields');
+  const notes    = document.getElementById('rt-edit-notes-fields');
+  finished.style.display = status === 'read'    ? 'block' : 'none';
+  notes.style.display    = (status === 'read' || status === 'reading') ? 'block' : 'none';
+}
+
+document.getElementById('rt-edit-status-select').addEventListener('change', function() {
+  updateEditConditionalFields(this.value);
+});
+
+function showEditMode() {
+  document.getElementById('rt-view-mode').style.display = 'none';
+  document.getElementById('rt-edit-mode').style.display = 'block';
+  // For finished/DNF books the status row is hidden, so always show all fields
+  const statusRow = document.getElementById('rt-edit-status-row');
+  if (statusRow.style.display === 'none') {
+    document.getElementById('rt-edit-finished-fields').style.display = 'block';
+    document.getElementById('rt-edit-notes-fields').style.display    = 'block';
+  }
+  const footer = document.getElementById('rt-sheet-footer');
+  footer.innerHTML = `
+    <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-edit-cancel" type="button">Cancel</button>
+    <button class="rt-sheet-btn rt-sheet-btn--primary"   id="rt-edit-save"   type="button">Save changes</button>`;
+  document.getElementById('rt-edit-cancel').onclick = closeModal;
+  document.getElementById('rt-edit-save').onclick   = saveEdits;
+}
+
 function openEditSheet(bookId) {
   const book = books.find(b => String(b.id) === String(bookId));
   if (!book) return;
@@ -2986,7 +3178,42 @@ function openEditSheet(bookId) {
     img.style.display = 'none'; ph.style.display = 'flex';
   }
 
-  // Pre-populate edit slide fields
+  // Populate READ VIEW
+  const stars = book.rating ? '★'.repeat(book.rating) + '☆'.repeat(5 - book.rating) : '';
+  document.getElementById('rt-view-rating').innerHTML = stars
+    ? `<span style="font-size:1.6rem;color:var(--rt-amber);letter-spacing:2px;">${stars}</span>`
+    : `<span style="font-size:0.82rem;color:var(--rt-t3);">No rating yet</span>`;
+  document.getElementById('rt-view-date').textContent = book.date ? `Finished ${fmtDate(book.date)}` : '';
+
+  const reviewWrap = document.getElementById('rt-view-review-wrap');
+  const reviewEl   = document.getElementById('rt-view-review');
+  if (book.reviewBody) {
+    reviewEl.textContent = book.reviewBody;
+    reviewWrap.style.display = 'block';
+  } else {
+    reviewWrap.style.display = 'none';
+  }
+
+  const notesWrap = document.getElementById('rt-view-notes-wrap');
+  const notesEl   = document.getElementById('rt-view-notes');
+  if (book.notes) {
+    notesEl.textContent = book.notes;
+    notesWrap.style.display = 'block';
+  } else {
+    notesWrap.style.display = 'none';
+  }
+
+  const isEmpty = !book.rating && !book.notes && !book.reviewBody;
+  document.getElementById('rt-view-empty').style.display = isEmpty ? 'block' : 'none';
+
+  // Populate EDIT VIEW fields
+  const isTbrOrReading = book.status === 'tbr' || book.status === 'reading';
+  const statusRow = document.getElementById('rt-edit-status-row');
+  if (statusRow) {
+    statusRow.style.display = isTbrOrReading ? 'block' : 'none';
+    const sel = document.getElementById('rt-edit-status-select');
+    if (sel) sel.value = book.status;
+  }
   editRating = book.rating || 0;
   setEditStars(editRating);
   document.getElementById('rt-sheet-date-edit').value         = book.date || new Date().toISOString().split('T')[0];
@@ -2998,21 +3225,19 @@ function openEditSheet(bookId) {
   document.getElementById('rt-share-check-edit').checked      = isPublic;
   document.getElementById('rt-review-public-wrap-edit').classList.toggle('visible', isPublic);
 
-  // Switch sheet to edit mode: hide step dots, go to edit slide
+  // Switch sheet to edit slide
   const sheet = document.getElementById('rt-sheet');
   sheet.classList.add('rt-sheet--edit');
-  // Slide to the edit slide (index 3 in the flex row)
   document.getElementById('rt-sheet-slides').style.transform = 'translateX(-300%)';
 
-  // Footer: Cancel + Save
-  const footer = document.getElementById('rt-sheet-footer');
-  footer.innerHTML = `
-    <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-edit-cancel" type="button">Cancel</button>
-    <button class="rt-sheet-btn rt-sheet-btn--primary"   id="rt-edit-save"   type="button">Save changes</button>`;
-  document.getElementById('rt-edit-cancel').onclick = closeModal;
-  document.getElementById('rt-edit-save').onclick   = saveEdits;
+  // Open in read mode by default (edit mode for TBR/reading)
+  if (isTbrOrReading) {
+    updateEditConditionalFields(book.status);
+    showEditMode();
+  } else {
+    showReadMode();
+  }
 
-  // Open overlay
   const overlay = document.getElementById('rt-sheet-overlay');
   overlay.classList.add('open');
   requestAnimationFrame(() => sheet.classList.add('open'));
@@ -3022,6 +3247,22 @@ function openEditSheet(bookId) {
 function saveEdits() {
   const book = books.find(b => String(b.id) === String(sheetBookId));
   if (!book) { closeModal(); return; }
+
+  // If status selector is visible, use it
+  const statusRow = document.getElementById('rt-edit-status-row');
+  const isTbrOrReading = statusRow && statusRow.style.display !== 'none';
+  if (isTbrOrReading) {
+    const sel = document.getElementById('rt-edit-status-select');
+    book.status = sel ? sel.value : book.status;
+    if (book.status === 'reading') book.dateStarted = book.dateStarted || new Date().toISOString().split('T')[0];
+    if (book.status === 'tbr') { book.rating = null; book.date = null; }
+    save(); saveBookToCloud(book);
+    closeModal();
+    renderTBR(); renderHomeReading(); updateStats();
+    showFlash(`"${book.title}" updated.`);
+    return;
+  }
+
   const isDnf = document.getElementById('rt-dnf-check-edit').checked;
   book.status       = isDnf ? 'dnf' : 'read';
   book.rating       = isDnf ? null : (editRating || null);
@@ -3033,7 +3274,8 @@ function saveEdits() {
   book.reviewPublic = isPublic && !!reviewText;
   save(); saveBookToCloud(book);
   renderHistory(); updateStats(); renderGenreChart();
-  closeModal();
+  // Return to read mode with updated content
+  openEditSheet(book.id);
   showFlash(`"${book.title}" updated.`);
 }
 
