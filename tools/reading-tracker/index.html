@@ -1670,15 +1670,14 @@ permalink: /tools/reading-tracker/
             <p class="rt-tbr-empty-title">Your list is empty</p>
             <p class="rt-tbr-empty-sub">Save books you want to read next, or import your book list from Goodreads or Storygraph.</p>
             <div class="rt-tbr-empty-actions">
-              <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
-              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">📥 Goodreads</button>
-              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-sg-csv-file').click()">📥 Storygraph</button>
+              <button class="rt-ghost-btn" type="button" onclick="openAddModal('tbr')" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
+              <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Goodreads</label>
+              <label for="rt-sg-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Storygraph</label>
             </div>
           </div>
         </div>
 
-        <!-- Import status -->
-        <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
+        <!-- Import status shown at body level (see below app shell) -->
 
       </div>
     </div>
@@ -1950,8 +1949,8 @@ permalink: /tools/reading-tracker/
       </div>
       <div style="display:flex;align-items:center;gap:0.65rem;flex-wrap:wrap;padding:0.85rem 1rem;background:var(--rt-cream);border-radius:var(--rt-r3);border:1.5px dashed var(--rt-border-md);margin-bottom:1.25rem;">
         <span style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);">📥 Import your book list from Goodreads or Storygraph</span>
-        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Goodreads CSV</button>
-        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-sg-csv-file').click()">Storygraph CSV</button>
+        <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">Goodreads CSV</label>
+        <label for="rt-sg-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">Storygraph CSV</label>
       </div>
       </div>
     </div>
@@ -2216,9 +2215,11 @@ permalink: /tools/reading-tracker/
 </div>
 
 
-<!-- File inputs at body level — must NOT be inside any display:none parent -->
-<input type="file" id="rt-csv-file" accept=".csv" style="position:fixed;top:-9999px;left:-9999px;opacity:0;">
-<input type="file" id="rt-sg-csv-file" accept=".csv" style="position:fixed;top:-9999px;left:-9999px;opacity:0;">
+<!-- File inputs at body level — MUST be outside any display:none ancestor for file picker to work -->
+<input type="file" id="rt-csv-file" accept=".csv" style="position:fixed;top:-999px;left:-999px;width:1px;height:1px;opacity:0;">
+<input type="file" id="rt-sg-csv-file" accept=".csv" style="position:fixed;top:-999px;left:-999px;width:1px;height:1px;opacity:0;">
+<!-- Import status — fixed position so visible from any tab -->
+<div id="rt-import-status" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:400;min-width:300px;max-width:92vw;box-shadow:0 4px 20px rgba(26,39,68,0.18);text-align:left;" class="rt-import-status"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -3622,12 +3623,15 @@ function renderOLDropdown(docs) {
 // GOODREADS CSV IMPORT (v2 — with OL matching)
 // ─────────────────────────────────────────────────────────────
 document.getElementById('rt-csv-file').addEventListener('change', function(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const target = e.target;
+  const file = e.target.files[0];
+  if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(ev) { processGoodreadsCSV(ev.target.result); };
+  reader.onload = function(ev) {
+    processGoodreadsCSV(ev.target.result);
+  };
   reader.readAsText(file);
-  setTimeout(() => { target.value = ''; }, 200);
+  // Reset after a delay so the same file can be re-imported if needed
+  setTimeout(function() { e.target.value = ''; }, 500);
 });
 
 function normaliseTitle(s) {
@@ -3768,8 +3772,16 @@ function parseCSV(text) {
 
 function parseGRDate(str) {
   if (!str || !str.trim()) return null;
-  const m = str.trim().match(/(\d{4})\/(\d{2})\/(\d{2})/);
-  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  const s = str.trim();
+  // Full date: YYYY/MM/DD
+  const full = s.match(/^(\d{4})\/(\d{2})\/(\d{2})$/);
+  if (full) return `${full[1]}-${full[2]}-${full[3]}`;
+  // Partial: YYYY/MM — use first of month
+  const partial = s.match(/^(\d{4})\/(\d{2})$/);
+  if (partial) return `${partial[1]}-${partial[2]}-01`;
+  // Year only: YYYY — use Jan 1
+  const yearOnly = s.match(/^(\d{4})$/);
+  if (yearOnly) return `${yearOnly[1]}-01-01`;
   return null;
 }
 
@@ -3777,12 +3789,14 @@ function parseGRDate(str) {
 // STORYGRAPH CSV IMPORT
 // ─────────────────────────────────────────────────────────────
 document.getElementById('rt-sg-csv-file').addEventListener('change', function(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const target = e.target;
+  const file = e.target.files[0];
+  if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(ev) { processStorygraphCSV(ev.target.result); };
+  reader.onload = function(ev) {
+    processStorygraphCSV(ev.target.result);
+  };
   reader.readAsText(file);
-  setTimeout(() => { target.value = ''; }, 200);
+  setTimeout(function() { e.target.value = ''; }, 500);
 });
 
 async function processStorygraphCSV(csvText) {
