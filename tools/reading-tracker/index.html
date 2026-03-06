@@ -1677,9 +1677,7 @@ permalink: /tools/reading-tracker/
           </div>
         </div>
 
-        <!-- Goodreads + Storygraph file inputs + status -->
-        <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
-        <input type="file" id="rt-sg-csv-file" accept=".csv" style="display:none;">
+        <!-- Import status -->
         <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
 
       </div>
@@ -2217,6 +2215,10 @@ permalink: /tools/reading-tracker/
   </div>
 </div>
 
+
+<!-- Canonical file inputs — single instances at body level to avoid duplicate ID issues -->
+<input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
+<input type="file" id="rt-sg-csv-file" accept=".csv" style="display:none;">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -3621,10 +3623,11 @@ function renderOLDropdown(docs) {
 // ─────────────────────────────────────────────────────────────
 document.getElementById('rt-csv-file').addEventListener('change', function(e) {
   const file = e.target.files[0]; if (!file) return;
+  const target = e.target;
   const reader = new FileReader();
   reader.onload = function(ev) { processGoodreadsCSV(ev.target.result); };
   reader.readAsText(file);
-  this.value = '';
+  setTimeout(() => { target.value = ''; }, 100);
 });
 
 function normaliseTitle(s) {
@@ -3775,10 +3778,11 @@ function parseGRDate(str) {
 // ─────────────────────────────────────────────────────────────
 document.getElementById('rt-sg-csv-file').addEventListener('change', function(e) {
   const file = e.target.files[0]; if (!file) return;
+  const target = e.target;
   const reader = new FileReader();
   reader.onload = function(ev) { processStorygraphCSV(ev.target.result); };
   reader.readAsText(file);
-  this.value = '';
+  setTimeout(() => { target.value = ''; }, 100);
 });
 
 async function processStorygraphCSV(csvText) {
