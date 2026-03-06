@@ -1196,7 +1196,6 @@ permalink: /tools/reading-tracker/
 ══════════════════════════════════════════════ */
 /* Hide hero, install strip and author promo banner everywhere */
 .rt-hero          { display: none !important; }
-.rt-install-strip { display: none !important; }
 .sister-banner    { display: none !important; }
 /* Hide site footer on mobile and tablet only — show it on desktop */
 @media (max-width: 1023px) {
@@ -3926,6 +3925,25 @@ document.getElementById('rt-install-btn').addEventListener('click', async functi
   deferredPrompt = null;
   if (outcome === 'accepted') document.getElementById('rt-install-strip').style.display = 'none';
 });
+
+// Hide strip if user installs via browser UI
+window.addEventListener('appinstalled', () => {
+  document.getElementById('rt-install-strip').style.display = 'none';
+  deferredPrompt = null;
+});
+
+// iOS install prompt (Safari doesn't fire beforeinstallprompt)
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase());
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+if (isIOS && !isStandalone) {
+  const strip = document.getElementById('rt-install-strip');
+  strip.style.display = 'block'; // or flex — check what displays it correctly
+  const iosHint = document.getElementById('rt-ios-hint');
+  if (iosHint) iosHint.style.display = 'block';
+  // Hide the Chrome install button since it won't work on iOS
+  const chromeBtn = document.getElementById('rt-install-chrome');
+  if (chromeBtn) chromeBtn.style.display = 'none';
+}
 
 // ─────────────────────────────────────────────────────────────
 // STICKY TAB BAR
