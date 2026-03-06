@@ -2141,11 +2141,16 @@ sb.auth.onAuthStateChange(async (event, session) => {
     return;
   }
   if (currentUser) {
-    // If user just signed in and had pre-auth books, sync them first
-    if (wasLoggedOut && books.length) {
-      await syncPreAuthBooks();
+    if (wasLoggedOut) {
+      // Just signed in — push any pre-auth local books first, then pull cloud
+      if (books.length) await syncPreAuthBooks();
+      await syncFromCloud();
     }
-    await syncFromCloud();
+    // If already logged in (page load with active session), just pull cloud
+    else if (event === 'INITIAL_SESSION') {
+      await syncFromCloud();
+    }
+    // For TOKEN_REFRESHED etc — do nothing, don't overwrite local state
   }
 });
 
