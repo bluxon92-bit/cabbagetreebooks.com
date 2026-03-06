@@ -1670,14 +1670,14 @@ permalink: /tools/reading-tracker/
             <p class="rt-tbr-empty-title">Your list is empty</p>
             <p class="rt-tbr-empty-sub">Save books you want to read next, or import your book list from Goodreads or Storygraph.</p>
             <div class="rt-tbr-empty-actions">
-              <button class="rt-ghost-btn" type="button" onclick="openAddModal('tbr')" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
+              <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
               <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Goodreads</label>
               <label for="rt-sg-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Storygraph</label>
             </div>
           </div>
         </div>
 
-        <!-- Import status shown at body level (see below app shell) -->
+        <!-- Import status shown via fixed toast at body level -->
 
       </div>
     </div>
@@ -2215,11 +2215,11 @@ permalink: /tools/reading-tracker/
 </div>
 
 
-<!-- File inputs at body level — MUST be outside any display:none ancestor for file picker to work -->
+<!-- File inputs MUST live outside any display:none ancestor -->
 <input type="file" id="rt-csv-file" accept=".csv" style="position:fixed;top:-999px;left:-999px;width:1px;height:1px;opacity:0;">
 <input type="file" id="rt-sg-csv-file" accept=".csv" style="position:fixed;top:-999px;left:-999px;width:1px;height:1px;opacity:0;">
-<!-- Import status — fixed position so visible from any tab -->
-<div id="rt-import-status" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:400;min-width:300px;max-width:92vw;box-shadow:0 4px 20px rgba(26,39,68,0.18);text-align:left;" class="rt-import-status"></div>
+<!-- Import status toast — fixed so visible from any tab -->
+<div id="rt-import-status" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:400;min-width:300px;max-width:92vw;box-shadow:0 4px 20px rgba(26,39,68,0.18);" class="rt-import-status"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -3625,12 +3625,10 @@ function renderOLDropdown(docs) {
 document.getElementById('rt-csv-file').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
+  closeAddModal(); // close the add sheet if open
   const reader = new FileReader();
-  reader.onload = function(ev) {
-    processGoodreadsCSV(ev.target.result);
-  };
+  reader.onload = function(ev) { processGoodreadsCSV(ev.target.result); };
   reader.readAsText(file);
-  // Reset after a delay so the same file can be re-imported if needed
   setTimeout(function() { e.target.value = ''; }, 500);
 });
 
@@ -3669,11 +3667,36 @@ async function batchMatchOL(bookList, onProgress) {
   return results;
 }
 
+// Shared: show import status toast and auto-dismiss after delay
+function showImportStatus(type, html, autoDismissMs) {
+  const el = document.getElementById('rt-import-status');
+  el.style.display = 'block';
+  el.className = 'rt-import-status rt-import-status--' + type;
+  el.innerHTML = html;
+  if (autoDismissMs) {
+    setTimeout(function() { el.style.display = 'none'; }, autoDismissMs);
+  }
+}
+
+// Shared: normalise a title for duplicate checking
+function normTitle(s) {
+  return (s || '').toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+// Shared: check if a book already exists in local library
+function isDuplicate(title, author) {
+  const nt = normTitle(title);
+  const na = normTitle(author);
+  return books.some(b => {
+    if (normTitle(b.title) !== nt) return false;
+    // If we have author info on both sides, also match author to avoid false positives
+    if (na && normTitle(b.author) && normTitle(b.author) !== na) return false;
+    return true;
+  });
+}
+
 async function processGoodreadsCSV(csvText) {
-  const statusEl = document.getElementById('rt-import-status');
-  statusEl.style.display = 'block';
-  statusEl.className = 'rt-import-status rt-import-status--loading';
-  statusEl.textContent = 'Reading CSV…';
+  showImportStatus('loading', 'Reading CSV…');
   try {
     const rows = parseCSV(csvText); if (!rows.length) throw new Error('No rows found');
     const headers = rows[0].map(h => h.toLowerCase().trim());
@@ -3700,7 +3723,7 @@ async function processGoodreadsCSV(csvText) {
       const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
       const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
       const notes  = iReview  >= 0 ? (row[iReview] || '').trim() || null : null;
-      if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) { skipped++; continue; }
+      if (isDuplicate(title, author)) { skipped++; continue; }
       let status = 'read';
       if      (shelf === 'to-read')           status = 'tbr';
       else if (shelf === 'currently-reading') status = 'reading';
@@ -3714,12 +3737,12 @@ async function processGoodreadsCSV(csvText) {
     }
 
     if (!toImport.length && skipped > 0) {
-      statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.textContent = `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list.`; return;
+      showImportStatus('success', `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list.`, 5000);
+      return;
     }
     if (!toImport.length) throw new Error('No valid book rows found.');
 
-    statusEl.innerHTML = `Matching ${toImport.length} book${toImport.length !== 1 ? 's' : ''} against Open Library… <span id="rt-import-progress">(0/${toImport.length})</span>`;
+    showImportStatus('loading', `Matching ${toImport.length} book${toImport.length !== 1 ? 's' : ''} against Open Library… <span id="rt-import-progress">(0/${toImport.length})</span>`);
     const olResults = await batchMatchOL(toImport, (done, total) => {
       const p = document.getElementById('rt-import-progress');
       if (p) p.textContent = `(${done}/${total})`;
@@ -3729,28 +3752,30 @@ async function processGoodreadsCSV(csvText) {
     toImport.forEach(b => books.push(b));
     save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
 
-    statusEl.className = 'rt-import-status rt-import-status--loading';
-    statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). ${currentUser ? 'Syncing to cloud…' : ''}`;
     if (currentUser) {
+      showImportStatus('loading', `✓ Parsed ${toImport.length} books. Syncing to cloud…`);
       const SYNC_BATCH = 3;
       for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
         await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
-        statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`;
+        showImportStatus('loading', `Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`);
         if (i + SYNC_BATCH < toImport.length) await new Promise(r => setTimeout(r, 500));
       }
-      statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
-        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
-        ` <button class="btn-text-link" onclick="switchTab('home')">View library →</button>`;
+      showImportStatus('success',
+        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` · ${skipped} skipped` : '') +
+        ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
+        ` <button class="btn-text-link" onclick="switchTab('home');document.getElementById('rt-import-status').style.display='none'">View library →</button>`,
+        8000);
     } else {
-      statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
-        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library.` +
-        ` <button class="btn-text-link" onclick="switchTab('account')">Sign in to sync →</button>`;
+      showImportStatus('success',
+        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` · ${skipped} skipped` : '') +
+        ` · <strong>${matched}</strong> matched to Open Library.` +
+        ` <button class="btn-text-link" onclick="switchTab('account');document.getElementById('rt-import-status').style.display='none'">Sign in to sync →</button>`,
+        8000);
     }
   } catch(err) {
-    statusEl.className = 'rt-import-status rt-import-status--error';
-    statusEl.textContent = `Import failed: ${err.message}`;
+    showImportStatus('error', `Import failed: ${err.message}`, 6000);
   }
 }
 
@@ -3773,13 +3798,10 @@ function parseCSV(text) {
 function parseGRDate(str) {
   if (!str || !str.trim()) return null;
   const s = str.trim();
-  // Full date: YYYY/MM/DD
   const full = s.match(/^(\d{4})\/(\d{2})\/(\d{2})$/);
   if (full) return `${full[1]}-${full[2]}-${full[3]}`;
-  // Partial: YYYY/MM — use first of month
   const partial = s.match(/^(\d{4})\/(\d{2})$/);
   if (partial) return `${partial[1]}-${partial[2]}-01`;
-  // Year only: YYYY — use Jan 1
   const yearOnly = s.match(/^(\d{4})$/);
   if (yearOnly) return `${yearOnly[1]}-01-01`;
   return null;
@@ -3791,19 +3813,15 @@ function parseGRDate(str) {
 document.getElementById('rt-sg-csv-file').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
+  closeAddModal(); // close the add sheet if open
   const reader = new FileReader();
-  reader.onload = function(ev) {
-    processStorygraphCSV(ev.target.result);
-  };
+  reader.onload = function(ev) { processStorygraphCSV(ev.target.result); };
   reader.readAsText(file);
   setTimeout(function() { e.target.value = ''; }, 500);
 });
 
 async function processStorygraphCSV(csvText) {
-  const statusEl = document.getElementById('rt-import-status');
-  statusEl.style.display = 'block';
-  statusEl.className = 'rt-import-status rt-import-status--loading';
-  statusEl.textContent = 'Reading CSV…';
+  showImportStatus('loading', 'Reading CSV…');
   try {
     const rows = parseCSV(csvText); if (!rows.length) throw new Error('No rows found');
     const headers = rows[0].map(h => h.toLowerCase().trim());
@@ -3823,22 +3841,19 @@ async function processStorygraphCSV(csvText) {
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
       if (!row[iTitle] || !row[iTitle].trim()) continue;
-
       const title     = row[iTitle].trim();
-      // Storygraph: "Firstname Lastname" — already in display order
       const author    = iAuthor >= 0 ? row[iAuthor].trim() : '';
       const sgStatus  = iStatus >= 0 ? row[iStatus].trim().toLowerCase() : 'read';
-      // Rating is a float (5.0, 3.5) — round to nearest integer
       const rawRating = iRating >= 0 ? parseFloat(row[iRating]) : NaN;
       const rating    = !isNaN(rawRating) ? Math.round(rawRating) : null;
       const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
       const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
       const notes     = iReview >= 0 ? (row[iReview] || '').trim() || null : null;
 
-      if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) { skipped++; continue; }
+      if (isDuplicate(title, author)) { skipped++; continue; }
 
       let status = 'read';
-      if      (sgStatus === 'to-read')          status = 'tbr';
+      if      (sgStatus === 'to-read')           status = 'tbr';
       else if (sgStatus === 'currently-reading') status = 'reading';
       else if (sgStatus === 'did-not-finish')    status = 'dnf';
 
@@ -3854,12 +3869,12 @@ async function processStorygraphCSV(csvText) {
     }
 
     if (!toImport.length && skipped > 0) {
-      statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.textContent = `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list.`; return;
+      showImportStatus('success', `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list.`, 5000);
+      return;
     }
     if (!toImport.length) throw new Error('No valid book rows found.');
 
-    statusEl.innerHTML = `Matching ${toImport.length} book${toImport.length !== 1 ? 's' : ''} against Open Library… <span id="rt-import-progress">(0/${toImport.length})</span>`;
+    showImportStatus('loading', `Matching ${toImport.length} book${toImport.length !== 1 ? 's' : ''} against Open Library… <span id="rt-import-progress">(0/${toImport.length})</span>`);
     const olResults = await batchMatchOL(toImport, (done, total) => {
       const p = document.getElementById('rt-import-progress');
       if (p) p.textContent = `(${done}/${total})`;
@@ -3869,28 +3884,30 @@ async function processStorygraphCSV(csvText) {
     toImport.forEach(b => books.push(b));
     save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
 
-    statusEl.className = 'rt-import-status rt-import-status--loading';
-    statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). ${currentUser ? 'Syncing to cloud…' : ''}`;
     if (currentUser) {
+      showImportStatus('loading', `✓ Parsed ${toImport.length} books. Syncing to cloud…`);
       const SYNC_BATCH = 3;
       for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
         await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
-        statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`;
+        showImportStatus('loading', `Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`);
         if (i + SYNC_BATCH < toImport.length) await new Promise(r => setTimeout(r, 500));
       }
-      statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
-        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
-        ` <button class="btn-text-link" onclick="switchTab('home')">View library →</button>`;
+      showImportStatus('success',
+        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` · ${skipped} skipped` : '') +
+        ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
+        ` <button class="btn-text-link" onclick="switchTab('home');document.getElementById('rt-import-status').style.display='none'">View library →</button>`,
+        8000);
     } else {
-      statusEl.className = 'rt-import-status rt-import-status--success';
-      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
-        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library.` +
-        ` <button class="btn-text-link" onclick="switchTab('account')">Sign in to sync →</button>`;
+      showImportStatus('success',
+        `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` · ${skipped} skipped` : '') +
+        ` · <strong>${matched}</strong> matched to Open Library.` +
+        ` <button class="btn-text-link" onclick="switchTab('account');document.getElementById('rt-import-status').style.display='none'">Sign in to sync →</button>`,
+        8000);
     }
   } catch(err) {
-    statusEl.className = 'rt-import-status rt-import-status--error';
-    statusEl.textContent = `Import failed: ${err.message}`;
+    showImportStatus('error', `Import failed: ${err.message}`, 6000);
   }
 }
 
