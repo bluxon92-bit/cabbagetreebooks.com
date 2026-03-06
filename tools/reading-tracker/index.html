@@ -1668,16 +1668,18 @@ permalink: /tools/reading-tracker/
           <div class="rt-empty" id="rt-tbr-empty" style="display:none;">
             <div class="rt-tbr-empty-icon">🔖</div>
             <p class="rt-tbr-empty-title">Your list is empty</p>
-            <p class="rt-tbr-empty-sub">Save books you want to read next, or import your whole Goodreads library in one go.</p>
+            <p class="rt-tbr-empty-sub">Save books you want to read next, or import your book list from Goodreads or Storygraph.</p>
             <div class="rt-tbr-empty-actions">
               <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
-              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">📥 Import from Goodreads</button>
+              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">📥 Goodreads</button>
+              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-sg-csv-file').click()">📥 Storygraph</button>
             </div>
           </div>
         </div>
 
-        <!-- Goodreads file input + status -->
+        <!-- Goodreads + Storygraph file inputs + status -->
         <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
+        <input type="file" id="rt-sg-csv-file" accept=".csv" style="display:none;">
         <div id="rt-import-status" style="display:none;" class="rt-import-status"></div>
 
       </div>
@@ -1949,9 +1951,9 @@ permalink: /tools/reading-tracker/
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:0.65rem;flex-wrap:wrap;padding:0.85rem 1rem;background:var(--rt-cream);border-radius:var(--rt-r3);border:1.5px dashed var(--rt-border-md);margin-bottom:1.25rem;">
-        <span style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);">📥 Goodreads import</span>
-        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Import CSV</button>
-        <span style="font-size:0.75rem;color:var(--rt-t3);">Goodreads → My Books → Export library.</span>
+        <span style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);">📥 Import your book list from Goodreads or Storygraph</span>
+        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Goodreads CSV</button>
+        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-sg-csv-file').click()">Storygraph CSV</button>
       </div>
       </div>
     </div>
@@ -3766,6 +3768,112 @@ function parseGRDate(str) {
   const m = str.trim().match(/(\d{4})\/(\d{2})\/(\d{2})/);
   if (m) return `${m[1]}-${m[2]}-${m[3]}`;
   return null;
+}
+
+// ─────────────────────────────────────────────────────────────
+// STORYGRAPH CSV IMPORT
+// ─────────────────────────────────────────────────────────────
+document.getElementById('rt-sg-csv-file').addEventListener('change', function(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) { processStorygraphCSV(ev.target.result); };
+  reader.readAsText(file);
+  this.value = '';
+});
+
+async function processStorygraphCSV(csvText) {
+  const statusEl = document.getElementById('rt-import-status');
+  statusEl.style.display = 'block';
+  statusEl.className = 'rt-import-status rt-import-status--loading';
+  statusEl.textContent = 'Reading CSV…';
+  try {
+    const rows = parseCSV(csvText); if (!rows.length) throw new Error('No rows found');
+    const headers = rows[0].map(h => h.toLowerCase().trim());
+    const col = name => headers.findIndex(h => h.includes(name));
+
+    const iTitle      = col('title');
+    const iAuthor     = col('authors');
+    const iStatus     = col('read status');
+    const iRating     = col('star rating');
+    const iDateRead   = col('last date read');
+    const iDateAdded  = col('date added');
+    const iReview     = col('review');
+
+    if (iTitle === -1) throw new Error('Could not find Title column — is this a Storygraph CSV?');
+
+    const toImport = []; let skipped = 0;
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      if (!row[iTitle] || !row[iTitle].trim()) continue;
+
+      const title     = row[iTitle].trim();
+      // Storygraph: "Firstname Lastname" — already in display order
+      const author    = iAuthor >= 0 ? row[iAuthor].trim() : '';
+      const sgStatus  = iStatus >= 0 ? row[iStatus].trim().toLowerCase() : 'read';
+      // Rating is a float (5.0, 3.5) — round to nearest integer
+      const rawRating = iRating >= 0 ? parseFloat(row[iRating]) : NaN;
+      const rating    = !isNaN(rawRating) ? Math.round(rawRating) : null;
+      const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
+      const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
+      const notes     = iReview >= 0 ? (row[iReview] || '').trim() || null : null;
+
+      if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) { skipped++; continue; }
+
+      let status = 'read';
+      if      (sgStatus === 'to-read')          status = 'tbr';
+      else if (sgStatus === 'currently-reading') status = 'reading';
+      else if (sgStatus === 'did-not-finish')    status = 'dnf';
+
+      toImport.push({
+        id: uid(), title, author, status,
+        rating:      status === 'read' ? rating : null,
+        notes:       status === 'read' ? notes  : null,
+        date:        status === 'read' ? dateRead : null,
+        dateStarted: status === 'reading' ? (dateAdded || null) : null,
+        added:       dateAdded || new Date().toISOString(),
+        source: 'storygraph', olKey: null, coverId: null
+      });
+    }
+
+    if (!toImport.length && skipped > 0) {
+      statusEl.className = 'rt-import-status rt-import-status--success';
+      statusEl.textContent = `All ${skipped} book${skipped !== 1 ? 's' : ''} already in your list.`; return;
+    }
+    if (!toImport.length) throw new Error('No valid book rows found.');
+
+    statusEl.innerHTML = `Matching ${toImport.length} book${toImport.length !== 1 ? 's' : ''} against Open Library… <span id="rt-import-progress">(0/${toImport.length})</span>`;
+    const olResults = await batchMatchOL(toImport, (done, total) => {
+      const p = document.getElementById('rt-import-progress');
+      if (p) p.textContent = `(${done}/${total})`;
+    });
+    let matched = 0;
+    olResults.forEach((ol, i) => { if (ol) { toImport[i].olKey = ol.olKey; toImport[i].coverId = ol.coverId; matched++; } });
+    toImport.forEach(b => books.push(b));
+    save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
+
+    statusEl.className = 'rt-import-status rt-import-status--loading';
+    statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). ${currentUser ? 'Syncing to cloud…' : ''}`;
+    if (currentUser) {
+      const SYNC_BATCH = 3;
+      for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
+        await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
+        statusEl.innerHTML = `✓ Parsed ${toImport.length} books (${matched} matched). Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`;
+        if (i + SYNC_BATCH < toImport.length) await new Promise(r => setTimeout(r, 500));
+      }
+      statusEl.className = 'rt-import-status rt-import-status--success';
+      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
+        ` <button class="btn-text-link" onclick="switchTab('home')">View library →</button>`;
+    } else {
+      statusEl.className = 'rt-import-status rt-import-status--success';
+      statusEl.innerHTML = `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
+        (skipped ? ` (${skipped} skipped)` : '') + ` · <strong>${matched}</strong> matched to Open Library.` +
+        ` <button class="btn-text-link" onclick="switchTab('account')">Sign in to sync →</button>`;
+    }
+  } catch(err) {
+    statusEl.className = 'rt-import-status rt-import-status--error';
+    statusEl.textContent = `Import failed: ${err.message}`;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────
