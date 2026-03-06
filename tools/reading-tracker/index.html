@@ -1671,8 +1671,8 @@ permalink: /tools/reading-tracker/
             <p class="rt-tbr-empty-sub">Save books you want to read next, or import your book list from Goodreads or Storygraph.</p>
             <div class="rt-tbr-empty-actions">
               <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
-              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">📥 Goodreads</button>
-              <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-sg-csv-file').click()">📥 Storygraph</button>
+              <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;">📥 Goodreads</label>
+              <label for="rt-sg-csv-file" class="rt-ghost-btn" style="cursor:pointer;">📥 Storygraph</label>
             </div>
           </div>
         </div>
@@ -1950,8 +1950,8 @@ permalink: /tools/reading-tracker/
       </div>
       <div style="display:flex;align-items:center;gap:0.65rem;flex-wrap:wrap;padding:0.85rem 1rem;background:var(--rt-cream);border-radius:var(--rt-r3);border:1.5px dashed var(--rt-border-md);margin-bottom:1.25rem;">
         <span style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);">📥 Import your book list from Goodreads or Storygraph</span>
-        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-csv-file').click()">Goodreads CSV</button>
-        <button class="rt-ghost-btn" type="button" onclick="document.getElementById('rt-sg-csv-file').click()">Storygraph CSV</button>
+        <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;">Goodreads CSV</label>
+        <label for="rt-sg-csv-file" class="rt-ghost-btn" style="cursor:pointer;">Storygraph CSV</label>
       </div>
       </div>
     </div>
@@ -2216,7 +2216,7 @@ permalink: /tools/reading-tracker/
 </div>
 
 
-<!-- Canonical file inputs — single instances at body level to avoid duplicate ID issues -->
+<!-- Canonical file inputs — single instances, outside any modal/sheet -->
 <input type="file" id="rt-csv-file" accept=".csv" style="display:none;">
 <input type="file" id="rt-sg-csv-file" accept=".csv" style="display:none;">
 
