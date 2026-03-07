@@ -1066,6 +1066,24 @@ permalink: /tools/reading-tracker/
 .rt-modal-overlay { display: none !important; }
 .rt-modal-btn { display: none; }
 
+/* ── SYNC STATUS ── */
+#rt-sync-status {
+  position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%);
+  background: rgba(26,39,68,0.9); color: rgba(255,255,255,0.85);
+  font-size: 0.72rem; padding: 0.3rem 0.75rem; border-radius: 20px;
+  pointer-events: none; z-index: 200;
+  transition: opacity 0.4s ease;
+  white-space: nowrap;
+}
+#rt-sync-status[data-state="idle"]    { opacity: 0; }
+#rt-sync-status[data-state="syncing"] { opacity: 1; }
+#rt-sync-status[data-state="pending"] { opacity: 1; }
+#rt-sync-status[data-state="error"]   { opacity: 1; background: rgba(180,50,50,0.9); }
+#rt-sync-status[data-state="offline"] { opacity: 1; background: rgba(80,80,80,0.9); }
+@media (min-width: 768px) {
+  #rt-sync-status { bottom: 1rem; left: auto; right: 1.5rem; transform: none; }
+}
+
 /* ── FLASH ── */
 .rt-flash {
   position: sticky; top: 108px; z-index: 150;
@@ -1233,6 +1251,7 @@ permalink: /tools/reading-tracker/
   font-size: 0.72rem; color: var(--rt-t3); font-style: italic;
   margin-top: 0.4rem; line-height: 1.5;
 }
+} /* end @media (max-width: 700px) — genre chart */
 
 @media (max-width: 700px) {
   .rt-tabbar-wrap { display: none; }
@@ -1869,6 +1888,9 @@ permalink: /tools/reading-tracker/
   </button>
 </nav>
 
+<!-- SYNC STATUS INDICATOR -->
+<div id="rt-sync-status" data-state="idle" aria-live="polite"></div>
+
 <!-- ══════════════════════════════════════════════
      ADD BOOK SHEET
 ══════════════════════════════════════════════ -->
@@ -2146,6 +2168,16 @@ permalink: /tools/reading-tracker/
             </div>
             <!-- Notes shown for "Currently reading" and "Already finished" -->
             <div id="rt-edit-notes-fields" style="display:none;">
+              <div class="rt-review-field" style="margin-bottom:0.85rem;">
+                <label for="rt-genre-edit" style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--rt-t3);">Genre</label>
+                <select id="rt-genre-edit" style="font-family:var(--rt-font-body);font-size:0.9rem;padding:0.7rem 0.9rem;border:1.5px solid var(--rt-border-md);background:var(--rt-cream);color:var(--rt-t1);border-radius:var(--rt-r4);width:100%;box-sizing:border-box;margin-top:0.4rem;">
+                  <option value="">— select —</option>
+                  <option>Fantasy</option><option>Science Fiction</option><option>Horror</option>
+                  <option>Romance</option><option>Dystopian</option><option>Literary Fiction</option>
+                  <option>Historical Fiction</option><option>Thriller</option>
+                  <option>Non-Fiction</option><option>Short Stories</option><option>Other</option>
+                </select>
+              </div>
               <div class="rt-write-divider"><span>🔒 Private notes</span></div>
               <div class="rt-review-field">
                 <label for="rt-sheet-notes-edit">Only you can see this</label>
@@ -2227,8 +2259,8 @@ permalink: /tools/reading-tracker/
 // ─────────────────────────────────────────────────────────────
 // SUPABASE CLIENT
 // ─────────────────────────────────────────────────────────────
-const SUPABASE_URL  = 'https://danknyhumorgkvidrdve.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhbmtueWh1bW9yZ2t2aWRyZHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3OTMzMzksImV4cCI6MjA4ODM2OTMzOX0.uTbNT_MBipxNCJckFI2JFACvftdtSy3M-YRQuJVDziU';
+const SUPABASE_URL  = 'https://faykquqgjndphmizwxts.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZheWtxdXFnam5kcGhtaXp3eHRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1Mjk4NjYsImV4cCI6MjA4ODEwNTg2Nn0.OiXN7nNB2O6stDXUj6Y_usNb6w4aOVsxQqF-bF_OZno';
 const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 let   currentUser   = null;
 
@@ -2236,21 +2268,22 @@ sb.auth.onAuthStateChange(async (event, session) => {
   const wasLoggedOut = !currentUser;
   currentUser = session?.user || null;
   renderAuthUI();
+
   if (event === 'PASSWORD_RECOVERY') {
     document.getElementById('rt-reset-overlay').style.display = 'flex';
     return;
   }
+
   if (currentUser) {
-    if (wasLoggedOut) {
-      // Just signed in — push any pre-auth local books first, then pull cloud
-      if (books.length) await syncPreAuthBooks();
-      await syncFromCloud();
+    if (wasLoggedOut || event === 'INITIAL_SESSION') {
+      // Safe merge login: preserves unsynced local books, pulls cloud, deduplicates
+      await SyncQueue.syncOnLogin();
     }
-    // If already logged in (page load with active session), just pull cloud
-    else if (event === 'INITIAL_SESSION') {
-      await syncFromCloud();
-    }
-    // For TOKEN_REFRESHED etc — do nothing, don't overwrite local state
+    // TOKEN_REFRESHED, USER_UPDATED etc — resume queue in case it was paused
+    SyncQueue.resume();
+  } else {
+    // Signed out — pause queue, keep local state intact
+    SyncQueue.pause();
   }
 });
 
@@ -2309,7 +2342,7 @@ function renderAuthUI() {
     loggedOut.style.display = 'none';
     if (emailEl) emailEl.textContent = currentUser.email;
     if (joinedEl) {
-      const d = new Date(currentUser.created_at || currentUser.email);
+      const d = new Date(currentUser.created_at);
       joinedEl.textContent = isNaN(d) ? '' : 'Member since ' + d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
     }
     const readCount = getBooks('read').length;
@@ -2391,102 +2424,301 @@ function showMsg(el, text, type) {
 }
 
 async function signOut() {
+  if (SyncQueue.pending > 0) {
+    const ok = confirm(`You have ${SyncQueue.pending} change${SyncQueue.pending !== 1 ? 's' : ''} still syncing. Signing out now may lose them. Sign out anyway?`);
+    if (!ok) return;
+  }
   try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 1500))]); } catch(e) {}
   const key = Object.keys(localStorage).find(k => k.startsWith('sb-') && k.endsWith('-auth-token'));
   if (key) localStorage.removeItem(key);
   currentUser = null; books = []; save(); location.reload();
 }
 
-// ── Cloud sync — books (canonical) + reading_entries (per-user) ─
+// ═══════════════════════════════════════════════════════════════
+// SYNC ENGINE
+// ═══════════════════════════════════════════════════════════════
+// Single source of truth: cloud. localStorage = cache + offline buffer.
+// All writes go through SyncQueue — never call Supabase directly.
+// Queue persists across page loads. Retries up to 3x with backoff.
+// Pauses when offline or unauthenticated. Drains automatically on reconnect.
+// ═══════════════════════════════════════════════════════════════
 
-// Upsert a canonical book record into the `books` table (by ol_key).
-// Returns the book's UUID, or null if no ol_key.
-// Upsert to canonical books table by ol_key — returns UUID or null.
-async function upsertCanonicalBook(book) {
-  if (!book.olKey) return null;
-  const { data, error } = await sb.from('books').upsert(
-    { ol_key: book.olKey, title: book.title, author: book.author || null, cover_id: book.coverId || null },
-    { onConflict: 'ol_key', ignoreDuplicates: false }
-  ).select('id').single();
-  if (error) { console.warn('upsertCanonicalBook:', error.message); return null; }
-  return data?.id || null;
-}
+const SyncQueue = (() => {
+  const QUEUE_KEY     = 'ctb_sync_queue_v1';
+  const MAX_ATTEMPTS  = 3;
+  const RETRY_DELAYS  = [2000, 5000, 15000]; // ms between retries
 
-// Save a single book to cloud — create or update the reading_entries row.
-async function saveBookToCloud(book) {
-  if (!currentUser) return;
-  const bookId = await upsertCanonicalBook(book);
-  const row = {
-    user_id:          currentUser.id,
-    book_id:          bookId || null,
-    title_manual:     bookId ? null : (book.title  || null),
-    author_manual:    bookId ? null : (book.author || null),
-    status:           book.status,
-    rating:           book.rating        || null,
-    notes:            book.notes         || null,
-    date_finished:    book.date          || null,
-    date_started:     book.dateStarted   || null,
-    review_body:      book.reviewBody    || null,
-    review_is_public: book.reviewPublic  || false
-  };
-  if (book.cloudId) {
+  let _queue      = [];
+  let _processing = false;
+  let _paused     = false;
+  let _online     = navigator.onLine;
+
+  // ── Persistence ──────────────────────────────────────────────
+  function _persist() {
+    try { localStorage.setItem(QUEUE_KEY, JSON.stringify(_queue)); } catch(e) {}
+  }
+  function _load() {
+    try { _queue = JSON.parse(localStorage.getItem(QUEUE_KEY)) || []; } catch(e) { _queue = []; }
+  }
+
+  // ── Status indicator ─────────────────────────────────────────
+  function _setStatus(state, detail) {
+    // states: idle | syncing | pending | error | offline
+    const el = document.getElementById('rt-sync-status');
+    if (!el) return;
+    const icons = { idle:'✓', syncing:'↑', pending:'…', error:'⚠', offline:'○' };
+    const labels = {
+      idle:    'Synced',
+      syncing: 'Syncing…',
+      pending: `${_queue.length} pending`,
+      error:   'Sync error — will retry',
+      offline: 'Offline — changes saved locally'
+    };
+    el.dataset.state = state;
+    if (state === 'idle') {
+      el.style.opacity = '0';
+      // Clear text after fade-out so it can't flash stale content
+      setTimeout(() => { if (el.dataset.state === 'idle') el.textContent = ''; }, 500);
+    } else {
+      el.textContent = `${icons[state]} ${detail || labels[state]}`;
+      el.style.opacity = '1';
+    }
+  }
+
+  // ── Queue management ─────────────────────────────────────────
+  function enqueue(operation, payload) {
+    // For upsert: replace any existing pending item for same book to avoid stale writes
+    if (operation === 'upsert_entry') {
+      const existingIdx = _queue.findIndex(
+        item => item.operation === 'upsert_entry' &&
+                item.payload.id === payload.id &&
+                item.attempts === 0
+      );
+      if (existingIdx !== -1) { _queue.splice(existingIdx, 1); }
+    }
+    // For delete: remove any pending upserts for this book — no point syncing a deleted book
+    if (operation === 'delete_entry') {
+      _queue = _queue.filter(
+        item => !(item.operation === 'upsert_entry' && item.payload.id === payload.id)
+      );
+    }
+    _queue.push({
+      id:        `sq_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,
+      operation,
+      payload,
+      attempts:  0,
+      createdAt: new Date().toISOString()
+    });
+    _persist();
+    _setStatus('pending');
+    _drain();
+  }
+
+  function enqueueBatch(operation, payloads) {
+    payloads.forEach(p => enqueue(operation, p));
+  }
+
+  // ── Core processor ───────────────────────────────────────────
+  async function _drain() {
+    if (_processing || _paused || !_online || !currentUser) return;
+    if (!_queue.length) { _setStatus('idle'); return; }
+    _processing = true;
+    _setStatus('syncing');
+
+    while (_queue.length > 0) {
+      if (_paused || !_online || !currentUser) break;
+      const item = _queue[0];
+      const success = await _process(item);
+      if (success) {
+        _queue.shift();
+        _persist();
+      } else {
+        item.attempts++;
+        if (item.attempts >= MAX_ATTEMPTS) {
+          console.error('[SyncQueue] Dropping item after max attempts:', item);
+          _queue.shift();
+          _persist();
+          _setStatus('error');
+        } else {
+          // Back off before retrying
+          const delay = RETRY_DELAYS[item.attempts - 1] || 15000;
+          _setStatus('pending', `Retrying in ${delay/1000}s…`);
+          await new Promise(r => setTimeout(r, delay));
+        }
+      }
+    }
+
+    _processing = false;
+    _setStatus(_queue.length ? 'pending' : 'idle');
+  }
+
+  async function _process(item) {
+    try {
+      switch (item.operation) {
+        case 'upsert_entry':  return await _upsertEntry(item.payload);
+        case 'delete_entry':  return await _deleteEntry(item.payload);
+        default:
+          console.error('[SyncQueue] Unknown operation:', item.operation);
+          return true; // drop unknown ops
+      }
+    } catch(e) {
+      console.error('[SyncQueue] Process error on operation', item.operation, ':', e.message, e);
+      return false;
+    }
+  }
+
+  // ── Operations ───────────────────────────────────────────────
+  async function _upsertCanonicalBook(book) {
+    if (!book.olKey) return null;
+    const { data, error } = await sb.from('books').upsert(
+      { ol_key: book.olKey, title: book.title, author: book.author || null, cover_id: book.coverId || null },
+      { onConflict: 'ol_key', ignoreDuplicates: false }
+    ).select('id').single();
+    if (error) { console.error('[SyncQueue] upsertCanonicalBook:', error.message); return null; }
+    return data?.id || null;
+  }
+
+  async function _upsertEntry(book) {
+    // Step 1: ensure canonical book record exists
+    const bookId = await _upsertCanonicalBook(book);
+    const row = {
+      user_id:          currentUser.id,
+      book_id:          bookId || null,
+      title_manual:     bookId ? null : (book.title  || null),
+      author_manual:    bookId ? null : (book.author || null),
+      status:           book.status,
+      rating:           book.rating       || null,
+      notes:            book.notes        || null,
+      date_finished:    book.date         || null,
+      date_started:     book.dateStarted  || null,
+      review_body:      book.reviewBody   || null,
+      review_is_public: book.reviewPublic || false,
+      updated_at:       new Date().toISOString()
+    };
+    if (book.cloudId) {
+      // Update existing entry
+      const { error } = await sb.from('reading_entries')
+        .update(row)
+        .eq('id', book.cloudId)
+        .eq('user_id', currentUser.id);
+      if (error) { console.error('[SyncQueue] update entry:', error.message, error.code, error.details, error.hint); return false; }
+    } else {
+      // Insert new entry, write cloudId back to local book
+      const { data, error } = await sb.from('reading_entries')
+        .insert(row).select('id').single();
+      if (error) { console.error('[SyncQueue] insert entry:', error.message, error.code, error.details, error.hint); return false; }
+      if (data?.id) {
+        // Write cloudId back into local books array and persist
+        const localBook = books.find(b => String(b.id) === String(book.id));
+        if (localBook) { localBook.cloudId = data.id; save(); }
+      }
+    }
+    return true;
+  }
+
+  async function _deleteEntry(book) {
+    if (!book.cloudId) return true; // never synced, nothing to delete
     const { error } = await sb.from('reading_entries')
-      .update(row).eq('id', book.cloudId).eq('user_id', currentUser.id);
-    if (error) console.warn('saveBookToCloud (update):', error.message);
-  } else {
-    const { data, error } = await sb.from('reading_entries')
-      .insert(row).select('id').single();
-    if (error) { console.warn('saveBookToCloud (insert):', error.message); return; }
-    if (data) { book.cloudId = data.id; }
+      .delete()
+      .eq('id', book.cloudId)
+      .eq('user_id', currentUser.id);
+    if (error) { console.error('[SyncQueue] delete entry:', error.message); return false; }
+    return true;
   }
-  save();
-}
 
-async function deleteBookFromCloud(book) {
-  if (!currentUser || !book.cloudId) return;
-  await sb.from('reading_entries').delete().eq('id', book.cloudId).eq('user_id', currentUser.id);
-}
+  // ── Login sync — safe merge (does NOT overwrite unsynced local books) ──
+  async function syncOnLogin() {
+    _paused = true;
+    _setStatus('syncing', 'Loading your library…');
+    // Safety cap — never show "Loading your library" for more than 12s
+    const safetyTimer = setTimeout(() => { _paused = false; _setStatus('idle'); }, 12000);
+    try {
+      const { data, error } = await sb
+        .from('reading_entries')
+        .select('*, books(title, author, cover_id, ol_key)')
+        .eq('user_id', currentUser.id);
+      if (error) { console.error('[SyncQueue] syncOnLogin fetch:', error.message); return; }
 
-// Pull everything from cloud and replace local state.
-async function syncFromCloud() {
-  if (!currentUser) return;
-  const { data, error } = await sb
-    .from('reading_entries')
-    .select('*, books(title, author, cover_id, ol_key)')
-    .eq('user_id', currentUser.id);
-  if (error) { console.error('syncFromCloud:', error.message); return; }
-  books = (data || []).map(e => ({
-    id:           e.id,
-    cloudId:      e.id,
-    title:        e.books?.title    || e.title_manual  || '',
-    author:       e.books?.author   || e.author_manual || '',
-    coverId:      e.books?.cover_id || null,
-    olKey:        e.books?.ol_key   || null,
-    status:       e.status,
-    rating:       e.rating          || null,
-    notes:        e.notes           || null,
-    reviewBody:   e.review_body     || null,
-    reviewPublic: e.review_is_public || false,
-    date:         e.date_finished   || null,
-    dateStarted:  e.date_started    || null,
-    added:        e.added_at
-  }));
-  save();
-  updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
-  if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
-}
+      const cloudBooks = (data || []).map(e => ({
+        id:           e.id,
+        cloudId:      e.id,
+        title:        e.books?.title    || e.title_manual  || '',
+        author:       e.books?.author   || e.author_manual || '',
+        coverId:      e.books?.cover_id || null,
+        olKey:        e.books?.ol_key   || null,
+        status:       e.status,
+        rating:       e.rating          || null,
+        notes:        e.notes           || null,
+        reviewBody:   e.review_body     || null,
+        reviewPublic: e.review_is_public || false,
+        date:         e.date_finished   || null,
+        dateStarted:  e.date_started    || null,
+        added:        e.added_at,
+        updatedAt:    e.updated_at      || e.added_at
+      }));
 
-// After signup/login, retroactively sync any books added before auth.
-async function syncPreAuthBooks() {
-  if (!currentUser) return;
-  const unsynced = books.filter(b => !b.cloudId);
-  if (!unsynced.length) return;
-  const BATCH = 5;
-  for (let i = 0; i < unsynced.length; i += BATCH) {
-    await Promise.all(unsynced.slice(i, i + BATCH).map(b => saveBookToCloud(b)));
+      // Build lookup of cloud books by cloudId
+      const cloudById = {};
+      cloudBooks.forEach(b => { cloudById[b.cloudId] = b; });
+
+      // Separate local books into synced vs unsynced
+      const localUnsynced = books.filter(b => !b.cloudId);
+      const localSynced   = books.filter(b => !!b.cloudId);
+
+      // For synced books: cloud wins if it exists, otherwise keep local
+      const mergedSynced = localSynced.map(local => {
+        const cloud = cloudById[local.cloudId];
+        if (!cloud) return local; // deleted on another device — keep local for now
+        // Last write wins based on updatedAt
+        const cloudTime = new Date(cloud.updatedAt  || 0).getTime();
+        const localTime = new Date(local.updatedAt  || local.added || 0).getTime();
+        return cloudTime >= localTime ? cloud : local;
+      });
+
+      // Add cloud books not present locally (added on another device)
+      const localCloudIds = new Set(localSynced.map(b => b.cloudId));
+      const newFromCloud  = cloudBooks.filter(b => !localCloudIds.has(b.cloudId));
+
+      // Merge: cloud-synced + new from cloud + unsynced local
+      books = [...mergedSynced, ...newFromCloud, ...localUnsynced];
+      save();
+
+      // Queue any unsynced local books to push up
+      if (localUnsynced.length) {
+        localUnsynced.forEach(b => enqueue('upsert_entry', b));
+        showFlash(`↑ Syncing ${localUnsynced.length} book${localUnsynced.length !== 1 ? 's' : ''} to your account…`);
+      }
+
+    } finally {
+      clearTimeout(safetyTimer);
+      _paused = false;
+      updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
+      if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
+      _setStatus('idle');
+      _drain();
+    }
   }
-  showFlash(`✓ ${unsynced.length} book${unsynced.length !== 1 ? 's' : ''} synced to your account.`);
-}
+
+  // ── Online / offline listeners ───────────────────────────────
+  window.addEventListener('online',  () => { _online = true;  _setStatus('syncing'); _drain(); });
+  window.addEventListener('offline', () => { _online = false; _setStatus('offline'); });
+
+  // ── Public API ───────────────────────────────────────────────
+  return {
+    load:         _load,
+    enqueue,
+    enqueueBatch,
+    syncOnLogin,
+    pause:        () => { _paused = true; },
+    resume:       () => { _paused = false; _drain(); },
+    drain:        _drain,
+    get pending() { return _queue.length; }
+  };
+})();
+
+// Convenience shims — keep all callsites working without changes
+function saveBookToCloud(book)   { SyncQueue.enqueue('upsert_entry', book); }
+function deleteBookFromCloud(book) { SyncQueue.enqueue('delete_entry', book); }
 
 // ─────────────────────────────────────────────────────────────
 // DATA MODEL
@@ -2510,10 +2742,11 @@ function load() {
       if (old && old.length) { books = old.map(b => ({...b, status: b.status || 'read'})); save(); }
     } catch(e){}
   }
+  SyncQueue.load(); // restore any pending queue items from previous session
 }
 
 function getBooks(status) { return books.filter(b => b.status === status); }
-function uid() { return Date.now() + Math.floor(Math.random() * 1000); }
+function uid() { return `${Date.now()}_${Math.random().toString(36).slice(2)}`; }
 function esc(s) {
   const d = document.createElement('div');
   d.appendChild(document.createTextNode(s || ''));
@@ -2663,7 +2896,7 @@ function renderHomeReading() {
 
 document.getElementById('rt-home-reading-list').addEventListener('click', function(e) {
   const finBtn = e.target.closest('.rt-finish-btn');
-  if (finBtn) { openModal(Number(finBtn.dataset.id) || finBtn.dataset.id); return; }
+  if (finBtn) { openModal(finBtn.dataset.id); return; }
   const delBtn = e.target.closest('[data-action="remove-reading"]');
   if (delBtn && confirm('Remove from currently reading?')) {
     const book = books.find(b => String(b.id) === String(delBtn.dataset.id));
@@ -2691,7 +2924,15 @@ const HISTORY_PAGE = 20;
 function renderHistory() {
   const so   = document.getElementById('rt-home-sort').value;
   let   list = getBooks(histFilter).sort((a,b) => {
-    if (so === 'newest')      return new Date(b.date||b.added) - new Date(a.date||a.added);
+    if (so === 'newest') {
+      // Books with no date sort to the bottom
+      const aDate = a.date || a.added || null;
+      const bDate = b.date || b.added || null;
+      if (!aDate && !bDate) return 0;
+      if (!aDate) return 1;
+      if (!bDate) return -1;
+      return new Date(bDate) - new Date(aDate);
+    }
     if (so === 'rating-high') return (b.rating||0) - (a.rating||0);
     if (so === 'title')       return a.title.localeCompare(b.title);
     return 0;
@@ -2808,6 +3049,10 @@ function closeAddModal() {
   sheet.classList.remove('open');
   document.body.style.overflow = '';
   document.getElementById('rt-add-duplicate-warning').style.display = 'none';
+  // Reset OL search state so next open starts fresh
+  olSelected = false;
+  clearTimeout(olTimer);
+  if (olDropdown) olDropdown.style.display = 'none';
 }
 
 document.getElementById('rt-add-sheet-close').addEventListener('click', closeAddModal);
@@ -2901,6 +3146,7 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
     date:        status === 'read' ? (document.getElementById('rt-date').value || new Date().toISOString().split('T')[0]) : null,
     dateStarted: status === 'reading' ? new Date().toISOString().split('T')[0] : null,
     added:       new Date().toISOString(),
+    updatedAt:   new Date().toISOString(),
     coverId:     coverIdRaw ? parseInt(coverIdRaw) : null,
     olKey:       olKeyRaw || null
   };
@@ -2976,8 +3222,10 @@ function addRecToTBR(title, author) {
   if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
     alert(`"${title}" is already in your list.`); return;
   }
-  books.push({ id:uid(), title, author:author||'', status:'tbr', added:new Date().toISOString() });
+  const book = { id:uid(), title, author:author||'', status:'tbr', added:new Date().toISOString(), updatedAt:new Date().toISOString() };
+  books.push(book);
   save();
+  saveBookToCloud(book);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -3230,6 +3478,8 @@ function openEditSheet(bookId) {
   document.getElementById('rt-dnf-toggle-edit').classList.toggle('active', book.status === 'dnf');
   document.getElementById('rt-sheet-notes-edit').value        = book.notes || '';
   document.getElementById('rt-sheet-review-edit').value       = book.reviewBody || '';
+  const genreEditEl = document.getElementById('rt-genre-edit');
+  if (genreEditEl) genreEditEl.value = book.genre || '';
   const isPublic = !!(book.reviewPublic && book.reviewBody);
   document.getElementById('rt-share-check-edit').checked      = isPublic;
   document.getElementById('rt-review-public-wrap-edit').classList.toggle('visible', isPublic);
@@ -3265,6 +3515,7 @@ function saveEdits() {
     book.status = sel ? sel.value : book.status;
     if (book.status === 'reading') book.dateStarted = book.dateStarted || new Date().toISOString().split('T')[0];
     if (book.status === 'tbr') { book.rating = null; book.date = null; }
+    book.updatedAt = new Date().toISOString();
     save(); saveBookToCloud(book);
     closeModal();
     renderTBR(); renderHomeReading(); updateStats();
@@ -3277,10 +3528,13 @@ function saveEdits() {
   book.rating       = isDnf ? null : (editRating || null);
   book.date         = document.getElementById('rt-sheet-date-edit').value || book.date;
   book.notes        = document.getElementById('rt-sheet-notes-edit').value.trim() || null;
+  const genreEditEl = document.getElementById('rt-genre-edit');
+  if (genreEditEl) book.genre = genreEditEl.value || book.genre || null;
   const isPublic    = document.getElementById('rt-share-check-edit').checked;
   const reviewText  = document.getElementById('rt-sheet-review-edit').value.trim();
   book.reviewBody   = (isPublic && reviewText) ? reviewText : null;
   book.reviewPublic = isPublic && !!reviewText;
+  book.updatedAt    = new Date().toISOString();
   save(); saveBookToCloud(book);
   renderHistory(); updateStats(); renderGenreChart();
   // Return to read mode with updated content
@@ -3308,6 +3562,7 @@ function commitFinish(status) {
   const reviewText = document.getElementById('rt-sheet-review').value.trim();
   book.reviewBody  = (isPublic && reviewText) ? reviewText : null;
   book.reviewPublic = isPublic && !!reviewText;
+  book.updatedAt   = new Date().toISOString();
 
   save();
   saveBookToCloud(book);
@@ -3377,7 +3632,9 @@ function buildRecsPrompt() {
   const genres  = [...new Set(books.map(b => b.genre).filter(Boolean))];
   const topRated = read.filter(b => b.rating >= 4).slice(0, 8);
   const sample   = topRated.length ? topRated : read.slice(0, 6);
-  const fmt = b => `"${b.title}"${b.author?` by ${b.author}`:''}${b.genre?` (${b.genre})`:''}${b.rating?` ${b.rating}/5★`:''}${b.notes?` — "${b.notes}"`:''}`;
+  // Sanitise user-entered strings before injecting into prompt
+  const safe = s => (s || '').replace(/[\r\n]+/g, ' ').slice(0, 200);
+  const fmt = b => `"${safe(b.title)}"${b.author?` by ${safe(b.author)}`:''}${b.genre?` (${safe(b.genre)})`:''}${b.rating?` ${b.rating}/5★`:''}${b.notes?` — "${safe(b.notes).slice(0, 150)}"`:''}`;
   return `You are a deeply well-read friend. Here is someone's reading history:
 
 LOVED (4-5★):
@@ -3387,12 +3644,12 @@ CURRENTLY READING:
 ${reading.map(fmt).join('\n') || 'Nothing'}
 
 DID NOT FINISH:
-${dnf.map(b => `"${b.title}"${b.author?` by ${b.author}`:''}`).join('\n') || 'None'}
+${dnf.map(b => `"${safe(b.title)}"${b.author?` by ${safe(b.author)}`:''}`).join('\n') || 'None'}
 
 WANTS TO READ:
-${tbr.map(b => b.title).join(', ') || 'Empty'}
+${tbr.map(b => safe(b.title)).join(', ') || 'Empty'}
 
-Genres they read: ${genres.join(', ') || 'mixed'}. Total finished: ${read.length}.
+Genres they read: ${genres.map(safe).join(', ') || 'mixed'}. Total finished: ${read.length}.
 
 Recommend exactly 4 books. Respond ONLY with valid JSON — no markdown, no preamble. Format:
 [
@@ -3406,18 +3663,27 @@ Recommend exactly 4 books. Respond ONLY with valid JSON — no markdown, no prea
 }
 
 async function fetchRecs() {
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/recommendations`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON}` },
-    body: JSON.stringify({ prompt: buildRecsPrompt() })
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const data = await res.json();
-  const text = data.text || data.content?.find(c => c.type === 'text')?.text || '';
-  if (!text) throw new Error('empty response');
-  // Strip any markdown fences
-  const clean = text.replace(/```json|```/g, '').trim();
-  return JSON.parse(clean);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/recommendations`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON}` },
+      body: JSON.stringify({ prompt: buildRecsPrompt() }),
+      signal: controller.signal
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const text = data.text || data.content?.find(c => c.type === 'text')?.text || '';
+    if (!text) throw new Error('empty response');
+    const clean = text.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
+  } catch(e) {
+    if (e.name === 'AbortError') throw new Error('Request timed out — please try again.');
+    throw e;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function renderRecCard(rec, idx, total) {
@@ -3429,8 +3695,6 @@ function renderRecCard(rec, idx, total) {
   document.getElementById('rt-prog-label').textContent = `${idx + 1} of ${total}`;
 
   const wrap = document.getElementById('rt-rec-card-wrap');
-  const safeTitle  = rec.title.replace(/'/g, "\\'");
-  const safeAuthor = (rec.author || '').replace(/'/g, "\\'");
   wrap.innerHTML = `
   <div class="rt-rec-card">
     <div class="rt-rec-card-top">
@@ -3445,16 +3709,21 @@ function renderRecCard(rec, idx, total) {
     <div class="rt-rec-card-body">
       <p class="rt-rec-desc">${esc(rec.desc || '')}</p>
       <div class="rt-rec-actions">
-        <button class="rt-rec-add-btn" id="rt-rec-add-${idx}" type="button"
-          onclick="addRecToTBRAndNext('${safeTitle}','${safeAuthor}',${idx})">
+        <button class="rt-rec-add-btn" id="rt-rec-add-${idx}" type="button">
           + Add to My List
         </button>
-        <button class="rt-rec-dismiss-btn" type="button" onclick="nextRec(${idx})">
+        <button class="rt-rec-dismiss-btn" id="rt-rec-skip-${idx}" type="button">
           Skip →
         </button>
       </div>
     </div>
   </div>`;
+
+  // Bind handlers imperatively — avoids string injection in onclick attributes
+  const addBtn  = document.getElementById(`rt-rec-add-${idx}`);
+  const skipBtn = document.getElementById(`rt-rec-skip-${idx}`);
+  if (addBtn)  addBtn.addEventListener('click',  () => addRecToTBRAndNext(rec.title, rec.author || '', idx));
+  if (skipBtn) skipBtn.addEventListener('click', () => nextRec(idx));
 
   // Try to fetch cover from OL
   fetchOLCover(rec.title, rec.author).then(coverId => {
@@ -3549,9 +3818,13 @@ titleInput.addEventListener('input', function() {
   olSelected = false;
   document.getElementById('rt-ol-cover-id').value = '';
   document.getElementById('rt-ol-key').value = '';
-  if (q.length < 3) { olDropdown.style.display = 'none'; return; }
+  olDropdown.style.display = 'none';
+  if (q.length < 4) return;
   clearTimeout(olTimer);
-  olTimer = setTimeout(() => searchOpenLibrary(q), 350);
+  olTimer = setTimeout(() => {
+    if (olSelected) return; // user already picked a result, don't re-open
+    searchOpenLibrary(q);
+  }, 600);
 });
 
 titleInput.addEventListener('keydown', function(e) {
@@ -3615,6 +3888,7 @@ function renderOLDropdown(docs) {
       document.getElementById('rt-ol-key').value      = this.dataset.olkey;
       olDropdown.style.display = 'none';
       olSelected = true;
+      clearTimeout(olTimer); // cancel any pending search triggered by the selection
     });
   });
 }
@@ -3705,6 +3979,7 @@ async function processGoodreadsCSV(csvText) {
     const iBookId   = col('book id');
     const iAuthor   = headers.findIndex(h => h === 'author');
     const iShelf    = col('exclusive shelf');
+    const iShelves  = col('bookshelves');
     const iRating   = col('my rating');
     const iDateRead  = col('date read');
     const iDateAdded = col('date added');
@@ -3723,6 +3998,7 @@ async function processGoodreadsCSV(csvText) {
       const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
       const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
       const notes  = iReview  >= 0 ? (row[iReview] || '').trim() || null : null;
+      const genre  = normaliseImportedGenre(iShelves >= 0 ? row[iShelves] : '');
       if (isDuplicate(title, author)) { skipped++; continue; }
       let status = 'read';
       if      (shelf === 'to-read')           status = 'tbr';
@@ -3733,6 +4009,7 @@ async function processGoodreadsCSV(csvText) {
         date:        status === 'read' ? dateRead : null,
         dateStarted: status === 'reading' ? (dateAdded || null) : null,
         added:       dateAdded || new Date().toISOString(),
+        genre:       genre || null,
         source: 'goodreads', goodreadsId: grId || null, olKey: null, coverId: null });
     }
 
@@ -3753,17 +4030,11 @@ async function processGoodreadsCSV(csvText) {
     save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
 
     if (currentUser) {
-      showImportStatus('loading', `✓ Parsed ${toImport.length} books. Syncing to cloud…`);
-      const SYNC_BATCH = 3;
-      for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
-        await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
-        showImportStatus('loading', `Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`);
-        if (i + SYNC_BATCH < toImport.length) await new Promise(r => setTimeout(r, 500));
-      }
+      SyncQueue.enqueueBatch('upsert_entry', toImport);
       showImportStatus('success',
         `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
         (skipped ? ` · ${skipped} skipped` : '') +
-        ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
+        ` · <strong>${matched}</strong> matched to Open Library · syncing to cloud.` +
         ` <button class="btn-text-link" onclick="switchTab('home');document.getElementById('rt-import-status').style.display='none'">View library →</button>`,
         8000);
     } else {
@@ -3795,13 +4066,43 @@ function parseCSV(text) {
   return rows;
 }
 
+// Map imported genre/shelf strings to our genre list
+// Accepts a comma-separated string (Goodreads bookshelves or StoryGraph genres)
+function normaliseImportedGenre(raw) {
+  if (!raw || !raw.trim()) return null;
+  const terms = raw.toLowerCase();
+  if (terms.includes('fantasy'))                                    return 'Fantasy';
+  if (terms.includes('sci-fi') || terms.includes('science-fiction')
+    || terms.includes('science fiction') || terms.includes('scifi')) return 'Science Fiction';
+  if (terms.includes('horror'))                                     return 'Horror';
+  if (terms.includes('romance'))                                    return 'Romance';
+  if (terms.includes('dystopia'))                                   return 'Dystopian';
+  if (terms.includes('literary fiction') || terms.includes('literary')) return 'Literary Fiction';
+  if (terms.includes('historical fiction') || terms.includes('historical')) return 'Historical Fiction';
+  if (terms.includes('thriller') || terms.includes('mystery')
+    || terms.includes('crime') || terms.includes('suspense'))       return 'Thriller';
+  if (terms.includes('non-fiction') || terms.includes('nonfiction')
+    || terms.includes('biography') || terms.includes('memoir')
+    || terms.includes('self-help') || terms.includes('history')
+    || terms.includes('true crime') || terms.includes('psychology')) return 'Non-Fiction';
+  if (terms.includes('short stor') || terms.includes('anthology')
+    || terms.includes('collection'))                                return 'Short Stories';
+  return null; // don't guess — leave blank rather than assign wrongly
+}
+
 function parseGRDate(str) {
   if (!str || !str.trim()) return null;
   const s = str.trim();
-  const full = s.match(/^(\d{4})\/(\d{2})\/(\d{2})$/);
-  if (full) return `${full[1]}-${full[2]}-${full[3]}`;
-  const partial = s.match(/^(\d{4})\/(\d{2})$/);
+  // YYYY/MM/DD (Goodreads)
+  const slash = s.match(/^(\d{4})\/(\d{2})\/(\d{2})$/);
+  if (slash) return `${slash[1]}-${slash[2]}-${slash[3]}`;
+  // YYYY-MM-DD (StoryGraph)
+  const dash = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (dash) return `${dash[1]}-${dash[2]}-${dash[3]}`;
+  // YYYY/MM or YYYY-MM (partial)
+  const partial = s.match(/^(\d{4})[\/\-](\d{2})$/);
   if (partial) return `${partial[1]}-${partial[2]}-01`;
+  // YYYY only
   const yearOnly = s.match(/^(\d{4})$/);
   if (yearOnly) return `${yearOnly[1]}-01-01`;
   return null;
@@ -3834,6 +4135,7 @@ async function processStorygraphCSV(csvText) {
     const iDateRead   = col('last date read');
     const iDateAdded  = col('date added');
     const iReview     = col('review');
+    const iGenres     = col('genres');
 
     if (iTitle === -1) throw new Error('Could not find Title column — is this a Storygraph CSV?');
 
@@ -3849,6 +4151,7 @@ async function processStorygraphCSV(csvText) {
       const dateRead  = iDateRead  >= 0 ? parseGRDate(row[iDateRead])  : null;
       const dateAdded = iDateAdded >= 0 ? parseGRDate(row[iDateAdded]) : null;
       const notes     = iReview >= 0 ? (row[iReview] || '').trim() || null : null;
+      const genre     = normaliseImportedGenre(iGenres >= 0 ? row[iGenres] : '');
 
       if (isDuplicate(title, author)) { skipped++; continue; }
 
@@ -3864,6 +4167,7 @@ async function processStorygraphCSV(csvText) {
         date:        status === 'read' ? dateRead : null,
         dateStarted: status === 'reading' ? (dateAdded || null) : null,
         added:       dateAdded || new Date().toISOString(),
+        genre:       genre || null,
         source: 'storygraph', olKey: null, coverId: null
       });
     }
@@ -3885,17 +4189,11 @@ async function processStorygraphCSV(csvText) {
     save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
 
     if (currentUser) {
-      showImportStatus('loading', `✓ Parsed ${toImport.length} books. Syncing to cloud…`);
-      const SYNC_BATCH = 3;
-      for (let i = 0; i < toImport.length; i += SYNC_BATCH) {
-        await Promise.all(toImport.slice(i, i + SYNC_BATCH).map(b => saveBookToCloud(b)));
-        showImportStatus('loading', `Syncing… ${Math.min(i + SYNC_BATCH, toImport.length)}/${toImport.length}`);
-        if (i + SYNC_BATCH < toImport.length) await new Promise(r => setTimeout(r, 500));
-      }
+      SyncQueue.enqueueBatch('upsert_entry', toImport);
       showImportStatus('success',
         `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
         (skipped ? ` · ${skipped} skipped` : '') +
-        ` · <strong>${matched}</strong> matched to Open Library · synced to cloud.` +
+        ` · <strong>${matched}</strong> matched to Open Library · syncing to cloud.` +
         ` <button class="btn-text-link" onclick="switchTab('home');document.getElementById('rt-import-status').style.display='none'">View library →</button>`,
         8000);
     } else {
