@@ -3964,8 +3964,6 @@ async function processGoodreadsCSV(csvText) {
     save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
 
     if (currentUser) {
-
-    if (currentUser) {
       SyncQueue.enqueueBatch('upsert_entry', toImport);
       showImportStatus('success',
         `✓ Imported <strong>${toImport.length}</strong> book${toImport.length !== 1 ? 's' : ''}` +
@@ -4091,8 +4089,6 @@ async function processStorygraphCSV(csvText) {
     olResults.forEach((ol, i) => { if (ol) { toImport[i].olKey = ol.olKey; toImport[i].coverId = ol.coverId; matched++; } });
     toImport.forEach(b => books.push(b));
     save(); updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
-
-    if (currentUser) {
 
     if (currentUser) {
       SyncQueue.enqueueBatch('upsert_entry', toImport);
