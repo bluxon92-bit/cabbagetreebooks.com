@@ -2520,6 +2520,7 @@ const SyncQueue = (() => {
 
   // ── Core processor ───────────────────────────────────────────
   async function _drain() {
+    console.log('[SyncQueue] _drain called — processing:', _processing, 'paused:', _paused, 'online:', _online, 'user:', !!currentUser, 'queue:', _queue.length);
     if (_processing || _paused || !_online || !currentUser) return;
     if (!_queue.length) { _setStatus('idle'); return; }
     _processing = true;
