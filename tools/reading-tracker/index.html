@@ -1251,6 +1251,7 @@ permalink: /tools/reading-tracker/
   font-size: 0.72rem; color: var(--rt-t3); font-style: italic;
   margin-top: 0.4rem; line-height: 1.5;
 }
+} /* end @media (max-width: 700px) — genre chart */
 
 @media (max-width: 700px) {
   .rt-tabbar-wrap { display: none; }
@@ -2328,7 +2329,7 @@ function renderAuthUI() {
     loggedOut.style.display = 'none';
     if (emailEl) emailEl.textContent = currentUser.email;
     if (joinedEl) {
-      const d = new Date(currentUser.created_at || currentUser.email);
+      const d = new Date(currentUser.created_at);
       joinedEl.textContent = isNaN(d) ? '' : 'Member since ' + d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
     }
     const readCount = getBooks('read').length;
@@ -2410,6 +2411,10 @@ function showMsg(el, text, type) {
 }
 
 async function signOut() {
+  if (SyncQueue.pending > 0) {
+    const ok = confirm(`You have ${SyncQueue.pending} change${SyncQueue.pending !== 1 ? 's' : ''} still syncing. Signing out now may lose them. Sign out anyway?`);
+    if (!ok) return;
+  }
   try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 1500))]); } catch(e) {}
   const key = Object.keys(localStorage).find(k => k.startsWith('sb-') && k.endsWith('-auth-token'));
   if (key) localStorage.removeItem(key);
@@ -2718,7 +2723,7 @@ function load() {
 }
 
 function getBooks(status) { return books.filter(b => b.status === status); }
-function uid() { return Date.now() + Math.floor(Math.random() * 1000); }
+function uid() { return `${Date.now()}_${Math.random().toString(36).slice(2)}`; }
 function esc(s) {
   const d = document.createElement('div');
   d.appendChild(document.createTextNode(s || ''));
@@ -2868,7 +2873,7 @@ function renderHomeReading() {
 
 document.getElementById('rt-home-reading-list').addEventListener('click', function(e) {
   const finBtn = e.target.closest('.rt-finish-btn');
-  if (finBtn) { openModal(Number(finBtn.dataset.id) || finBtn.dataset.id); return; }
+  if (finBtn) { openModal(finBtn.dataset.id); return; }
   const delBtn = e.target.closest('[data-action="remove-reading"]');
   if (delBtn && confirm('Remove from currently reading?')) {
     const book = books.find(b => String(b.id) === String(delBtn.dataset.id));
@@ -3588,7 +3593,9 @@ function buildRecsPrompt() {
   const genres  = [...new Set(books.map(b => b.genre).filter(Boolean))];
   const topRated = read.filter(b => b.rating >= 4).slice(0, 8);
   const sample   = topRated.length ? topRated : read.slice(0, 6);
-  const fmt = b => `"${b.title}"${b.author?` by ${b.author}`:''}${b.genre?` (${b.genre})`:''}${b.rating?` ${b.rating}/5★`:''}${b.notes?` — "${b.notes}"`:''}`;
+  // Sanitise user-entered strings before injecting into prompt
+  const safe = s => (s || '').replace(/[\r\n]+/g, ' ').slice(0, 200);
+  const fmt = b => `"${safe(b.title)}"${b.author?` by ${safe(b.author)}`:''}${b.genre?` (${safe(b.genre)})`:''}${b.rating?` ${b.rating}/5★`:''}${b.notes?` — "${safe(b.notes).slice(0, 150)}"`:''}`;
   return `You are a deeply well-read friend. Here is someone's reading history:
 
 LOVED (4-5★):
@@ -3598,12 +3605,12 @@ CURRENTLY READING:
 ${reading.map(fmt).join('\n') || 'Nothing'}
 
 DID NOT FINISH:
-${dnf.map(b => `"${b.title}"${b.author?` by ${b.author}`:''}`).join('\n') || 'None'}
+${dnf.map(b => `"${safe(b.title)}"${b.author?` by ${safe(b.author)}`:''}`).join('\n') || 'None'}
 
 WANTS TO READ:
-${tbr.map(b => b.title).join(', ') || 'Empty'}
+${tbr.map(b => safe(b.title)).join(', ') || 'Empty'}
 
-Genres they read: ${genres.join(', ') || 'mixed'}. Total finished: ${read.length}.
+Genres they read: ${genres.map(safe).join(', ') || 'mixed'}. Total finished: ${read.length}.
 
 Recommend exactly 4 books. Respond ONLY with valid JSON — no markdown, no preamble. Format:
 [
@@ -3617,18 +3624,27 @@ Recommend exactly 4 books. Respond ONLY with valid JSON — no markdown, no prea
 }
 
 async function fetchRecs() {
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/recommendations`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON}` },
-    body: JSON.stringify({ prompt: buildRecsPrompt() })
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const data = await res.json();
-  const text = data.text || data.content?.find(c => c.type === 'text')?.text || '';
-  if (!text) throw new Error('empty response');
-  // Strip any markdown fences
-  const clean = text.replace(/```json|```/g, '').trim();
-  return JSON.parse(clean);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/recommendations`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_ANON}` },
+      body: JSON.stringify({ prompt: buildRecsPrompt() }),
+      signal: controller.signal
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const text = data.text || data.content?.find(c => c.type === 'text')?.text || '';
+    if (!text) throw new Error('empty response');
+    const clean = text.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
+  } catch(e) {
+    if (e.name === 'AbortError') throw new Error('Request timed out — please try again.');
+    throw e;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function renderRecCard(rec, idx, total) {
@@ -3640,8 +3656,6 @@ function renderRecCard(rec, idx, total) {
   document.getElementById('rt-prog-label').textContent = `${idx + 1} of ${total}`;
 
   const wrap = document.getElementById('rt-rec-card-wrap');
-  const safeTitle  = rec.title.replace(/'/g, "\\'");
-  const safeAuthor = (rec.author || '').replace(/'/g, "\\'");
   wrap.innerHTML = `
   <div class="rt-rec-card">
     <div class="rt-rec-card-top">
@@ -3656,16 +3670,21 @@ function renderRecCard(rec, idx, total) {
     <div class="rt-rec-card-body">
       <p class="rt-rec-desc">${esc(rec.desc || '')}</p>
       <div class="rt-rec-actions">
-        <button class="rt-rec-add-btn" id="rt-rec-add-${idx}" type="button"
-          onclick="addRecToTBRAndNext('${safeTitle}','${safeAuthor}',${idx})">
+        <button class="rt-rec-add-btn" id="rt-rec-add-${idx}" type="button">
           + Add to My List
         </button>
-        <button class="rt-rec-dismiss-btn" type="button" onclick="nextRec(${idx})">
+        <button class="rt-rec-dismiss-btn" id="rt-rec-skip-${idx}" type="button">
           Skip →
         </button>
       </div>
     </div>
   </div>`;
+
+  // Bind handlers imperatively — avoids string injection in onclick attributes
+  const addBtn  = document.getElementById(`rt-rec-add-${idx}`);
+  const skipBtn = document.getElementById(`rt-rec-skip-${idx}`);
+  if (addBtn)  addBtn.addEventListener('click',  () => addRecToTBRAndNext(rec.title, rec.author || '', idx));
+  if (skipBtn) skipBtn.addEventListener('click', () => nextRec(idx));
 
   // Try to fetch cover from OL
   fetchOLCover(rec.title, rec.author).then(coverId => {
@@ -3983,7 +4002,6 @@ async function processGoodreadsCSV(csvText) {
     showImportStatus('error', `Import failed: ${err.message}`, 6000);
   }
 }
-}
 
 function parseCSV(text) {
   const rows = []; let row = [], cell = '', inQuote = false;
@@ -4109,7 +4127,6 @@ async function processStorygraphCSV(csvText) {
   } catch(err) {
     showImportStatus('error', `Import failed: ${err.message}`, 6000);
   }
-}
 }
 
 // ─────────────────────────────────────────────────────────────
