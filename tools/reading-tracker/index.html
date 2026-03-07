@@ -2520,7 +2520,6 @@ const SyncQueue = (() => {
 
   // ── Core processor ───────────────────────────────────────────
   async function _drain() {
-    console.log('[SyncQueue] _drain called — processing:', _processing, 'paused:', _paused, 'online:', _online, 'user:', !!currentUser, 'queue:', _queue.length);
     if (_processing || _paused || !_online || !currentUser) return;
     if (!_queue.length) { _setStatus('idle'); return; }
     _processing = true;
@@ -2596,7 +2595,6 @@ const SyncQueue = (() => {
       review_is_public: book.reviewPublic || false,
       updated_at:       new Date().toISOString()
     };
-    console.log('[SyncQueue] _upsertEntry row:', JSON.stringify(row));
     if (book.cloudId) {
       // Update existing entry
       const { error } = await sb.from('reading_entries')
