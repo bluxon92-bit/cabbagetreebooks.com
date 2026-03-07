@@ -2631,20 +2631,12 @@ const SyncQueue = (() => {
     _paused = true;
     _setStatus('syncing', 'Loading your library…');
     // Safety cap — never show "Loading your library" for more than 12s
-    const safetyTimer = setTimeout(() => _setStatus('idle'), 12000);
+    const safetyTimer = setTimeout(() => { _paused = false; _setStatus('idle'); }, 12000);
     try {
-      const controller = new AbortController();
-      const fetchTimeout = setTimeout(() => controller.abort(), 10000);
-      let data, error;
-      try {
-        ({ data, error } = await sb
-          .from('reading_entries')
-          .select('*, books(title, author, cover_id, ol_key)')
-          .eq('user_id', currentUser.id)
-          .abortSignal(controller.signal));
-      } finally {
-        clearTimeout(fetchTimeout);
-      }
+      const { data, error } = await sb
+        .from('reading_entries')
+        .select('*, books(title, author, cover_id, ol_key)')
+        .eq('user_id', currentUser.id);
       if (error) { console.error('[SyncQueue] syncOnLogin fetch:', error.message); return; }
 
       const cloudBooks = (data || []).map(e => ({
