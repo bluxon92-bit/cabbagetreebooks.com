@@ -2465,8 +2465,14 @@ const SyncQueue = (() => {
       offline: 'Offline — changes saved locally'
     };
     el.dataset.state = state;
-    el.textContent   = `${icons[state]} ${detail || labels[state]}`;
-    el.style.opacity = (state === 'idle') ? '0' : '1';
+    if (state === 'idle') {
+      el.style.opacity = '0';
+      // Clear text after fade-out so it can't flash stale content
+      setTimeout(() => { if (el.dataset.state === 'idle') el.textContent = ''; }, 500);
+    } else {
+      el.textContent = `${icons[state]} ${detail || labels[state]}`;
+      el.style.opacity = '1';
+    }
   }
 
   // ── Queue management ─────────────────────────────────────────
@@ -2675,6 +2681,7 @@ const SyncQueue = (() => {
       _paused = false;
       updateStats(); renderGenreChart(); renderHomeReading(); renderHistory();
       if (document.getElementById('rt-panel-tbr').style.display !== 'none') renderTBR();
+      _setStatus('idle');
       _drain();
     }
   }
@@ -3021,6 +3028,10 @@ function closeAddModal() {
   sheet.classList.remove('open');
   document.body.style.overflow = '';
   document.getElementById('rt-add-duplicate-warning').style.display = 'none';
+  // Reset OL search state so next open starts fresh
+  olSelected = false;
+  clearTimeout(olTimer);
+  if (olDropdown) olDropdown.style.display = 'none';
 }
 
 document.getElementById('rt-add-sheet-close').addEventListener('click', closeAddModal);
@@ -3782,9 +3793,13 @@ titleInput.addEventListener('input', function() {
   olSelected = false;
   document.getElementById('rt-ol-cover-id').value = '';
   document.getElementById('rt-ol-key').value = '';
-  if (q.length < 3) { olDropdown.style.display = 'none'; return; }
+  olDropdown.style.display = 'none';
+  if (q.length < 4) return;
   clearTimeout(olTimer);
-  olTimer = setTimeout(() => searchOpenLibrary(q), 350);
+  olTimer = setTimeout(() => {
+    if (olSelected) return; // user already picked a result, don't re-open
+    searchOpenLibrary(q);
+  }, 600);
 });
 
 titleInput.addEventListener('keydown', function(e) {
@@ -3848,6 +3863,7 @@ function renderOLDropdown(docs) {
       document.getElementById('rt-ol-key').value      = this.dataset.olkey;
       olDropdown.style.display = 'none';
       olSelected = true;
+      clearTimeout(olTimer); // cancel any pending search triggered by the selection
     });
   });
 }
