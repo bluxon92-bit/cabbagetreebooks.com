@@ -2847,7 +2847,7 @@ addStarWrap.addEventListener('mouseover', e => {
 addStarWrap.addEventListener('mouseleave', () =>
   document.querySelectorAll('#rt-star-input .rt-star').forEach(s => s.classList.remove('hover')));
 
-document.getElementById('rt-add-btn').addEventListener('click', async function() {
+document.getElementById('rt-add-btn').addEventListener('click', function() {
   const titleEl = document.getElementById('rt-title');
   const title   = titleEl.value.trim();
   if (!title) {
@@ -2905,7 +2905,6 @@ document.getElementById('rt-add-btn').addEventListener('click', async function()
     olKey:       olKeyRaw || null
   };
   books.unshift(book); save();
-  await saveBookToCloud(book);
   saveBookToCloud(book);
   ['rt-title','rt-author','rt-notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('rt-ol-cover-id').value = '';
