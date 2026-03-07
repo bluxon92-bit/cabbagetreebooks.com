@@ -2548,11 +2548,11 @@ const SyncQueue = (() => {
         case 'upsert_entry':  return await _upsertEntry(item.payload);
         case 'delete_entry':  return await _deleteEntry(item.payload);
         default:
-          console.warn('[SyncQueue] Unknown operation:', item.operation);
+          console.error('[SyncQueue] Unknown operation:', item.operation);
           return true; // drop unknown ops
       }
     } catch(e) {
-      console.warn('[SyncQueue] Process error:', e.message);
+      console.error('[SyncQueue] Process error on operation', item.operation, ':', e.message, e);
       return false;
     }
   }
@@ -2564,7 +2564,7 @@ const SyncQueue = (() => {
       { ol_key: book.olKey, title: book.title, author: book.author || null, cover_id: book.coverId || null },
       { onConflict: 'ol_key', ignoreDuplicates: false }
     ).select('id').single();
-    if (error) { console.warn('[SyncQueue] upsertCanonicalBook:', error.message); return null; }
+    if (error) { console.error('[SyncQueue] upsertCanonicalBook:', error.message); return null; }
     return data?.id || null;
   }
 
@@ -2591,12 +2591,12 @@ const SyncQueue = (() => {
         .update(row)
         .eq('id', book.cloudId)
         .eq('user_id', currentUser.id);
-      if (error) { console.warn('[SyncQueue] update entry:', error.message); return false; }
+      if (error) { console.error('[SyncQueue] update entry:', error.message); return false; }
     } else {
       // Insert new entry, write cloudId back to local book
       const { data, error } = await sb.from('reading_entries')
         .insert(row).select('id').single();
-      if (error) { console.warn('[SyncQueue] insert entry:', error.message); return false; }
+      if (error) { console.error('[SyncQueue] insert entry:', error.message); return false; }
       if (data?.id) {
         // Write cloudId back into local books array and persist
         const localBook = books.find(b => String(b.id) === String(book.id));
@@ -2612,7 +2612,7 @@ const SyncQueue = (() => {
       .delete()
       .eq('id', book.cloudId)
       .eq('user_id', currentUser.id);
-    if (error) { console.warn('[SyncQueue] delete entry:', error.message); return false; }
+    if (error) { console.error('[SyncQueue] delete entry:', error.message); return false; }
     return true;
   }
 
