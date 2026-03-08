@@ -778,7 +778,7 @@ permalink: /tools/reading-tracker/
 .rt-profile-joined { font-size: 0.75rem; color: var(--rt-t3); margin-top: 0.15rem; }
 .rt-profile-stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 0.6rem; margin-top: 0.25rem;
+  gap: 0.6rem;
 }
 .rt-profile-stat {
   background: #ffffff; border-radius: 10px;
@@ -1986,7 +1986,7 @@ permalink: /tools/reading-tracker/
     </button>
     <button class="rt-tab" data-tab="community" onclick="switchTab('community')">
       <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Community
+      Friends
     </button>
     <button class="rt-tab" data-tab="tbr"    onclick="switchTab('tbr')">
       <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2015,7 +2015,7 @@ permalink: /tools/reading-tracker/
     </button>
     <button class="rt-sidebar-item" data-tab="community" onclick="switchTab('community')">
       <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Community
+      Friends
     </button>
     <button class="rt-sidebar-item" data-tab="tbr" onclick="switchTab('tbr')">
       <svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2138,72 +2138,69 @@ permalink: /tools/reading-tracker/
         <div id="rt-community-loggedout" style="display:none;">
           <div class="rt-card" style="text-align:center;padding:2.5rem 1.5rem;">
             <div style="font-size:2.5rem;margin-bottom:0.75rem;">👥</div>
-            <h3 style="font-family:var(--rt-font-display);font-size:1.2rem;font-weight:700;color:var(--rt-navy);margin-bottom:0.5rem;">Your reading circle</h3>
-            <p style="font-size:0.85rem;color:var(--rt-t3);line-height:1.65;margin-bottom:1.25rem;max-width:320px;margin-left:auto;margin-right:auto;">Sign in to add friends, share recommendations, and see what your reading circle is up to.</p>
+            <h3 style="font-family:var(--rt-font-display);font-size:1.2rem;font-weight:700;color:var(--rt-navy);margin-bottom:0.5rem;">Chat &amp; Friends</h3>
+            <p style="font-size:0.85rem;color:var(--rt-t3);line-height:1.65;margin-bottom:1.25rem;max-width:320px;margin-left:auto;margin-right:auto;">Sign in to add friends, share recommendations, and chat about books you're both reading.</p>
             <button class="rt-submit-btn" onclick="switchTab('account')" type="button" style="max-width:240px;margin:0 auto;">Sign in to connect →</button>
           </div>
         </div>
 
         <!-- LOGGED IN STATE -->
         <div id="rt-community-loggedin" style="display:none;">
+          <div class="rt-panel-inner">
 
-          <!-- Add friend + invite -->
-          <div class="rt-card" style="display:flex;flex-direction:column;gap:1rem;">
-            <div>
-              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Add a friend</div>
-              <div class="rt-add-friend-form">
-                <input type="email" class="rt-add-friend-input" id="rt-add-friend-input" placeholder="Friend's email or @username">
-                <button class="rt-add-friend-btn" id="rt-add-friend-btn" type="button">Send invite</button>
-              </div>
-              <p id="rt-add-friend-msg" style="display:none;font-size:0.78rem;margin-top:0.5rem;"></p>
-            </div>
-            <div class="rt-invite-box">
-              <div class="rt-invite-box-title">Share your invite link</div>
-              <div class="rt-invite-box-sub">Anyone with this link can send you a friend request.</div>
-              <div class="rt-invite-link-row">
-                <div class="rt-invite-link-field" id="rt-invite-link-field">Generating…</div>
-                <button class="rt-invite-copy-btn" id="rt-invite-copy-btn" type="button">Copy</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pending friend requests -->
+          <!-- Pending friend requests (shown above tabs when present) -->
           <div id="rt-pending-requests-wrap" style="display:none;">
             <div class="rt-pending-requests" id="rt-pending-requests-list"></div>
           </div>
 
-          <!-- Sub-tabs: Feed | Friends -->
+          <!-- Sub-tabs: Friends | Chat -->
           <div class="rt-card" style="padding:0;overflow:hidden;">
             <div class="rt-community-tabs" style="padding:0 1.25rem;">
-              <button class="rt-community-tab active" id="rt-ctab-feed" onclick="switchCommunityTab('feed')">
-                Activity feed
-              </button>
-              <button class="rt-community-tab" id="rt-ctab-friends" onclick="switchCommunityTab('friends')">
+              <button class="rt-community-tab active" id="rt-ctab-friends" onclick="switchCommunityTab('friends')">
                 Friends <span class="rt-community-tab-badge" id="rt-friends-count-badge" style="display:none;"></span>
               </button>
+              <button class="rt-community-tab" id="rt-ctab-chat" onclick="switchCommunityTab('chat')">
+                Chat
+              </button>
             </div>
 
-            <!-- Feed tab -->
-            <div id="rt-community-feed-tab" style="padding:0.25rem 1.25rem 1.25rem;">
-              <div id="rt-feed-list">
-                <div class="rt-feed-empty">
-                  <div class="rt-feed-empty-icon">📖</div>
-                  <p>Add friends to see their reading activity here.</p>
-                </div>
+            <!-- Friends tab: search at top, list below -->
+            <div id="rt-community-friends-tab" style="padding:1rem 1.25rem 1.25rem;">
+              <!-- Inline search -->
+              <div class="rt-add-friend-form" style="margin-bottom:0.5rem;">
+                <input type="text" class="rt-add-friend-input" id="rt-add-friend-input" placeholder="Search by @username">
+                <button class="rt-add-friend-btn" id="rt-add-friend-btn" type="button">Add</button>
               </div>
-            </div>
+              <p id="rt-add-friend-msg" style="display:none;font-size:0.78rem;margin-bottom:0.75rem;"></p>
 
-            <!-- Friends tab -->
-            <div id="rt-community-friends-tab" style="display:none;padding:0.25rem 1.25rem 1.25rem;">
-              <div id="rt-friends-list">
-                <div class="rt-feed-empty">
+              <!-- Friends list / empty state -->
+              <div id="rt-friends-list" style="margin-top:0.5rem;">
+                <div class="rt-feed-empty" style="padding:1.5rem 0.5rem;">
                   <div class="rt-feed-empty-icon">👋</div>
-                  <p>No friends yet — add someone above or share your invite link.</p>
+                  <p>No friends yet — search for someone above, or share your invite link below.</p>
                 </div>
               </div>
+            </div>
+
+            <!-- Chat tab (Phase 3) -->
+            <div id="rt-community-chat-tab" style="display:none;padding:1.5rem 1.25rem;text-align:center;">
+              <div style="font-size:1.8rem;margin-bottom:0.6rem;">💬</div>
+              <div style="font-family:var(--rt-font-display);font-size:1rem;font-weight:700;color:var(--rt-navy);margin-bottom:0.4rem;">Book chat — coming soon</div>
+              <p style="font-size:0.83rem;color:var(--rt-t3);line-height:1.6;max-width:280px;margin:0 auto;">Dedicated chat spaces for books you and a friend are both reading.</p>
             </div>
           </div>
 
+          <!-- Invite link at bottom, lower visual weight -->
+          <div class="rt-invite-box">
+            <div class="rt-invite-box-title">Invite a friend</div>
+            <div class="rt-invite-box-sub">Share this link — anyone who opens it can send you a friend request.</div>
+            <div class="rt-invite-link-row">
+              <div class="rt-invite-link-field" id="rt-invite-link-field">Generating…</div>
+              <button class="rt-invite-copy-btn" id="rt-invite-copy-btn" type="button">Copy</button>
+            </div>
+          </div>
+
+          </div><!-- /rt-panel-inner -->
         </div><!-- /loggedin -->
       </div>
     </div>
@@ -2385,38 +2382,55 @@ permalink: /tools/reading-tracker/
 
         <!-- LOGGED IN -->
         <div id="rt-auth-loggedin" style="display:none;">
-          <div class="rt-profile-card">
-            <div class="rt-profile-avatar">
-              <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="white" stroke-width="1.8"/></svg>
-            </div>
-            <div style="flex:1;min-width:0;">
-              <div class="rt-profile-email" id="rt-auth-email"></div>
-              <div class="rt-profile-joined" id="rt-profile-joined"></div>
-              <button class="rt-ghost-btn" onclick="signOut()" type="button" style="margin-top:0.5rem;font-size:0.75rem;padding:0.35rem 0.75rem;">Sign out</button>
-            </div>
-          </div>
+          <div class="rt-panel-inner">
 
-          <!-- Username row -->
-          <div class="rt-card" style="margin-top:0;">
-            <div class="rt-username-row" id="rt-username-display-row">
-              <span class="rt-username-label">Username</span>
-              <span class="rt-username-value" id="rt-username-display">—</span>
-              <button class="rt-username-edit-btn" type="button" onclick="showUsernameEdit()">Edit</button>
-            </div>
-            <div class="rt-username-row" id="rt-username-edit-row" style="display:none;">
-              <span class="rt-username-label">Username</span>
-              <input class="rt-username-input" type="text" id="rt-username-input" placeholder="e.g. bookworm42" maxlength="30" autocomplete="off">
-              <button class="rt-username-edit-btn" type="button" id="rt-username-save-btn" onclick="saveUsername()">Save</button>
-              <button class="rt-username-edit-btn" type="button" onclick="cancelUsernameEdit()" style="color:var(--rt-t3);">✕</button>
-            </div>
-            <p id="rt-username-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;padding-top:0.25rem;"></p>
-          </div>
+            <!-- Combined profile + username card -->
+            <div class="rt-card">
+              <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--rt-border);">
+                <div class="rt-profile-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="white" stroke-width="1.8"/></svg>
+                </div>
+                <div style="flex:1;min-width:0;">
+                  <div class="rt-profile-email" id="rt-auth-email"></div>
+                  <div class="rt-profile-joined" id="rt-profile-joined"></div>
+                </div>
+                <button class="rt-ghost-btn" onclick="signOut()" type="button" style="font-size:0.75rem;padding:0.35rem 0.75rem;flex-shrink:0;">Sign out</button>
+              </div>
 
-          <div class="rt-profile-stats">
-            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
-            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-tbr">0</div><div class="rt-profile-stat-l">My List</div></div>
-            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-fav">0</div><div class="rt-profile-stat-l">5★ reads</div></div>
-            <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-dnf">0</div><div class="rt-profile-stat-l">DNF</div></div>
+              <!-- Username row inline -->
+              <div class="rt-username-row" id="rt-username-display-row">
+                <span class="rt-username-label">Username</span>
+                <span class="rt-username-value" id="rt-username-display">—</span>
+                <button class="rt-username-edit-btn" type="button" onclick="showUsernameEdit()">Edit</button>
+              </div>
+              <div class="rt-username-row" id="rt-username-edit-row" style="display:none;">
+                <span class="rt-username-label">Username</span>
+                <input class="rt-username-input" type="text" id="rt-username-input" placeholder="e.g. bookworm42" maxlength="30" autocomplete="off">
+                <button class="rt-username-edit-btn" type="button" id="rt-username-save-btn" onclick="saveUsername()">Save</button>
+                <button class="rt-username-edit-btn" type="button" onclick="cancelUsernameEdit()" style="color:var(--rt-t3);">✕</button>
+              </div>
+              <p id="rt-username-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;"></p>
+            </div>
+
+            <!-- Stats -->
+            <div class="rt-profile-stats">
+              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
+              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-tbr">0</div><div class="rt-profile-stat-l">My List</div></div>
+              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-fav">0</div><div class="rt-profile-stat-l">5★ reads</div></div>
+              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-dnf">0</div><div class="rt-profile-stat-l">DNF</div></div>
+            </div>
+
+            <!-- Activity feed -->
+            <div class="rt-card" id="rt-account-feed-card" style="display:none;">
+              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.85rem;">Friends' activity</div>
+              <div id="rt-feed-list">
+                <div class="rt-feed-empty">
+                  <div class="rt-feed-empty-icon">📖</div>
+                  <p>Add friends to see their reading activity here.</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -2434,7 +2448,7 @@ permalink: /tools/reading-tracker/
   </button>
   <button class="rt-nav-btn" data-tab="community" onclick="switchTab('community')">
     <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="rt-nav-label">Community</span>
+    <span class="rt-nav-label">Friends</span>
   </button>
   <button class="rt-nav-btn" data-tab="tbr" onclick="switchTab('tbr')">
     <svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3005,49 +3019,9 @@ async function doResetPassword() {
   }
 }
 
-function renderAuthUI() {
-  const loggedIn  = document.getElementById('rt-auth-loggedin');
-  const loggedOut = document.getElementById('rt-auth-loggedout');
-  const emailEl   = document.getElementById('rt-auth-email');
-  const joinedEl  = document.getElementById('rt-profile-joined');
-  const ctaEl     = document.getElementById('rt-signin-cta');
-  const ctaText   = document.getElementById('rt-signin-cta-sub');
-  const lockedEl  = document.getElementById('rt-recs-locked');
-  const genWrap   = document.getElementById('rt-recs-generate-wrap');
-  if (!loggedIn || !loggedOut) return;
-  if (ctaEl) {
-    ctaEl.style.display = currentUser ? 'none' : 'flex';
-    if (!currentUser && ctaText) {
-      ctaText.textContent = books.length
-        ? `You have ${books.length} book${books.length !== 1 ? 's' : ''} saved locally — sign up to back them up.`
-        : 'Create a free account to access your books on any device.';
-    }
-  }
-  // Show/hide recs locked state
-  if (lockedEl) lockedEl.style.display = currentUser ? 'none' : 'block';
-  if (genWrap)  genWrap.style.display  = currentUser ? 'block' : 'none';
-  if (currentUser) {
-    loggedIn.style.display  = 'block';
-    loggedOut.style.display = 'none';
-    if (emailEl) emailEl.textContent = currentUser.email;
-    if (joinedEl) {
-      const d = new Date(currentUser.created_at);
-      joinedEl.textContent = isNaN(d) ? '' : 'Member since ' + d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
-    }
-    const readCount = getBooks('read').length;
-    const tbrCount  = getBooks('tbr').length;
-    const favCount  = getBooks('read').filter(b => b.rating === 5).length;
-    const dnfCount  = getBooks('dnf').length;
-    const el = id => document.getElementById(id);
-    if (el('rt-profile-read')) el('rt-profile-read').textContent = readCount;
-    if (el('rt-profile-tbr'))  el('rt-profile-tbr').textContent  = tbrCount;
-    if (el('rt-profile-fav'))  el('rt-profile-fav').textContent  = favCount;
-    if (el('rt-profile-dnf'))  el('rt-profile-dnf').textContent  = dnfCount;
-  } else {
-    loggedIn.style.display  = 'none';
-    loggedOut.style.display = 'block';
-  }
-}
+// ═══════════════════════════════════════════════════════════════
+// ACCOUNT / AUTH UI
+// ═══════════════════════════════════════════════════════════════
 
 function renderAuthUI() {
   const loggedIn  = document.getElementById('rt-auth-loggedin');
@@ -3111,7 +3085,7 @@ function renderAuthUI() {
 const AVATAR_COLOURS = ['#1a2744','#c8891a','#2A6E69','#5c6bc0','#b43a3a','#7b3fa0','#2e7d52'];
 function avatarColour(str) {
   let h = 0;
-  for (let i = 0; i < (str||'').length; i++) h = (h * 31 + str.charCodeAt(i)) & 0xfffffff;
+  for (let i = 0; i < (str||'').length; i++) h = (h * 31 + str.charCodeAt(i)) & 0xffffffff;
   return AVATAR_COLOURS[h % AVATAR_COLOURS.length];
 }
 function avatarInitial(name) {
@@ -3130,7 +3104,8 @@ const socialState = {
 async function loadSocialData() {
   if (!currentUser) return;
   try {
-    const [friendsRes, pendingRes, feedRes, recsRes] = await Promise.all([
+    // Step 1: fetch friendships and pending requests
+    const [friendsRes, pendingRes, recsRes] = await Promise.all([
       sb.from('friendships')
         .select('id, requester_id, addressee_id, status')
         .or(`requester_id.eq.${currentUser.id},addressee_id.eq.${currentUser.id}`)
@@ -3139,10 +3114,6 @@ async function loadSocialData() {
         .select('id, requester_id')
         .eq('addressee_id', currentUser.id)
         .eq('status', 'pending'),
-      sb.from('feed_events')
-        .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
-        .order('created_at', { ascending: false })
-        .limit(40),
       sb.from('book_recommendations')
         .select('id, created_at, recommender_id, book_ol_key, message')
         .eq('recipient_id', currentUser.id)
@@ -3150,16 +3121,27 @@ async function loadSocialData() {
         .order('created_at', { ascending: false })
     ]);
 
-    // Collect all user IDs we need profiles for
-    const friendIds  = (friendsRes.data || []).map(f =>
+    // Derive friend IDs — needed to filter the feed (fix: no longer fetches all users' events)
+    const friendIds     = (friendsRes.data || []).map(f =>
       f.requester_id === currentUser.id ? f.addressee_id : f.requester_id
     );
-    const pendingIds = (pendingRes.data || []).map(f => f.requester_id);
-    const feedIds    = (feedRes.data  || []).map(f => f.user_id);
-    const recIds     = (recsRes.data  || []).map(r => r.recommender_id);
-    const allIds     = [...new Set([...friendIds, ...pendingIds, ...feedIds, ...recIds])];
+    const pendingIds    = (pendingRes.data || []).map(f => f.requester_id);
+    const recIds        = (recsRes.data   || []).map(r => r.recommender_id);
+    const friendAndSelf = [...new Set([currentUser.id, ...friendIds])];
 
-    // Batch-fetch profiles
+    // Step 2: fetch feed filtered to friends only
+    let feedData = [];
+    if (friendAndSelf.length > 0) {
+      const { data } = await sb.from('feed_events')
+        .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
+        .in('user_id', friendAndSelf)
+        .order('created_at', { ascending: false })
+        .limit(40);
+      feedData = data || [];
+    }
+
+    // Step 3: batch-fetch profiles for all relevant user IDs
+    const allIds = [...new Set([...friendIds, ...pendingIds, ...feedData.map(e => e.user_id), ...recIds])];
     let profileMap = {};
     if (allIds.length) {
       const { data: profiles } = await sb.from('profiles')
@@ -3194,12 +3176,8 @@ async function loadSocialData() {
     });
 
     // Attach profiles to feed and recs
-    socialState.feed = (feedRes.data || []).map(e => ({
-      ...e, profiles: profileMap[e.user_id] || null
-    }));
-    socialState.recs = (recsRes.data || []).map(r => ({
-      ...r, profiles: profileMap[r.recommender_id] || null
-    }));
+    socialState.feed = feedData.map(e => ({ ...e, profiles: profileMap[e.user_id] || null }));
+    socialState.recs = (recsRes.data || []).map(r => ({ ...r, profiles: profileMap[r.recommender_id] || null }));
 
     socialState._loaded = true;
     renderCommunityUI();
@@ -3212,10 +3190,10 @@ async function loadSocialData() {
 
 // ── Community sub-tab switch ──────────────────────────────────
 function switchCommunityTab(tab) {
-  document.getElementById('rt-community-feed-tab').style.display    = tab === 'feed'    ? 'block' : 'none';
   document.getElementById('rt-community-friends-tab').style.display = tab === 'friends' ? 'block' : 'none';
-  document.getElementById('rt-ctab-feed').classList.toggle('active',    tab === 'feed');
+  document.getElementById('rt-community-chat-tab').style.display    = tab === 'chat'    ? 'block' : 'none';
   document.getElementById('rt-ctab-friends').classList.toggle('active', tab === 'friends');
+  document.getElementById('rt-ctab-chat').classList.toggle('active',    tab === 'chat');
 }
 
 // ── Main community render ─────────────────────────────────────
@@ -3223,6 +3201,9 @@ function renderCommunityUI() {
   renderPendingRequests();
   renderFeed();
   renderFriendsList();
+  // Show feed card on account panel if user has friends
+  const feedCard = document.getElementById('rt-account-feed-card');
+  if (feedCard) feedCard.style.display = socialState.friends.length > 0 ? 'block' : 'none';
   // Friends count badge
   const badge = document.getElementById('rt-friends-count-badge');
   if (badge) {
@@ -3285,6 +3266,16 @@ function renderFeed() {
   el.innerHTML = allItems.map(item => renderFeedItem(item)).join('');
 }
 
+// Event delegation for rec accept chips — safe, no inline JS with user data (#2)
+document.getElementById('rt-feed-list').addEventListener('click', function(e) {
+  const chip = e.target.closest('.rt-rec-accept-chip');
+  if (!chip) return;
+  const recId   = chip.dataset.recId;
+  const olKey   = chip.dataset.olKey;
+  const message = chip.dataset.message;
+  if (recId && olKey) acceptRecToTBR(recId, olKey, message);
+});
+
 function renderFeedItem(item) {
   const now = Date.now();
   const ago = timeAgo(item.created_at);
@@ -3303,10 +3294,13 @@ function renderFeedItem(item) {
         <div class="rt-feed-avatar" style="background:${colour};">${avatarInitial(fromName)}</div>
         <div class="rt-feed-content">
           <div class="rt-feed-text"><strong>${esc(fromName)}</strong> recommended a book to you</div>
-          <div class="rt-feed-book-chip" onclick="acceptRecToTBR('${item.id}','${esc(olKey)}','${esc(item.message||'')}')">
+          <div class="rt-feed-book-chip rt-rec-accept-chip"
+            data-rec-id="${esc(item.id)}"
+            data-ol-key="${esc(olKey)}"
+            data-message="${esc(item.message||'')}">
             ${coverHtml}
             <div>
-              <div class="rt-feed-book-title">${esc(olKey || 'View recommendation')}</div>
+              <div class="rt-feed-book-title">${esc(item.book_title || olKey || 'View recommendation')}</div>
               ${item.message ? `<div style="font-size:0.68rem;color:var(--rt-t3);margin-top:1px;">"${esc(item.message.slice(0,60))}"</div>` : ''}
             </div>
             <span style="font-size:0.68rem;font-weight:700;color:var(--rt-teal);margin-left:auto;white-space:nowrap;">+ Add to list</span>
@@ -3676,6 +3670,10 @@ async function openFriendProfile(userId) {
 
   } catch(e) {
     console.error('[Social] openFriendProfile:', e);
+    document.getElementById('rt-fp-read-count').textContent    = '—';
+    document.getElementById('rt-fp-reading-count').textContent = '—';
+    document.getElementById('rt-fp-currently-reading').innerHTML =
+      '<p style="font-size:0.83rem;color:#991b1b;">Couldn\'t load data — check your connection.</p>';
   }
 }
 
@@ -4268,7 +4266,7 @@ function updateStats() {
 
 const gi = document.getElementById('rt-goal-target');
 gi.value = loadGoal();
-gi.addEventListener('change', function() { saveGoal(this.value); updateStats(); renderGenreChart(); });
+gi.addEventListener('input', function() { saveGoal(this.value); updateStats(); renderGenreChart(); });
 
 // ─────────────────────────────────────────────────────────────
 // GENRE PIE CHART
@@ -4350,7 +4348,7 @@ function switchTab(name) {
   document.querySelectorAll('.rt-nav-btn').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
 
   if (name === 'tbr') renderTBR();
-  if (name === 'community' && currentUser && !socialState._loaded) loadSocialData();
+  if ((name === 'community' || name === 'account') && currentUser && !socialState._loaded) loadSocialData();
   window.scrollTo({ top: document.querySelector('.rt-hero').offsetHeight, behavior: 'smooth' });
 }
 
@@ -4854,17 +4852,20 @@ function reorderTBR(srcId, targetId) {
 }
 
 async function saveTBRPositionsToCloud(orderedTBR) {
-  // Update tbr_position for each entry that has a cloudId
-  const updates = orderedTBR
+  // Single upsert with all positions — avoids N parallel requests (#13)
+  const rows = orderedTBR
     .filter(b => b.cloudId)
-    .map((b, i) =>
-      sb.from('reading_entries')
-        .update({ tbr_position: i + 1, updated_at: new Date().toISOString() })
-        .eq('id', b.cloudId)
-        .eq('user_id', currentUser.id)
-    );
+    .map((b, i) => ({
+      id:           b.cloudId,
+      user_id:      currentUser.id,
+      tbr_position: i + 1,
+      updated_at:   new Date().toISOString()
+    }));
+  if (!rows.length) return;
   try {
-    await Promise.all(updates);
+    const { error } = await sb.from('reading_entries')
+      .upsert(rows, { onConflict: 'id' });
+    if (error) console.error('[TBR] Failed to save positions:', error);
   } catch(e) {
     console.error('[TBR] Failed to save positions:', e);
   }
@@ -5344,7 +5345,7 @@ function renderBookDetailFooter(book) {
   const footer = document.getElementById('rt-book-detail-footer');
   const hasFriends = currentUser && socialState.friends.length > 0;
   const recBtn = hasFriends
-    ? `<button class="rt-book-detail-action rt-book-detail-action--amber" onclick="openRecommendSheet('${book.id}')">📚 Recommend</button>`
+    ? `<button class="rt-book-detail-action rt-book-detail-action--amber" data-action="recommend" data-book-id="${esc(String(book.id))}">📚 Recommend</button>`
     : '';
 
   if (book.status === 'tbr') {
@@ -5374,10 +5375,38 @@ function closeBookDetail() {
   detailBookId = null;
 }
 
+document.getElementById('rt-book-detail-footer').addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-action="recommend"]');
+  if (btn) openRecommendSheet(btn.dataset.bookId);
+});
+
 document.getElementById('rt-book-detail-close').addEventListener('click', closeBookDetail);
 document.getElementById('rt-book-detail-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeBookDetail();
 });
+
+// Book detail description cache — keyed by OL key, persisted to localStorage
+const BOOK_DESC_CACHE_KEY = 'ctb_book_desc_v1';
+function _descCache() {
+  try { return JSON.parse(localStorage.getItem(BOOK_DESC_CACHE_KEY) || '{}'); } catch { return {}; }
+}
+function _descCacheSet(olKey, data) {
+  try {
+    const c = _descCache();
+    c[olKey] = { ...data, _ts: Date.now() };
+    // Prune if > 100 entries (keep newest)
+    const keys = Object.keys(c);
+    if (keys.length > 100) {
+      keys.sort((a, b) => (c[a]._ts || 0) - (c[b]._ts || 0))
+          .slice(0, keys.length - 100)
+          .forEach(k => delete c[k]);
+    }
+    localStorage.setItem(BOOK_DESC_CACHE_KEY, JSON.stringify(c));
+  } catch {}
+}
+
+// Store current full description for expandBlurb (avoids passing through onclick string)
+let _currentBlurbFull = '';
 
 async function fetchBookDetail(book) {
   try {
@@ -5391,14 +5420,10 @@ async function fetchBookDetail(book) {
       const doc = searchData.docs?.[0];
       if (doc) {
         olKey = doc.key;
-        // Show publish year if available
         if (doc.first_publish_year) {
           document.getElementById('rt-book-detail-year').textContent = `First published ${doc.first_publish_year}`;
         }
-        // Show subjects
-        if (doc.subject?.length) {
-          showBookDetailSubjects(doc.subject.slice(0, 8));
-        }
+        if (doc.subject?.length) showBookDetailSubjects(doc.subject.slice(0, 8));
       }
     }
 
@@ -5408,7 +5433,15 @@ async function fetchBookDetail(book) {
       return;
     }
 
-    // Fetch work data for description
+    // Check local cache first
+    const cache = _descCache();
+    const cached = cache[olKey];
+    if (cached) {
+      _renderBlurb(cached.description || '', cached.year || '', cached.subjects || []);
+      return;
+    }
+
+    // Fetch work data
     const workRes = await fetch(`https://openlibrary.org${olKey}.json`);
     const workData = await workRes.json();
 
@@ -5419,36 +5452,19 @@ async function fetchBookDetail(book) {
         ? workData.description
         : workData.description.value || '';
     }
-
-    // Strip OL formatting markers
     description = description
       .replace(/\r\n/g, '\n')
-      .replace(/\[.*?\]\(.*?\)/g, '') // markdown links
-      .replace(/----------\n.*/s, '') // cut off "source" lines
+      .replace(/\[.*?\]\(.*?\)/g, '')
+      .replace(/----------\n.*/s, '')
       .trim();
 
-    if (description) {
-      // Truncate at ~400 chars with expand option
-      const LIMIT = 400;
-      const truncated = description.length > LIMIT;
-      const shown = truncated ? description.slice(0, LIMIT) + '…' : description;
-      document.getElementById('rt-book-detail-blurb').innerHTML = `
-        <p class="rt-book-detail-blurb" id="rt-book-detail-blurb-text">${esc(shown)}</p>
-        ${truncated ? `<button type="button" style="background:none;border:none;color:var(--rt-amber);font-size:0.8rem;font-weight:600;cursor:pointer;padding:0.4rem 0 0;" onclick="expandBlurb(${JSON.stringify(esc(description))})">Read more ↓</button>` : ''}`;
-    } else {
-      document.getElementById('rt-book-detail-blurb').innerHTML =
-        '<p class="rt-book-detail-blurb" style="color:var(--rt-t3);font-style:italic;">No description available for this book.</p>';
-    }
+    const year     = workData.first_publish_date || '';
+    const subjects = workData.subjects?.slice(0, 8) || [];
 
-    // Publish year
-    if (workData.first_publish_date && !document.getElementById('rt-book-detail-year').textContent) {
-      document.getElementById('rt-book-detail-year').textContent = `First published ${workData.first_publish_date}`;
-    }
+    // Cache it
+    _descCacheSet(olKey, { description, year, subjects });
 
-    // Subjects
-    if (workData.subjects?.length) {
-      showBookDetailSubjects(workData.subjects.slice(0, 8));
-    }
+    _renderBlurb(description, year, subjects);
 
   } catch(e) {
     console.error('[BookDetail] fetch error:', e);
@@ -5457,9 +5473,32 @@ async function fetchBookDetail(book) {
   }
 }
 
-function expandBlurb(fullText) {
+function _renderBlurb(description, year, subjects) {
+  if (description) {
+    const LIMIT = 400;
+    const truncated = description.length > LIMIT;
+    const shown = truncated ? description.slice(0, LIMIT) + '…' : description;
+    _currentBlurbFull = description; // stored at module level — no inline onclick needed
+    document.getElementById('rt-book-detail-blurb').innerHTML = `
+      <p class="rt-book-detail-blurb" id="rt-book-detail-blurb-text">${esc(shown)}</p>
+      ${truncated ? `<button type="button" id="rt-blurb-expand-btn" style="background:none;border:none;color:var(--rt-amber);font-size:0.8rem;font-weight:600;cursor:pointer;padding:0.4rem 0 0;">Read more ↓</button>` : ''}`;
+    if (truncated) {
+      document.getElementById('rt-blurb-expand-btn').addEventListener('click', expandBlurb, { once: true });
+    }
+  } else {
+    document.getElementById('rt-book-detail-blurb').innerHTML =
+      '<p class="rt-book-detail-blurb" style="color:var(--rt-t3);font-style:italic;">No description available for this book.</p>';
+  }
+
+  if (year && !document.getElementById('rt-book-detail-year').textContent) {
+    document.getElementById('rt-book-detail-year').textContent = `First published ${year}`;
+  }
+  if (subjects.length) showBookDetailSubjects(subjects);
+}
+
+function expandBlurb() {
   const el = document.getElementById('rt-book-detail-blurb');
-  el.innerHTML = `<p class="rt-book-detail-blurb">${fullText}</p>`;
+  el.innerHTML = `<p class="rt-book-detail-blurb">${esc(_currentBlurbFull)}</p>`;
 }
 
 function showBookDetailSubjects(subjects) {
