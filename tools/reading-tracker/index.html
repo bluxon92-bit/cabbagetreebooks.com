@@ -4033,10 +4033,11 @@ async function signOut() {
     const ok = confirm(`You have ${SyncQueue.pending} change${SyncQueue.pending !== 1 ? 's' : ''} still syncing. Signing out now may lose them. Sign out anyway?`);
     if (!ok) return;
   }
-  try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 1500))]); } catch(e) {}
-  const key = Object.keys(localStorage).find(k => k.startsWith('sb-') && k.endsWith('-auth-token'));
-  if (key) localStorage.removeItem(key);
-  currentUser = null; books = []; save(); location.reload();
+  // Let Supabase manage its own session storage — do NOT manually touch localStorage.
+  // signOut() clears the session; onAuthStateChange fires SIGNED_OUT and resets UI.
+  try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 3000))]); } catch(e) {}
+  books = []; save();
+  location.reload();
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -6281,7 +6282,7 @@ renderAuthUI();
 // loadUsernameDisplay etc. are all guaranteed to exist when
 // INITIAL_SESSION fires on page refresh.
 // ─────────────────────────────────────────────────────────────
-sb.auth.onAuthStateChange(async (event, session) => {
+sb.auth.onAuthStateChange((event, session) => {
   currentUser = session?.user || null;
 
   if (event === 'PASSWORD_RECOVERY') {
@@ -6290,10 +6291,10 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 
   if (currentUser) {
-    // Sync books on login/refresh — safe to call multiple times (idempotent merge)
+    // Fire book sync in background — do NOT await, never block the UI transition.
+    // syncOnLogin is idempotent; calling it on TOKEN_REFRESHED is harmless (fast no-op).
     if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
-      await SyncQueue.syncOnLogin();
-      handleInviteParam();
+      SyncQueue.syncOnLogin().then(() => handleInviteParam());
     }
     SyncQueue.resume();
     // renderAuthUI triggers username+social load via _sessionDataLoaded guard
