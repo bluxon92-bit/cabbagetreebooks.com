@@ -2964,8 +2964,6 @@ const SUPABASE_URL  = 'https://danknyhumorgkvidrdve.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhbmtueWh1bW9yZ2t2aWRyZHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3OTMzMzksImV4cCI6MjA4ODM2OTMzOX0.uTbNT_MBipxNCJckFI2JFACvftdtSy3M-YRQuJVDziU';
 const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { db: { schema: 'staging' } });
 let   currentUser   = null;
-let   _usernameLoaded = false;
-
 sb.auth.onAuthStateChange(async (event, session) => {
   const wasLoggedOut = !currentUser;
   currentUser = session?.user || null;
@@ -2982,11 +2980,8 @@ sb.auth.onAuthStateChange(async (event, session) => {
       await SyncQueue.syncOnLogin();
       // Handle ?invite= param if present
       handleInviteParam();
-      // Load username once per session
-      if (!_usernameLoaded) {
-        _usernameLoaded = true;
-        loadUsernameDisplay();
-      }
+      // Always reload username on session start (handles page refresh correctly)
+      await loadUsernameDisplay();
       // Load social data (friends, pending requests etc)
       socialState._loaded = false;
       loadSocialData();
@@ -2998,7 +2993,6 @@ sb.auth.onAuthStateChange(async (event, session) => {
   } else {
     // Signed out — pause queue, keep local state intact
     SyncQueue.pause();
-    _usernameLoaded = false;
     if (typeof _realtimeChannel !== 'undefined' && _realtimeChannel) {
       sb.removeChannel(_realtimeChannel);
       _realtimeChannel = null;
@@ -3208,7 +3202,7 @@ let _realtimeChannel = null;
 function setupRealtimeSubscription() {
   if (_realtimeChannel) { sb.removeChannel(_realtimeChannel); _realtimeChannel = null; }
   if (!currentUser) return;
-  _realtimeChannel = sb.channel('social-updates')
+  _realtimeChannel = sb.channel(`social-updates-${currentUser.id}`)
     .on('postgres_changes', {
       event: '*', schema: 'staging', table: 'friendships',
       filter: `addressee_id=eq.${currentUser.id}`
@@ -3217,8 +3211,23 @@ function setupRealtimeSubscription() {
       event: '*', schema: 'staging', table: 'friendships',
       filter: `requester_id=eq.${currentUser.id}`
     }, () => { socialState._loaded = false; loadSocialData(); })
-    .subscribe();
+    .subscribe((status) => {
+      // If realtime fails to connect (e.g. schema replication not enabled),
+      // we rely on the visibilitychange fallback below instead
+      if (status === 'CHANNEL_ERROR') {
+        console.warn('[Realtime] Channel error — friend updates will refresh on tab focus.');
+      }
+    });
 }
+
+// Fallback: refresh social data whenever the tab regains focus.
+// This ensures friend requests appear even if realtime isn't working.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && currentUser) {
+    socialState._loaded = false;
+    loadSocialData();
+  }
+});
 
 // ── Community sub-tab switch ──────────────────────────────────
 function switchCommunityTab(tab) {
@@ -3669,10 +3678,18 @@ async function openFriendProfile(userId) {
 
   // Load friend's data
   try {
-    const { data: entries } = await sb
-      .from('reading_entries')
-      .select('status, date_finished, books(title, author, cover_id, ol_key), title_manual, author_manual')
-      .eq('user_id', userId);
+    // Try RPC first (bypasses RLS); fall back to direct query if RPC not available
+    let entries = null;
+    const { data: rpcData, error: rpcErr } = await sb.rpc('get_friend_reading_entries', { p_user_id: userId });
+    if (!rpcErr && Array.isArray(rpcData)) {
+      entries = rpcData;
+    } else {
+      const { data: directData } = await sb
+        .from('reading_entries')
+        .select('status, date_finished, books(title, author, cover_id, ol_key), title_manual, author_manual')
+        .eq('user_id', userId);
+      entries = directData;
+    }
 
     const friendBooks = (entries || []).map(e => ({
       title:  e.books?.title  || e.title_manual  || '',
