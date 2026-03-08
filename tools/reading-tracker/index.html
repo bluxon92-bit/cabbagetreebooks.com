@@ -2968,10 +2968,8 @@ const SUPABASE_URL  = 'https://danknyhumorgkvidrdve.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhbmtueWh1bW9yZ2t2aWRyZHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3OTMzMzksImV4cCI6MjA4ODM2OTMzOX0.uTbNT_MBipxNCJckFI2JFACvftdtSy3M-YRQuJVDziU';
 const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { db: { schema: 'staging' } });
 let   currentUser   = null;
-// Session ID guard — tracks which Supabase session we've fully initialised for.
-// Prevents double-initialisation when INITIAL_SESSION + TOKEN_REFRESHED fire
-// in quick succession on page refresh (both arrive with currentUser set).
-let _initialisedSessionId = null;
+// Auth state is handled by onAuthStateChange at the bottom of this script.
+// INITIAL_SESSION = refresh, SIGNED_IN = login, TOKEN_REFRESHED = jwt renewal only.
 
 // Warn user if they have books but no account when navigating away
 window.addEventListener('beforeunload', function(e) {
@@ -3096,7 +3094,7 @@ async function loadSocialData() {
         .eq('addressee_id', currentUser.id)
         .eq('status', 'pending'),
       sb.from('book_recommendations')
-        .select('id, created_at, from_user_id, book_ol_key, book_title, book_author, cover_id, message')
+        .select('id, created_at, from_user_id, book_ol_key, message')
         .eq('to_user_id', currentUser.id)
         .eq('status', 'pending')
         .order('created_at', { ascending: false })
@@ -3694,7 +3692,7 @@ async function openFriendProfile(userId) {
     // Also fetch recs this friend sent to me
     const { data: recsFromFriend } = await sb
       .from('book_recommendations')
-      .select('id, book_ol_key, book_title, book_author, cover_id, message, status, created_at')
+      .select('id, book_ol_key, message, status, created_at')
       .eq('from_user_id', userId)
       .eq('to_user_id', currentUser.id)
       .order('created_at', { ascending: false });
@@ -3898,10 +3896,7 @@ document.getElementById('rt-rec-send-btn').addEventListener('click', async funct
   const { error } = await sb.from('book_recommendations').insert({
     from_user_id: currentUser.id,
     to_user_id:   recipientId,
-    book_ol_key:  book.olKey   || null,
-    book_title:   book.title   || null,
-    book_author:  book.author  || null,
-    cover_id:     book.coverId || null,
+    book_ol_key:  book.olKey || null,
     message:      note,
     status:       'pending'
   });
@@ -6274,12 +6269,36 @@ renderHistory();
 renderAuthUI();
 
 // ─────────────────────────────────────────────────────────────
-// AUTH STATE — registered last so SyncQueue, socialState,
-// loadUsernameDisplay etc. are all guaranteed to exist when
-// INITIAL_SESSION fires on page refresh.
+// AUTH STATE — registered last so all functions exist at parse time.
+//
+// Strategy: respond to explicit login/refresh events only.
+//   INITIAL_SESSION = page refresh with existing session
+//   SIGNED_IN       = fresh login
+//   Both run the full init (sync books + load username + load friends).
+//   TOKEN_REFRESHED = Supabase silently refreshed the JWT — just
+//   resume the sync queue, do NOT re-run social/username loads.
+//   SIGNED_OUT      = tear down everything.
 // ─────────────────────────────────────────────────────────────
+async function runFullInit() {
+  // Runs on both fresh login and page refresh.
+  // Each branch is independent — a failure in one cannot kill the other.
+  await Promise.allSettled([
+    SyncQueue.syncOnLogin(),
+    (async () => {
+      try {
+        await loadUsernameDisplay();
+        socialState._loaded = false;
+        await loadSocialData();
+        setupRealtimeSubscription();
+      } catch(e) {
+        console.error('[Auth] social init failed:', e);
+      }
+    })()
+  ]);
+  handleInviteParam();
+}
+
 sb.auth.onAuthStateChange(async (event, session) => {
-  const wasLoggedOut = !currentUser;
   currentUser = session?.user || null;
   renderAuthUI();
 
@@ -6288,39 +6307,21 @@ sb.auth.onAuthStateChange(async (event, session) => {
     return;
   }
 
-  if (currentUser) {
-    const sessionId = session?.access_token?.slice(-12) || currentUser.id;
+  if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
+    // Page refresh or fresh login — run everything.
+    if (currentUser) await runFullInit();
+    return;
+  }
 
-    if (wasLoggedOut || event === 'INITIAL_SESSION' || _initialisedSessionId !== sessionId) {
-      // Mark this session as initialising immediately — prevents TOKEN_REFRESHED
-      // (which fires ~200ms later) from running a redundant second init.
-      _initialisedSessionId = sessionId;
+  if (event === 'TOKEN_REFRESHED') {
+    // JWT silently refreshed — just let the sync queue keep running.
+    if (currentUser) SyncQueue.resume();
+    return;
+  }
 
-      // Run book sync and social/username in parallel.
-      // Promise.allSettled: a failure in either branch cannot kill the other.
-      await Promise.allSettled([
-        SyncQueue.syncOnLogin(),
-        (async () => {
-          try {
-            await loadUsernameDisplay();
-            socialState._loaded = false;
-            await loadSocialData();
-            setupRealtimeSubscription();
-          } catch(e) {
-            console.error('[Auth] social/username init failed:', e);
-          }
-        })()
-      ]);
-      handleInviteParam();
-    }
-
-    // TOKEN_REFRESHED, USER_UPDATED etc — resume queue in case it was paused
-    SyncQueue.resume();
-  } else {
-    // Signed out
+  if (event === 'SIGNED_OUT') {
     SyncQueue.pause();
-    _initialisedSessionId = null;
-    if (typeof _realtimeChannel !== 'undefined' && _realtimeChannel) {
+    if (_realtimeChannel) {
       sb.removeChannel(_realtimeChannel);
       _realtimeChannel = null;
     }
