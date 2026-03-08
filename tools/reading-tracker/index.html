@@ -3574,7 +3574,7 @@ function generateInviteLink() {
   const btn   = document.getElementById('rt-invite-copy-btn');
   if (field) field.textContent = link;
   if (btn) {
-    btn.addEventListener('click', function() {
+    btn.onclick = function() {
       navigator.clipboard?.writeText(link).then(() => {
         btn.textContent = '✓ Copied!';
         setTimeout(() => btn.textContent = 'Copy', 2000);
@@ -3584,7 +3584,7 @@ function generateInviteLink() {
         btn.textContent = '✓ Copied!';
         setTimeout(() => btn.textContent = 'Copy', 2000);
       });
-    }, { once: false });
+    };
   }
 }
 
@@ -3837,7 +3837,7 @@ async function openFriendProfile(userId) {
     document.getElementById('rt-fp-read-count').textContent    = '—';
     document.getElementById('rt-fp-reading-count').textContent = '—';
     document.getElementById('rt-fp-currently-reading').innerHTML =
-      '<p style="font-size:0.83rem;color:#991b1b;">Couldn't load data — check your connection.</p>';
+      '<p style="font-size:0.83rem;color:#991b1b;">Could not load data \u2014 check your connection.</p>';
   }
 }
 
@@ -5679,12 +5679,8 @@ function showBookDetailSubjects(subjects) {
   section.style.display = 'block';
 }
 
-// Make history cards clickable to open book detail
-document.getElementById('rt-history-list').addEventListener('click', function(e) {
-  // Note: existing click handler above handles delete / readmore
-  // This adds detail panel for card click — but existing handler runs first
-  // so we only open detail if not already handled
-}, false);
+// Note: history card click-to-detail is handled by the listener defined
+// immediately after renderHistory() above (handles delete, readmore, and edit-book → openBookDetail).
 
 // ─────────────────────────────────────────────────────────────
 // AI RECOMMENDATIONS
@@ -5756,10 +5752,13 @@ async function fetchRecs() {
 }
 
 function renderRecCard(rec, idx, total) {
-  // Update progress dots
+  // Update progress dots — use actual total, not hardcoded 4
   for (let i = 0; i < 4; i++) {
     const dot = document.getElementById(`rt-prog-${i}`);
-    if (dot) dot.classList.toggle('done', i <= idx);
+    if (dot) {
+      dot.classList.toggle('done', i < total && i <= idx);
+      dot.style.visibility = i < total ? 'visible' : 'hidden';
+    }
   }
   document.getElementById('rt-prog-label').textContent = `${idx + 1} of ${total}`;
 
@@ -5848,14 +5847,20 @@ async function startRecs() {
   }
   if (btn) { btn.disabled = true; btn.textContent = '✦ Finding your books…'; }
   try {
-    recQueue = await fetchRecs();
+    const result = await fetchRecs();
+    // Validate: must be a non-empty array (guard against malformed AI JSON)
+    if (!Array.isArray(result) || result.length === 0) {
+      throw new Error('No recommendations returned — please try again.');
+    }
+    recQueue = result;
     recIdx   = 0;
     document.getElementById('rt-recs-generate-wrap').style.display = 'none';
     document.getElementById('rt-recs-queue').style.display = 'block';
     document.getElementById('rt-recs-done').style.display  = 'none';
+    // Re-enable button now that recs are loaded (user may navigate away and return)
+    if (btn) { btn.disabled = false; btn.textContent = '✦ Get 4 more recommendations'; }
     renderRecCard(recQueue[0], 0, recQueue.length);
   } catch(err) {
-    // Fall back to legacy list display
     if (btn) { btn.disabled = false; btn.textContent = '✦ Get recommendations'; }
     const output = document.getElementById('rt-ai-output');
     output.style.display = 'block';
@@ -6046,7 +6051,8 @@ async function processGoodreadsCSV(csvText) {
     const col = name => headers.findIndex(h => h.includes(name));
     const iTitle    = col('title');
     const iBookId   = col('book id');
-    const iAuthor   = headers.findIndex(h => h === 'author');
+    // Use includes() like all other column finders — handles "Author l-f" variants
+    const iAuthor   = headers.findIndex(h => h.includes('author'));
     const iShelf    = col('exclusive shelf');
     const iShelves  = col('bookshelves');
     const iRating   = col('my rating');
