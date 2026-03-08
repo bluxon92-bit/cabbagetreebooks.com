@@ -6875,18 +6875,19 @@ function subscribeToChatThread(chatId) {
 }
 
 // ── Start or open a chat for a book ───────────────────────────
-async function startOrOpenChat(olKey, title, author, coverId) {
+async function startOrOpenChat(olKey, title, author, coverId, friendIds) {
   if (!currentUser) { showFlash('Sign in to chat about books.'); return; }
   if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
 
   try {
-    // Single RPC handles upsert of book_chats + adding current user as participant.
-    // Runs SECURITY DEFINER so RLS on those tables doesn't interfere.
+    // Single RPC handles upsert of book_chats, adds current user + any co-reading
+    // friends as participants. Runs SECURITY DEFINER so RLS doesn't interfere.
     const { data: chatId, error: rpcErr } = await sb.rpc('start_or_join_chat', {
-      p_ol_key:   olKey,
-      p_title:    title   || null,
-      p_author:   author  || null,
-      p_cover_id: coverId || null
+      p_ol_key:     olKey,
+      p_title:      title      || null,
+      p_author:     author     || null,
+      p_cover_id:   coverId    || null,
+      p_friend_ids: friendIds  || []
     });
     if (rpcErr) throw rpcErr;
     if (!chatId) throw new Error('No chat id returned');
@@ -6926,14 +6927,12 @@ async function handleBookClubTrigger(book) {
       return { userId: row.user_id, name: friend?.displayName || friend?.username || 'A friend' };
     });
 
-    // Check if a chat already exists for this book
-    const { data: existingChat } = await sb
-      .from('book_chats')
-      .select('id')
-      .eq('book_ol_key', book.olKey)
-      .maybeSingle();
+    // Check if a chat already exists (use SECURITY DEFINER RPC — direct SELECT
+    // on book_chats would 403 before user is a participant)
+    const { data: existingChatId } = await sb
+      .rpc('get_book_chat_id_by_ol_key', { p_ol_key: book.olKey });
 
-    showBookClubToast(book, friendsReading, !!existingChat);
+    showBookClubToast(book, friendsReading, !!existingChatId);
 
   } catch(e) {
     console.error('[Chat] handleBookClubTrigger:', e);
@@ -6966,8 +6965,7 @@ function showBookClubToast(book, friendsReading, hasExistingChat) {
     <div class="rt-book-club-toast-title">${emoji} You've joined a book club!</div>
     <div style="font-size:0.78rem;opacity:0.85;">${esc(nameStr)} ${friendsReading.length === 1 ? 'is' : 'are'} also reading <em>${esc(book.title)}</em>.</div>
     <div class="rt-book-club-toast-actions">
-      <button class="rt-book-club-toast-btn rt-book-club-toast-btn--primary" type="button"
-        onclick="dismissBookClubToast();startOrOpenChat('${esc(book.olKey)}','${esc(book.title).replace(/'/g,"\'")}','${esc(book.author||'').replace(/'/g,"\'")}',${book.coverId||null})">
+      <button class="rt-book-club-toast-btn rt-book-club-toast-btn--primary" type="button" id="rt-book-club-start-btn">
         ${verb} →
       </button>
       <button class="rt-book-club-toast-btn rt-book-club-toast-btn--ghost" type="button"
@@ -6976,6 +6974,12 @@ function showBookClubToast(book, friendsReading, hasExistingChat) {
       </button>
     </div>`;
   document.body.appendChild(toast);
+
+  // Attach click directly so friendIds array passes without HTML serialisation
+  document.getElementById('rt-book-club-start-btn').onclick = function() {
+    dismissBookClubToast();
+    startOrOpenChat(book.olKey, book.title, book.author || null, book.coverId || null, friendIds);
+  };
 
   // Auto-dismiss after 12 seconds
   _bookClubToastTimer = setTimeout(dismissBookClubToast, 12000);
