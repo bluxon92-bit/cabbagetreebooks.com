@@ -3531,10 +3531,7 @@ async function loadUsernameDisplay() {
     if (!username) {
       const emailPart = currentUser.email.split('@')[0];
       username = emailPart.toLowerCase().replace(/[^a-z0-9]/g, '_');
-      await sb.from('profiles').upsert(
-        { id: currentUser.id, username },
-        { onConflict: 'id' }
-      );
+      await sb.from('profiles').update({ username }).eq('id', currentUser.id);
     }
 
     const el = document.getElementById('rt-username-display');
@@ -3573,7 +3570,7 @@ async function saveUsername() {
   try {
     console.log('[Username] saving', raw, 'for', currentUser.id);
     const { error } = await Promise.race([
-      sb.from('profiles').upsert({ id: currentUser.id, username: raw }, { onConflict: 'id' }),
+      sb.from('profiles').update({ username: raw }).eq('id', currentUser.id),
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
     console.log('[Username] result error:', error);
