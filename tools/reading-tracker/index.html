@@ -2600,13 +2600,12 @@ permalink: /tools/reading-tracker/
       <div class="rt-mutual-carousel-label">Books you've both read</div>
       <div class="rt-mutual-carousel" id="rt-fp-mutual-carousel"></div>
     </div>
-    <!-- Friend's current reads + recommendations -->
+    <!-- Friend's current reads + recs from this friend -->
     <div style="flex:1;overflow-y:auto;padding:1rem 1.25rem;">
       <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.75rem;">Currently reading</div>
       <div id="rt-fp-currently-reading">
         <p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>
       </div>
-      <!-- Recommendations from this friend -->
       <div id="rt-fp-recs-from-friend" style="display:none;margin-top:1.25rem;">
         <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.75rem;">Recommended to you</div>
         <div id="rt-fp-recs-from-friend-list"></div>
@@ -2969,6 +2968,11 @@ const SUPABASE_URL  = 'https://danknyhumorgkvidrdve.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhbmtueWh1bW9yZ2t2aWRyZHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3OTMzMzksImV4cCI6MjA4ODM2OTMzOX0.uTbNT_MBipxNCJckFI2JFACvftdtSy3M-YRQuJVDziU';
 const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { db: { schema: 'staging' } });
 let   currentUser   = null;
+// Session ID guard — tracks which Supabase session we've fully initialised for.
+// Prevents double-initialisation when INITIAL_SESSION + TOKEN_REFRESHED fire
+// in quick succession on page refresh (both arrive with currentUser set).
+let _initialisedSessionId = null;
+
 sb.auth.onAuthStateChange(async (event, session) => {
   const wasLoggedOut = !currentUser;
   currentUser = session?.user || null;
@@ -2980,9 +2984,15 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 
   if (currentUser) {
-    if (wasLoggedOut || event === 'INITIAL_SESSION') {
-      // Run book sync and social/username loading fully in parallel.
-      // Promise.allSettled means a sync error can NEVER silently kill the social UI.
+    const sessionId = session?.access_token?.slice(-12) || currentUser.id;
+
+    if (wasLoggedOut || event === 'INITIAL_SESSION' || _initialisedSessionId !== sessionId) {
+      // Mark this session as initialising immediately — prevents TOKEN_REFRESHED
+      // (which fires ~200ms later) from running a redundant second init.
+      _initialisedSessionId = sessionId;
+
+      // Run book sync and social/username in parallel.
+      // Promise.allSettled: a failure in either branch cannot kill the other.
       await Promise.allSettled([
         SyncQueue.syncOnLogin(),
         (async () => {
@@ -2992,17 +3002,19 @@ sb.auth.onAuthStateChange(async (event, session) => {
             await loadSocialData();
             setupRealtimeSubscription();
           } catch(e) {
-            console.error('[Auth] social init failed:', e);
+            console.error('[Auth] social/username init failed:', e);
           }
         })()
       ]);
       handleInviteParam();
     }
+
     // TOKEN_REFRESHED, USER_UPDATED etc — resume queue in case it was paused
     SyncQueue.resume();
   } else {
-    // Signed out — pause queue, keep local state intact
+    // Signed out
     SyncQueue.pause();
+    _initialisedSessionId = null;
     if (typeof _realtimeChannel !== 'undefined' && _realtimeChannel) {
       sb.removeChannel(_realtimeChannel);
       _realtimeChannel = null;
@@ -3147,17 +3159,37 @@ async function loadSocialData() {
     const recIds        = (recsRes.data   || []).map(r => r.from_user_id);
     const friendAndSelf = [...new Set([currentUser.id, ...friendIds])];
 
-    // Step 2: fetch feed filtered to self + friends only
+    // Step 2: fetch feed for self + friends via RPC (bypasses RLS which only allows own rows)
     let feedData = [];
-    // Always fetch own events; only include friends if there are any
-    const feedUserIds = [currentUser.id, ...friendIds];
-    if (feedUserIds.length > 0) {
-      const { data, error: feedErr } = await sb.from('feed_events')
+    if (friendIds.length > 0) {
+      // Try RPC first (needs SECURITY DEFINER function in Supabase)
+      const { data: rpcFeed, error: rpcFeedErr } = await sb.rpc('get_friend_feed_events', {
+        p_user_id:   currentUser.id,
+        p_friend_ids: friendIds
+      });
+      if (!rpcFeedErr && Array.isArray(rpcFeed)) {
+        feedData = rpcFeed;
+      } else {
+        // Fallback: own events only (friends' events blocked by RLS until RPC is created)
+        const { data: ownFeed } = await sb.from('feed_events')
+          .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
+          .eq('user_id', currentUser.id)
+          .order('created_at', { ascending: false })
+          .limit(40);
+        feedData = ownFeed || [];
+        if (rpcFeedErr && rpcFeedErr.code !== 'PGRST202') {
+          // Only log if it's not a "function not found" error — that's expected until SQL is run
+          console.warn('[Social] feed_events RPC unavailable, showing own events only:', rpcFeedErr.message);
+        }
+      }
+    } else {
+      // No friends yet — just own events
+      const { data: ownFeed } = await sb.from('feed_events')
         .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
-        .in('user_id', feedUserIds)
+        .eq('user_id', currentUser.id)
         .order('created_at', { ascending: false })
         .limit(40);
-      if (!feedErr) feedData = data || [];
+      feedData = ownFeed || [];
     }
 
     // Step 3: batch-fetch profiles via RPC (bypasses own-only RLS)
@@ -3212,7 +3244,6 @@ let _realtimeChannel = null;
 function setupRealtimeSubscription() {
   if (_realtimeChannel) { sb.removeChannel(_realtimeChannel); _realtimeChannel = null; }
   if (!currentUser) return;
-  // User-scoped channel name avoids cross-user interference
   _realtimeChannel = sb.channel(`social-${currentUser.id}`)
     .on('postgres_changes', {
       event: '*', schema: 'staging', table: 'friendships',
@@ -3224,13 +3255,13 @@ function setupRealtimeSubscription() {
     }, () => { socialState._loaded = false; loadSocialData(); })
     .subscribe((status) => {
       if (status === 'CHANNEL_ERROR') {
-        console.warn('[Realtime] Channel error — will rely on focus-refresh fallback.');
+        console.warn('[Realtime] Channel error — relying on focus-refresh fallback.');
       }
     });
 }
 
-// Fallback: refresh social data on tab focus.
-// Guarantees friend requests/updates appear even if realtime subscription fails.
+// Fallback: refresh social data whenever user returns to this tab.
+// Guarantees friend requests appear even if realtime subscription silently fails.
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible' && currentUser) {
     socialState._loaded = false;
@@ -3334,14 +3365,13 @@ function renderFeedItem(item) {
     const fromName = item.profiles?.display_name || item.profiles?.username || 'A friend';
     const colour   = avatarColour(item.from_user_id);
     const olKey    = item.book_ol_key || '';
-    // Prefer cover_id (stored at send time), fall back to OL key cover
+    // Prefer stored cover_id (set at send time); fall back to OL key cover
     const coverHtml = item.cover_id
       ? `<img src="https://covers.openlibrary.org/b/id/${item.cover_id}-S.jpg" class="rt-feed-book-thumb" alt="" onerror="this.style.display='none'">`
       : olKey
         ? `<img src="https://covers.openlibrary.org/b/olid/${olKey.replace('/works/','')}-S.jpg" class="rt-feed-book-thumb" alt="" onerror="this.style.display='none'">`
         : `<div class="rt-feed-book-thumb--ph">📚</div>`;
-    // Always show title; OL key is only the last-resort fallback
-    const displayTitle = item.book_title || (olKey ? olKey.replace('/works/','') : 'a book');
+    const displayTitle  = item.book_title  || olKey.replace('/works/','') || 'a book';
     const displayAuthor = item.book_author || '';
     return `
       <div class="rt-feed-item">
@@ -3356,7 +3386,7 @@ function renderFeedItem(item) {
             <div style="min-width:0;">
               <div class="rt-feed-book-title">${esc(displayTitle)}</div>
               ${displayAuthor ? `<div style="font-size:0.68rem;color:var(--rt-t3);margin-top:1px;">${esc(displayAuthor)}</div>` : ''}
-              ${item.message ? `<div style="font-size:0.68rem;color:var(--rt-t3);margin-top:2px;font-style:italic;">"${esc(item.message.slice(0,60))}"</div>` : ''}
+              ${item.message ? `<div style="font-size:0.68rem;color:var(--rt-t3);font-style:italic;margin-top:2px;">"${esc(item.message.slice(0,60))}"</div>` : ''}
             </div>
             <span style="font-size:0.68rem;font-weight:700;color:var(--rt-teal);margin-left:auto;white-space:nowrap;flex-shrink:0;">+ Add to list</span>
           </div>
@@ -3678,8 +3708,8 @@ async function openFriendProfile(userId) {
   document.getElementById('rt-fp-reading-count').textContent = '…';
   document.getElementById('rt-fp-mutual-wrap').style.display = 'none';
   document.getElementById('rt-fp-currently-reading').innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Loading…</p>';
-  const fpRecsWrap = document.getElementById('rt-fp-recs-from-friend');
-  if (fpRecsWrap) fpRecsWrap.style.display = 'none';
+  const _fpRecsWrap = document.getElementById('rt-fp-recs-from-friend');
+  if (_fpRecsWrap) _fpRecsWrap.style.display = 'none';
 
   // Wire footer buttons
   document.getElementById('rt-fp-close-btn').onclick  = closeFriendProfile;
@@ -3692,27 +3722,31 @@ async function openFriendProfile(userId) {
   requestAnimationFrame(() => sheet.classList.add('open'));
   document.body.style.overflow = 'hidden';
 
-  // Load friend's data in parallel: their books + recs they sent me
+  // Load friend's data — try RPC first (bypasses RLS), fall back to direct query
   try {
-    const [booksResult, recsResult] = await Promise.allSettled([
-      // Try RPC first to bypass RLS, fall back to direct query
-      (async () => {
-        const rpc = await sb.rpc('get_friend_reading_entries', { p_user_id: userId });
-        if (!rpc.error && Array.isArray(rpc.data)) return rpc;
-        return sb.from('reading_entries')
-          .select('status, books(title, author, cover_id, ol_key), title_manual, author_manual')
-          .eq('user_id', userId);
-      })(),
-      // Recs this friend has sent to me — stored with title/cover at send time
-      sb.from('book_recommendations')
-        .select('id, book_ol_key, book_title, book_author, cover_id, message, status, created_at')
-        .eq('from_user_id', userId)
-        .eq('to_user_id', currentUser.id)
-        .order('created_at', { ascending: false })
-    ]);
+    // Fetch reading entries
+    let entries = [];
+    const rpcRes = await sb.rpc('get_friend_reading_entries', { p_user_id: userId });
+    if (!rpcRes.error && Array.isArray(rpcRes.data)) {
+      entries = rpcRes.data;
+    } else {
+      if (rpcRes.error && rpcRes.error.code !== 'PGRST202') {
+        console.warn('[Social] get_friend_reading_entries unavailable:', rpcRes.error.message);
+      }
+      const { data: directData } = await sb
+        .from('reading_entries')
+        .select('status, books(title, author, cover_id, ol_key), title_manual, author_manual')
+        .eq('user_id', userId);
+      entries = directData || [];
+    }
 
-    const entries = booksResult.status === 'fulfilled' ? (booksResult.value?.data || []) : [];
-    const recs    = recsResult.status  === 'fulfilled' ? (recsResult.value?.data  || []) : [];
+    // Also fetch recs this friend sent to me
+    const { data: recsFromFriend } = await sb
+      .from('book_recommendations')
+      .select('id, book_ol_key, book_title, book_author, cover_id, message, status, created_at')
+      .eq('from_user_id', userId)
+      .eq('to_user_id', currentUser.id)
+      .order('created_at', { ascending: false });
 
     const friendBooks = entries.map(e => ({
       title:   e.books?.title   || e.title_manual  || '',
@@ -3748,10 +3782,10 @@ async function openFriendProfile(userId) {
       crEl.innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>';
     }
 
-    // Recommendations from this friend — shown below currently reading
+    // Recommendations from this friend to me
+    const pendingRecs = (recsFromFriend || []).filter(r => r.status === 'pending');
     const recWrap = document.getElementById('rt-fp-recs-from-friend');
     if (recWrap) {
-      const pendingRecs = recs.filter(r => r.status === 'pending');
       if (pendingRecs.length) {
         recWrap.style.display = 'block';
         document.getElementById('rt-fp-recs-from-friend-list').innerHTML = pendingRecs.map(r => {
