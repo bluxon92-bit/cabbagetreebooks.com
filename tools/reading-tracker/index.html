@@ -2981,17 +2981,12 @@ sb.auth.onAuthStateChange(async (event, session) => {
       await SyncQueue.syncOnLogin();
       // Handle ?invite= param if present
       handleInviteParam();
-      // Load username display (only needed once per session)
-      loadUsernameDisplay();
-      // Start realtime subscriptions for live friend request updates
-      setupRealtimeSubscription();
     }
     // TOKEN_REFRESHED, USER_UPDATED etc — resume queue in case it was paused
     SyncQueue.resume();
   } else {
     // Signed out — pause queue, keep local state intact
     SyncQueue.pause();
-    if (_realtimeChannel) { sb.removeChannel(_realtimeChannel); _realtimeChannel = null; }
   }
 });
 
@@ -3072,6 +3067,8 @@ function renderAuthUI() {
     if (el('rt-profile-tbr'))  el('rt-profile-tbr').textContent  = tbrCount;
     if (el('rt-profile-fav'))  el('rt-profile-fav').textContent  = favCount;
     if (el('rt-profile-dnf'))  el('rt-profile-dnf').textContent  = dnfCount;
+    // Load username
+    loadUsernameDisplay();
     // Generate invite link
     generateInviteLink();
   } else {
@@ -3118,8 +3115,8 @@ async function loadSocialData() {
         .eq('addressee_id', currentUser.id)
         .eq('status', 'pending'),
       sb.from('book_recommendations')
-        .select('id, created_at, recommender_id, book_ol_key, message')
-        .eq('recipient_id', currentUser.id)
+        .select('id, created_at, from_user_id, book_ol_key, message')
+        .eq('to_user_id', currentUser.id)
         .eq('status', 'pending')
         .order('created_at', { ascending: false })
     ]);
@@ -3129,27 +3126,27 @@ async function loadSocialData() {
       f.requester_id === currentUser.id ? f.addressee_id : f.requester_id
     );
     const pendingIds    = (pendingRes.data || []).map(f => f.requester_id);
-    const recIds        = (recsRes.data   || []).map(r => r.recommender_id);
+    const recIds        = (recsRes.data   || []).map(r => r.from_user_id);
     const friendAndSelf = [...new Set([currentUser.id, ...friendIds])];
 
-    // Step 2: fetch feed filtered to friends only
+    // Step 2: fetch feed filtered to self + friends only
     let feedData = [];
-    if (friendAndSelf.length > 0) {
-      const { data } = await sb.from('feed_events')
+    // Always fetch own events; only include friends if there are any
+    const feedUserIds = [currentUser.id, ...friendIds];
+    if (feedUserIds.length > 0) {
+      const { data, error: feedErr } = await sb.from('feed_events')
         .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
-        .in('user_id', friendAndSelf)
+        .in('user_id', feedUserIds)
         .order('created_at', { ascending: false })
         .limit(40);
-      feedData = data || [];
+      if (!feedErr) feedData = data || [];
     }
 
-    // Step 3: batch-fetch profiles for all relevant user IDs
+    // Step 3: batch-fetch profiles via RPC (bypasses own-only RLS)
     const allIds = [...new Set([...friendIds, ...pendingIds, ...feedData.map(e => e.user_id), ...recIds])];
     let profileMap = {};
     if (allIds.length) {
-      const { data: profiles } = await sb.from('profiles')
-        .select('id, username, display_name')
-        .in('id', allIds);
+      const { data: profiles } = await sb.rpc('get_profiles_by_ids', { user_ids: allIds });
       (profiles || []).forEach(p => { profileMap[p.id] = p; });
     }
 
@@ -3180,7 +3177,7 @@ async function loadSocialData() {
 
     // Attach profiles to feed and recs
     socialState.feed = feedData.map(e => ({ ...e, profiles: profileMap[e.user_id] || null }));
-    socialState.recs = (recsRes.data || []).map(r => ({ ...r, profiles: profileMap[r.recommender_id] || null }));
+    socialState.recs = (recsRes.data || []).map(r => ({ ...r, profiles: profileMap[r.from_user_id] || null }));
 
     socialState._loaded = true;
     renderCommunityUI();
@@ -3189,35 +3186,6 @@ async function loadSocialData() {
   } catch(e) {
     console.error('[Social] loadSocialData:', e);
   }
-}
-
-// ── Realtime subscriptions ────────────────────────────────────
-let _realtimeChannel = null;
-
-function setupRealtimeSubscription() {
-  if (_realtimeChannel) sb.removeChannel(_realtimeChannel);
-  if (!currentUser) return;
-
-  _realtimeChannel = sb.channel('social-updates')
-    .on('postgres_changes', {
-      event: '*',
-      schema: 'staging',
-      table: 'friendships',
-      filter: `addressee_id=eq.${currentUser.id}`
-    }, () => {
-      socialState._loaded = false;
-      loadSocialData();
-    })
-    .on('postgres_changes', {
-      event: '*',
-      schema: 'staging',
-      table: 'friendships',
-      filter: `requester_id=eq.${currentUser.id}`
-    }, () => {
-      socialState._loaded = false;
-      loadSocialData();
-    })
-    .subscribe();
 }
 
 // ── Community sub-tab switch ──────────────────────────────────
@@ -3314,7 +3282,7 @@ function renderFeedItem(item) {
 
   if (item._type === 'rec') {
     const fromName = item.profiles?.display_name || item.profiles?.username || 'A friend';
-    const colour   = avatarColour(item.recommender_id);
+    const colour   = avatarColour(item.from_user_id);
     // book_recommendations uses book_ol_key; fetch cover from OL key if available
     const olKey    = item.book_ol_key || '';
     const coverHtml = olKey
@@ -3498,13 +3466,17 @@ async function acceptFriendRequest(friendshipId, requesterId) {
     .eq('id', friendshipId);
   if (!error) {
     showFlash('✓ Friend request accepted!');
+    socialState._loaded = false;
     await loadSocialData();
   }
 }
 
 async function declineFriendRequest(friendshipId) {
   const { error } = await sb.from('friendships').delete().eq('id', friendshipId);
-  if (!error) await loadSocialData();
+  if (!error) {
+    socialState._loaded = false;
+    await loadSocialData();
+  }
 }
 
 // ── Invite link ───────────────────────────────────────────────
