@@ -2976,17 +2976,22 @@ sb.auth.onAuthStateChange(async (event, session) => {
 
   if (currentUser) {
     if (wasLoggedOut || event === 'INITIAL_SESSION') {
-      // Safe merge login: preserves unsynced local books, pulls cloud, deduplicates
-      await SyncQueue.syncOnLogin();
-      // Handle ?invite= param if present
+      // Run book sync AND social/username loading concurrently.
+      // Using Promise.allSettled so a sync error never silently kills the UI.
+      await Promise.allSettled([
+        SyncQueue.syncOnLogin(),
+        (async () => {
+          try {
+            await loadUsernameDisplay();
+            socialState._loaded = false;
+            await loadSocialData();
+            setupRealtimeSubscription();
+          } catch(e) {
+            console.error('[Auth] social/username load failed:', e);
+          }
+        })()
+      ]);
       handleInviteParam();
-      // Always reload username on session start (handles page refresh correctly)
-      await loadUsernameDisplay();
-      // Load social data (friends, pending requests etc)
-      socialState._loaded = false;
-      loadSocialData();
-      // Start realtime subscriptions
-      setupRealtimeSubscription();
     }
     // TOKEN_REFRESHED, USER_UPDATED etc — resume queue in case it was paused
     SyncQueue.resume();
