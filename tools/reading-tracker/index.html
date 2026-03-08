@@ -6877,33 +6877,16 @@ async function startOrOpenChat(olKey, title, author, coverId) {
   if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
 
   try {
-    // Step 1: insert the book_chats row (ignore conflict if it already exists).
-    // We capture the returned id if insert succeeds; otherwise we fetch it via RPC.
-    let chatId = null;
-
-    const { data: inserted } = await sb.from('book_chats').insert({
-      book_ol_key: olKey,
-      book_title:  title  || null,
-      book_author: author || null,
-      cover_id:    coverId || null
-    }).select('id').single();
-
-    if (inserted?.id) {
-      chatId = inserted.id;
-    } else {
-      // Row already exists — fetch id via RPC (bypasses participant-only SELECT policy)
-      const { data: existingId, error: rpcErr } = await sb
-        .rpc('get_book_chat_id_by_ol_key', { p_ol_key: olKey });
-      if (rpcErr || !existingId) throw rpcErr || new Error('Could not find chat');
-      chatId = existingId;
-    }
-
-    // Step 2: add current user as participant (ignore if already one)
-    await sb.from('chat_participants').insert({
-      chat_id:     chatId,
-      user_id:     currentUser.id,
-      join_reason: 'manual'
-    }).select('id').single().catch(() => {}); // unique conflict = already participant
+    // Single RPC handles upsert of book_chats + adding current user as participant.
+    // Runs SECURITY DEFINER so RLS on those tables doesn't interfere.
+    const { data: chatId, error: rpcErr } = await sb.rpc('start_or_join_chat', {
+      p_ol_key:   olKey,
+      p_title:    title   || null,
+      p_author:   author  || null,
+      p_cover_id: coverId || null
+    });
+    if (rpcErr) throw rpcErr;
+    if (!chatId) throw new Error('No chat id returned');
 
     // Reload chat list and open thread
     await loadChatList();
