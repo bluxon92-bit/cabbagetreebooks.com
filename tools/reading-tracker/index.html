@@ -1387,6 +1387,211 @@ permalink: /tools/reading-tracker/
   .rt-tbr-header-add-btn { width: 100% !important; text-align: center; }
 }
 
+/* ── TBR DRAG AND DROP ── */
+.rt-tbr-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 0; border-bottom: 1px solid var(--rt-border);
+  cursor: default; position: relative;
+  transition: background var(--rt-fast), box-shadow var(--rt-fast);
+  border-radius: var(--rt-r4);
+}
+.rt-tbr-item:last-child { border-bottom: none; }
+.rt-tbr-item.dragging {
+  opacity: 0.5; background: var(--rt-cream);
+}
+.rt-tbr-item.drag-over {
+  background: var(--rt-amber-pale);
+  border-radius: var(--rt-r3);
+}
+.rt-tbr-drag-handle {
+  display: flex; flex-direction: column; gap: 3px;
+  cursor: grab; padding: 0.5rem 0.25rem; flex-shrink: 0;
+  color: var(--rt-t3); opacity: 0.4;
+  transition: opacity var(--rt-fast);
+  touch-action: none;
+}
+.rt-tbr-drag-handle:active { cursor: grabbing; }
+.rt-tbr-item:hover .rt-tbr-drag-handle { opacity: 0.7; }
+.rt-tbr-drag-handle span {
+  display: block; width: 16px; height: 2px;
+  background: currentColor; border-radius: 1px;
+}
+.rt-tbr-num {
+  font-family: var(--rt-font-display); font-size: 1rem; font-weight: 700;
+  color: var(--rt-t3); min-width: 22px; text-align: right; flex-shrink: 0;
+}
+.rt-tbr-item-cover {
+  flex-shrink: 0; cursor: pointer;
+  transition: transform var(--rt-fast);
+}
+.rt-tbr-item-cover:hover { transform: scale(1.04); }
+.rt-tbr-item-body {
+  flex: 1; min-width: 0; cursor: pointer;
+}
+.rt-tbr-item-body:hover .rt-book-title { color: var(--rt-amber); }
+.rt-tbr-item-actions {
+  display: flex; align-items: center; gap: 0.4rem; flex-shrink: 0;
+}
+
+/* ── BOOK DETAIL PANEL ── */
+.rt-book-detail-overlay {
+  position: fixed; inset: 0; background: rgba(10,15,30,0.55);
+  z-index: 502; opacity: 0; pointer-events: none;
+  transition: opacity var(--rt-med) var(--rt-ease);
+}
+.rt-book-detail-overlay.open { opacity: 1; pointer-events: auto; }
+
+.rt-book-detail-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 503;
+  background: var(--rt-white);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 40px rgba(10,15,30,0.18);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  max-height: 92vh; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.rt-book-detail-sheet.open { transform: translateY(0); }
+
+@media (min-width: 640px) {
+  .rt-book-detail-overlay { display: flex; align-items: center; justify-content: center; }
+  .rt-book-detail-sheet {
+    position: relative; left: auto; right: auto; bottom: auto;
+    border-radius: var(--rt-r2); max-width: 480px; width: 100%;
+    transform: translateY(24px) scale(0.97);
+    transition: transform 0.32s cubic-bezier(0.32,0.72,0,1), opacity 0.28s var(--rt-ease);
+    opacity: 0; max-height: 88vh;
+  }
+  .rt-book-detail-overlay.open .rt-book-detail-sheet {
+    transform: translateY(0) scale(1); opacity: 1;
+  }
+}
+
+.rt-book-detail-handle {
+  width: 36px; height: 4px; border-radius: 99px;
+  background: var(--rt-cream-md); margin: 10px auto 0; flex-shrink: 0;
+}
+@media (min-width: 640px) { .rt-book-detail-handle { display: none; } }
+
+.rt-book-detail-hero {
+  background: linear-gradient(160deg, var(--rt-navy) 0%, var(--rt-navy-mid) 100%);
+  padding: 1.25rem 1.25rem 1.5rem;
+  display: flex; gap: 1rem; align-items: flex-start;
+  position: relative; overflow: hidden; flex-shrink: 0;
+}
+.rt-book-detail-hero::before {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(232,168,48,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.rt-book-detail-cover {
+  width: 72px; height: 104px; border-radius: 8px; object-fit: cover;
+  flex-shrink: 0; box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  position: relative; z-index: 1;
+}
+.rt-book-detail-cover--ph {
+  width: 72px; height: 104px; border-radius: 8px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--rt-navy-light), #3a4a7a);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  position: relative; z-index: 1;
+}
+.rt-book-detail-meta { flex: 1; min-width: 0; position: relative; z-index: 1; }
+.rt-book-detail-status-badge {
+  font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--rt-amber-lt); margin-bottom: 0.4rem;
+}
+.rt-book-detail-title {
+  font-family: var(--rt-font-display); font-size: 1.2rem; font-weight: 700;
+  color: #fff; line-height: 1.2; margin-bottom: 0.3rem;
+}
+.rt-book-detail-author {
+  font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-bottom: 0.5rem;
+}
+.rt-book-detail-year {
+  font-size: 0.72rem; color: rgba(255,255,255,0.3);
+}
+.rt-book-detail-close {
+  position: absolute; top: 0.85rem; right: 0.85rem; z-index: 2;
+  background: rgba(255,255,255,0.12); border: none; border-radius: 50%;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: rgba(255,255,255,0.7); cursor: pointer;
+  transition: background var(--rt-fast);
+}
+.rt-book-detail-close:hover { background: rgba(255,255,255,0.22); }
+
+.rt-book-detail-body {
+  overflow-y: auto; flex: 1; padding: 1.25rem;
+}
+.rt-book-detail-section { margin-bottom: 1.25rem; }
+.rt-book-detail-section:last-child { margin-bottom: 0; }
+.rt-book-detail-section-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--rt-t3); margin-bottom: 0.5rem;
+}
+.rt-book-detail-blurb {
+  font-size: 0.88rem; color: var(--rt-t2); line-height: 1.7;
+}
+.rt-book-detail-blurb-loading {
+  display: flex; gap: 6px; align-items: center;
+  font-size: 0.82rem; color: var(--rt-t3);
+}
+.rt-book-detail-blurb-loading span {
+  width: 6px; height: 6px; background: var(--rt-t3);
+  border-radius: 50%; animation: rt-bounce 1.1s ease-in-out infinite;
+}
+.rt-book-detail-blurb-loading span:nth-child(2) { animation-delay: 0.18s; }
+.rt-book-detail-blurb-loading span:nth-child(3) { animation-delay: 0.36s; }
+
+.rt-book-detail-subjects {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.rt-book-detail-subject {
+  font-size: 0.7rem; font-weight: 500; color: var(--rt-navy);
+  background: var(--rt-surface); border-radius: 99px;
+  padding: 0.25em 0.7em;
+}
+
+.rt-book-detail-footer {
+  padding: 0.85rem 1.25rem 1.25rem; flex-shrink: 0;
+  border-top: 1px solid var(--rt-border);
+  display: flex; gap: 0.6rem; flex-wrap: wrap;
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+}
+.rt-book-detail-action {
+  flex: 1; font-family: var(--rt-font-body); font-size: 0.82rem; font-weight: 700;
+  padding: 0.75rem 0.75rem; border: none; border-radius: var(--rt-r3);
+  cursor: pointer; transition: background var(--rt-fast); text-align: center;
+  white-space: nowrap; min-width: 0;
+}
+.rt-book-detail-action--primary {
+  background: var(--rt-navy); color: white;
+}
+.rt-book-detail-action--primary:hover { background: var(--rt-navy-light); }
+.rt-book-detail-action--primary:disabled {
+  background: var(--rt-surface); color: var(--rt-t3); cursor: default;
+}
+.rt-book-detail-action--secondary {
+  background: var(--rt-surface); color: var(--rt-t2);
+}
+.rt-book-detail-action--secondary:hover { background: var(--rt-cream-md); }
+.rt-book-detail-action--amber {
+  background: var(--rt-amber-pale); color: var(--rt-amber);
+  border: 1.5px solid rgba(200,137,26,0.2);
+}
+.rt-book-detail-action--amber:hover { background: var(--rt-amber); color: #fff; }
+
+/* User's notes/review in detail panel */
+.rt-book-detail-review {
+  font-size: 0.88rem; color: var(--rt-t2); line-height: 1.65;
+  font-style: italic; padding: 0.75rem; background: var(--rt-cream);
+  border-radius: var(--rt-r3); border-left: 3px solid var(--rt-amber);
+}
+.rt-book-detail-stars {
+  font-size: 1.2rem; color: var(--rt-amber); letter-spacing: 1px; margin-bottom: 0.5rem;
+}
+
 /* ── ADD BOOK SHEET (exact mirror of rt-sheet-overlay / rt-sheet) ── */
 .rt-add-overlay {
   position: fixed; inset: 0; background: rgba(10,15,30,0.55);
@@ -1998,6 +2203,62 @@ permalink: /tools/reading-tracker/
 </div>
 
 <!-- ══════════════════════════════════════════════
+     BOOK DETAIL PANEL
+══════════════════════════════════════════════ -->
+<div class="rt-book-detail-overlay" id="rt-book-detail-overlay" role="dialog" aria-modal="true" aria-label="Book details">
+  <div class="rt-book-detail-sheet" id="rt-book-detail-sheet">
+    <div class="rt-book-detail-handle"></div>
+
+    <!-- Hero -->
+    <div class="rt-book-detail-hero" id="rt-book-detail-hero">
+      <button class="rt-book-detail-close" id="rt-book-detail-close" type="button" aria-label="Close">×</button>
+      <div class="rt-book-detail-cover--ph" id="rt-book-detail-cover-ph">📖</div>
+      <img id="rt-book-detail-cover-img" class="rt-book-detail-cover" alt="" style="display:none;" loading="eager">
+      <div class="rt-book-detail-meta">
+        <div class="rt-book-detail-status-badge" id="rt-book-detail-badge"></div>
+        <div class="rt-book-detail-title" id="rt-book-detail-title"></div>
+        <div class="rt-book-detail-author" id="rt-book-detail-author"></div>
+        <div class="rt-book-detail-year" id="rt-book-detail-year"></div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="rt-book-detail-body" id="rt-book-detail-body">
+
+      <!-- User's rating/review (shown for read books) -->
+      <div class="rt-book-detail-section" id="rt-book-detail-user-section" style="display:none;">
+        <div class="rt-book-detail-stars" id="rt-book-detail-user-stars"></div>
+        <div class="rt-book-detail-review" id="rt-book-detail-user-review" style="display:none;"></div>
+      </div>
+
+      <!-- Blurb from Open Library -->
+      <div class="rt-book-detail-section">
+        <div class="rt-book-detail-section-label">About this book</div>
+        <div id="rt-book-detail-blurb">
+          <div class="rt-book-detail-blurb-loading">
+            <span></span><span></span><span></span>
+            <span style="margin-left:4px;">Loading…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subjects / genres -->
+      <div class="rt-book-detail-section" id="rt-book-detail-subjects-section" style="display:none;">
+        <div class="rt-book-detail-section-label">Subjects</div>
+        <div class="rt-book-detail-subjects" id="rt-book-detail-subjects"></div>
+      </div>
+
+    </div>
+
+    <!-- Footer actions -->
+    <div class="rt-book-detail-footer" id="rt-book-detail-footer">
+      <!-- injected by JS based on book status -->
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
      FINISH BOTTOM SHEET — 3 steps
 ══════════════════════════════════════════════ -->
 <div class="rt-sheet-overlay" id="rt-sheet-overlay" role="dialog" aria-modal="true" aria-label="Finish book">
@@ -2593,6 +2854,7 @@ const SyncQueue = (() => {
       date_started:     book.dateStarted  || null,
       review_body:      book.reviewBody   || null,
       review_is_public: book.reviewPublic || false,
+      tbr_position:     book.tbrPosition  || null,
       updated_at:       new Date().toISOString()
     };
     if (book.cloudId) {
@@ -2653,6 +2915,7 @@ const SyncQueue = (() => {
         reviewPublic: e.review_is_public || false,
         date:         e.date_finished   || null,
         dateStarted:  e.date_started    || null,
+        tbrPosition:  e.tbr_position    || null,
         added:        e.added_at,
         updatedAt:    e.updated_at      || e.added_at
       }));
@@ -2876,7 +3139,7 @@ function renderHomeReading() {
   list.innerHTML = reading.map(b => {
     const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
     return `
-    <div class="rt-reading-card">
+    <div class="rt-reading-card" style="cursor:pointer;" data-action="detail" data-id="${b.id}">
       ${coverUrl
         ? `<img src="${coverUrl}" class="rt-reading-cover" alt="Cover of ${esc(b.title)}" loading="lazy">`
         : '<div class="rt-reading-cover rt-reading-cover--placeholder">📖</div>'}
@@ -2903,7 +3166,10 @@ document.getElementById('rt-home-reading-list').addEventListener('click', functi
     if (book) deleteBookFromCloud(book);
     books = books.filter(b => String(b.id) !== String(delBtn.dataset.id));
     save(); renderHomeReading();
+    return;
   }
+  const card = e.target.closest('[data-action="detail"]');
+  if (card) openBookDetail(card.dataset.id);
 });
 
 // ─────────────────────────────────────────────────────────────
@@ -2999,9 +3265,9 @@ document.getElementById('rt-history-list').addEventListener('click', function(e)
     return;
   }
   const readMore = e.target.closest('.rt-hist-readmore');
-  if (readMore) { openEditSheet(readMore.dataset.id); return; }
+  if (readMore) { openBookDetail(readMore.dataset.id); return; }
   const card = e.target.closest('[data-action="edit-book"]');
-  if (card) openEditSheet(card.dataset.id);
+  if (card) openBookDetail(card.dataset.id);
 });
 document.getElementById('rt-home-sort').addEventListener('change', renderHistory);
 
@@ -3173,7 +3439,13 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
 // TBR / MY LIST
 // ─────────────────────────────────────────────────────────────
 function renderTBR() {
-  const tbr   = getBooks('tbr');
+  const tbr   = getBooks('tbr').sort((a,b) => {
+    // Sort by tbr_position if set, otherwise by added date
+    const ap = a.tbrPosition != null ? a.tbrPosition : 9999;
+    const bp = b.tbrPosition != null ? b.tbrPosition : 9999;
+    if (ap !== bp) return ap - bp;
+    return new Date(a.added||0) - new Date(b.added||0);
+  });
   const list  = document.getElementById('rt-tbr-list');
   const empty = document.getElementById('rt-tbr-empty');
   empty.style.display = tbr.length ? 'none' : 'flex';
@@ -3181,22 +3453,29 @@ function renderTBR() {
     const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
     const phClass  = `rt-hist-cover--ph rt-hist-cover--ph-${idx % 6}`;
     return `
-    <div class="rt-book-item">
-      ${coverUrl
-        ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy">`
-        : `<div class="${phClass}" style="width:56px;height:80px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📖</div>`}
-      <div class="rt-book-main">
-        <div class="rt-book-info">
-          <div class="rt-book-title">${esc(b.title)}</div>
-          ${b.author ? `<div class="rt-book-author">${esc(b.author)}</div>` : ''}
-        </div>
-        <div class="rt-book-meta">
-          <button class="rt-start-reading-btn" data-id="${b.id}" type="button">📖 Start reading</button>
-          <button class="rt-delete" data-id="${b.id}" data-action="remove-tbr" title="Remove" type="button">×</button>
-        </div>
+    <div class="rt-tbr-item" data-id="${b.id}" draggable="true">
+      <div class="rt-tbr-drag-handle" title="Drag to reorder">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="rt-tbr-num">${idx + 1}</div>
+      <div class="rt-tbr-item-cover" data-action="detail" data-id="${b.id}">
+        ${coverUrl
+          ? `<img src="${coverUrl}" class="rt-book-cover" alt="" loading="lazy" style="width:44px;height:62px;border-radius:5px;object-fit:cover;box-shadow:0 2px 6px rgba(26,39,68,0.14);">`
+          : `<div class="${phClass}" style="width:44px;height:62px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">📖</div>`}
+      </div>
+      <div class="rt-tbr-item-body" data-action="detail" data-id="${b.id}">
+        <div class="rt-book-title">${esc(b.title)}</div>
+        ${b.author ? `<div class="rt-book-author">${esc(b.author)}</div>` : ''}
+      </div>
+      <div class="rt-tbr-item-actions">
+        <button class="rt-start-reading-btn" data-id="${b.id}" type="button">📖 Start</button>
+        <button class="rt-delete" data-id="${b.id}" data-action="remove-tbr" title="Remove" type="button">×</button>
       </div>
     </div>`;
   }).join('');
+
+  // Wire up drag-and-drop
+  initTBRDragAndDrop();
 }
 
 // addToTBR removed — use openAddModal('tbr')
@@ -3215,8 +3494,156 @@ document.getElementById('rt-tbr-list').addEventListener('click', function(e) {
     if (book) deleteBookFromCloud(book);
     books = books.filter(b => String(b.id) !== String(delBtn.dataset.id));
     save(); renderTBR();
+    return;
+  }
+  const detailEl = e.target.closest('[data-action="detail"]');
+  if (detailEl) {
+    openBookDetail(detailEl.dataset.id);
   }
 });
+
+// ─────────────────────────────────────────────────────────────
+// TBR DRAG AND DROP
+// ─────────────────────────────────────────────────────────────
+let dragSrcId = null;
+
+function initTBRDragAndDrop() {
+  const list = document.getElementById('rt-tbr-list');
+  const items = list.querySelectorAll('.rt-tbr-item');
+
+  items.forEach(item => {
+    // Desktop drag events
+    item.addEventListener('dragstart', function(e) {
+      dragSrcId = this.dataset.id;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+      list.querySelectorAll('.rt-tbr-item').forEach(i => i.classList.remove('drag-over'));
+    });
+    item.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (this.dataset.id !== dragSrcId) {
+        list.querySelectorAll('.rt-tbr-item').forEach(i => i.classList.remove('drag-over'));
+        this.classList.add('drag-over');
+      }
+    });
+    item.addEventListener('drop', function(e) {
+      e.preventDefault();
+      if (this.dataset.id === dragSrcId) return;
+      reorderTBR(dragSrcId, this.dataset.id);
+    });
+
+    // Touch drag events (mobile)
+    const handle = item.querySelector('.rt-tbr-drag-handle');
+    if (handle) {
+      let touchStartY = 0;
+      let touchItem   = null;
+      let touchClone  = null;
+
+      handle.addEventListener('touchstart', function(e) {
+        touchItem = item;
+        touchStartY = e.touches[0].clientY;
+        dragSrcId = item.dataset.id;
+        item.classList.add('dragging');
+
+        // Create a visual clone for touch feedback
+        touchClone = item.cloneNode(true);
+        touchClone.style.cssText = `
+          position:fixed;left:${item.getBoundingClientRect().left}px;
+          top:${item.getBoundingClientRect().top}px;
+          width:${item.offsetWidth}px;opacity:0.85;
+          background:white;border-radius:8px;
+          box-shadow:0 8px 24px rgba(26,39,68,0.2);
+          pointer-events:none;z-index:9999;
+          transition:none;
+        `;
+        document.body.appendChild(touchClone);
+        e.preventDefault();
+      }, { passive: false });
+
+      handle.addEventListener('touchmove', function(e) {
+        if (!touchClone) return;
+        const touch = e.touches[0];
+        const dy = touch.clientY - touchStartY;
+        touchClone.style.transform = `translateY(${dy}px)`;
+
+        // Find which item we're hovering over
+        const els = list.querySelectorAll('.rt-tbr-item:not(.dragging)');
+        els.forEach(el => el.classList.remove('drag-over'));
+        const elAtPoint = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetItem = elAtPoint?.closest('.rt-tbr-item');
+        if (targetItem && targetItem !== item) {
+          targetItem.classList.add('drag-over');
+          dragSrcId && (window._touchDropTarget = targetItem.dataset.id);
+        }
+        e.preventDefault();
+      }, { passive: false });
+
+      handle.addEventListener('touchend', function() {
+        if (touchClone) { touchClone.remove(); touchClone = null; }
+        if (item) item.classList.remove('dragging');
+        list.querySelectorAll('.rt-tbr-item').forEach(i => i.classList.remove('drag-over'));
+        if (dragSrcId && window._touchDropTarget && dragSrcId !== window._touchDropTarget) {
+          reorderTBR(dragSrcId, window._touchDropTarget);
+        }
+        window._touchDropTarget = null;
+        dragSrcId = null;
+      });
+    }
+  });
+}
+
+function reorderTBR(srcId, targetId) {
+  const tbr = getBooks('tbr').sort((a,b) => {
+    const ap = a.tbrPosition != null ? a.tbrPosition : 9999;
+    const bp = b.tbrPosition != null ? b.tbrPosition : 9999;
+    if (ap !== bp) return ap - bp;
+    return new Date(a.added||0) - new Date(b.added||0);
+  });
+
+  const srcIdx    = tbr.findIndex(b => String(b.id) === String(srcId));
+  const targetIdx = tbr.findIndex(b => String(b.id) === String(targetId));
+  if (srcIdx === -1 || targetIdx === -1) return;
+
+  // Reorder array
+  const [moved] = tbr.splice(srcIdx, 1);
+  tbr.splice(targetIdx, 0, moved);
+
+  // Write new positions back to local books
+  tbr.forEach((b, i) => {
+    const local = books.find(book => String(book.id) === String(b.id));
+    if (local) local.tbrPosition = i + 1;
+  });
+  save();
+
+  // Sync positions to Supabase
+  if (currentUser) {
+    saveTBRPositionsToCloud(tbr);
+  }
+
+  renderTBR();
+}
+
+async function saveTBRPositionsToCloud(orderedTBR) {
+  // Update tbr_position for each entry that has a cloudId
+  const updates = orderedTBR
+    .filter(b => b.cloudId)
+    .map((b, i) =>
+      sb.from('reading_entries')
+        .update({ tbr_position: i + 1, updated_at: new Date().toISOString() })
+        .eq('id', b.cloudId)
+        .eq('user_id', currentUser.id)
+    );
+  try {
+    await Promise.all(updates);
+  } catch(e) {
+    console.error('[TBR] Failed to save positions:', e);
+  }
+}
+
 
 function addRecToTBR(title, author) {
   if (books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
@@ -3616,6 +4043,212 @@ function showFlash(msg) {
   document.querySelector('.rt-panels').prepend(f);
   setTimeout(() => f.remove(), 3200);
 }
+
+// ─────────────────────────────────────────────────────────────
+// BOOK DETAIL PANEL
+// ─────────────────────────────────────────────────────────────
+let detailBookId = null;
+
+function openBookDetail(bookId) {
+  const book = books.find(b => String(b.id) === String(bookId));
+  if (!book) return;
+  detailBookId = bookId;
+
+  // Cover
+  const ph  = document.getElementById('rt-book-detail-cover-ph');
+  const img = document.getElementById('rt-book-detail-cover-img');
+  if (book.coverId) {
+    img.src = `https://covers.openlibrary.org/b/id/${book.coverId}-L.jpg`;
+    img.style.display = 'block'; ph.style.display = 'none';
+  } else {
+    img.style.display = 'none'; ph.style.display = 'flex';
+  }
+
+  // Title / author / year
+  document.getElementById('rt-book-detail-title').textContent  = book.title;
+  document.getElementById('rt-book-detail-author').textContent = book.author ? `by ${book.author}` : '';
+  document.getElementById('rt-book-detail-year').textContent   = '';
+
+  // Status badge
+  const badges = { reading: '📖 Currently reading', read: '✓ Read', tbr: '🔖 On your list', dnf: 'Did not finish' };
+  document.getElementById('rt-book-detail-badge').textContent = badges[book.status] || '';
+
+  // User rating + review (read books)
+  const userSection = document.getElementById('rt-book-detail-user-section');
+  const userStars   = document.getElementById('rt-book-detail-user-stars');
+  const userReview  = document.getElementById('rt-book-detail-user-review');
+  if (book.status === 'read' || book.status === 'dnf') {
+    userSection.style.display = 'block';
+    userStars.textContent = book.rating
+      ? '★'.repeat(book.rating) + '☆'.repeat(5 - book.rating)
+      : '';
+    if (book.reviewBody) {
+      userReview.textContent = book.reviewBody;
+      userReview.style.display = 'block';
+    } else {
+      userReview.style.display = 'none';
+    }
+  } else {
+    userSection.style.display = 'none';
+  }
+
+  // Reset blurb to loading state
+  document.getElementById('rt-book-detail-blurb').innerHTML = `
+    <div class="rt-book-detail-blurb-loading">
+      <span></span><span></span><span></span>
+      <span style="margin-left:4px;">Loading…</span>
+    </div>`;
+  document.getElementById('rt-book-detail-subjects-section').style.display = 'none';
+
+  // Footer actions based on status
+  renderBookDetailFooter(book);
+
+  // Open
+  const overlay = document.getElementById('rt-book-detail-overlay');
+  const sheet   = document.getElementById('rt-book-detail-sheet');
+  overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+
+  // Fetch OL data
+  fetchBookDetail(book);
+}
+
+function renderBookDetailFooter(book) {
+  const footer = document.getElementById('rt-book-detail-footer');
+  let html = '';
+
+  if (book.status === 'tbr') {
+    html = `
+      <button class="rt-book-detail-action rt-book-detail-action--primary" onclick="closeBookDetail();openEditSheet('${book.id}')">📖 Start reading</button>
+      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail()">Close</button>`;
+  } else if (book.status === 'reading') {
+    html = `
+      <button class="rt-book-detail-action rt-book-detail-action--primary" onclick="closeBookDetail();openModal('${book.id}')">✓ Mark finished</button>
+      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail();openEditSheet('${book.id}')">✏️ Edit</button>`;
+  } else if (book.status === 'read' || book.status === 'dnf') {
+    html = `
+      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail();openEditSheet('${book.id}')">✏️ Edit notes</button>
+      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail()">Close</button>`;
+  }
+
+  footer.innerHTML = html;
+}
+
+function closeBookDetail() {
+  const overlay = document.getElementById('rt-book-detail-overlay');
+  const sheet   = document.getElementById('rt-book-detail-sheet');
+  sheet.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  detailBookId = null;
+}
+
+document.getElementById('rt-book-detail-close').addEventListener('click', closeBookDetail);
+document.getElementById('rt-book-detail-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeBookDetail();
+});
+
+async function fetchBookDetail(book) {
+  try {
+    let olKey = book.olKey;
+
+    // If no OL key, search for it
+    if (!olKey) {
+      const q = book.author ? `${book.title} ${book.author.split(',')[0]}` : book.title;
+      const searchRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(q)}&fields=key,title,author_name,first_publish_year,subject&limit=1`);
+      const searchData = await searchRes.json();
+      const doc = searchData.docs?.[0];
+      if (doc) {
+        olKey = doc.key;
+        // Show publish year if available
+        if (doc.first_publish_year) {
+          document.getElementById('rt-book-detail-year').textContent = `First published ${doc.first_publish_year}`;
+        }
+        // Show subjects
+        if (doc.subject?.length) {
+          showBookDetailSubjects(doc.subject.slice(0, 8));
+        }
+      }
+    }
+
+    if (!olKey) {
+      document.getElementById('rt-book-detail-blurb').innerHTML =
+        '<p class="rt-book-detail-blurb" style="color:var(--rt-t3);font-style:italic;">No description available for this book.</p>';
+      return;
+    }
+
+    // Fetch work data for description
+    const workRes = await fetch(`https://openlibrary.org${olKey}.json`);
+    const workData = await workRes.json();
+
+    // Extract description
+    let description = '';
+    if (workData.description) {
+      description = typeof workData.description === 'string'
+        ? workData.description
+        : workData.description.value || '';
+    }
+
+    // Strip OL formatting markers
+    description = description
+      .replace(/\r\n/g, '\n')
+      .replace(/\[.*?\]\(.*?\)/g, '') // markdown links
+      .replace(/----------\n.*/s, '') // cut off "source" lines
+      .trim();
+
+    if (description) {
+      // Truncate at ~400 chars with expand option
+      const LIMIT = 400;
+      const truncated = description.length > LIMIT;
+      const shown = truncated ? description.slice(0, LIMIT) + '…' : description;
+      document.getElementById('rt-book-detail-blurb').innerHTML = `
+        <p class="rt-book-detail-blurb" id="rt-book-detail-blurb-text">${esc(shown)}</p>
+        ${truncated ? `<button type="button" style="background:none;border:none;color:var(--rt-amber);font-size:0.8rem;font-weight:600;cursor:pointer;padding:0.4rem 0 0;" onclick="expandBlurb(${JSON.stringify(esc(description))})">Read more ↓</button>` : ''}`;
+    } else {
+      document.getElementById('rt-book-detail-blurb').innerHTML =
+        '<p class="rt-book-detail-blurb" style="color:var(--rt-t3);font-style:italic;">No description available for this book.</p>';
+    }
+
+    // Publish year
+    if (workData.first_publish_date && !document.getElementById('rt-book-detail-year').textContent) {
+      document.getElementById('rt-book-detail-year').textContent = `First published ${workData.first_publish_date}`;
+    }
+
+    // Subjects
+    if (workData.subjects?.length) {
+      showBookDetailSubjects(workData.subjects.slice(0, 8));
+    }
+
+  } catch(e) {
+    console.error('[BookDetail] fetch error:', e);
+    document.getElementById('rt-book-detail-blurb').innerHTML =
+      '<p class="rt-book-detail-blurb" style="color:var(--rt-t3);font-style:italic;">Couldn\'t load book details right now.</p>';
+  }
+}
+
+function expandBlurb(fullText) {
+  const el = document.getElementById('rt-book-detail-blurb');
+  el.innerHTML = `<p class="rt-book-detail-blurb">${fullText}</p>`;
+}
+
+function showBookDetailSubjects(subjects) {
+  const section = document.getElementById('rt-book-detail-subjects-section');
+  const wrap    = document.getElementById('rt-book-detail-subjects');
+  if (!subjects?.length) return;
+  wrap.innerHTML = subjects
+    .filter(s => s.length < 40) // skip overly long subject strings
+    .map(s => `<span class="rt-book-detail-subject">${esc(s)}</span>`)
+    .join('');
+  section.style.display = 'block';
+}
+
+// Make history cards clickable to open book detail
+document.getElementById('rt-history-list').addEventListener('click', function(e) {
+  // Note: existing click handler above handles delete / readmore
+  // This adds detail panel for card click — but existing handler runs first
+  // so we only open detail if not already handled
+}, false);
 
 // ─────────────────────────────────────────────────────────────
 // AI RECOMMENDATIONS
