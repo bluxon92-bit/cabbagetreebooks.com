@@ -6847,28 +6847,31 @@ function subscribeToChatThread(chatId) {
   if (chatState._realtimeCh) {
     sb.removeChannel(chatState._realtimeCh);
   }
+  // No server-side filter -- filtered realtime on custom schemas requires
+  // REPLICA IDENTITY FULL. Filter client-side instead.
   chatState._realtimeCh = sb
-    .channel(`chat-thread-${chatId}`)
+    .channel('chat-thread-' + chatId)
     .on('postgres_changes', {
-      event: 'INSERT', schema: 'staging', table: 'chat_messages',
-      filter: `chat_id=eq.${chatId}`
+      event: 'INSERT', schema: 'staging', table: 'chat_messages'
     }, payload => {
-      // Don't add if it's already in the list (our own optimistic or confirmed)
+      if (payload.new.chat_id !== chatId) return;
       const exists = chatState.messages.some(m => m.id === payload.new.id);
-      if (!exists && payload.new.user_id !== currentUser.id) {
+      if (!exists && payload.new.user_id !== currentUser?.id) {
         chatState.messages.push(payload.new);
         renderThread(false);
         markChatRead(chatId);
       }
     })
     .on('postgres_changes', {
-      event: 'UPDATE', schema: 'staging', table: 'chat_messages',
-      filter: `chat_id=eq.${chatId}`
+      event: 'UPDATE', schema: 'staging', table: 'chat_messages'
     }, payload => {
+      if (payload.new.chat_id !== chatId) return;
       const idx = chatState.messages.findIndex(m => m.id === payload.new.id);
       if (idx >= 0) { chatState.messages[idx] = payload.new; renderThread(false); }
     })
-    .subscribe();
+    .subscribe(status => {
+      console.log('[Chat] realtime status:', status);
+    });
 }
 
 // ── Start or open a chat for a book ───────────────────────────
