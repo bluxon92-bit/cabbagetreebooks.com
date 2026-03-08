@@ -1961,6 +1961,146 @@ permalink: /tools/reading-tracker/
   font-size: 0.78rem; color: var(--rt-t3);
 }
 
+
+/* ─── CHAT ─────────────────────────────────────────────────── */
+.rt-chat-list { display:flex; flex-direction:column; gap:0; }
+.rt-chat-list-item {
+  display:flex; align-items:center; gap:0.85rem;
+  padding:0.85rem 1.25rem; cursor:pointer;
+  border-bottom:1px solid var(--rt-border);
+  transition:background 0.15s;
+}
+.rt-chat-list-item:last-child { border-bottom:none; }
+.rt-chat-list-item:hover { background:var(--rt-surface); }
+.rt-chat-list-cover {
+  width:38px; height:54px; border-radius:4px; object-fit:cover; flex-shrink:0;
+}
+.rt-chat-list-cover--ph {
+  width:38px; height:54px; border-radius:4px; background:var(--rt-surface);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.2rem; flex-shrink:0;
+}
+.rt-chat-list-body { flex:1; min-width:0; }
+.rt-chat-list-title {
+  font-size:0.85rem; font-weight:600; color:var(--rt-navy);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.rt-chat-list-preview {
+  font-size:0.75rem; color:var(--rt-t3); margin-top:2px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.rt-chat-list-meta {
+  font-size:0.68rem; color:var(--rt-t3); flex-shrink:0; text-align:right;
+}
+.rt-chat-unread {
+  background:var(--rt-amber); color:#fff; border-radius:10px;
+  font-size:0.62rem; font-weight:700; padding:1px 6px; margin-top:3px;
+  display:inline-block;
+}
+
+/* Thread view */
+.rt-chat-thread { display:flex; flex-direction:column; height:100%; }
+.rt-chat-thread-header {
+  display:flex; align-items:center; gap:0.75rem;
+  padding:0.85rem 1.25rem; border-bottom:1px solid var(--rt-border);
+  background:#fff; position:sticky; top:0; z-index:2;
+}
+.rt-chat-thread-back {
+  background:none; border:none; cursor:pointer; color:var(--rt-amber);
+  font-size:0.85rem; font-weight:600; padding:0.25rem 0; flex-shrink:0;
+}
+.rt-chat-thread-title {
+  font-size:0.85rem; font-weight:700; color:var(--rt-navy);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;
+}
+.rt-chat-messages {
+  flex:1; overflow-y:auto; padding:1rem 1.25rem;
+  display:flex; flex-direction:column; gap:0.75rem;
+  min-height:200px; max-height:340px;
+}
+.rt-chat-bubble-wrap {
+  display:flex; gap:0.5rem; align-items:flex-end;
+}
+.rt-chat-bubble-wrap--mine { flex-direction:row-reverse; }
+.rt-chat-bubble-avatar {
+  width:26px; height:26px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.68rem; font-weight:700; color:#fff;
+}
+.rt-chat-bubble {
+  max-width:72%; padding:0.55rem 0.85rem; border-radius:14px;
+  font-size:0.82rem; line-height:1.5; color:var(--rt-navy);
+  background:var(--rt-surface); word-break:break-word;
+}
+.rt-chat-bubble--mine {
+  background:var(--rt-navy); color:#fff; border-bottom-right-radius:4px;
+}
+.rt-chat-bubble--theirs { border-bottom-left-radius:4px; }
+.rt-chat-bubble--deleted { color:var(--rt-t3); font-style:italic; }
+.rt-chat-bubble-meta {
+  font-size:0.62rem; color:var(--rt-t3); margin-top:2px;
+  display:flex; gap:0.4rem; align-items:center;
+}
+.rt-chat-bubble-wrap--mine .rt-chat-bubble-meta { flex-direction:row-reverse; }
+.rt-chat-delete-btn {
+  background:none; border:none; cursor:pointer; color:var(--rt-t3);
+  font-size:0.65rem; padding:0; opacity:0; transition:opacity 0.15s;
+}
+.rt-chat-bubble-wrap:hover .rt-chat-delete-btn { opacity:1; }
+.rt-chat-input-row {
+  display:flex; gap:0.5rem; padding:0.75rem 1.25rem;
+  border-top:1px solid var(--rt-border); background:#fff;
+}
+.rt-chat-input {
+  flex:1; border:1px solid var(--rt-border-md); border-radius:20px;
+  padding:0.5rem 1rem; font-size:0.83rem; color:var(--rt-navy);
+  outline:none; resize:none; font-family:inherit; line-height:1.4;
+  max-height:100px; overflow-y:auto;
+}
+.rt-chat-input:focus { border-color:var(--rt-amber); }
+.rt-chat-send-btn {
+  background:var(--rt-amber); color:#fff; border:none; border-radius:50%;
+  width:36px; height:36px; cursor:pointer; font-size:1rem; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s; align-self:flex-end;
+}
+.rt-chat-send-btn:hover { background:var(--rt-amber-lt); }
+.rt-chat-send-btn:disabled { background:var(--rt-border-md); cursor:not-allowed; }
+.rt-chat-load-earlier {
+  text-align:center; padding:0.35rem 0 0.75rem;
+}
+.rt-chat-load-earlier button {
+  background:none; border:none; color:var(--rt-amber); font-size:0.75rem;
+  font-weight:600; cursor:pointer;
+}
+.rt-chat-date-divider {
+  text-align:center; font-size:0.65rem; color:var(--rt-t3);
+  margin:0.25rem 0; letter-spacing:0.05em;
+}
+.rt-chat-empty {
+  padding:2rem 1rem; text-align:center;
+}
+.rt-chat-empty-icon { font-size:2rem; margin-bottom:0.5rem; }
+.rt-chat-empty-text { font-size:0.83rem; color:var(--rt-t3); line-height:1.6; }
+
+/* Book club toast */
+.rt-book-club-toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
+  background:var(--rt-navy); color:#fff; border-radius:12px;
+  padding:0.85rem 1.25rem; font-size:0.83rem; z-index:9999;
+  box-shadow:var(--rt-s3); max-width:340px; width:calc(100% - 2rem);
+  animation:rt-toast-in 0.25s ease;
+}
+.rt-book-club-toast-title { font-weight:700; margin-bottom:0.35rem; }
+.rt-book-club-toast-actions { display:flex; gap:0.5rem; margin-top:0.65rem; }
+.rt-book-club-toast-btn {
+  flex:1; padding:0.45rem 0.5rem; border-radius:8px; border:none;
+  font-size:0.78rem; font-weight:600; cursor:pointer; text-align:center;
+}
+.rt-book-club-toast-btn--primary { background:var(--rt-amber); color:#fff; }
+.rt-book-club-toast-btn--ghost {
+  background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.75);
+}
 </style>
 
 <!-- ══════════════════════════════════════════════
@@ -2183,10 +2323,38 @@ permalink: /tools/reading-tracker/
             </div>
 
             <!-- Chat tab (Phase 3) -->
-            <div id="rt-community-chat-tab" style="display:none;padding:1.5rem 1.25rem;text-align:center;">
-              <div style="font-size:1.8rem;margin-bottom:0.6rem;">💬</div>
-              <div style="font-family:var(--rt-font-display);font-size:1rem;font-weight:700;color:var(--rt-navy);margin-bottom:0.4rem;">Book chat — coming soon</div>
-              <p style="font-size:0.83rem;color:var(--rt-t3);line-height:1.6;max-width:280px;margin:0 auto;">Dedicated chat spaces for books you and a friend are both reading.</p>
+            <div id="rt-community-chat-tab" style="display:none;">
+
+              <!-- View A: Chat list -->
+              <div id="rt-chat-list-view">
+                <div class="rt-chat-list" id="rt-chat-list">
+                  <div class="rt-chat-empty" id="rt-chat-empty">
+                    <div class="rt-chat-empty-icon">💬</div>
+                    <p class="rt-chat-empty-text">No book chats yet.<br>Start reading a book a friend is also reading — you'll be able to start a chat.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- View B: Chat thread -->
+              <div id="rt-chat-thread-view" style="display:none;">
+                <div class="rt-chat-thread">
+                  <div class="rt-chat-thread-header">
+                    <button class="rt-chat-thread-back" onclick="closeChatThread()" type="button">← Back</button>
+                    <div class="rt-chat-thread-title" id="rt-chat-thread-title">Chat</div>
+                  </div>
+                  <div class="rt-chat-messages" id="rt-chat-messages">
+                    <div class="rt-chat-load-earlier" id="rt-chat-load-earlier" style="display:none;">
+                      <button onclick="loadEarlierMessages()" type="button">Load earlier messages</button>
+                    </div>
+                  </div>
+                  <div class="rt-chat-input-row">
+                    <textarea class="rt-chat-input" id="rt-chat-input" placeholder="Message…" rows="1"
+                      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
+                    <button class="rt-chat-send-btn" id="rt-chat-send-btn" onclick="sendMessage()" type="button" title="Send">↑</button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -4764,6 +4932,7 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   };
   books.unshift(book); save();
   saveBookToCloud(book);
+  if (status === 'reading') handleBookClubTrigger(book);
   ['rt-title','rt-author','rt-notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('rt-ol-cover-id').value = '';
   document.getElementById('rt-ol-key').value = '';
@@ -5289,7 +5458,11 @@ function saveEdits() {
   if (isTbrOrReading) {
     const sel = document.getElementById('rt-edit-status-select');
     book.status = sel ? sel.value : book.status;
-    if (book.status === 'reading') book.dateStarted = book.dateStarted || new Date().toISOString().split('T')[0];
+    if (book.status === 'reading') {
+      book.dateStarted = book.dateStarted || new Date().toISOString().split('T')[0];
+      // Book club: check if any friend is also reading this book
+      handleBookClubTrigger(book);
+    }
     if (book.status === 'tbr') { book.rating = null; book.date = null; }
     book.updatedAt = new Date().toISOString();
     save(); saveBookToCloud(book);
@@ -6277,6 +6450,565 @@ renderHistory();
 // Initialise recs panel state (locked if not signed in)
 renderAuthUI();
 
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 3 — BOOK CHAT
+// ═══════════════════════════════════════════════════════════════
+// Architecture:
+//   - One chat thread per OL key (book), not per friendship
+//   - Auto-triggered when you mark a book as "reading" and a
+//     friend is also reading it (book club prompt)
+//   - Two sub-views inside the Chat tab: list ↔ thread
+// ═══════════════════════════════════════════════════════════════
+
+const chatState = {
+  chats:       [],    // [{id, bookOlKey, bookTitle, bookAuthor, coverId, lastMessageAt, lastPreview, unread}]
+  activeChat:  null,  // {id, bookTitle, ...}
+  messages:    [],    // current thread messages
+  _loaded:     false,
+  _cursor:     null,  // for "load earlier" pagination
+  _realtimeCh: null   // realtime channel for active thread
+};
+
+// ── Helpers ───────────────────────────────────────────────────
+function chatProfileMap() {
+  // Build a quick id→profile lookup from socialState
+  const map = {};
+  (socialState.friends || []).forEach(f => {
+    map[f.userId] = { username: f.username, displayName: f.displayName };
+  });
+  if (socialState._myUsername) {
+    map[currentUser.id] = {
+      username: socialState._myUsername,
+      displayName: socialState._myDisplayName || socialState._myUsername
+    };
+  }
+  return map;
+}
+
+function chatCoverUrl(coverId, olKey, size = 'S') {
+  if (coverId) return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`;
+  if (olKey)   return `https://covers.openlibrary.org/b/olid/${olKey.replace('/works/','')}-${size}.jpg`;
+  return null;
+}
+
+// ── Switch community tab — hook into existing function ────────
+const _origSwitchCommunityTab = switchCommunityTab;
+switchCommunityTab = function(tab) {
+  _origSwitchCommunityTab(tab);
+  if (tab === 'chat' && currentUser && !chatState._loaded) {
+    loadChatList();
+  }
+};
+
+// ── Load chat list ────────────────────────────────────────────
+async function loadChatList() {
+  if (!currentUser) return;
+  try {
+    // Get all chats user participates in, with unread count
+    const { data: participations, error } = await sb
+      .from('chat_participants')
+      .select('chat_id, last_read_at, chat:book_chats(id, book_ol_key, book_title, book_author, cover_id, last_message_at, last_message_preview, last_message_user_id)')
+      .eq('user_id', currentUser.id)
+      .order('joined_at', { ascending: false });
+
+    if (error) throw error;
+
+    // For each chat, compute unread count
+    const chatIds = (participations || []).map(p => p.chat_id);
+    let unreadMap = {};
+    if (chatIds.length) {
+      const { data: unreadRows } = await sb
+        .from('chat_messages')
+        .select('chat_id, created_at, user_id')
+        .in('chat_id', chatIds)
+        .eq('is_deleted', false);
+
+      (unreadRows || []).forEach(m => {
+        const p = (participations || []).find(p => p.chat_id === m.chat_id);
+        if (!p || m.user_id === currentUser.id) return;
+        const lastRead = p.last_read_at ? new Date(p.last_read_at) : new Date(0);
+        if (new Date(m.created_at) > lastRead) {
+          unreadMap[m.chat_id] = (unreadMap[m.chat_id] || 0) + 1;
+        }
+      });
+    }
+
+    chatState.chats = (participations || [])
+      .filter(p => p.chat)
+      .map(p => ({
+        id:            p.chat.id,
+        bookOlKey:     p.chat.book_ol_key,
+        bookTitle:     p.chat.book_title  || p.chat.book_ol_key || 'Unknown book',
+        bookAuthor:    p.chat.book_author || '',
+        coverId:       p.chat.cover_id,
+        lastMessageAt: p.chat.last_message_at,
+        lastPreview:   p.chat.last_message_preview,
+        lastUserId:    p.chat.last_message_user_id,
+        unread:        unreadMap[p.chat.id] || 0
+      }))
+      .sort((a, b) => {
+        if (!a.lastMessageAt && !b.lastMessageAt) return 0;
+        if (!a.lastMessageAt) return 1;
+        if (!b.lastMessageAt) return -1;
+        return new Date(b.lastMessageAt) - new Date(a.lastMessageAt);
+      });
+
+    chatState._loaded = true;
+    renderChatList();
+
+  } catch(e) {
+    console.error('[Chat] loadChatList:', e);
+  }
+}
+
+function renderChatList() {
+  const listEl  = document.getElementById('rt-chat-list');
+  const emptyEl = document.getElementById('rt-chat-empty');
+  if (!listEl) return;
+
+  if (!chatState.chats.length) {
+    if (emptyEl) emptyEl.style.display = 'block';
+    listEl.innerHTML = '';
+    listEl.appendChild(emptyEl);
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+
+  listEl.innerHTML = chatState.chats.map(c => {
+    const coverUrl = chatCoverUrl(c.coverId, c.bookOlKey);
+    const coverHtml = coverUrl
+      ? `<img src="${coverUrl}" class="rt-chat-list-cover" alt="" onerror="this.style.display='none'">`
+      : `<div class="rt-chat-list-cover--ph">📖</div>`;
+    const preview = c.lastPreview
+      ? esc(c.lastPreview.slice(0, 60)) + (c.lastPreview.length > 60 ? '…' : '')
+      : '<span style="font-style:italic;color:var(--rt-t3)">No messages yet</span>';
+    const when = c.lastMessageAt ? timeAgo(c.lastMessageAt) : '';
+    const unreadBadge = c.unread > 0
+      ? `<div class="rt-chat-unread">${c.unread}</div>`
+      : '';
+    return `
+      <div class="rt-chat-list-item" onclick="openChatThread('${esc(c.id)}')">
+        ${coverHtml}
+        <div class="rt-chat-list-body">
+          <div class="rt-chat-list-title">${esc(c.bookTitle)}</div>
+          <div class="rt-chat-list-preview">${preview}</div>
+        </div>
+        <div class="rt-chat-list-meta">
+          <div>${when}</div>
+          ${unreadBadge}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Open thread ───────────────────────────────────────────────
+async function openChatThread(chatId) {
+  const chat = chatState.chats.find(c => c.id === chatId);
+  if (!chat) return;
+  chatState.activeChat  = chat;
+  chatState.messages    = [];
+  chatState._cursor     = null;
+
+  // Switch views
+  document.getElementById('rt-chat-list-view').style.display   = 'none';
+  document.getElementById('rt-chat-thread-view').style.display = 'block';
+  document.getElementById('rt-chat-thread-title').textContent  = chat.bookTitle;
+  document.getElementById('rt-chat-messages').innerHTML =
+    '<div style="padding:1rem;text-align:center;color:var(--rt-t3);font-size:0.8rem;">Loading…</div>';
+
+  await fetchMessages(chatId, false);
+  markChatRead(chatId);
+  subscribeToChatThread(chatId);
+}
+
+function closeChatThread() {
+  document.getElementById('rt-chat-list-view').style.display   = 'block';
+  document.getElementById('rt-chat-thread-view').style.display = 'none';
+  if (chatState._realtimeCh) {
+    sb.removeChannel(chatState._realtimeCh);
+    chatState._realtimeCh = null;
+  }
+  chatState.activeChat = null;
+  // Refresh list to clear unread badge
+  loadChatList();
+}
+
+async function fetchMessages(chatId, prepend) {
+  try {
+    let query = sb
+      .from('chat_messages')
+      .select('id, chat_id, user_id, body, is_deleted, edited_at, created_at')
+      .eq('chat_id', chatId)
+      .order('created_at', { ascending: false })
+      .limit(50);
+
+    if (prepend && chatState._cursor) {
+      query = query.lt('created_at', chatState._cursor);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    const msgs = (data || []).reverse(); // oldest first
+    if (msgs.length) chatState._cursor = msgs[0].created_at;
+
+    if (prepend) {
+      chatState.messages = [...msgs, ...chatState.messages];
+    } else {
+      chatState.messages = msgs;
+    }
+
+    const loadEarlierEl = document.getElementById('rt-chat-load-earlier');
+    if (loadEarlierEl) loadEarlierEl.style.display = msgs.length >= 50 ? 'block' : 'none';
+
+    renderThread(prepend);
+  } catch(e) {
+    console.error('[Chat] fetchMessages:', e);
+  }
+}
+
+async function loadEarlierMessages() {
+  if (chatState.activeChat) await fetchMessages(chatState.activeChat.id, true);
+}
+
+function renderThread(prepend) {
+  const el = document.getElementById('rt-chat-messages');
+  if (!el) return;
+  const profileMap = chatProfileMap();
+
+  if (!chatState.messages.length) {
+    el.innerHTML = `
+      <div class="rt-chat-load-earlier" id="rt-chat-load-earlier" style="display:none;">
+        <button onclick="loadEarlierMessages()" type="button">Load earlier messages</button>
+      </div>
+      <div class="rt-chat-empty" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="rt-chat-empty-icon">💬</div>
+        <p class="rt-chat-empty-text">No messages yet — say something!</p>
+      </div>`;
+    return;
+  }
+
+  const bubblesHtml = chatState.messages.map((m, i) => {
+    const isMine   = m.user_id === currentUser.id;
+    const profile  = profileMap[m.user_id] || {};
+    const name     = profile.displayName || profile.username || '?';
+    const colour   = avatarColour(m.user_id);
+    const initial  = avatarInitial(name);
+    const isDeleted = m.is_deleted || !m.body;
+
+    // Date divider
+    let divider = '';
+    if (i === 0 || !sameDay(chatState.messages[i-1].created_at, m.created_at)) {
+      divider = `<div class="rt-chat-date-divider">${formatDay(m.created_at)}</div>`;
+    }
+
+    const bubbleClass = `rt-chat-bubble${isMine ? ' rt-chat-bubble--mine' : ' rt-chat-bubble--theirs'}${isDeleted ? ' rt-chat-bubble--deleted' : ''}`;
+    const bodyHtml    = isDeleted ? 'Message deleted' : esc(m.body);
+    const timeStr     = new Date(m.created_at).toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+    const editedStr   = m.edited_at ? ' · edited' : '';
+    const deleteBtn   = (isMine && !isDeleted)
+      ? `<button class="rt-chat-delete-btn" onclick="deleteMessage('${m.id}')" title="Delete" type="button">✕</button>`
+      : '';
+
+    return `${divider}
+      <div class="rt-chat-bubble-wrap${isMine ? ' rt-chat-bubble-wrap--mine' : ''}">
+        ${!isMine ? `<div class="rt-chat-bubble-avatar" style="background:${colour};">${initial}</div>` : ''}
+        <div>
+          <div class="${bubbleClass}">${bodyHtml}</div>
+          <div class="rt-chat-bubble-meta">
+            ${!isMine ? `<span>${esc(name)}</span>` : ''}
+            <span>${timeStr}${editedStr}</span>
+            ${deleteBtn}
+          </div>
+        </div>
+        ${isMine ? `<div class="rt-chat-bubble-avatar" style="background:${colour};">${initial}</div>` : ''}
+      </div>`;
+  }).join('');
+
+  const scrollTop = el.scrollTop;
+  const wasAtBottom = el.scrollHeight - scrollTop - el.clientHeight < 60;
+
+  el.innerHTML = `
+    <div class="rt-chat-load-earlier" id="rt-chat-load-earlier" style="display:none;">
+      <button onclick="loadEarlierMessages()" type="button">Load earlier messages</button>
+    </div>
+    ${bubblesHtml}`;
+
+  // Show/hide load earlier
+  const loadEl = document.getElementById('rt-chat-load-earlier');
+  if (loadEl && chatState._cursor && chatState.messages.length >= 50) {
+    loadEl.style.display = 'block';
+  }
+
+  // Scroll to bottom on first load or new message; preserve position on prepend
+  if (!prepend || wasAtBottom) {
+    el.scrollTop = el.scrollHeight;
+  }
+}
+
+function sameDay(a, b) {
+  const da = new Date(a), db = new Date(b);
+  return da.getFullYear() === db.getFullYear() &&
+         da.getMonth()    === db.getMonth()    &&
+         da.getDate()     === db.getDate();
+}
+function formatDay(iso) {
+  const d = new Date(iso);
+  const today = new Date();
+  if (sameDay(iso, today)) return 'Today';
+  const yest  = new Date(today); yest.setDate(today.getDate() - 1);
+  if (sameDay(iso, yest))  return 'Yesterday';
+  return d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+}
+
+// ── Mark read ─────────────────────────────────────────────────
+async function markChatRead(chatId) {
+  if (!currentUser) return;
+  await sb.from('chat_participants')
+    .update({ last_read_at: new Date().toISOString() })
+    .eq('chat_id', chatId)
+    .eq('user_id', currentUser.id);
+  // Clear unread badge locally
+  const chat = chatState.chats.find(c => c.id === chatId);
+  if (chat) { chat.unread = 0; renderChatList(); }
+}
+
+// ── Send message ──────────────────────────────────────────────
+async function sendMessage() {
+  if (!currentUser || !chatState.activeChat) return;
+  const input = document.getElementById('rt-chat-input');
+  const body  = input.value.trim();
+  if (!body) return;
+
+  const sendBtn = document.getElementById('rt-chat-send-btn');
+  sendBtn.disabled = true;
+  input.value = '';
+  input.style.height = 'auto';
+
+  // Optimistic: add to local state immediately
+  const optimisticId = 'opt_' + Date.now();
+  const optimistic = {
+    id: optimisticId, chat_id: chatState.activeChat.id,
+    user_id: currentUser.id, body, is_deleted: false,
+    edited_at: null, created_at: new Date().toISOString()
+  };
+  chatState.messages.push(optimistic);
+  renderThread(false);
+
+  try {
+    const { data, error } = await sb.from('chat_messages').insert({
+      chat_id:  chatState.activeChat.id,
+      user_id:  currentUser.id,
+      body
+    }).select().single();
+
+    if (error) throw error;
+
+    // Replace optimistic entry with real one
+    const idx = chatState.messages.findIndex(m => m.id === optimisticId);
+    if (idx >= 0) chatState.messages[idx] = data;
+    renderThread(false);
+    markChatRead(chatState.activeChat.id);
+
+  } catch(e) {
+    // Remove optimistic on failure, restore input
+    chatState.messages = chatState.messages.filter(m => m.id !== optimisticId);
+    renderThread(false);
+    input.value = body;
+    console.error('[Chat] sendMessage:', e);
+    showFlash('Could not send message — check your connection.');
+  } finally {
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+// Enter to send (shift+enter for newline)
+document.getElementById('rt-chat-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+// ── Delete message (soft delete) ──────────────────────────────
+async function deleteMessage(msgId) {
+  if (!confirm('Delete this message?')) return;
+  const { error } = await sb.from('chat_messages')
+    .update({ is_deleted: true, body: null })
+    .eq('id', msgId)
+    .eq('user_id', currentUser.id);
+  if (!error) {
+    const m = chatState.messages.find(m => m.id === msgId);
+    if (m) { m.is_deleted = true; m.body = null; renderThread(false); }
+  }
+}
+
+// ── Realtime subscription for active thread ───────────────────
+function subscribeToChatThread(chatId) {
+  if (chatState._realtimeCh) {
+    sb.removeChannel(chatState._realtimeCh);
+  }
+  chatState._realtimeCh = sb
+    .channel(`chat-thread-${chatId}`)
+    .on('postgres_changes', {
+      event: 'INSERT', schema: 'staging', table: 'chat_messages',
+      filter: `chat_id=eq.${chatId}`
+    }, payload => {
+      // Don't add if it's already in the list (our own optimistic or confirmed)
+      const exists = chatState.messages.some(m => m.id === payload.new.id);
+      if (!exists && payload.new.user_id !== currentUser.id) {
+        chatState.messages.push(payload.new);
+        renderThread(false);
+        markChatRead(chatId);
+      }
+    })
+    .on('postgres_changes', {
+      event: 'UPDATE', schema: 'staging', table: 'chat_messages',
+      filter: `chat_id=eq.${chatId}`
+    }, payload => {
+      const idx = chatState.messages.findIndex(m => m.id === payload.new.id);
+      if (idx >= 0) { chatState.messages[idx] = payload.new; renderThread(false); }
+    })
+    .subscribe();
+}
+
+// ── Start or open a chat for a book ───────────────────────────
+async function startOrOpenChat(olKey, title, author, coverId) {
+  if (!currentUser) { showFlash('Sign in to chat about books.'); return; }
+  if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
+
+  try {
+    // Upsert the book_chats row
+    const { data: chat, error: upsertErr } = await sb
+      .from('book_chats')
+      .upsert({
+        book_ol_key:  olKey,
+        book_title:   title  || null,
+        book_author:  author || null,
+        cover_id:     coverId || null
+      }, { onConflict: 'book_ol_key' })
+      .select()
+      .single();
+
+    if (upsertErr) throw upsertErr;
+
+    // Ensure current user is a participant
+    await sb.from('chat_participants')
+      .upsert({ chat_id: chat.id, user_id: currentUser.id, join_reason: 'manual' },
+               { onConflict: 'chat_id,user_id', ignoreDuplicates: true });
+
+    // Reload chat list and open thread
+    await loadChatList();
+    // Switch to chat tab
+    switchCommunityTab('chat');
+    switchTab('community');
+    // Open the thread (find by id)
+    const found = chatState.chats.find(c => c.bookOlKey === olKey);
+    if (found) openChatThread(found.id);
+
+  } catch(e) {
+    console.error('[Chat] startOrOpenChat:', e);
+    showFlash('Could not open chat — please try again.');
+  }
+}
+
+// ── Book club trigger ─────────────────────────────────────────
+// Called whenever a book's status changes to 'reading'.
+// Checks if any friend is also currently reading the same book.
+async function handleBookClubTrigger(book) {
+  if (!currentUser || !book.olKey) return;
+  if (!socialState.friends.length) return;
+
+  try {
+    // Find friends who are currently reading this book via RPC
+    const { data, error } = await sb.rpc('get_friend_reading_entries_by_ol_key', {
+      p_ol_key: book.olKey,
+      p_friend_ids: socialState.friends.map(f => f.userId)
+    });
+
+    if (error || !data || !data.length) return;
+
+    // Map friend IDs to names
+    const friendsReading = data.map(row => {
+      const friend = socialState.friends.find(f => f.userId === row.user_id);
+      return { userId: row.user_id, name: friend?.displayName || friend?.username || 'A friend' };
+    });
+
+    // Check if a chat already exists for this book
+    const { data: existingChat } = await sb
+      .from('book_chats')
+      .select('id')
+      .eq('book_ol_key', book.olKey)
+      .maybeSingle();
+
+    showBookClubToast(book, friendsReading, !!existingChat);
+
+  } catch(e) {
+    console.error('[Chat] handleBookClubTrigger:', e);
+  }
+}
+
+// ── Book club toast UI ────────────────────────────────────────
+let _bookClubToastTimer = null;
+function showBookClubToast(book, friendsReading, hasExistingChat) {
+  // Remove any existing toast
+  const existing = document.getElementById('rt-book-club-toast');
+  if (existing) existing.remove();
+  if (_bookClubToastTimer) clearTimeout(_bookClubToastTimer);
+
+  const names = friendsReading.map(f => f.name);
+  const nameStr = names.length === 1 ? names[0]
+    : names.length === 2 ? `${names[0]} and ${names[1]}`
+    : `${names[0]} and ${names.length - 1} others`;
+  const verb = hasExistingChat ? 'Join the chat' : 'Start a chat';
+  const emoji = hasExistingChat ? '💬' : '📖';
+
+  // If multiple friends and no existing chat, we might want to pick — simplify:
+  // just start/join a single chat for the book (book-anchored, not friend-anchored)
+  const friendIds = friendsReading.map(f => f.userId);
+
+  const toast = document.createElement('div');
+  toast.id = 'rt-book-club-toast';
+  toast.className = 'rt-book-club-toast';
+  toast.innerHTML = `
+    <div class="rt-book-club-toast-title">${emoji} You've joined a book club!</div>
+    <div style="font-size:0.78rem;opacity:0.85;">${esc(nameStr)} ${friendsReading.length === 1 ? 'is' : 'are'} also reading <em>${esc(book.title)}</em>.</div>
+    <div class="rt-book-club-toast-actions">
+      <button class="rt-book-club-toast-btn rt-book-club-toast-btn--primary" type="button"
+        onclick="dismissBookClubToast();startOrOpenChat('${esc(book.olKey)}','${esc(book.title).replace(/'/g,"\'")}','${esc(book.author||'').replace(/'/g,"\'")}',${book.coverId||null})">
+        ${verb} →
+      </button>
+      <button class="rt-book-club-toast-btn rt-book-club-toast-btn--ghost" type="button"
+        onclick="dismissBookClubToast()">
+        Dismiss
+      </button>
+    </div>`;
+  document.body.appendChild(toast);
+
+  // Auto-dismiss after 12 seconds
+  _bookClubToastTimer = setTimeout(dismissBookClubToast, 12000);
+}
+
+function dismissBookClubToast() {
+  const t = document.getElementById('rt-book-club-toast');
+  if (t) t.remove();
+  if (_bookClubToastTimer) { clearTimeout(_bookClubToastTimer); _bookClubToastTimer = null; }
+}
+
+// ── Teardown on sign-out ──────────────────────────────────────
+const _origOnAuthSignOut_chat = sb.auth.onAuthStateChange;
+// We reset chatState in the existing signed-out branch already in onAuthStateChange.
+// Add reset here just for the channel teardown:
+function teardownChat() {
+  if (chatState._realtimeCh) {
+    sb.removeChannel(chatState._realtimeCh);
+    chatState._realtimeCh = null;
+  }
+  chatState.chats      = [];
+  chatState.activeChat = null;
+  chatState.messages   = [];
+  chatState._loaded    = false;
+}
+
 // ─────────────────────────────────────────────────────────────
 // AUTH STATE — registered last so SyncQueue, socialState,
 // loadUsernameDisplay etc. are all guaranteed to exist when
@@ -6307,6 +7039,7 @@ sb.auth.onAuthStateChange((event, session) => {
     socialState.feed    = [];
     socialState.recs    = [];
     socialState._loaded = false;
+    teardownChat();
     SyncQueue.pause();
     if (_realtimeChannel) {
       sb.removeChannel(_realtimeChannel);
