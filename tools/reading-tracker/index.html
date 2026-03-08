@@ -3130,57 +3130,76 @@ const socialState = {
 async function loadSocialData() {
   if (!currentUser) return;
   try {
-    // Load accepted friends + pending requests in parallel
     const [friendsRes, pendingRes, feedRes, recsRes] = await Promise.all([
       sb.from('friendships')
-        .select('id, requester_id, addressee_id, status, profiles!friendships_requester_id_fkey(username,display_name), profiles!friendships_addressee_id_fkey(username,display_name)')
+        .select('id, requester_id, addressee_id, status')
         .or(`requester_id.eq.${currentUser.id},addressee_id.eq.${currentUser.id}`)
         .eq('status', 'accepted'),
       sb.from('friendships')
-        .select('id, requester_id, profiles!friendships_requester_id_fkey(username,display_name,email:id)')
+        .select('id, requester_id')
         .eq('addressee_id', currentUser.id)
         .eq('status', 'pending'),
       sb.from('feed_events')
-        .select('*, profiles(username,display_name)')
+        .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
         .order('created_at', { ascending: false })
         .limit(40),
       sb.from('book_recommendations')
-        .select('id, created_at, recommender_id, book_ol_key, message, profiles!book_recommendations_recommender_id_fkey(username,display_name)')
+        .select('id, created_at, recommender_id, book_ol_key, message')
         .eq('recipient_id', currentUser.id)
         .eq('status', 'pending')
         .order('created_at', { ascending: false })
     ]);
 
+    // Collect all user IDs we need profiles for
+    const friendIds  = (friendsRes.data || []).map(f =>
+      f.requester_id === currentUser.id ? f.addressee_id : f.requester_id
+    );
+    const pendingIds = (pendingRes.data || []).map(f => f.requester_id);
+    const feedIds    = (feedRes.data  || []).map(f => f.user_id);
+    const recIds     = (recsRes.data  || []).map(r => r.recommender_id);
+    const allIds     = [...new Set([...friendIds, ...pendingIds, ...feedIds, ...recIds])];
+
+    // Batch-fetch profiles
+    let profileMap = {};
+    if (allIds.length) {
+      const { data: profiles } = await sb.from('profiles')
+        .select('id, username, display_name')
+        .in('id', allIds);
+      (profiles || []).forEach(p => { profileMap[p.id] = p; });
+    }
+
     // Process friends
     socialState.friends = (friendsRes.data || []).map(f => {
-      const iAmRequester = f.requester_id === currentUser.id;
-      const friendId     = iAmRequester ? f.addressee_id : f.requester_id;
-      const profile      = iAmRequester
-        ? f['profiles!friendships_addressee_id_fkey']
-        : f['profiles!friendships_requester_id_fkey'];
+      const friendId = f.requester_id === currentUser.id ? f.addressee_id : f.requester_id;
+      const profile  = profileMap[friendId] || {};
       return {
         friendshipId: f.id,
         userId:       friendId,
-        username:     profile?.username    || null,
-        displayName:  profile?.display_name || profile?.username || 'Friend',
-        readCount:    null,  // loaded lazily on profile open
+        username:     profile.username    || null,
+        displayName:  profile.display_name || profile.username || 'Friend',
+        readCount:    null,
         readingBooks: []
       };
     });
 
-    // Process pending incoming requests
-    socialState.pending = (pendingRes.data || []).map(f => ({
-      friendshipId:      f.id,
-      requesterId:       f.requester_id,
-      requesterUsername: f.profiles?.username    || null,
-      requesterName:     f.profiles?.display_name || f.profiles?.username || 'Someone'
+    // Process pending
+    socialState.pending = (pendingRes.data || []).map(f => {
+      const profile = profileMap[f.requester_id] || {};
+      return {
+        friendshipId:      f.id,
+        requesterId:       f.requester_id,
+        requesterUsername: profile.username    || null,
+        requesterName:     profile.display_name || profile.username || 'Someone'
+      };
+    });
+
+    // Attach profiles to feed and recs
+    socialState.feed = (feedRes.data || []).map(e => ({
+      ...e, profiles: profileMap[e.user_id] || null
     }));
-
-    // Process feed
-    socialState.feed = feedRes.data || [];
-
-    // Process incoming recs — merge into TBR display
-    socialState.recs = recsRes.data || [];
+    socialState.recs = (recsRes.data || []).map(r => ({
+      ...r, profiles: profileMap[r.recommender_id] || null
+    }));
 
     socialState._loaded = true;
     renderCommunityUI();
@@ -3387,20 +3406,13 @@ async function sendFriendRequest() {
     // Find the user's profile
     let targetId = null;
     if (isUsername) {
-      const { data } = await sb.from('profiles').select('user_id').eq('username', lookup).maybeSingle();
-      targetId = data?.user_id || null;
+      const { data } = await sb.from('profiles').select('id').eq('username', lookup).maybeSingle();
+      targetId = data?.id || null;
     } else {
-      // Look up by auth email via profiles (email stored in auth, not profiles)
-      // We use a custom approach: search profiles by display_name or fall back to user lookup
-      const { data } = await sb.from('profiles').select('user_id').eq('username', lookup).maybeSingle();
-      if (data) {
-        targetId = data.user_id;
-      } else {
-        // Try to find via auth users — not directly accessible, so prompt to use username
-        showFriendMsg('Try using their @username instead of email — they can find it in their Account tab.', 'info');
-        btn.disabled = false; btn.textContent = 'Send invite';
-        return;
-      }
+      // Profiles table doesn't store email — prompt to use @username
+      showFriendMsg('Try using their @username instead of email — they can find it in their Account tab.', 'info');
+      btn.disabled = false; btn.textContent = 'Send invite';
+      return;
     }
 
     if (!targetId) {
@@ -3512,7 +3524,7 @@ async function loadUsernameDisplay() {
   try {
     const { data } = await sb.from('profiles')
       .select('username, display_name')
-      .eq('user_id', currentUser.id)
+      .eq('id', currentUser.id)
       .maybeSingle();
     const el = document.getElementById('rt-username-display');
     if (el) el.textContent = data?.username ? `@${data.username}` : '— not set';
@@ -3549,7 +3561,7 @@ async function saveUsername() {
   saveBtn.textContent = 'Saving…';
   try {
     const { error } = await sb.from('profiles')
-      .upsert({ user_id: currentUser.id, username: raw }, { onConflict: 'user_id' });
+      .upsert({ id: currentUser.id, username: raw }, { onConflict: 'id' });
     if (error) {
       if (error.code === '23505') {
         msgEl.style.cssText = 'display:block;color:#991b1b;';
@@ -6088,7 +6100,7 @@ document.getElementById('rt-install-btn').addEventListener('click', async functi
 })();
 
 // ─────────────────────────────────────────────────────────────
-// INIT 
+// INIT
 // ─────────────────────────────────────────────────────────────
 load();
 updateStats();
