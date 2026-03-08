@@ -3397,33 +3397,37 @@ async function sendFriendRequest() {
     const lookup     = isUsername ? raw.slice(1).toLowerCase() : raw.toLowerCase();
     const field      = isUsername ? 'username' : 'email';
 
-    // Find the user's profile
+    // Find the user's profile via RPC (bypasses RLS on profiles table)
     let targetId = null;
     if (isUsername) {
-      const { data } = await sb.from('profiles').select('id').eq('username', lookup).maybeSingle();
-      targetId = data?.id || null;
+      const { data, error } = await sb.rpc('find_user_by_username', { p_username: lookup });
+      if (error) {
+        showFriendMsg('Search failed: ' + error.message, 'error');
+        btn.disabled = false; btn.textContent = 'Add';
+        return;
+      }
+      targetId = data || null;
     } else {
-      // Profiles table doesn't store email — prompt to use @username
-      showFriendMsg('Try using their @username instead of email — they can find it in their Account tab.', 'info');
-      btn.disabled = false; btn.textContent = 'Send invite';
+      showFriendMsg('Try using their @username — they can find it in their Account tab.', 'info');
+      btn.disabled = false; btn.textContent = 'Add';
       return;
     }
 
     if (!targetId) {
       showFriendMsg(`No account found for "${raw}". Check the username is correct.`, 'error');
-      btn.disabled = false; btn.textContent = 'Send invite';
+      btn.disabled = false; btn.textContent = 'Add';
       return;
     }
     if (targetId === currentUser.id) {
       showFriendMsg("That's you! Try a friend's username.", 'error');
-      btn.disabled = false; btn.textContent = 'Send invite';
+      btn.disabled = false; btn.textContent = 'Add';
       return;
     }
     // Check not already friends/pending
     const already = socialState.friends.find(f => f.userId === targetId);
     if (already) {
       showFriendMsg('You\'re already friends with this person.', 'info');
-      btn.disabled = false; btn.textContent = 'Send invite';
+      btn.disabled = false; btn.textContent = 'Add';
       return;
     }
     // Insert friendship row
@@ -3446,7 +3450,7 @@ async function sendFriendRequest() {
     showFriendMsg('Something went wrong — please try again.', 'error');
     console.error('[Social] sendFriendRequest:', e);
   }
-  btn.disabled = false; btn.textContent = 'Send invite';
+  btn.disabled = false; btn.textContent = 'Add';
 }
 
 function showFriendMsg(text, type) {
@@ -3525,7 +3529,7 @@ async function loadUsernameDisplay() {
     // Cache in memory
     socialState._myUsername    = data?.username    || null;
     socialState._myDisplayName = data?.display_name || null;
-  } catch(e) {}
+  } catch(e) { console.error("[Profile] loadUsernameDisplay:", e); }
 }
 
 function showUsernameEdit() {
@@ -3554,8 +3558,18 @@ async function saveUsername() {
   }
   saveBtn.textContent = 'Saving…';
   try {
-    const { error } = await sb.from('profiles')
-      .upsert({ id: currentUser.id, username: raw }, { onConflict: 'id' });
+    const { data: existing } = await sb.from('profiles')
+      .select('id').eq('id', currentUser.id).maybeSingle();
+
+    let error;
+    if (existing) {
+      ({ error } = await sb.from('profiles')
+        .update({ username: raw })
+        .eq('id', currentUser.id));
+    } else {
+      ({ error } = await sb.from('profiles')
+        .insert({ id: currentUser.id, username: raw }));
+    }
     if (error) {
       if (error.code === '23505') {
         msgEl.style.cssText = 'display:block;color:#991b1b;';
