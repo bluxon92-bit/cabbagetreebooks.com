@@ -3557,26 +3557,31 @@ async function saveUsername() {
     return;
   }
   saveBtn.textContent = 'Saving…';
-  try {
-    const { data: existing } = await sb.from('profiles')
-      .select('id').eq('id', currentUser.id).maybeSingle();
+  saveBtn.disabled    = true;
 
-    let error;
-    if (existing) {
-      ({ error } = await sb.from('profiles')
-        .update({ username: raw })
-        .eq('id', currentUser.id));
-    } else {
-      ({ error } = await sb.from('profiles')
-        .insert({ id: currentUser.id, username: raw }));
-    }
+  try {
+    console.log('[Username] attempting upsert for', currentUser.id, '→', raw);
+
+    // Use upsert with setType to force merge on PK conflict
+    const result = await Promise.race([
+      sb.from('profiles').upsert(
+        { id: currentUser.id, username: raw },
+        { onConflict: 'id', ignoreDuplicates: false }
+      ),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+    ]);
+
+    console.log('[Username] upsert result:', result);
+    const { error } = result;
+
     if (error) {
+      console.error('[Username] upsert error:', error);
       if (error.code === '23505') {
         msgEl.style.cssText = 'display:block;color:#991b1b;';
         msgEl.textContent   = 'That username is taken — try another.';
       } else {
         msgEl.style.cssText = 'display:block;color:#991b1b;';
-        msgEl.textContent   = error.message;
+        msgEl.textContent   = `Error (${error.code}): ${error.message}`;
       }
     } else {
       socialState._myUsername = raw;
@@ -3585,10 +3590,14 @@ async function saveUsername() {
       showFlash('✓ Username saved!');
     }
   } catch(e) {
+    console.error('[Username] caught:', e);
     msgEl.style.cssText = 'display:block;color:#991b1b;';
-    msgEl.textContent   = 'Something went wrong — please try again.';
+    msgEl.textContent   = e.message === 'timeout'
+      ? 'Request timed out — check your connection and try again.'
+      : 'Something went wrong — please try again.';
   }
   saveBtn.textContent = 'Save';
+  saveBtn.disabled    = false;
 }
 document.getElementById('rt-username-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') saveUsername();
