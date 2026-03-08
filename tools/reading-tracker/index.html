@@ -2968,8 +2968,9 @@ const SUPABASE_URL  = 'https://danknyhumorgkvidrdve.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhbmtueWh1bW9yZ2t2aWRyZHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3OTMzMzksImV4cCI6MjA4ODM2OTMzOX0.uTbNT_MBipxNCJckFI2JFACvftdtSy3M-YRQuJVDziU';
 const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { db: { schema: 'staging' } });
 let   currentUser   = null;
-// Auth state is handled by onAuthStateChange at the bottom of this script.
-// INITIAL_SESSION = refresh, SIGNED_IN = login, TOKEN_REFRESHED = jwt renewal only.
+// Simple flag: have we loaded username+social data for the current session?
+// Reset to false on sign-out. renderAuthUI() checks this and loads if needed.
+let _sessionDataLoaded = false;
 
 // Warn user if they have books but no account when navigating away
 window.addEventListener('beforeunload', function(e) {
@@ -3050,6 +3051,14 @@ function renderAuthUI() {
     if (el('rt-profile-dnf'))  el('rt-profile-dnf').textContent  = dnfCount;
     // Generate invite link
     generateInviteLink();
+    // Load username + social data if not yet loaded for this session.
+    // Called here so it fires regardless of which auth event triggered renderAuthUI.
+    if (!_sessionDataLoaded) {
+      _sessionDataLoaded = true;
+      loadUsernameDisplay();
+      socialState._loaded = false;
+      loadSocialData().then(() => setupRealtimeSubscription());
+    }
   } else {
     loggedIn.style.display  = 'none';
     loggedOut.style.display = 'block';
@@ -3209,11 +3218,10 @@ function setupRealtimeSubscription() {
     });
 }
 
-// Fallback: refresh social data whenever user returns to this tab.
-// Guarantees friend requests appear even if realtime subscription silently fails.
+// Refresh social data when user returns to this tab (catches missed realtime events).
+// Only fires if data was previously loaded — avoids conflicting with initial page load.
 document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible' && currentUser) {
-    socialState._loaded = false;
+  if (document.visibilityState === 'visible' && currentUser && socialState._loaded) {
     loadSocialData();
   }
 });
@@ -6269,62 +6277,41 @@ renderHistory();
 renderAuthUI();
 
 // ─────────────────────────────────────────────────────────────
-// AUTH STATE — registered last so all functions exist at parse time.
-//
-// Strategy: respond to explicit login/refresh events only.
-//   INITIAL_SESSION = page refresh with existing session
-//   SIGNED_IN       = fresh login
-//   Both run the full init (sync books + load username + load friends).
-//   TOKEN_REFRESHED = Supabase silently refreshed the JWT — just
-//   resume the sync queue, do NOT re-run social/username loads.
-//   SIGNED_OUT      = tear down everything.
+// AUTH STATE — registered last so SyncQueue, socialState,
+// loadUsernameDisplay etc. are all guaranteed to exist when
+// INITIAL_SESSION fires on page refresh.
 // ─────────────────────────────────────────────────────────────
-async function runFullInit() {
-  // Runs on both fresh login and page refresh.
-  // Each branch is independent — a failure in one cannot kill the other.
-  await Promise.allSettled([
-    SyncQueue.syncOnLogin(),
-    (async () => {
-      try {
-        await loadUsernameDisplay();
-        socialState._loaded = false;
-        await loadSocialData();
-        setupRealtimeSubscription();
-      } catch(e) {
-        console.error('[Auth] social init failed:', e);
-      }
-    })()
-  ]);
-  handleInviteParam();
-}
-
 sb.auth.onAuthStateChange(async (event, session) => {
   currentUser = session?.user || null;
-  renderAuthUI();
 
   if (event === 'PASSWORD_RECOVERY') {
     document.getElementById('rt-reset-overlay').style.display = 'flex';
     return;
   }
 
-  if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
-    // Page refresh or fresh login — run everything.
-    if (currentUser) await runFullInit();
-    return;
-  }
-
-  if (event === 'TOKEN_REFRESHED') {
-    // JWT silently refreshed — just let the sync queue keep running.
-    if (currentUser) SyncQueue.resume();
-    return;
-  }
-
-  if (event === 'SIGNED_OUT') {
+  if (currentUser) {
+    // Sync books on login/refresh — safe to call multiple times (idempotent merge)
+    if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
+      await SyncQueue.syncOnLogin();
+      handleInviteParam();
+    }
+    SyncQueue.resume();
+    // renderAuthUI triggers username+social load via _sessionDataLoaded guard
+    renderAuthUI();
+  } else {
+    // Signed out — reset everything
+    _sessionDataLoaded = false;
+    socialState.friends = [];
+    socialState.pending = [];
+    socialState.feed    = [];
+    socialState.recs    = [];
+    socialState._loaded = false;
     SyncQueue.pause();
     if (_realtimeChannel) {
       sb.removeChannel(_realtimeChannel);
       _realtimeChannel = null;
     }
+    renderAuthUI();
   }
 });
 </script>
