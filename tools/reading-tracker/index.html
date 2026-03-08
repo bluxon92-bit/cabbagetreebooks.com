@@ -3115,8 +3115,8 @@ async function loadSocialData() {
         .eq('addressee_id', currentUser.id)
         .eq('status', 'pending'),
       sb.from('book_recommendations')
-        .select('id, created_at, recommender_id, book_ol_key, message')
-        .eq('recipient_id', currentUser.id)
+        .select('id, created_at, from_user_id, book_ol_key, message')
+        .eq('to_user_id', currentUser.id)
         .eq('status', 'pending')
         .order('created_at', { ascending: false })
     ]);
@@ -3126,27 +3126,27 @@ async function loadSocialData() {
       f.requester_id === currentUser.id ? f.addressee_id : f.requester_id
     );
     const pendingIds    = (pendingRes.data || []).map(f => f.requester_id);
-    const recIds        = (recsRes.data   || []).map(r => r.recommender_id);
+    const recIds        = (recsRes.data   || []).map(r => r.from_user_id);
     const friendAndSelf = [...new Set([currentUser.id, ...friendIds])];
 
-    // Step 2: fetch feed filtered to friends only
+    // Step 2: fetch feed filtered to self + friends only
     let feedData = [];
-    if (friendAndSelf.length > 0) {
-      const { data } = await sb.from('feed_events')
+    // Always fetch own events; only include friends if there are any
+    const feedUserIds = [currentUser.id, ...friendIds];
+    if (feedUserIds.length > 0) {
+      const { data, error: feedErr } = await sb.from('feed_events')
         .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
-        .in('user_id', friendAndSelf)
+        .in('user_id', feedUserIds)
         .order('created_at', { ascending: false })
         .limit(40);
-      feedData = data || [];
+      if (!feedErr) feedData = data || [];
     }
 
-    // Step 3: batch-fetch profiles for all relevant user IDs
+    // Step 3: batch-fetch profiles via RPC (bypasses own-only RLS)
     const allIds = [...new Set([...friendIds, ...pendingIds, ...feedData.map(e => e.user_id), ...recIds])];
     let profileMap = {};
     if (allIds.length) {
-      const { data: profiles } = await sb.from('profiles')
-        .select('id, username, display_name')
-        .in('id', allIds);
+      const { data: profiles } = await sb.rpc('get_profiles_by_ids', { user_ids: allIds });
       (profiles || []).forEach(p => { profileMap[p.id] = p; });
     }
 
@@ -3177,7 +3177,7 @@ async function loadSocialData() {
 
     // Attach profiles to feed and recs
     socialState.feed = feedData.map(e => ({ ...e, profiles: profileMap[e.user_id] || null }));
-    socialState.recs = (recsRes.data || []).map(r => ({ ...r, profiles: profileMap[r.recommender_id] || null }));
+    socialState.recs = (recsRes.data || []).map(r => ({ ...r, profiles: profileMap[r.from_user_id] || null }));
 
     socialState._loaded = true;
     renderCommunityUI();
@@ -3282,7 +3282,7 @@ function renderFeedItem(item) {
 
   if (item._type === 'rec') {
     const fromName = item.profiles?.display_name || item.profiles?.username || 'A friend';
-    const colour   = avatarColour(item.recommender_id);
+    const colour   = avatarColour(item.from_user_id);
     // book_recommendations uses book_ol_key; fetch cover from OL key if available
     const olKey    = item.book_ol_key || '';
     const coverHtml = olKey
@@ -3466,13 +3466,17 @@ async function acceptFriendRequest(friendshipId, requesterId) {
     .eq('id', friendshipId);
   if (!error) {
     showFlash('✓ Friend request accepted!');
+    socialState._loaded = false;
     await loadSocialData();
   }
 }
 
 async function declineFriendRequest(friendshipId) {
   const { error } = await sb.from('friendships').delete().eq('id', friendshipId);
-  if (!error) await loadSocialData();
+  if (!error) {
+    socialState._loaded = false;
+    await loadSocialData();
+  }
 }
 
 // ── Invite link ───────────────────────────────────────────────
@@ -3531,7 +3535,10 @@ async function loadUsernameDisplay() {
     if (!username) {
       const emailPart = currentUser.email.split('@')[0];
       username = emailPart.toLowerCase().replace(/[^a-z0-9]/g, '_');
-      await sb.from('profiles').update({ username }).eq('id', currentUser.id);
+      await sb.from('profiles').upsert(
+        { id: currentUser.id, username },
+        { onConflict: 'id' }
+      );
     }
 
     const el = document.getElementById('rt-username-display');
@@ -3570,7 +3577,7 @@ async function saveUsername() {
   try {
     console.log('[Username] saving', raw, 'for', currentUser.id);
     const { error } = await Promise.race([
-      sb.from('profiles').update({ username: raw }).eq('id', currentUser.id),
+      sb.from('profiles').upsert({ id: currentUser.id, username: raw }, { onConflict: 'id' }),
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
     console.log('[Username] result error:', error);
@@ -3802,8 +3809,8 @@ document.getElementById('rt-rec-send-btn').addEventListener('click', async funct
     return;
   }
   const { error } = await sb.from('book_recommendations').insert({
-    recommender_id: currentUser.id,
-    recipient_id:   recipientId,
+    from_user_id: currentUser.id,
+    to_user_id:   recipientId,
     book_ol_key:    book.olKey  || null,
     message:        note,
     status:         'pending'
