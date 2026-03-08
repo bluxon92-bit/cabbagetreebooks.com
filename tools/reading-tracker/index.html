@@ -3560,19 +3560,34 @@ async function saveUsername() {
   saveBtn.disabled    = true;
 
   try {
-    console.log('[Username] attempting upsert for', currentUser.id, '→', raw);
+    console.log('[Username] attempting save for', currentUser.id, '→', raw);
 
-    // Use upsert with setType to force merge on PK conflict
-    const result = await Promise.race([
-      sb.from('profiles').upsert(
-        { id: currentUser.id, username: raw },
-        { onConflict: 'id', ignoreDuplicates: false }
-      ),
+    // Try UPDATE first; if no row exists yet, fall back to INSERT
+    const updateResult = await Promise.race([
+      sb.from('profiles')
+        .update({ username: raw })
+        .eq('id', currentUser.id)
+        .select('id'),
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
 
-    console.log('[Username] upsert result:', result);
-    const { error } = result;
+    console.log('[Username] update result:', updateResult);
+
+    let error = updateResult.error;
+
+    // If update matched no rows (new user, no profile row yet), insert instead
+    if (!error && (!updateResult.data || updateResult.data.length === 0)) {
+      console.log('[Username] no row to update, trying insert');
+      const insertResult = await Promise.race([
+        sb.from('profiles')
+          .insert({ id: currentUser.id, username: raw })
+          .select('id'),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+      ]);
+      console.log('[Username] insert result:', insertResult);
+      error = insertResult.error;
+    }
+
 
     if (error) {
       console.error('[Username] upsert error:', error);
