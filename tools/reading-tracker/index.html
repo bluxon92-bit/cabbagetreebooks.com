@@ -3558,35 +3558,34 @@ async function saveUsername() {
   }
   saveBtn.textContent = 'Saving…';
   saveBtn.disabled    = true;
-
   try {
-    console.log('[Username] attempting save for', currentUser.id, '→', raw);
-
-    // Try UPDATE first; if no row exists yet, fall back to INSERT
-    const updateResult = await Promise.race([
-      sb.from('profiles')
-        .update({ username: raw })
-        .eq('id', currentUser.id)
-        .select('id'),
+    console.log('[Username] saving', raw, 'for', currentUser.id);
+    const { error } = await Promise.race([
+      sb.from('profiles').update({ username: raw }).eq('id', currentUser.id),
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
-
-    console.log('[Username] update result:', updateResult);
-
-    let error = updateResult.error;
-
-    // If update matched no rows (new user, no profile row yet), insert instead
-    if (!error && (!updateResult.data || updateResult.data.length === 0)) {
-      console.log('[Username] no row to update, trying insert');
-      const insertResult = await Promise.race([
-        sb.from('profiles')
-          .insert({ id: currentUser.id, username: raw })
-          .select('id'),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
-      ]);
-      console.log('[Username] insert result:', insertResult);
-      error = insertResult.error;
+    console.log('[Username] result error:', error);
+    if (error) {
+      msgEl.style.cssText = 'display:block;color:#991b1b;';
+      msgEl.textContent   = error.code === '23505'
+        ? 'That username is taken — try another.'
+        : `Error: ${error.message}`;
+    } else {
+      socialState._myUsername = raw;
+      document.getElementById('rt-username-display').textContent = `@${raw}`;
+      cancelUsernameEdit();
+      showFlash('✓ Username saved!');
     }
+  } catch(e) {
+    console.error('[Username] caught:', e);
+    msgEl.style.cssText = 'display:block;color:#991b1b;';
+    msgEl.textContent   = e.message === 'timeout'
+      ? 'Timed out — check Supabase API settings expose the staging schema.'
+      : 'Something went wrong — please try again.';
+  }
+  saveBtn.textContent = 'Save';
+  saveBtn.disabled    = false;
+}
 
 
     if (error) {
