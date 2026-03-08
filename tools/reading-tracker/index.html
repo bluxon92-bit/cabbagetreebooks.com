@@ -3588,31 +3588,6 @@ async function saveUsername() {
 }
 
 
-    if (error) {
-      console.error('[Username] upsert error:', error);
-      if (error.code === '23505') {
-        msgEl.style.cssText = 'display:block;color:#991b1b;';
-        msgEl.textContent   = 'That username is taken — try another.';
-      } else {
-        msgEl.style.cssText = 'display:block;color:#991b1b;';
-        msgEl.textContent   = `Error (${error.code}): ${error.message}`;
-      }
-    } else {
-      socialState._myUsername = raw;
-      document.getElementById('rt-username-display').textContent = `@${raw}`;
-      cancelUsernameEdit();
-      showFlash('✓ Username saved!');
-    }
-  } catch(e) {
-    console.error('[Username] caught:', e);
-    msgEl.style.cssText = 'display:block;color:#991b1b;';
-    msgEl.textContent   = e.message === 'timeout'
-      ? 'Request timed out — check your connection and try again.'
-      : 'Something went wrong — please try again.';
-  }
-  saveBtn.textContent = 'Save';
-  saveBtn.disabled    = false;
-}
 document.getElementById('rt-username-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') saveUsername();
   if (e.key === 'Escape') cancelUsernameEdit();
