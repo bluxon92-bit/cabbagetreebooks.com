@@ -3524,12 +3524,24 @@ async function loadUsernameDisplay() {
       .select('username, display_name')
       .eq('id', currentUser.id)
       .maybeSingle();
+
+    let username = data?.username || null;
+
+    // Auto-generate username if none exists (signed up before trigger was added)
+    if (!username) {
+      const emailPart = currentUser.email.split('@')[0];
+      username = emailPart.toLowerCase().replace(/[^a-z0-9]/g, '_');
+      await sb.from('profiles').upsert(
+        { id: currentUser.id, username },
+        { onConflict: 'id' }
+      );
+    }
+
     const el = document.getElementById('rt-username-display');
-    if (el) el.textContent = data?.username ? `@${data.username}` : '— not set';
-    // Cache in memory
-    socialState._myUsername    = data?.username    || null;
+    if (el) el.textContent = `@${username}`;
+    socialState._myUsername    = username;
     socialState._myDisplayName = data?.display_name || null;
-  } catch(e) { console.error("[Profile] loadUsernameDisplay:", e); }
+  } catch(e) { console.error('[Profile] loadUsernameDisplay:', e); }
 }
 
 function showUsernameEdit() {
@@ -3561,7 +3573,7 @@ async function saveUsername() {
   try {
     console.log('[Username] saving', raw, 'for', currentUser.id);
     const { error } = await Promise.race([
-      sb.from('profiles').update({ username: raw }).eq('id', currentUser.id),
+      sb.from('profiles').upsert({ id: currentUser.id, username: raw }, { onConflict: 'id' }),
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
     console.log('[Username] result error:', error);
