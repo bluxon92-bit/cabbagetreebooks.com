@@ -1592,6 +1592,317 @@ permalink: /tools/reading-tracker/
   font-size: 1.2rem; color: var(--rt-amber); letter-spacing: 1px; margin-bottom: 0.5rem;
 }
 
+/* ══════════════════════════════════════════════
+   PHASE 2 — COMMUNITY & SOCIAL STYLES
+══════════════════════════════════════════════ */
+
+/* ── Community sub-tabs ── */
+.rt-community-tabs {
+  display: flex; border-bottom: 2px solid var(--rt-border); gap: 0; margin-bottom: 0;
+}
+.rt-community-tab {
+  flex: 1; background: none; border: none;
+  padding: 0.7rem 0.5rem; font-family: var(--rt-font-body);
+  font-size: 0.82rem; font-weight: 500; color: var(--rt-t3);
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px;
+  transition: color var(--rt-fast), border-color var(--rt-fast);
+  display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+}
+.rt-community-tab:hover { color: var(--rt-navy); }
+.rt-community-tab.active { color: var(--rt-navy); border-bottom-color: var(--rt-amber); font-weight: 600; }
+.rt-community-tab-badge {
+  background: var(--rt-amber-lt); color: var(--rt-navy);
+  border-radius: 99px; font-size: 0.58rem; font-weight: 700;
+  padding: 1px 5px; min-width: 14px; text-align: center; line-height: 1.4;
+}
+
+/* ── Feed ── */
+.rt-feed-item {
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  padding: 0.9rem 0; border-bottom: 1px solid var(--rt-border);
+}
+.rt-feed-item:last-child { border-bottom: none; }
+.rt-feed-avatar {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: #fff;
+}
+.rt-feed-content { flex: 1; min-width: 0; }
+.rt-feed-text {
+  font-size: 0.84rem; color: var(--rt-t1); line-height: 1.5; margin-bottom: 0.25rem;
+}
+.rt-feed-text strong { font-weight: 700; color: var(--rt-navy); }
+.rt-feed-time { font-size: 0.7rem; color: var(--rt-t3); }
+.rt-feed-book-chip {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: var(--rt-surface); border-radius: var(--rt-r3);
+  padding: 0.3rem 0.6rem; margin-top: 0.4rem; cursor: pointer;
+  transition: background var(--rt-fast);
+}
+.rt-feed-book-chip:hover { background: var(--rt-cream-md); }
+.rt-feed-book-thumb {
+  width: 20px; height: 28px; border-radius: 3px; object-fit: cover;
+  flex-shrink: 0;
+}
+.rt-feed-book-thumb--ph {
+  width: 20px; height: 28px; border-radius: 3px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  display: flex; align-items: center; justify-content: center; font-size: 0.55rem;
+}
+.rt-feed-book-title {
+  font-size: 0.76rem; font-weight: 600; color: var(--rt-navy);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px;
+}
+
+/* ── Friend cards ── */
+.rt-friend-card {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.85rem 0; border-bottom: 1px solid var(--rt-border);
+  cursor: pointer; transition: background var(--rt-fast);
+  border-radius: var(--rt-r3);
+}
+.rt-friend-card:last-child { border-bottom: none; }
+.rt-friend-card:hover { background: var(--rt-cream); }
+.rt-friend-avatar {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 700; color: #fff;
+}
+.rt-friend-info { flex: 1; min-width: 0; }
+.rt-friend-name { font-size: 0.9rem; font-weight: 600; color: var(--rt-navy); }
+.rt-friend-sub  { font-size: 0.73rem; color: var(--rt-t3); margin-top: 0.1rem; }
+.rt-friend-action {
+  background: none; border: 1.5px solid var(--rt-border-md); border-radius: var(--rt-r4);
+  padding: 0.3rem 0.75rem; font-family: var(--rt-font-body); font-size: 0.72rem;
+  font-weight: 600; color: var(--rt-t2); cursor: pointer; flex-shrink: 0;
+  transition: all var(--rt-fast);
+}
+.rt-friend-action:hover { border-color: var(--rt-navy); color: var(--rt-navy); }
+.rt-friend-action--pending {
+  background: var(--rt-amber-pale); border-color: rgba(200,137,26,0.2);
+  color: var(--rt-amber); cursor: default;
+}
+.rt-friend-action--accept {
+  background: var(--rt-navy); border-color: var(--rt-navy); color: #fff;
+}
+.rt-friend-action--accept:hover { background: var(--rt-navy-light); }
+
+/* ── Add friend form ── */
+.rt-add-friend-form {
+  display: flex; gap: 0.5rem; margin-bottom: 0;
+}
+.rt-add-friend-input {
+  flex: 1; font-family: var(--rt-font-body); font-size: 0.88rem;
+  padding: 0.65rem 0.85rem; border: 1.5px solid var(--rt-border-md);
+  background: var(--rt-white); color: var(--rt-t1); border-radius: var(--rt-r4);
+  transition: border-color var(--rt-fast);
+}
+.rt-add-friend-input:focus { outline: none; border-color: var(--rt-navy); }
+.rt-add-friend-btn {
+  font-family: var(--rt-font-body); font-size: 0.82rem; font-weight: 700;
+  padding: 0.65rem 1.1rem; background: var(--rt-navy); color: white;
+  border: none; border-radius: var(--rt-r4); cursor: pointer; white-space: nowrap;
+  transition: background var(--rt-fast);
+}
+.rt-add-friend-btn:hover { background: var(--rt-navy-light); }
+.rt-add-friend-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── Invite link box ── */
+.rt-invite-box {
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  border-radius: var(--rt-r2); padding: 1.1rem 1.25rem;
+  position: relative; overflow: hidden;
+}
+.rt-invite-box::before {
+  content: ''; position: absolute; top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(232,168,48,0.15) 0%, transparent 70%);
+}
+.rt-invite-box-title {
+  font-family: var(--rt-font-display); font-size: 0.95rem; font-weight: 700;
+  color: #fff; margin-bottom: 0.3rem; position: relative; z-index: 1;
+}
+.rt-invite-box-sub {
+  font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 0.85rem;
+  position: relative; z-index: 1; line-height: 1.5;
+}
+.rt-invite-link-row {
+  display: flex; gap: 0.5rem; position: relative; z-index: 1;
+}
+.rt-invite-link-field {
+  flex: 1; font-family: var(--rt-font-body); font-size: 0.75rem;
+  padding: 0.55rem 0.75rem; background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.8);
+  border-radius: var(--rt-r4); overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; cursor: text; user-select: all;
+}
+.rt-invite-copy-btn {
+  font-family: var(--rt-font-body); font-size: 0.75rem; font-weight: 700;
+  padding: 0.55rem 0.9rem; background: var(--rt-amber-lt); color: var(--rt-navy);
+  border: none; border-radius: var(--rt-r4); cursor: pointer; white-space: nowrap;
+  transition: background var(--rt-fast); flex-shrink: 0;
+}
+.rt-invite-copy-btn:hover { background: var(--rt-amber); color: #fff; }
+
+/* ── Friend profile sheet ── */
+.rt-friend-profile-overlay {
+  position: fixed; inset: 0; background: rgba(10,15,30,0.55);
+  z-index: 504; opacity: 0; pointer-events: none;
+  transition: opacity var(--rt-med) var(--rt-ease);
+}
+.rt-friend-profile-overlay.open { opacity: 1; pointer-events: auto; }
+.rt-friend-profile-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 505;
+  background: var(--rt-white); border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 40px rgba(10,15,30,0.18);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  max-height: 92vh; overflow: hidden; display: flex; flex-direction: column;
+}
+.rt-friend-profile-sheet.open { transform: translateY(0); }
+@media (min-width: 640px) {
+  .rt-friend-profile-overlay { display: flex; align-items: center; justify-content: center; }
+  .rt-friend-profile-sheet {
+    position: relative; left: auto; right: auto; bottom: auto;
+    border-radius: var(--rt-r2); max-width: 480px; width: 100%;
+    transform: translateY(24px) scale(0.97); opacity: 0; max-height: 88vh;
+    transition: transform 0.32s cubic-bezier(0.32,0.72,0,1), opacity 0.28s var(--rt-ease);
+  }
+  .rt-friend-profile-overlay.open .rt-friend-profile-sheet {
+    transform: translateY(0) scale(1); opacity: 1;
+  }
+}
+.rt-friend-profile-hero {
+  background: linear-gradient(160deg, var(--rt-navy), var(--rt-navy-mid));
+  padding: 1.5rem 1.25rem 1.25rem; flex-shrink: 0; position: relative;
+}
+.rt-friend-profile-close {
+  position: absolute; top: 0.85rem; right: 0.85rem;
+  background: rgba(255,255,255,0.12); border: none; border-radius: 50%;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: rgba(255,255,255,0.7); cursor: pointer;
+}
+.rt-friend-profile-av {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+.rt-friend-profile-name {
+  font-family: var(--rt-font-display); font-size: 1.2rem; font-weight: 700; color: #fff;
+}
+.rt-friend-profile-username { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 0.15rem; }
+.rt-friend-profile-stats {
+  display: flex; gap: 1.25rem; margin-top: 0.85rem;
+}
+.rt-friend-profile-stat { text-align: left; }
+.rt-friend-profile-stat-n {
+  font-family: var(--rt-font-display); font-size: 1.3rem; font-weight: 700; color: var(--rt-amber-lt);
+}
+.rt-friend-profile-stat-l { font-size: 0.6rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Mutual books carousel */
+.rt-mutual-carousel-wrap {
+  padding: 1rem 1.25rem 0.75rem; border-bottom: 1px solid var(--rt-border); flex-shrink: 0;
+}
+.rt-mutual-carousel-label {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--rt-t3); margin-bottom: 0.6rem;
+}
+.rt-mutual-carousel {
+  display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.25rem;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.rt-mutual-carousel::-webkit-scrollbar { display: none; }
+.rt-mutual-book {
+  flex-shrink: 0; cursor: pointer; transition: transform var(--rt-fast);
+}
+.rt-mutual-book:hover { transform: scale(1.06); }
+.rt-mutual-book img, .rt-mutual-book-ph {
+  width: 36px; height: 52px; border-radius: 4px; object-fit: cover;
+  box-shadow: 0 2px 8px rgba(26,39,68,0.15); display: block;
+}
+.rt-mutual-book-ph {
+  background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid));
+  display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+}
+
+/* ── Recommend sheet ── */
+.rt-recommend-overlay {
+  position: fixed; inset: 0; background: rgba(10,15,30,0.55);
+  z-index: 506; opacity: 0; pointer-events: none;
+  transition: opacity var(--rt-med) var(--rt-ease);
+}
+.rt-recommend-overlay.open { opacity: 1; pointer-events: auto; }
+.rt-recommend-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 507;
+  background: var(--rt-white); border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 40px rgba(10,15,30,0.18);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+  max-height: 88vh; overflow: hidden; display: flex; flex-direction: column;
+}
+.rt-recommend-sheet.open { transform: translateY(0); }
+@media (min-width: 640px) {
+  .rt-recommend-overlay { display: flex; align-items: center; justify-content: center; }
+  .rt-recommend-sheet {
+    position: relative; left: auto; right: auto; bottom: auto;
+    border-radius: var(--rt-r2); max-width: 440px; width: 100%;
+    transform: translateY(24px) scale(0.97); opacity: 0; max-height: 80vh;
+    transition: transform 0.32s cubic-bezier(0.32,0.72,0,1), opacity 0.28s var(--rt-ease);
+  }
+  .rt-recommend-overlay.open .rt-recommend-sheet { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* ── Username edit ── */
+.rt-username-row {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.75rem 0; border-bottom: 1px solid var(--rt-border);
+}
+.rt-username-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rt-t3); min-width: 60px; }
+.rt-username-value { font-size: 0.9rem; font-weight: 600; color: var(--rt-navy); flex: 1; }
+.rt-username-edit-btn {
+  background: none; border: none; color: var(--rt-amber); font-size: 0.75rem;
+  font-weight: 600; cursor: pointer; padding: 0.2rem 0.4rem; font-family: var(--rt-font-body);
+}
+.rt-username-input {
+  flex: 1; font-family: var(--rt-font-body); font-size: 0.9rem;
+  padding: 0.4rem 0.6rem; border: 1.5px solid var(--rt-navy);
+  background: var(--rt-white); color: var(--rt-t1); border-radius: var(--rt-r4);
+}
+.rt-username-input:focus { outline: none; }
+
+/* ── Pending requests banner ── */
+.rt-pending-requests {
+  background: var(--rt-amber-pale); border: 1px solid rgba(200,137,26,0.2);
+  border-radius: var(--rt-r2); padding: 0.85rem 1rem;
+}
+.rt-pending-request-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.5rem 0; border-bottom: 1px solid rgba(200,137,26,0.12);
+}
+.rt-pending-request-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+/* ── Recommendation chip on TBR ── */
+.rt-rec-from-chip {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.67rem; font-weight: 600; color: var(--rt-teal);
+  background: rgba(27,77,74,0.08); border-radius: 99px;
+  padding: 0.15em 0.55em; margin-top: 0.25rem;
+}
+
+/* ── Empty feed ── */
+.rt-feed-empty {
+  text-align: center; padding: 2.5rem 1rem; color: var(--rt-t3);
+}
+.rt-feed-empty-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.rt-feed-empty p { font-size: 0.84rem; line-height: 1.65; }
+
+/* ── Community logged-out ── */
+.rt-community-loggedout {
+  text-align: center; padding: 2.5rem 1.5rem;
+}
+
 /* ── ADD BOOK SHEET (exact mirror of rt-sheet-overlay / rt-sheet) ── */
 .rt-add-overlay {
   position: fixed; inset: 0; background: rgba(10,15,30,0.55);
@@ -1822,49 +2133,78 @@ permalink: /tools/reading-tracker/
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-community" data-tab="community" style="display:none;">
       <div class="rt-panel-inner">
-        <div style="background:#ffffff;border-radius:18px;padding:2.5rem 2rem;text-align:center;box-shadow:0 4px 20px rgba(26,39,68,0.11);position:relative;overflow:hidden;">
-          <!-- glow -->
-          <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(200,137,26,0.09) 0%,transparent 70%);pointer-events:none;"></div>
-          <!-- badge -->
-          <div style="display:inline-block;background:#fdf3dc;color:#c8891a;border:1px solid rgba(200,137,26,0.25);border-radius:99px;font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.3em 1em;margin-bottom:1.25rem;">Coming soon</div>
-          <!-- icon -->
-          <div style="font-size:2.8rem;margin-bottom:0.75rem;">👥</div>
-          <!-- title -->
-          <h3 style="font-family:Georgia,serif;font-size:1.5rem;font-weight:700;color:#1a2744;margin:0 0 0.75rem;line-height:1.2;">Your reading circle, all in one place</h3>
-          <!-- sub -->
-          <p style="font-size:0.88rem;color:#6b7280;line-height:1.7;max-width:420px;margin:0 auto 2rem;">Recommend books to friends, comment on their reviews, and talk about your favourites — your social reading hub is on its way.</p>
-          <!-- features -->
-          <div style="display:grid;grid-template-columns:1fr;gap:0.85rem;text-align:left;">
-            <div style="display:flex;gap:0.75rem;align-items:flex-start;background:#f0ede6;border-radius:10px;padding:1rem;border:1px solid rgba(26,39,68,0.10);">
-              <div style="font-size:1.2rem;flex-shrink:0;line-height:1.4;">📚</div>
-              <div>
-                <strong style="display:block;font-size:0.88rem;font-weight:700;color:#1a2744;margin-bottom:0.2rem;">Recommend to friends</strong>
-                <p style="font-size:0.82rem;color:#6b7280;line-height:1.5;margin:0;">Send books directly to someone's list with a personal note.</p>
+
+        <!-- LOGGED OUT STATE -->
+        <div id="rt-community-loggedout" style="display:none;">
+          <div class="rt-card" style="text-align:center;padding:2.5rem 1.5rem;">
+            <div style="font-size:2.5rem;margin-bottom:0.75rem;">👥</div>
+            <h3 style="font-family:var(--rt-font-display);font-size:1.2rem;font-weight:700;color:var(--rt-navy);margin-bottom:0.5rem;">Your reading circle</h3>
+            <p style="font-size:0.85rem;color:var(--rt-t3);line-height:1.65;margin-bottom:1.25rem;max-width:320px;margin-left:auto;margin-right:auto;">Sign in to add friends, share recommendations, and see what your reading circle is up to.</p>
+            <button class="rt-submit-btn" onclick="switchTab('account')" type="button" style="max-width:240px;margin:0 auto;">Sign in to connect →</button>
+          </div>
+        </div>
+
+        <!-- LOGGED IN STATE -->
+        <div id="rt-community-loggedin" style="display:none;">
+
+          <!-- Add friend + invite -->
+          <div class="rt-card" style="display:flex;flex-direction:column;gap:1rem;">
+            <div>
+              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Add a friend</div>
+              <div class="rt-add-friend-form">
+                <input type="email" class="rt-add-friend-input" id="rt-add-friend-input" placeholder="Friend's email or @username">
+                <button class="rt-add-friend-btn" id="rt-add-friend-btn" type="button">Send invite</button>
               </div>
+              <p id="rt-add-friend-msg" style="display:none;font-size:0.78rem;margin-top:0.5rem;"></p>
             </div>
-            <div style="display:flex;gap:0.75rem;align-items:flex-start;background:#f0ede6;border-radius:10px;padding:1rem;border:1px solid rgba(26,39,68,0.10);">
-              <div style="font-size:1.2rem;flex-shrink:0;line-height:1.4;">💬</div>
-              <div>
-                <strong style="display:block;font-size:0.88rem;font-weight:700;color:#1a2744;margin-bottom:0.2rem;">Comment on reviews</strong>
-                <p style="font-size:0.82rem;color:#6b7280;line-height:1.5;margin:0;">React and reply to friends' reviews when you've read the same book.</p>
-              </div>
-            </div>
-            <div style="display:flex;gap:0.75rem;align-items:flex-start;background:#f0ede6;border-radius:10px;padding:1rem;border:1px solid rgba(26,39,68,0.10);">
-              <div style="font-size:1.2rem;flex-shrink:0;line-height:1.4;">🔥</div>
-              <div>
-                <strong style="display:block;font-size:0.88rem;font-weight:700;color:#1a2744;margin-bottom:0.2rem;">Book chat</strong>
-                <p style="font-size:0.82rem;color:#6b7280;line-height:1.5;margin:0;">Dedicated chat spaces for books you're both reading — spoilers welcome.</p>
-              </div>
-            </div>
-            <div style="display:flex;gap:0.75rem;align-items:flex-start;background:#f0ede6;border-radius:10px;padding:1rem;border:1px solid rgba(26,39,68,0.10);">
-              <div style="font-size:1.2rem;flex-shrink:0;line-height:1.4;">⭐</div>
-              <div>
-                <strong style="display:block;font-size:0.88rem;font-weight:700;color:#1a2744;margin-bottom:0.2rem;">Talk about your favourites</strong>
-                <p style="font-size:0.82rem;color:#6b7280;line-height:1.5;margin:0;">Share your all-time top reads and see what the people you follow love most.</p>
+            <div class="rt-invite-box">
+              <div class="rt-invite-box-title">Share your invite link</div>
+              <div class="rt-invite-box-sub">Anyone with this link can send you a friend request.</div>
+              <div class="rt-invite-link-row">
+                <div class="rt-invite-link-field" id="rt-invite-link-field">Generating…</div>
+                <button class="rt-invite-copy-btn" id="rt-invite-copy-btn" type="button">Copy</button>
               </div>
             </div>
           </div>
-        </div>
+
+          <!-- Pending friend requests -->
+          <div id="rt-pending-requests-wrap" style="display:none;">
+            <div class="rt-pending-requests" id="rt-pending-requests-list"></div>
+          </div>
+
+          <!-- Sub-tabs: Feed | Friends -->
+          <div class="rt-card" style="padding:0;overflow:hidden;">
+            <div class="rt-community-tabs" style="padding:0 1.25rem;">
+              <button class="rt-community-tab active" id="rt-ctab-feed" onclick="switchCommunityTab('feed')">
+                Activity feed
+              </button>
+              <button class="rt-community-tab" id="rt-ctab-friends" onclick="switchCommunityTab('friends')">
+                Friends <span class="rt-community-tab-badge" id="rt-friends-count-badge" style="display:none;"></span>
+              </button>
+            </div>
+
+            <!-- Feed tab -->
+            <div id="rt-community-feed-tab" style="padding:0.25rem 1.25rem 1.25rem;">
+              <div id="rt-feed-list">
+                <div class="rt-feed-empty">
+                  <div class="rt-feed-empty-icon">📖</div>
+                  <p>Add friends to see their reading activity here.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Friends tab -->
+            <div id="rt-community-friends-tab" style="display:none;padding:0.25rem 1.25rem 1.25rem;">
+              <div id="rt-friends-list">
+                <div class="rt-feed-empty">
+                  <div class="rt-feed-empty-icon">👋</div>
+                  <p>No friends yet — add someone above or share your invite link.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /loggedin -->
       </div>
     </div>
 
@@ -2055,6 +2395,23 @@ permalink: /tools/reading-tracker/
               <button class="rt-ghost-btn" onclick="signOut()" type="button" style="margin-top:0.5rem;font-size:0.75rem;padding:0.35rem 0.75rem;">Sign out</button>
             </div>
           </div>
+
+          <!-- Username row -->
+          <div class="rt-card" style="margin-top:0;">
+            <div class="rt-username-row" id="rt-username-display-row">
+              <span class="rt-username-label">Username</span>
+              <span class="rt-username-value" id="rt-username-display">—</span>
+              <button class="rt-username-edit-btn" type="button" onclick="showUsernameEdit()">Edit</button>
+            </div>
+            <div class="rt-username-row" id="rt-username-edit-row" style="display:none;">
+              <span class="rt-username-label">Username</span>
+              <input class="rt-username-input" type="text" id="rt-username-input" placeholder="e.g. bookworm42" maxlength="30" autocomplete="off">
+              <button class="rt-username-edit-btn" type="button" id="rt-username-save-btn" onclick="saveUsername()">Save</button>
+              <button class="rt-username-edit-btn" type="button" onclick="cancelUsernameEdit()" style="color:var(--rt-t3);">✕</button>
+            </div>
+            <p id="rt-username-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;padding-top:0.25rem;"></p>
+          </div>
+
           <div class="rt-profile-stats">
             <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
             <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-tbr">0</div><div class="rt-profile-stat-l">My List</div></div>
@@ -2199,6 +2556,75 @@ permalink: /tools/reading-tracker/
       <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-add-btn" type="button">Add book</button>
     </div>
 
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     FRIEND PROFILE SHEET
+══════════════════════════════════════════════ -->
+<div class="rt-friend-profile-overlay" id="rt-friend-profile-overlay" role="dialog" aria-modal="true">
+  <div class="rt-friend-profile-sheet" id="rt-friend-profile-sheet">
+    <div class="rt-sheet-handle"></div>
+    <div class="rt-friend-profile-hero">
+      <button class="rt-friend-profile-close" id="rt-friend-profile-close" type="button">×</button>
+      <div class="rt-friend-profile-av" id="rt-fp-avatar"></div>
+      <div class="rt-friend-profile-name" id="rt-fp-name"></div>
+      <div class="rt-friend-profile-username" id="rt-fp-username"></div>
+      <div class="rt-friend-profile-stats">
+        <div class="rt-friend-profile-stat">
+          <div class="rt-friend-profile-stat-n" id="rt-fp-read-count">—</div>
+          <div class="rt-friend-profile-stat-l">books read</div>
+        </div>
+        <div class="rt-friend-profile-stat">
+          <div class="rt-friend-profile-stat-n" id="rt-fp-reading-count">—</div>
+          <div class="rt-friend-profile-stat-l">reading now</div>
+        </div>
+      </div>
+    </div>
+    <!-- Mutual reads carousel -->
+    <div class="rt-mutual-carousel-wrap" id="rt-fp-mutual-wrap" style="display:none;">
+      <div class="rt-mutual-carousel-label">Books you've both read</div>
+      <div class="rt-mutual-carousel" id="rt-fp-mutual-carousel"></div>
+    </div>
+    <!-- Friend's current reads -->
+    <div style="flex:1;overflow-y:auto;padding:1rem 1.25rem;">
+      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.75rem;">Currently reading</div>
+      <div id="rt-fp-currently-reading">
+        <p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>
+      </div>
+    </div>
+    <div class="rt-sheet-footer" style="gap:0.5rem;">
+      <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-fp-close-btn" type="button">Close</button>
+      <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-fp-remove-btn" type="button" style="flex:0 0 auto;background:rgba(127,29,29,0.08);color:#7f1d1d;">Remove friend</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     RECOMMEND BOOK SHEET
+══════════════════════════════════════════════ -->
+<div class="rt-recommend-overlay" id="rt-recommend-overlay" role="dialog" aria-modal="true">
+  <div class="rt-recommend-sheet" id="rt-recommend-sheet">
+    <div class="rt-sheet-handle"></div>
+    <div class="rt-sheet-header">
+      <div class="rt-sheet-book-info">
+        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.2rem;">Recommend to a friend</div>
+        <div class="rt-sheet-book-title" id="rt-rec-sheet-title"></div>
+      </div>
+      <button class="rt-sheet-close" id="rt-recommend-close" type="button">×</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:1.25rem;">
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Choose a friend</div>
+      <div id="rt-rec-friends-list" style="margin-bottom:1.1rem;display:flex;flex-direction:column;gap:0.5rem;"></div>
+      <div class="rt-review-field">
+        <label for="rt-rec-note">Add a note <span style="font-weight:400;color:var(--rt-t3);text-transform:none;letter-spacing:0;font-size:0.85em;">(optional)</span></label>
+        <textarea id="rt-rec-note" rows="3" placeholder="Why do you think they'd love this?"></textarea>
+      </div>
+    </div>
+    <div class="rt-sheet-footer">
+      <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-rec-cancel-btn" type="button">Cancel</button>
+      <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-rec-send-btn" type="button">Send recommendation →</button>
+    </div>
   </div>
 </div>
 
@@ -2539,6 +2965,8 @@ sb.auth.onAuthStateChange(async (event, session) => {
     if (wasLoggedOut || event === 'INITIAL_SESSION') {
       // Safe merge login: preserves unsynced local books, pulls cloud, deduplicates
       await SyncQueue.syncOnLogin();
+      // Handle ?invite= param if present
+      handleInviteParam();
     }
     // TOKEN_REFRESHED, USER_UPDATED etc — resume queue in case it was paused
     SyncQueue.resume();
@@ -2621,6 +3049,791 @@ function renderAuthUI() {
   }
 }
 
+function renderAuthUI() {
+  const loggedIn  = document.getElementById('rt-auth-loggedin');
+  const loggedOut = document.getElementById('rt-auth-loggedout');
+  const emailEl   = document.getElementById('rt-auth-email');
+  const joinedEl  = document.getElementById('rt-profile-joined');
+  const ctaEl     = document.getElementById('rt-signin-cta');
+  const ctaText   = document.getElementById('rt-signin-cta-sub');
+  const lockedEl  = document.getElementById('rt-recs-locked');
+  const genWrap   = document.getElementById('rt-recs-generate-wrap');
+  if (!loggedIn || !loggedOut) return;
+  if (ctaEl) {
+    ctaEl.style.display = currentUser ? 'none' : 'flex';
+    if (!currentUser && ctaText) {
+      ctaText.textContent = books.length
+        ? `You have ${books.length} book${books.length !== 1 ? 's' : ''} saved locally — sign up to back them up.`
+        : 'Create a free account to access your books on any device.';
+    }
+  }
+  if (lockedEl) lockedEl.style.display = currentUser ? 'none' : 'block';
+  if (genWrap)  genWrap.style.display  = currentUser ? 'block' : 'none';
+
+  // Community panel
+  const commOut = document.getElementById('rt-community-loggedout');
+  const commIn  = document.getElementById('rt-community-loggedin');
+  if (commOut) commOut.style.display = currentUser ? 'none' : 'block';
+  if (commIn)  commIn.style.display  = currentUser ? 'block' : 'none';
+
+  if (currentUser) {
+    loggedIn.style.display  = 'block';
+    loggedOut.style.display = 'none';
+    if (emailEl) emailEl.textContent = currentUser.email;
+    if (joinedEl) {
+      const d = new Date(currentUser.created_at);
+      joinedEl.textContent = isNaN(d) ? '' : 'Member since ' + d.toLocaleDateString('en-GB', {month:'long', year:'numeric'});
+    }
+    const readCount = getBooks('read').length;
+    const tbrCount  = getBooks('tbr').length;
+    const favCount  = getBooks('read').filter(b => b.rating === 5).length;
+    const dnfCount  = getBooks('dnf').length;
+    const el = id => document.getElementById(id);
+    if (el('rt-profile-read')) el('rt-profile-read').textContent = readCount;
+    if (el('rt-profile-tbr'))  el('rt-profile-tbr').textContent  = tbrCount;
+    if (el('rt-profile-fav'))  el('rt-profile-fav').textContent  = favCount;
+    if (el('rt-profile-dnf'))  el('rt-profile-dnf').textContent  = dnfCount;
+    // Load username
+    loadUsernameDisplay();
+    // Generate invite link
+    generateInviteLink();
+  } else {
+    loggedIn.style.display  = 'none';
+    loggedOut.style.display = 'block';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 2 — SOCIAL / COMMUNITY
+// ═══════════════════════════════════════════════════════════════
+
+// ── Avatar colour helper ──────────────────────────────────────
+const AVATAR_COLOURS = ['#1a2744','#c8891a','#2A6E69','#5c6bc0','#b43a3a','#7b3fa0','#2e7d52'];
+function avatarColour(str) {
+  let h = 0;
+  for (let i = 0; i < (str||'').length; i++) h = (h * 31 + str.charCodeAt(i)) & 0xfffffff;
+  return AVATAR_COLOURS[h % AVATAR_COLOURS.length];
+}
+function avatarInitial(name) {
+  return (name || '?').trim().charAt(0).toUpperCase();
+}
+
+// ── Social state ─────────────────────────────────────────────
+const socialState = {
+  friends:  [],   // [{id, userId, username, displayName, status, readCount, readingBooks}]
+  pending:  [],   // incoming requests [{id, requesterId, requesterEmail, requesterUsername}]
+  feed:     [],   // feed_events from Supabase
+  recs:     [],   // incoming book_recommendations
+  _loaded:  false
+};
+
+async function loadSocialData() {
+  if (!currentUser) return;
+  try {
+    // Load accepted friends + pending requests in parallel
+    const [friendsRes, pendingRes, feedRes, recsRes] = await Promise.all([
+      sb.from('friendships')
+        .select('id, requester_id, addressee_id, status, profiles!friendships_requester_id_fkey(username,display_name), profiles!friendships_addressee_id_fkey(username,display_name)')
+        .or(`requester_id.eq.${currentUser.id},addressee_id.eq.${currentUser.id}`)
+        .eq('status', 'accepted'),
+      sb.from('friendships')
+        .select('id, requester_id, profiles!friendships_requester_id_fkey(username,display_name,email:id)')
+        .eq('addressee_id', currentUser.id)
+        .eq('status', 'pending'),
+      sb.from('feed_events')
+        .select('*, profiles(username,display_name)')
+        .order('created_at', { ascending: false })
+        .limit(40),
+      sb.from('book_recommendations')
+        .select('id, created_at, recommender_id, book_ol_key, message, profiles!book_recommendations_recommender_id_fkey(username,display_name)')
+        .eq('recipient_id', currentUser.id)
+        .eq('status', 'pending')
+        .order('created_at', { ascending: false })
+    ]);
+
+    // Process friends
+    socialState.friends = (friendsRes.data || []).map(f => {
+      const iAmRequester = f.requester_id === currentUser.id;
+      const friendId     = iAmRequester ? f.addressee_id : f.requester_id;
+      const profile      = iAmRequester
+        ? f['profiles!friendships_addressee_id_fkey']
+        : f['profiles!friendships_requester_id_fkey'];
+      return {
+        friendshipId: f.id,
+        userId:       friendId,
+        username:     profile?.username    || null,
+        displayName:  profile?.display_name || profile?.username || 'Friend',
+        readCount:    null,  // loaded lazily on profile open
+        readingBooks: []
+      };
+    });
+
+    // Process pending incoming requests
+    socialState.pending = (pendingRes.data || []).map(f => ({
+      friendshipId:      f.id,
+      requesterId:       f.requester_id,
+      requesterUsername: f.profiles?.username    || null,
+      requesterName:     f.profiles?.display_name || f.profiles?.username || 'Someone'
+    }));
+
+    // Process feed
+    socialState.feed = feedRes.data || [];
+
+    // Process incoming recs — merge into TBR display
+    socialState.recs = recsRes.data || [];
+
+    socialState._loaded = true;
+    renderCommunityUI();
+    renderFriendBadgeOnTBR();
+
+  } catch(e) {
+    console.error('[Social] loadSocialData:', e);
+  }
+}
+
+// ── Community sub-tab switch ──────────────────────────────────
+function switchCommunityTab(tab) {
+  document.getElementById('rt-community-feed-tab').style.display    = tab === 'feed'    ? 'block' : 'none';
+  document.getElementById('rt-community-friends-tab').style.display = tab === 'friends' ? 'block' : 'none';
+  document.getElementById('rt-ctab-feed').classList.toggle('active',    tab === 'feed');
+  document.getElementById('rt-ctab-friends').classList.toggle('active', tab === 'friends');
+}
+
+// ── Main community render ─────────────────────────────────────
+function renderCommunityUI() {
+  renderPendingRequests();
+  renderFeed();
+  renderFriendsList();
+  // Friends count badge
+  const badge = document.getElementById('rt-friends-count-badge');
+  if (badge) {
+    if (socialState.friends.length > 0) {
+      badge.textContent = socialState.friends.length;
+      badge.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+}
+
+// ── Pending requests ─────────────────────────────────────────
+function renderPendingRequests() {
+  const wrap = document.getElementById('rt-pending-requests-wrap');
+  const list = document.getElementById('rt-pending-requests-list');
+  if (!wrap || !list) return;
+  if (!socialState.pending.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const colour = id => avatarColour(id);
+  list.innerHTML = `
+    <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-amber);margin-bottom:0.6rem;">
+      Friend request${socialState.pending.length > 1 ? 's' : ''}
+    </div>
+    ${socialState.pending.map(p => `
+      <div class="rt-pending-request-item">
+        <div class="rt-feed-avatar" style="background:${colour(p.requesterId)};width:34px;height:34px;flex-shrink:0;">
+          ${avatarInitial(p.requesterName)}
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);">${esc(p.requesterName)}</div>
+          ${p.requesterUsername ? `<div style="font-size:0.72rem;color:var(--rt-t3);">@${esc(p.requesterUsername)}</div>` : ''}
+        </div>
+        <button class="rt-friend-action rt-friend-action--accept" type="button"
+          onclick="acceptFriendRequest('${p.friendshipId}','${p.requesterId}')">Accept</button>
+        <button class="rt-friend-action" type="button" style="margin-left:0.3rem;"
+          onclick="declineFriendRequest('${p.friendshipId}')">Decline</button>
+      </div>`).join('')}`;
+}
+
+// ── Feed ─────────────────────────────────────────────────────
+function renderFeed() {
+  const el = document.getElementById('rt-feed-list');
+  if (!el) return;
+  // Merge social feed + incoming recs
+  const allItems = [
+    ...socialState.feed.map(e => ({ ...e, _type: 'feed' })),
+    ...socialState.recs.map(r => ({ ...r, _type: 'rec', created_at: r.created_at }))
+  ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 30);
+
+  if (!allItems.length && !socialState.friends.length) {
+    el.innerHTML = `<div class="rt-feed-empty"><div class="rt-feed-empty-icon">📖</div><p>Add friends to see their reading activity here.</p></div>`;
+    return;
+  }
+  if (!allItems.length) {
+    el.innerHTML = `<div class="rt-feed-empty"><div class="rt-feed-empty-icon">🔔</div><p>No activity yet — your friends will appear here when they log reads.</p></div>`;
+    return;
+  }
+
+  el.innerHTML = allItems.map(item => renderFeedItem(item)).join('');
+}
+
+function renderFeedItem(item) {
+  const now = Date.now();
+  const ago = timeAgo(item.created_at);
+
+  if (item._type === 'rec') {
+    const fromName = item.profiles?.display_name || item.profiles?.username || 'A friend';
+    const colour   = avatarColour(item.recommender_id);
+    // book_recommendations uses book_ol_key; fetch cover from OL key if available
+    const olKey    = item.book_ol_key || '';
+    const coverHtml = olKey
+      ? `<img src="https://covers.openlibrary.org/b/olid/${olKey.replace('/works/','')}-S.jpg" class="rt-feed-book-thumb" alt="" onerror="this.style.display='none'">`
+      : `<div class="rt-feed-book-thumb--ph">📚</div>`;
+    const displayTitle = olKey || 'a book';
+    return `
+      <div class="rt-feed-item">
+        <div class="rt-feed-avatar" style="background:${colour};">${avatarInitial(fromName)}</div>
+        <div class="rt-feed-content">
+          <div class="rt-feed-text"><strong>${esc(fromName)}</strong> recommended a book to you</div>
+          <div class="rt-feed-book-chip" onclick="acceptRecToTBR('${item.id}','${esc(olKey)}','${esc(item.message||'')}')">
+            ${coverHtml}
+            <div>
+              <div class="rt-feed-book-title">${esc(olKey || 'View recommendation')}</div>
+              ${item.message ? `<div style="font-size:0.68rem;color:var(--rt-t3);margin-top:1px;">"${esc(item.message.slice(0,60))}"</div>` : ''}
+            </div>
+            <span style="font-size:0.68rem;font-weight:700;color:var(--rt-teal);margin-left:auto;white-space:nowrap;">+ Add to list</span>
+          </div>
+          <div class="rt-feed-time">${ago}</div>
+        </div>
+      </div>`;
+  }
+
+  // feed_events
+  const name   = item.profiles?.display_name || item.profiles?.username || 'A friend';
+  const colour = avatarColour(item.user_id);
+  const coverHtml = item.cover_id
+    ? `<img src="https://covers.openlibrary.org/b/id/${item.cover_id}-S.jpg" class="rt-feed-book-thumb" alt="">`
+    : `<div class="rt-feed-book-thumb--ph">📚</div>`;
+  const bookChip = (item.book_title) ? `
+    <div class="rt-feed-book-chip">
+      ${coverHtml}
+      <div class="rt-feed-book-title">${esc(item.book_title)}</div>
+    </div>` : '';
+
+  let text = '';
+  if (item.event_type === 'started_reading')  text = `<strong>${esc(name)}</strong> started reading`;
+  else if (item.event_type === 'finished')     text = `<strong>${esc(name)}</strong> finished reading`;
+  else if (item.event_type === 'posted_review') text = `<strong>${esc(name)}</strong> shared a review of`;
+  else if (item.event_type === 'recommendation') text = `<strong>${esc(name)}</strong> recommended a book`;
+  else if (item.event_type === 'book_club_formed') text = `<strong>${esc(name)}</strong> is reading the same book as you!`;
+  else text = `<strong>${esc(name)}</strong> logged a book`;
+
+  return `
+    <div class="rt-feed-item">
+      <div class="rt-feed-avatar" style="background:${colour};">${avatarInitial(name)}</div>
+      <div class="rt-feed-content">
+        <div class="rt-feed-text">${text}</div>
+        ${bookChip}
+        <div class="rt-feed-time">${ago}</div>
+      </div>
+    </div>`;
+}
+
+function timeAgo(iso) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const m = Math.floor(diff / 60000);
+  if (m < 1)  return 'just now';
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  const d = Math.floor(h / 24);
+  if (d < 7)  return `${d}d ago`;
+  return new Date(iso).toLocaleDateString('en-GB', {day:'numeric',month:'short'});
+}
+
+// ── Friends list ──────────────────────────────────────────────
+function renderFriendsList() {
+  const el = document.getElementById('rt-friends-list');
+  if (!el) return;
+  if (!socialState.friends.length) {
+    el.innerHTML = `<div class="rt-feed-empty"><div class="rt-feed-empty-icon">👋</div><p>No friends yet — add someone above or share your invite link.</p></div>`;
+    return;
+  }
+  el.innerHTML = socialState.friends.map(f => {
+    const colour = avatarColour(f.userId);
+    return `
+      <div class="rt-friend-card" onclick="openFriendProfile('${f.userId}')">
+        <div class="rt-friend-avatar" style="background:${colour};">${avatarInitial(f.displayName)}</div>
+        <div class="rt-friend-info">
+          <div class="rt-friend-name">${esc(f.displayName)}</div>
+          ${f.username ? `<div class="rt-friend-sub">@${esc(f.username)}</div>` : ''}
+        </div>
+        <button class="rt-friend-action" type="button">View →</button>
+      </div>`;
+  }).join('');
+}
+
+// ── Add friend ────────────────────────────────────────────────
+document.getElementById('rt-add-friend-btn').addEventListener('click', sendFriendRequest);
+document.getElementById('rt-add-friend-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendFriendRequest();
+});
+
+async function sendFriendRequest() {
+  const input   = document.getElementById('rt-add-friend-input');
+  const msgEl   = document.getElementById('rt-add-friend-msg');
+  const btn     = document.getElementById('rt-add-friend-btn');
+  const raw     = input.value.trim();
+  if (!raw) return;
+  msgEl.style.display = 'none';
+
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  try {
+    // Look up by username (@handle) or email
+    const isUsername = raw.startsWith('@');
+    const lookup     = isUsername ? raw.slice(1).toLowerCase() : raw.toLowerCase();
+    const field      = isUsername ? 'username' : 'email';
+
+    // Find the user's profile
+    let targetId = null;
+    if (isUsername) {
+      const { data } = await sb.from('profiles').select('user_id').eq('username', lookup).maybeSingle();
+      targetId = data?.user_id || null;
+    } else {
+      // Look up by auth email via profiles (email stored in auth, not profiles)
+      // We use a custom approach: search profiles by display_name or fall back to user lookup
+      const { data } = await sb.from('profiles').select('user_id').eq('username', lookup).maybeSingle();
+      if (data) {
+        targetId = data.user_id;
+      } else {
+        // Try to find via auth users — not directly accessible, so prompt to use username
+        showFriendMsg('Try using their @username instead of email — they can find it in their Account tab.', 'info');
+        btn.disabled = false; btn.textContent = 'Send invite';
+        return;
+      }
+    }
+
+    if (!targetId) {
+      showFriendMsg(`No account found for "${raw}". Check the username is correct.`, 'error');
+      btn.disabled = false; btn.textContent = 'Send invite';
+      return;
+    }
+    if (targetId === currentUser.id) {
+      showFriendMsg("That's you! Try a friend's username.", 'error');
+      btn.disabled = false; btn.textContent = 'Send invite';
+      return;
+    }
+    // Check not already friends/pending
+    const already = socialState.friends.find(f => f.userId === targetId);
+    if (already) {
+      showFriendMsg('You\'re already friends with this person.', 'info');
+      btn.disabled = false; btn.textContent = 'Send invite';
+      return;
+    }
+    // Insert friendship row
+    const { error } = await sb.from('friendships').insert({
+      requester_id: currentUser.id,
+      addressee_id: targetId,
+      status:       'pending'
+    });
+    if (error) {
+      if (error.code === '23505') {
+        showFriendMsg('Friend request already sent.', 'info');
+      } else {
+        showFriendMsg('Could not send request: ' + error.message, 'error');
+      }
+    } else {
+      showFriendMsg('✓ Friend request sent!', 'success');
+      input.value = '';
+    }
+  } catch(e) {
+    showFriendMsg('Something went wrong — please try again.', 'error');
+    console.error('[Social] sendFriendRequest:', e);
+  }
+  btn.disabled = false; btn.textContent = 'Send invite';
+}
+
+function showFriendMsg(text, type) {
+  const el = document.getElementById('rt-add-friend-msg');
+  const colours = { error:'#991b1b', success:'#166534', info:'#1e40af' };
+  el.style.cssText = `display:block;color:${colours[type]||colours.info};`;
+  el.textContent = text;
+}
+
+async function acceptFriendRequest(friendshipId, requesterId) {
+  const { error } = await sb.from('friendships')
+    .update({ status: 'accepted' })
+    .eq('id', friendshipId);
+  if (!error) {
+    showFlash('✓ Friend request accepted!');
+    await loadSocialData();
+  }
+}
+
+async function declineFriendRequest(friendshipId) {
+  const { error } = await sb.from('friendships').delete().eq('id', friendshipId);
+  if (!error) await loadSocialData();
+}
+
+// ── Invite link ───────────────────────────────────────────────
+function generateInviteLink() {
+  if (!currentUser) return;
+  // Use user ID as invite token (simple v1 — no separate invites table needed)
+  const base = window.location.origin + window.location.pathname;
+  const link = `${base}?invite=${currentUser.id}`;
+  const field = document.getElementById('rt-invite-link-field');
+  const btn   = document.getElementById('rt-invite-copy-btn');
+  if (field) field.textContent = link;
+  if (btn) {
+    btn.addEventListener('click', function() {
+      navigator.clipboard?.writeText(link).then(() => {
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      }).catch(() => {
+        field.select?.();
+        document.execCommand('copy');
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }, { once: false });
+  }
+}
+
+// Handle ?invite=<userId> on load — send friend request automatically
+async function handleInviteParam() {
+  const params   = new URLSearchParams(window.location.search);
+  const inviterId = params.get('invite');
+  if (!inviterId || !currentUser || inviterId === currentUser.id) return;
+  // Clean URL
+  const clean = window.location.pathname;
+  window.history.replaceState({}, '', clean);
+  // Send friend request to the inviter
+  const { error } = await sb.from('friendships').insert({
+    requester_id: currentUser.id,
+    addressee_id: inviterId,
+    status:       'pending'
+  });
+  if (!error) showFlash('✓ Friend request sent via invite link!');
+}
+
+// ── Username ──────────────────────────────────────────────────
+async function loadUsernameDisplay() {
+  if (!currentUser) return;
+  try {
+    const { data } = await sb.from('profiles')
+      .select('username, display_name')
+      .eq('user_id', currentUser.id)
+      .maybeSingle();
+    const el = document.getElementById('rt-username-display');
+    if (el) el.textContent = data?.username ? `@${data.username}` : '— not set';
+    // Cache in memory
+    socialState._myUsername    = data?.username    || null;
+    socialState._myDisplayName = data?.display_name || null;
+  } catch(e) {}
+}
+
+function showUsernameEdit() {
+  document.getElementById('rt-username-display-row').style.display = 'none';
+  document.getElementById('rt-username-edit-row').style.display    = 'flex';
+  const input = document.getElementById('rt-username-input');
+  input.value = socialState._myUsername || '';
+  input.focus();
+}
+function cancelUsernameEdit() {
+  document.getElementById('rt-username-display-row').style.display = 'flex';
+  document.getElementById('rt-username-edit-row').style.display    = 'none';
+  document.getElementById('rt-username-msg').style.display         = 'none';
+}
+
+async function saveUsername() {
+  const input   = document.getElementById('rt-username-input');
+  const msgEl   = document.getElementById('rt-username-msg');
+  const saveBtn = document.getElementById('rt-username-save-btn');
+  const raw     = input.value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
+  msgEl.style.display = 'none';
+  if (raw.length < 3) {
+    msgEl.style.cssText = 'display:block;color:#991b1b;';
+    msgEl.textContent   = 'Username must be at least 3 characters (letters, numbers, underscores).';
+    return;
+  }
+  saveBtn.textContent = 'Saving…';
+  try {
+    const { error } = await sb.from('profiles')
+      .upsert({ user_id: currentUser.id, username: raw }, { onConflict: 'user_id' });
+    if (error) {
+      if (error.code === '23505') {
+        msgEl.style.cssText = 'display:block;color:#991b1b;';
+        msgEl.textContent   = 'That username is taken — try another.';
+      } else {
+        msgEl.style.cssText = 'display:block;color:#991b1b;';
+        msgEl.textContent   = error.message;
+      }
+    } else {
+      socialState._myUsername = raw;
+      document.getElementById('rt-username-display').textContent = `@${raw}`;
+      cancelUsernameEdit();
+      showFlash('✓ Username saved!');
+    }
+  } catch(e) {
+    msgEl.style.cssText = 'display:block;color:#991b1b;';
+    msgEl.textContent   = 'Something went wrong — please try again.';
+  }
+  saveBtn.textContent = 'Save';
+}
+document.getElementById('rt-username-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') saveUsername();
+  if (e.key === 'Escape') cancelUsernameEdit();
+});
+
+// ── Friend profile sheet ──────────────────────────────────────
+let _activeFriendId = null;
+
+async function openFriendProfile(userId) {
+  _activeFriendId = userId;
+  const friend = socialState.friends.find(f => f.userId === userId);
+  if (!friend) return;
+
+  const colour = avatarColour(userId);
+  document.getElementById('rt-fp-avatar').textContent        = avatarInitial(friend.displayName);
+  document.getElementById('rt-fp-avatar').style.background   = colour;
+  document.getElementById('rt-fp-name').textContent          = friend.displayName;
+  document.getElementById('rt-fp-username').textContent      = friend.username ? `@${friend.username}` : '';
+  document.getElementById('rt-fp-read-count').textContent    = '…';
+  document.getElementById('rt-fp-reading-count').textContent = '…';
+  document.getElementById('rt-fp-mutual-wrap').style.display = 'none';
+  document.getElementById('rt-fp-currently-reading').innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Loading…</p>';
+
+  // Wire footer buttons
+  document.getElementById('rt-fp-close-btn').onclick  = closeFriendProfile;
+  document.getElementById('rt-fp-remove-btn').onclick = () => confirmRemoveFriend(friend.friendshipId, friend.displayName);
+
+  // Open sheet
+  const overlay = document.getElementById('rt-friend-profile-overlay');
+  const sheet   = document.getElementById('rt-friend-profile-sheet');
+  overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+
+  // Load friend's data
+  try {
+    const { data: entries } = await sb
+      .from('reading_entries')
+      .select('status, date_finished, books(title, author, cover_id, ol_key), title_manual, author_manual')
+      .eq('user_id', userId);
+
+    const friendBooks = (entries || []).map(e => ({
+      title:  e.books?.title  || e.title_manual  || '',
+      author: e.books?.author || e.author_manual || '',
+      coverId: e.books?.cover_id || null,
+      olKey:   e.books?.ol_key   || null,
+      status:  e.status
+    }));
+
+    const readBooks    = friendBooks.filter(b => b.status === 'read');
+    const readingBooks = friendBooks.filter(b => b.status === 'reading');
+
+    document.getElementById('rt-fp-read-count').textContent    = readBooks.length;
+    document.getElementById('rt-fp-reading-count').textContent = readingBooks.length;
+
+    // Currently reading
+    const crEl = document.getElementById('rt-fp-currently-reading');
+    if (readingBooks.length) {
+      crEl.innerHTML = readingBooks.map(b => {
+        const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+        return `
+          <div style="display:flex;align-items:center;gap:0.65rem;padding:0.5rem 0;border-bottom:1px solid var(--rt-border);">
+            ${coverUrl
+              ? `<img src="${coverUrl}" style="width:28px;height:40px;border-radius:3px;object-fit:cover;flex-shrink:0;" alt="">`
+              : `<div style="width:28px;height:40px;border-radius:3px;background:var(--rt-surface);flex-shrink:0;"></div>`}
+            <div>
+              <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);">${esc(b.title)}</div>
+              ${b.author ? `<div style="font-size:0.72rem;color:var(--rt-t3);">${esc(b.author)}</div>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    } else {
+      crEl.innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>';
+    }
+
+    // Mutual reads
+    const myReadTitles = new Set(getBooks('read').map(b => b.title.toLowerCase()));
+    const mutual = readBooks.filter(b => myReadTitles.has(b.title.toLowerCase()));
+    if (mutual.length) {
+      const carousel = document.getElementById('rt-fp-mutual-carousel');
+      carousel.innerHTML = mutual.slice(0, 12).map(b => {
+        const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+        return `
+          <div class="rt-mutual-book" title="${esc(b.title)}">
+            ${coverUrl
+              ? `<img src="${coverUrl}" alt="${esc(b.title)}">`
+              : `<div class="rt-mutual-book-ph">📖</div>`}
+          </div>`;
+      }).join('');
+      document.getElementById('rt-fp-mutual-wrap').style.display = 'block';
+    }
+
+  } catch(e) {
+    console.error('[Social] openFriendProfile:', e);
+  }
+}
+
+function closeFriendProfile() {
+  const overlay = document.getElementById('rt-friend-profile-overlay');
+  const sheet   = document.getElementById('rt-friend-profile-sheet');
+  sheet.classList.remove('open');
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  _activeFriendId = null;
+}
+document.getElementById('rt-friend-profile-close').addEventListener('click', closeFriendProfile);
+document.getElementById('rt-friend-profile-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('rt-friend-profile-overlay')) closeFriendProfile();
+});
+
+async function confirmRemoveFriend(friendshipId, name) {
+  if (!confirm(`Remove ${name} from your friends? This can't be undone.`)) return;
+  const { error } = await sb.from('friendships').delete().eq('id', friendshipId);
+  if (!error) {
+    closeFriendProfile();
+    showFlash(`Removed ${name} from friends.`);
+    await loadSocialData();
+  }
+}
+
+// ── Recommend sheet ───────────────────────────────────────────
+let _recBookId = null;
+
+function openRecommendSheet(bookId) {
+  const book = books.find(b => String(b.id) === String(bookId));
+  if (!book) return;
+  _recBookId = bookId;
+
+  document.getElementById('rt-rec-sheet-title').textContent = book.title;
+  document.getElementById('rt-rec-note').value = '';
+
+  // Populate friend picker
+  const list = document.getElementById('rt-rec-friends-list');
+  if (!socialState.friends.length) {
+    list.innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);">Add friends first to recommend books to them.</p>';
+  } else {
+    list.innerHTML = socialState.friends.map(f => {
+      const colour = avatarColour(f.userId);
+      return `
+        <label style="display:flex;align-items:center;gap:0.65rem;padding:0.6rem;border:1.5px solid var(--rt-border-md);border-radius:var(--rt-r3);cursor:pointer;transition:border-color var(--rt-fast);" class="rt-rec-friend-option">
+          <input type="radio" name="rt-rec-friend" value="${f.userId}" style="display:none;">
+          <div style="width:32px;height:32px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:#fff;flex-shrink:0;">${avatarInitial(f.displayName)}</div>
+          <div style="flex:1;">
+            <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);">${esc(f.displayName)}</div>
+            ${f.username ? `<div style="font-size:0.72rem;color:var(--rt-t3);">@${esc(f.username)}</div>` : ''}
+          </div>
+          <div class="rt-rec-check" style="width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-border-md);flex-shrink:0;"></div>
+        </label>`;
+    }).join('');
+
+    // Highlight selected radio
+    list.querySelectorAll('.rt-rec-friend-option').forEach(opt => {
+      opt.addEventListener('click', function() {
+        const radio = this.querySelector('input[type=radio]');
+        radio.checked = true;
+        list.querySelectorAll('.rt-rec-friend-option').forEach(o => {
+          o.style.borderColor = '';
+          o.querySelector('.rt-rec-check').style.cssText = 'width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-border-md);flex-shrink:0;';
+        });
+        this.style.borderColor = 'var(--rt-navy)';
+        this.querySelector('.rt-rec-check').style.cssText = 'width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-navy);background:var(--rt-navy);flex-shrink:0;';
+      });
+    });
+  }
+
+  const overlay = document.getElementById('rt-recommend-overlay');
+  const sheet   = document.getElementById('rt-recommend-sheet');
+  overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+}
+
+function closeRecommendSheet() {
+  document.getElementById('rt-recommend-overlay').classList.remove('open');
+  document.getElementById('rt-recommend-sheet').classList.remove('open');
+  document.body.style.overflow = '';
+  _recBookId = null;
+}
+document.getElementById('rt-recommend-close').addEventListener('click', closeRecommendSheet);
+document.getElementById('rt-rec-cancel-btn').addEventListener('click', closeRecommendSheet);
+document.getElementById('rt-recommend-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('rt-recommend-overlay')) closeRecommendSheet();
+});
+
+document.getElementById('rt-rec-send-btn').addEventListener('click', async function() {
+  const book       = books.find(b => String(b.id) === String(_recBookId));
+  const recipientId = document.querySelector('input[name="rt-rec-friend"]:checked')?.value;
+  if (!book || !recipientId) {
+    showFlash('Please select a friend first.');
+    return;
+  }
+  const note  = document.getElementById('rt-rec-note').value.trim() || null;
+  const btn   = this;
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  if (!book.olKey) {
+    showFlash('This book needs an Open Library key to be recommended. Open the book detail panel first to load it.');
+    btn.disabled = false; btn.textContent = 'Send recommendation →';
+    return;
+  }
+  const { error } = await sb.from('book_recommendations').insert({
+    recommender_id: currentUser.id,
+    recipient_id:   recipientId,
+    book_ol_key:    book.olKey  || null,
+    message:        note,
+    status:         'pending'
+  });
+
+  btn.disabled = false; btn.textContent = 'Send recommendation →';
+  if (error) {
+    showFlash('Could not send recommendation — try again.');
+    console.error('[Social] sendRec:', error);
+  } else {
+    closeRecommendSheet();
+    const friend = socialState.friends.find(f => f.userId === recipientId);
+    showFlash(`📚 Recommended "${book.title}" to ${friend?.displayName || 'your friend'}!`);
+  }
+});
+
+// ── Accept rec → TBR ─────────────────────────────────────────
+async function acceptRecToTBR(recId, olKey, message) {
+  if (!olKey) return;
+  // Try to look up the book from local books first, or add a placeholder pointing to OL key
+  const existing = books.find(b => b.olKey === olKey);
+  if (!existing) {
+    const book = {
+      id: uid(), title: olKey, author: '', status: 'tbr',
+      olKey: olKey, coverId: null,
+      added: new Date().toISOString(), updatedAt: new Date().toISOString()
+    };
+    // Fetch actual title from Open Library
+    try {
+      const key = olKey.startsWith('/works/') ? olKey : `/works/${olKey}`;
+      const res  = await fetch(`https://openlibrary.org${key}.json`);
+      if (res.ok) {
+        const data = await res.json();
+        book.title  = data.title || olKey;
+        if (data.covers?.[0]) book.coverId = data.covers[0];
+        // Try to get author
+        if (data.authors?.[0]?.author?.key) {
+          const aRes = await fetch(`https://openlibrary.org${data.authors[0].author.key}.json`);
+          if (aRes.ok) { const aData = await aRes.json(); book.author = aData.name || ''; }
+        }
+      }
+    } catch(e) {}
+    books.push(book); save();
+    saveBookToCloud(book);
+    renderTBR();
+  }
+  // Mark rec as accepted
+  await sb.from('book_recommendations').update({ status: 'accepted' }).eq('id', recId);
+  socialState.recs = socialState.recs.filter(r => r.id !== recId);
+  renderFeed();
+  showFlash(`✓ Book added to My List!`);
+}
+
+// ── Render "Recommended by" chip on TBR ──────────────────────
+function renderFriendBadgeOnTBR() {
+  // Called after TBR renders — for now a no-op placeholder
+  // (full badge injection would require matching rec by title after render)
+}
+
+// ── Trigger load when community tab is opened ─────────────────
+// (patch switchTab to lazy-load social data)
 function showAuthForm(which) {
   document.getElementById('rt-form-signup').style.display = which === 'signup' ? 'flex' : 'none';
   document.getElementById('rt-form-login').style.display  = which === 'login'  ? 'flex' : 'none';
@@ -3125,6 +4338,7 @@ function switchTab(name) {
   document.querySelectorAll('.rt-nav-btn').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
 
   if (name === 'tbr') renderTBR();
+  if (name === 'community' && currentUser && !socialState._loaded) loadSocialData();
   window.scrollTo({ top: document.querySelector('.rt-hero').offsetHeight, behavior: 'smooth' });
 }
 
@@ -4116,23 +5330,27 @@ function openBookDetail(bookId) {
 
 function renderBookDetailFooter(book) {
   const footer = document.getElementById('rt-book-detail-footer');
-  let html = '';
+  const hasFriends = currentUser && socialState.friends.length > 0;
+  const recBtn = hasFriends
+    ? `<button class="rt-book-detail-action rt-book-detail-action--amber" onclick="openRecommendSheet('${book.id}')">📚 Recommend</button>`
+    : '';
 
   if (book.status === 'tbr') {
-    html = `
+    footer.innerHTML = `
       <button class="rt-book-detail-action rt-book-detail-action--primary" onclick="closeBookDetail();openEditSheet('${book.id}')">📖 Start reading</button>
+      ${recBtn}
       <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail()">Close</button>`;
   } else if (book.status === 'reading') {
-    html = `
+    footer.innerHTML = `
       <button class="rt-book-detail-action rt-book-detail-action--primary" onclick="closeBookDetail();openModal('${book.id}')">✓ Mark finished</button>
+      ${recBtn}
       <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail();openEditSheet('${book.id}')">✏️ Edit</button>`;
-  } else if (book.status === 'read' || book.status === 'dnf') {
-    html = `
+  } else {
+    footer.innerHTML = `
+      ${recBtn}
       <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail();openEditSheet('${book.id}')">✏️ Edit notes</button>
       <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail()">Close</button>`;
   }
-
-  footer.innerHTML = html;
 }
 
 function closeBookDetail() {
