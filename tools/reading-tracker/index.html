@@ -2964,6 +2964,7 @@ const SUPABASE_URL  = 'https://danknyhumorgkvidrdve.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhbmtueWh1bW9yZ2t2aWRyZHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3OTMzMzksImV4cCI6MjA4ODM2OTMzOX0.uTbNT_MBipxNCJckFI2JFACvftdtSy3M-YRQuJVDziU';
 const sb            = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, { db: { schema: 'staging' } });
 let   currentUser   = null;
+let   _usernameLoaded = false; // prevent re-running on TOKEN_REFRESHED etc
 
 sb.auth.onAuthStateChange(async (event, session) => {
   const wasLoggedOut = !currentUser;
@@ -2981,12 +2982,16 @@ sb.auth.onAuthStateChange(async (event, session) => {
       await SyncQueue.syncOnLogin();
       // Handle ?invite= param if present
       handleInviteParam();
+      // Start realtime subscription for live friend request updates
+      setupRealtimeSubscription();
     }
     // TOKEN_REFRESHED, USER_UPDATED etc — resume queue in case it was paused
     SyncQueue.resume();
   } else {
     // Signed out — pause queue, keep local state intact
     SyncQueue.pause();
+    _usernameLoaded = false;
+    if (_realtimeChannel) { sb.removeChannel(_realtimeChannel); _realtimeChannel = null; }
   }
 });
 
@@ -3067,8 +3072,11 @@ function renderAuthUI() {
     if (el('rt-profile-tbr'))  el('rt-profile-tbr').textContent  = tbrCount;
     if (el('rt-profile-fav'))  el('rt-profile-fav').textContent  = favCount;
     if (el('rt-profile-dnf'))  el('rt-profile-dnf').textContent  = dnfCount;
-    // Load username
-    loadUsernameDisplay();
+    // Load username — only once per session to avoid race conditions
+    if (!_usernameLoaded) {
+      _usernameLoaded = true;
+      loadUsernameDisplay();
+    }
     // Generate invite link
     generateInviteLink();
   } else {
@@ -3186,6 +3194,24 @@ async function loadSocialData() {
   } catch(e) {
     console.error('[Social] loadSocialData:', e);
   }
+}
+
+// ── Realtime: live friend request updates ─────────────────────
+let _realtimeChannel = null;
+
+function setupRealtimeSubscription() {
+  if (_realtimeChannel) { sb.removeChannel(_realtimeChannel); _realtimeChannel = null; }
+  if (!currentUser) return;
+  _realtimeChannel = sb.channel('social-updates')
+    .on('postgres_changes', {
+      event: '*', schema: 'staging', table: 'friendships',
+      filter: `addressee_id=eq.${currentUser.id}`
+    }, () => { socialState._loaded = false; loadSocialData(); })
+    .on('postgres_changes', {
+      event: '*', schema: 'staging', table: 'friendships',
+      filter: `requester_id=eq.${currentUser.id}`
+    }, () => { socialState._loaded = false; loadSocialData(); })
+    .subscribe();
 }
 
 // ── Community sub-tab switch ──────────────────────────────────
@@ -3535,10 +3561,7 @@ async function loadUsernameDisplay() {
     if (!username) {
       const emailPart = currentUser.email.split('@')[0];
       username = emailPart.toLowerCase().replace(/[^a-z0-9]/g, '_');
-      await sb.from('profiles').upsert(
-        { id: currentUser.id, username },
-        { onConflict: 'id' }
-      );
+      await sb.from('profiles').update({ username }).eq('id', currentUser.id);
     }
 
     const el = document.getElementById('rt-username-display');
@@ -3577,7 +3600,7 @@ async function saveUsername() {
   try {
     console.log('[Username] saving', raw, 'for', currentUser.id);
     const { error } = await Promise.race([
-      sb.from('profiles').upsert({ id: currentUser.id, username: raw }, { onConflict: 'id' }),
+      sb.from('profiles').update({ username: raw }).eq('id', currentUser.id),
       new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
     ]);
     console.log('[Username] result error:', error);
