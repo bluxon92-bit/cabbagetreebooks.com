@@ -6877,32 +6877,39 @@ async function startOrOpenChat(olKey, title, author, coverId) {
   if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
 
   try {
-    // Upsert the book_chats row
-    const { data: chat, error: upsertErr } = await sb
-      .from('book_chats')
-      .upsert({
-        book_ol_key:  olKey,
-        book_title:   title  || null,
-        book_author:  author || null,
-        cover_id:     coverId || null
-      }, { onConflict: 'book_ol_key' })
-      .select()
-      .single();
+    // Step 1: insert the book_chats row (ignore conflict if it already exists).
+    // We capture the returned id if insert succeeds; otherwise we fetch it via RPC.
+    let chatId = null;
 
-    if (upsertErr) throw upsertErr;
+    const { data: inserted } = await sb.from('book_chats').insert({
+      book_ol_key: olKey,
+      book_title:  title  || null,
+      book_author: author || null,
+      cover_id:    coverId || null
+    }).select('id').single();
 
-    // Ensure current user is a participant
-    await sb.from('chat_participants')
-      .upsert({ chat_id: chat.id, user_id: currentUser.id, join_reason: 'manual' },
-               { onConflict: 'chat_id,user_id', ignoreDuplicates: true });
+    if (inserted?.id) {
+      chatId = inserted.id;
+    } else {
+      // Row already exists — fetch id via RPC (bypasses participant-only SELECT policy)
+      const { data: existingId, error: rpcErr } = await sb
+        .rpc('get_book_chat_id_by_ol_key', { p_ol_key: olKey });
+      if (rpcErr || !existingId) throw rpcErr || new Error('Could not find chat');
+      chatId = existingId;
+    }
+
+    // Step 2: add current user as participant (ignore if already one)
+    await sb.from('chat_participants').insert({
+      chat_id:     chatId,
+      user_id:     currentUser.id,
+      join_reason: 'manual'
+    }).select('id').single().catch(() => {}); // unique conflict = already participant
 
     // Reload chat list and open thread
     await loadChatList();
-    // Switch to chat tab
     switchCommunityTab('chat');
     switchTab('community');
-    // Open the thread (find by id)
-    const found = chatState.chats.find(c => c.bookOlKey === olKey);
+    const found = chatState.chats.find(c => c.id === chatId || c.bookOlKey === olKey);
     if (found) openChatThread(found.id);
 
   } catch(e) {
