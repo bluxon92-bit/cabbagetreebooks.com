@@ -3811,7 +3811,7 @@ permalink: /tools/reading-tracker/
 </div>
 
 <!-- FRIEND PICKER OVERLAY (for starting chats) -->
-<div id="rt-friend-picker-overlay" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(10,16,35,0.55);backdrop-filter:blur(3px);display:none;align-items:flex-end;justify-content:center;" onclick="closeFriendPicker()">
+<div id="rt-friend-picker-overlay" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(10,16,35,0.55);backdrop-filter:blur(3px);align-items:flex-end;justify-content:center;" onclick="closeFriendPicker()">
   <div onclick="event.stopPropagation()" style="background:var(--rt-white);border-radius:var(--rt-r1) var(--rt-r1) 0 0;width:100%;max-width:480px;padding:1.5rem 1.5rem max(1.5rem,env(safe-area-inset-bottom));box-shadow:var(--rt-s3);">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
       <h3 style="font-family:var(--rt-font-display);font-size:1.1rem;font-weight:700;color:var(--rt-navy);margin:0;">Start a chat about</h3>
@@ -4122,6 +4122,48 @@ function setupRealtimeSubscription() {
       event: '*', schema: 'staging', table: 'friendships',
       filter: `requester_id=eq.${currentUser.id}`
     }, () => { socialState._loaded = false; loadSocialData(); })
+    .on('postgres_changes', {
+      // New book recommendation arrives for current user
+      event: 'INSERT', schema: 'staging', table: 'book_recommendations',
+      filter: `to_user_id=eq.${currentUser.id}`
+    }, (payload) => {
+      // Add to recs list and update notif state immediately — no full reload needed
+      const newRec = payload.new;
+      if (!socialState.recs.find(r => r.id === newRec.id)) {
+        socialState.recs.unshift({ ...newRec, profiles: null });
+      }
+      _notifState.newRecs = socialState.recs.filter(r => r.status === 'pending').length;
+      updateNotifDot();
+      updateHomeNotifStrip();
+    })
+    .on('postgres_changes', {
+      // New chat message in any chat — reload chat list to recompute unread counts
+      event: 'INSERT', schema: 'staging', table: 'chat_messages'
+    }, (payload) => {
+      // Only care if it's from someone else (our own messages we already track)
+      if (payload.new.user_id === currentUser.id) return;
+      // Check if this chat is one we're in
+      const inChat = chatState.chats.some(c => c.id === payload.new.chat_id);
+      if (!inChat) return;
+      // Bump unread count locally without a full reload
+      const chat = chatState.chats.find(c => c.id === payload.new.chat_id);
+      if (chat) {
+        chat.unread = (chat.unread || 0) + 1;
+        _notifState.unreadChats = chatState.chats.reduce((s,c) => s + (c.unread||0), 0);
+        updateNotifDot();
+        updateHomeNotifStrip();
+      }
+    })
+    .on('postgres_changes', {
+      // Friend posted a feed event — reload social data so it appears in home feed
+      event: 'INSERT', schema: 'staging', table: 'feed_events'
+    }, () => {
+      // Debounce: only reload if not already loading
+      if (currentUser && socialState._loaded) {
+        socialState._loaded = false;
+        loadSocialData();
+      }
+    })
     .subscribe((status) => {
       if (status === 'CHANNEL_ERROR') {
         console.warn('[Realtime] Channel error — relying on focus-refresh fallback.');
@@ -4808,6 +4850,7 @@ function closeRecommendSheet() {
   document.getElementById('rt-recommend-sheet').classList.remove('open');
   document.body.style.overflow = '';
   _recBookId = null;
+  _recFromDoneSlide = false;
 }
 document.getElementById('rt-recommend-close').addEventListener('click', closeRecommendSheet);
 document.getElementById('rt-rec-cancel-btn').addEventListener('click', closeRecommendSheet);
@@ -5127,6 +5170,23 @@ const SyncQueue = (() => {
     return data?.id || null;
   }
 
+  async function _writeFeedEvent(book, eventType) {
+    if (!currentUser || !eventType) return;
+    try {
+      await sb.from('feed_events').insert({
+        user_id:    currentUser.id,
+        event_type: eventType,
+        book_ol_key: book.olKey || null,
+        book_title:  book.title || null,
+        book_author: book.author || null,
+        cover_id:    book.coverId || null
+      });
+    } catch(e) {
+      // Non-fatal — notifications are best-effort
+      console.warn('[Feed] writeFeedEvent failed:', e.message);
+    }
+  }
+
   async function _upsertEntry(book) {
     // Step 1: ensure canonical book record exists
     const bookId = await _upsertCanonicalBook(book);
@@ -5145,6 +5205,8 @@ const SyncQueue = (() => {
       tbr_position:     book.tbrPosition  || null,
       updated_at:       new Date().toISOString()
     };
+
+    let isNewEntry = false;
     if (book.cloudId) {
       // Update existing entry
       const { error } = await sb.from('reading_entries')
@@ -5158,11 +5220,20 @@ const SyncQueue = (() => {
         .insert(row).select('id').single();
       if (error) { console.error('[SyncQueue] insert entry:', error.message, error.code, error.details, error.hint); return false; }
       if (data?.id) {
-        // Write cloudId back into local books array and persist
         const localBook = books.find(b => String(b.id) === String(book.id));
         if (localBook) { localBook.cloudId = data.id; save(); }
       }
+      isNewEntry = true;
     }
+
+    // Write feed event for status changes
+    if (book.status === 'read') {
+      if (isNewEntry) await _writeFeedEvent(book, 'finished');
+      if (book.reviewPublic && book.reviewBody) await _writeFeedEvent(book, 'posted_review');
+    } else if (book.status === 'reading' && isNewEntry) {
+      await _writeFeedEvent(book, 'started_reading');
+    }
+
     return true;
   }
 
@@ -5419,11 +5490,13 @@ function switchTab(name) {
   // Mobile bottom nav
   document.querySelectorAll('.rt-nav-btn').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
 
-  if (name === 'tbr') renderTBR();
-  if (name === 'stats') renderStatsPanel();
+  if (name === 'tbr')     renderTBR();
+  if (name === 'stats')   renderStatsPanel();
   if (name === 'settings') renderSettingsPanel();
+  if (name === 'profile' && currentUser) renderProfilePage();
   if ((name === 'home' || name === 'community' || name === 'account') && currentUser && !socialState._loaded) loadSocialData();
-  window.scrollTo({ top: document.querySelector('.rt-hero').offsetHeight, behavior: 'smooth' });
+  const hero = document.querySelector('.rt-hero');
+  if (hero) window.scrollTo({ top: hero.offsetHeight, behavior: 'smooth' });
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -6133,9 +6206,11 @@ function showReadMode() {
   const isFinished = book && (book.status === 'read' || book.status === 'dnf');
   const footer = document.getElementById('rt-sheet-footer');
   footer.innerHTML = isFinished
-    ? `<button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-rec-btn" type="button">📚 Recommend</button>
-       <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-chat-btn" type="button">💬 Start chat</button>`
+    ? `<button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-edit-btn" type="button"><svg viewBox="0 0 24 24" fill="none" width="13" height="13" style="vertical-align:-1px;margin-right:3px;"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Edit</button>
+       <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-rec-btn" type="button">📚 Recommend</button>
+       <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-chat-btn" type="button">💬 Chat</button>`
     : `<button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-edit-btn" type="button"><svg viewBox="0 0 24 24" fill="none" width="14" height="14" style="vertical-align:-1px;margin-right:3px;"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Edit</button>`;
+  document.getElementById('rt-view-edit-btn').onclick = showEditMode;
   if (isFinished) {
     document.getElementById('rt-view-rec-btn').onclick = () => { closeModal(); if (sheetBookId) openRecommendSheet(sheetBookId); };
     document.getElementById('rt-view-chat-btn').onclick = () => {
@@ -6145,8 +6220,6 @@ function showReadMode() {
       if (!b.olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
       openFriendPickerForChat(b.olKey, b.title, b.author, b.coverId);
     };
-  } else {
-    document.getElementById('rt-view-edit-btn').onclick = showEditMode;
   }
 }
 
@@ -6246,13 +6319,8 @@ function openEditSheet(bookId) {
   sheet.classList.add('rt-sheet--edit');
   document.getElementById('rt-sheet-slides').style.transform = 'translateX(-300%)';
 
-  // For read/DNF books open in view mode; TBR/reading go straight to edit
-  if (isTbrOrReading) {
-    updateEditConditionalFields(book.status);
-    showEditMode();
-  } else {
-    showReadMode();
-  }
+  // Always open straight to edit form — skip view mode
+  showEditMode();
 
   const overlay = document.getElementById('rt-sheet-overlay');
   overlay.classList.add('open');
@@ -6268,12 +6336,20 @@ function saveEdits() {
   const statusRow = document.getElementById('rt-edit-status-row');
   const isTbrOrReading = statusRow && statusRow.style.display !== 'none';
   if (isTbrOrReading) {
+    const prevStatus = book.status;
     const sel = document.getElementById('rt-edit-status-select');
     book.status = sel ? sel.value : book.status;
     if (book.status === 'reading') {
       book.dateStarted = book.dateStarted || new Date().toISOString().split('T')[0];
-      // Book club: check if any friend is also reading this book
       handleBookClubTrigger(book);
+      // Write feed event if transitioning into reading for first time
+      if (prevStatus !== 'reading' && currentUser) {
+        sb.from('feed_events').insert({
+          user_id: currentUser.id, event_type: 'started_reading',
+          book_ol_key: book.olKey||null, book_title: book.title||null,
+          book_author: book.author||null, cover_id: book.coverId||null
+        }).then(({error}) => { if (error) console.warn('[Feed] started_reading:', error.message); });
+      }
     }
     if (book.status === 'tbr') { book.rating = null; book.date = null; }
     book.updatedAt = new Date().toISOString();
@@ -6362,6 +6438,8 @@ function closeModal() {
   sheet.classList.remove('open');
   overlay.classList.remove('open');
   document.body.style.overflow = '';
+  sheetBookId = null;
+  sheetRating = 0;
   // Reset edit mode after transition
   setTimeout(() => {
     sheet.classList.remove('rt-sheet--edit');
@@ -6370,11 +6448,10 @@ function closeModal() {
   renderGenreChart();
 }
 
-// Keep old event listener targets alive (they now point to hidden elements — no-ops)
-document.getElementById('rt-modal-mark-read').addEventListener('click', () => {});
-document.getElementById('rt-modal-mark-dnf').addEventListener('click',  () => {});
-document.getElementById('rt-modal-cancel').addEventListener('click',    () => {});
-document.getElementById('rt-modal-close').addEventListener('click',     () => {});
+// Legacy no-op listeners — elements kept in DOM for compat
+['rt-modal-mark-read','rt-modal-mark-dnf','rt-modal-cancel','rt-modal-close'].forEach(id => {
+  document.getElementById(id)?.addEventListener('click', () => {});
+});
 
 function showFlash(msg) {
   const f = document.createElement('div');
@@ -7250,7 +7327,8 @@ document.getElementById('rt-install-btn').addEventListener('click', async functi
 // ─────────────────────────────────────────────────────────────
 (function() {
   const wrap  = document.getElementById('rt-tabbar-wrap');
-  const heroH = () => document.querySelector('.rt-hero').offsetHeight;
+  const heroEl = document.querySelector('.rt-hero');
+  const heroH  = () => heroEl ? heroEl.offsetHeight : 0;
   window.addEventListener('scroll', function() {
     if (wrap) wrap.classList.toggle('rt-tabbar--stuck', window.scrollY >= heroH());
   }, {passive: true});
@@ -7857,8 +7935,13 @@ function toggleFavBook(el, id) {
   }
 }
 function closeFavBooksEditor() {
-  document.getElementById('rt-favbooks-overlay').classList.remove('open');
-  setTimeout(() => { document.getElementById('rt-favbooks-overlay-bg').style.display = 'none'; }, 280);
+  const overlay = document.getElementById('rt-favbooks-overlay');
+  const bg      = document.getElementById('rt-favbooks-overlay-bg');
+  if (overlay) overlay.classList.remove('open');
+  setTimeout(() => {
+    if (overlay) overlay.style.display = 'none';
+    if (bg)      bg.style.display      = 'none';
+  }, 280);
 }
 async function saveFavBooks() {
   if (!currentUser) return;
@@ -8067,6 +8150,8 @@ function closeFriendPicker() {
   const overlay = document.getElementById('rt-friend-picker-overlay');
   if (overlay) overlay.style.display = 'none';
   document.body.style.overflow = '';
+  _friendPickerBook = null;
+  _friendPickerFromDoneSlide = false;
 }
 
 async function confirmFriendPickerChat() {
@@ -8120,8 +8205,7 @@ loadUsernameDisplay = async function() {
 };
 
 // Refresh home feed when social data loads
-const _origRenderSocial = typeof renderSocialUI === 'function' ? renderSocialUI : null;
-// Hook into loadSocialData completion via socialState
+// Hook into loadSocialData completion
 const _origLoadSocial = loadSocialData;
 loadSocialData = async function() {
   await _origLoadSocial();
@@ -8305,6 +8389,7 @@ async function loadChatList() {
 
     chatState._loaded = true;
     renderChatList();
+    updateHomeNotifStrip(); // refresh notif dot with latest unread counts
 
   } catch(e) {
     console.error('[Chat] loadChatList:', e);
