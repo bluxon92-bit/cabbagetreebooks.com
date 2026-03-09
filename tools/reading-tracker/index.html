@@ -2371,6 +2371,8 @@ permalink: /tools/reading-tracker/
 }
 .rt-overlay-panel-body {
   flex:1; overflow-y:auto; padding:1.25rem;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .rt-overlay-panel-footer {
   padding:0.85rem 1.25rem; border-top:1px solid var(--rt-border);
@@ -8006,10 +8008,12 @@ function openAccountSettings() {
   const bioInput = document.getElementById('rt-settings-bio');
   if (bioInput && socialState._myBio) bioInput.value = socialState._myBio;
   document.getElementById('rt-settings-overlay-bg').style.display = 'block';
+  document.body.style.overflow = 'hidden';
   requestAnimationFrame(() => document.getElementById('rt-settings-overlay').classList.add('open'));
 }
 function closeAccountSettings() {
   document.getElementById('rt-settings-overlay').classList.remove('open');
+  document.body.style.overflow = '';
   setTimeout(() => { document.getElementById('rt-settings-overlay-bg').style.display = 'none'; }, 280);
 }
 function showSettingsUsernameEdit() {
@@ -8275,6 +8279,7 @@ function openFavBooksEditor() {
   if (bg) bg.style.display = 'block';
   if (overlay) {
     overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // prevent page scroll-through
     requestAnimationFrame(() => overlay.classList.add('open'));
   }
 }
@@ -8295,6 +8300,7 @@ function closeFavBooksEditor() {
   const overlay = document.getElementById('rt-favbooks-overlay');
   const bg      = document.getElementById('rt-favbooks-overlay-bg');
   if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = ''; // restore page scroll
   setTimeout(() => {
     if (overlay) overlay.style.display = 'none';
     if (bg)      bg.style.display      = 'none';
