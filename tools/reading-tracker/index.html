@@ -4023,8 +4023,9 @@ function renderAuthUI() {
     loggedIn.style.display  = 'none';
     loggedOut.style.display = 'block';
   }
-  // Always update the notif strip visibility based on auth state
-  if (typeof updateHomeNotifStrip === 'function') updateHomeNotifStrip();
+  // Show the notif strip immediately when logged in (will populate once social data loads)
+  const notifStrip = document.getElementById('rt-home-notif-strip');
+  if (notifStrip) notifStrip.style.display = currentUser ? 'block' : 'none';
   if (typeof renderHomeFeed === 'function') renderHomeFeed();
 }
 
@@ -4196,9 +4197,11 @@ function setupRealtimeSubscription() {
     }, (payload) => {
       // Only care if it's from someone else (our own messages we already track)
       if (payload.new.user_id === currentUser.id) return;
+      // If chatState isn't loaded yet, do a full reload to pick up the unread count
+      if (!chatState._loaded) { loadChatList(); return; }
       // Check if this chat is one we're in
       const inChat = chatState.chats.some(c => c.id === payload.new.chat_id);
-      if (!inChat) return;
+      if (!inChat) { loadChatList(); return; } // new chat we don't know about yet
       // Bump unread count locally without a full reload
       const chat = chatState.chats.find(c => c.id === payload.new.chat_id);
       if (chat) {
@@ -4317,10 +4320,13 @@ function renderFeed() {
 document.getElementById('rt-feed-list').addEventListener('click', function(e) {
   const chip = e.target.closest('.rt-rec-accept-chip');
   if (!chip) return;
-  const recId   = chip.dataset.recId;
-  const olKey   = chip.dataset.olKey;
-  const message = chip.dataset.message;
-  if (recId && olKey) acceptRecToTBR(recId, olKey, message);
+  const recId      = chip.dataset.recId;
+  const olKey      = chip.dataset.olKey;
+  const message    = chip.dataset.message;
+  const bookTitle  = chip.dataset.bookTitle;
+  const bookAuthor = chip.dataset.bookAuthor;
+  const coverId    = chip.dataset.coverId || null;
+  if (recId && (olKey || bookTitle)) acceptRecToTBR(recId, olKey, message, bookTitle, bookAuthor, coverId);
 });
 
 function renderFeedItem(item) {
@@ -4347,7 +4353,11 @@ function renderFeedItem(item) {
           <div class="rt-feed-book-chip rt-rec-accept-chip"
             data-rec-id="${esc(item.id)}"
             data-ol-key="${esc(olKey)}"
-            data-message="${esc(item.message||'')}">
+            data-message="${esc(item.message||'')}"
+            data-book-title="${esc(item.book_title||displayTitle)}"
+            data-book-author="${esc(item.book_author||displayAuthor)}"
+            data-cover-id="${item.cover_id||''}"
+            style="cursor:pointer;">
             ${coverHtml}
             <div style="min-width:0;">
               <div class="rt-feed-book-title">${esc(displayTitle)}</div>
@@ -4802,7 +4812,7 @@ async function openFriendProfile(userId) {
               : '';
           return `
             <div style="display:flex;align-items:center;gap:0.65rem;padding:0.6rem 0.75rem;border-radius:10px;background:var(--rt-cream);margin-bottom:0.4rem;cursor:pointer;"
-              onclick="fpRecAction('${esc(r.id)}','${esc(r.book_ol_key||'')}','${esc(title)}','${esc(author)}')">
+              onclick="fpRecAction('${esc(r.id)}','${esc(r.book_ol_key||'')}','${esc(title)}','${esc(author)}',${r.cover_id||null})">
               ${coverUrl
                 ? `<img src="${coverUrl}" style="width:28px;height:40px;border-radius:3px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
                 : `<div style="width:28px;height:40px;border-radius:3px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;">📚</div>`}
@@ -4888,20 +4898,19 @@ function fpBookAction(olKey, title, author, coverId) {
 }
 
 // Friend card: clicking a rec chip accepts it (adds to TBR)
-async function fpRecAction(recId, olKey, title, author) {
+async function fpRecAction(recId, olKey, title, author, coverId) {
   try {
     await sb.from('book_recommendations').update({ status: 'accepted' }).eq('id', recId);
-    // Also add to local TBR if not already there
     const exists = books.find(b => b.olKey === olKey || b.title.toLowerCase() === title.toLowerCase());
     if (!exists && title) {
-      const newBook = { id: Date.now(), title, author, olKey: olKey || null, coverId: null, status: 'tbr', added: new Date().toISOString() };
+      const newBook = { id: Date.now(), title, author, olKey: olKey || null, coverId: coverId ? parseInt(coverId) : null, status: 'tbr', added: new Date().toISOString() };
       books.push(newBook); save(); renderTBR(); updateStats();
       SyncQueue.enqueue('upsert_entry', newBook);
     }
-    // Remove from recs state
     socialState.recs = socialState.recs.filter(r => r.id !== recId);
     updateHomeNotifStrip();
-    // Hide the rec chip in the modal
+    renderFriendRecsDiscover();
+    // Visually mark accepted in modal
     const chip = document.querySelector(`[onclick*="${recId}"]`);
     if (chip) { chip.style.opacity = '0.4'; chip.style.pointerEvents = 'none'; const label = chip.querySelector('span[style*="amber"]'); if (label) label.textContent = '✓ Added'; }
     showFlash(`"${title}" added to your list!`);
@@ -5023,6 +5032,9 @@ document.getElementById('rt-rec-send-btn').addEventListener('click', async funct
     from_user_id: currentUser.id,
     to_user_id:   rid,
     book_ol_key:  book.olKey,
+    book_title:   book.title   || null,
+    book_author:  book.author  || null,
+    cover_id:     book.coverId || null,
     message:      note,
     status:       'pending'
   }));
@@ -5051,40 +5063,45 @@ document.getElementById('rt-rec-send-btn').addEventListener('click', async funct
 });
 
 // ── Accept rec → TBR ─────────────────────────────────────────
-async function acceptRecToTBR(recId, olKey, message) {
-  if (!olKey) return;
-  // Try to look up the book from local books first, or add a placeholder pointing to OL key
-  const existing = books.find(b => b.olKey === olKey);
+async function acceptRecToTBR(recId, olKey, message, bookTitle, bookAuthor, coverId) {
+  if (!olKey && !bookTitle) return;
+  const existing = books.find(b => b.olKey === olKey || (bookTitle && b.title.toLowerCase() === (bookTitle||'').toLowerCase()));
   if (!existing) {
     const book = {
-      id: uid(), title: olKey, author: '', status: 'tbr',
-      olKey: olKey, coverId: null,
+      id: uid(),
+      title:  bookTitle || olKey,
+      author: bookAuthor || '',
+      status: 'tbr',
+      olKey:  olKey || null,
+      coverId: coverId ? parseInt(coverId) : null,
       added: new Date().toISOString(), updatedAt: new Date().toISOString()
     };
-    // Fetch actual title from Open Library
-    try {
-      const key = olKey.startsWith('/works/') ? olKey : `/works/${olKey}`;
-      const res  = await fetch(`https://openlibrary.org${key}.json`);
-      if (res.ok) {
-        const data = await res.json();
-        book.title  = data.title || olKey;
-        if (data.covers?.[0]) book.coverId = data.covers[0];
-        // Try to get author
-        if (data.authors?.[0]?.author?.key) {
-          const aRes = await fetch(`https://openlibrary.org${data.authors[0].author.key}.json`);
-          if (aRes.ok) { const aData = await aRes.json(); book.author = aData.name || ''; }
+    // Only hit OL API if we don't already have a real title
+    if (!bookTitle && olKey) {
+      try {
+        const key = olKey.startsWith('/works/') ? olKey : `/works/${olKey}`;
+        const res  = await fetch(`https://openlibrary.org${key}.json`);
+        if (res.ok) {
+          const data = await res.json();
+          book.title  = data.title || olKey;
+          if (data.covers?.[0]) book.coverId = data.covers[0];
+          if (data.authors?.[0]?.author?.key) {
+            const aRes = await fetch(`https://openlibrary.org${data.authors[0].author.key}.json`);
+            if (aRes.ok) { const aData = await aRes.json(); book.author = aData.name || ''; }
+          }
         }
-      }
-    } catch(e) {}
+      } catch(e) {}
+    }
     books.push(book); save();
     saveBookToCloud(book);
     renderTBR();
   }
   // Mark rec as accepted
-  await sb.from('book_recommendations').update({ status: 'accepted' }).eq('id', recId);
+  if (recId) await sb.from('book_recommendations').update({ status: 'accepted' }).eq('id', recId);
   socialState.recs = socialState.recs.filter(r => r.id !== recId);
-  renderFeed();
-  showFlash(`✓ Book added to My List!`);
+  updateHomeNotifStrip();
+  renderFriendRecsDiscover();
+  showFlash(`✓ "${bookTitle || olKey}" added to My List!`);
 }
 
 // ── Render "Recommended by" chip on TBR ──────────────────────
@@ -8358,8 +8375,13 @@ const _origLoadSocial = loadSocialData;
 loadSocialData = async function() {
   await _origLoadSocial();
   renderHomeFeed();
-  updateHomeNotifStrip();
   renderFriendRecsDiscover();
+  // Also refresh chat unread counts — loadChatList calls updateHomeNotifStrip on completion
+  if (currentUser) {
+    loadChatList();
+  } else {
+    updateHomeNotifStrip();
+  }
 };
 
 function renderFriendRecsDiscover() {
@@ -8401,7 +8423,7 @@ function renderFriendRecsDiscover() {
         ${msg}
       </div>
       <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0;">
-        <button class="rt-done-action-btn rt-done-action-btn--primary" style="padding:0.3rem 0.7rem;font-size:0.72rem;min-width:0;" onclick="acceptRecToTBR('${r.id}','${esc(r.book_ol_key||'')}','${esc(r.message||'')}')">+ Add</button>
+        <button class="rt-done-action-btn rt-done-action-btn--primary" style="padding:0.3rem 0.7rem;font-size:0.72rem;min-width:0;" onclick="acceptRecToTBR('${r.id}','${esc(r.book_ol_key||'')}','${esc(r.message||'')}','${esc(r.book_title||'')}','${esc(r.book_author||'')}',${r.cover_id||null})">+ Add</button>
         <button class="rt-done-action-btn rt-done-action-btn--secondary" style="padding:0.3rem 0.7rem;font-size:0.72rem;min-width:0;" onclick="dismissRec('${r.id}')">Dismiss</button>
       </div>
     </div>`;
