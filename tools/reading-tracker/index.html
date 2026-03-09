@@ -3796,6 +3796,17 @@ permalink: /tools/reading-tracker/
     <!-- Body -->
     <div class="rt-book-detail-body" id="rt-book-detail-body">
 
+      <!-- Friend's review (shown when opened from home feed) -->
+      <div class="rt-book-detail-section" id="rt-book-detail-friend-section" style="display:none;">
+        <div class="rt-book-detail-section-label" style="margin-bottom:0.55rem;">Friend's review</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+          <div id="rt-book-detail-friend-avatar" style="width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;flex-shrink:0;"></div>
+          <span id="rt-book-detail-friend-name" style="font-size:0.8rem;font-weight:600;color:var(--rt-navy);"></span>
+        </div>
+        <div id="rt-book-detail-friend-stars" style="color:var(--rt-amber);font-size:0.85rem;margin-bottom:0.5rem;letter-spacing:0.05em;"></div>
+        <div id="rt-book-detail-friend-body" style="font-size:0.88rem;color:var(--rt-t2);line-height:1.65;font-style:italic;"></div>
+      </div>
+
       <!-- User's rating/review (shown for read/dnf books) -->
       <div class="rt-book-detail-section" id="rt-book-detail-user-section" style="display:none;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.35rem;">
@@ -7007,6 +7018,9 @@ function closeBookDetail() {
   overlay.classList.remove('open');
   document.body.style.overflow = '';
   detailBookId = null;
+  // Always reset friend review section so it doesn't bleed into own-book opens
+  const fs = document.getElementById('rt-book-detail-friend-section');
+  if (fs) fs.style.display = 'none';
 }
 
 document.getElementById('rt-book-detail-footer').addEventListener('click', function(e) {
@@ -8484,74 +8498,138 @@ function renderHomeFeed() {
   const profileMap = {};
   (socialState.friends || []).forEach(f => { profileMap[f.userId] = f; });
 
-  feedEl.innerHTML = reviewEvents.slice(0, 10).map(ev => {
+  // Stash feed events on window so the modal opener can reach them by index
+  window._feedEvents = reviewEvents;
+
+  feedEl.innerHTML = reviewEvents.slice(0, 10).map((ev, idx) => {
     const friend   = profileMap[ev.user_id];
-    const username = friend?.username    || ev.profiles?.username    || 'A friend';
+    const username = friend?.username    || ev.profiles?.username    || 'friend';
     const name     = friend?.displayName || ev.profiles?.display_name || username;
     const colour   = avatarColour(ev.user_id);
     const init     = avatarInitial(name);
     const stars    = ev.rating ? '★'.repeat(ev.rating) + '☆'.repeat(5 - ev.rating) : '';
     const coverUrl = ev.cover_id
       ? `https://covers.openlibrary.org/b/id/${ev.cover_id}-S.jpg`
-      : ev.book_ol_key
-        ? `https://covers.openlibrary.org/b/olid/${ev.book_ol_key.replace('/works/', '')}-S.jpg`
-        : '';
+      : '';
     const coverHtml = coverUrl
-      ? `<div class="rt-home-review-cover"><img src="${coverUrl}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📖'"></div>`
-      : `<div class="rt-home-review-cover">📖</div>`;
-    const olKey  = esc(ev.book_ol_key || '');
-    const title  = esc(ev.book_title  || 'a book');
-    const author = esc(ev.book_author || '');
-    const covId  = ev.cover_id || null;
-    const uid    = esc(ev.user_id);
+      ? `<div class="rt-profile-review-cover"><img src="${coverUrl}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📖'"></div>`
+      : `<div class="rt-profile-review-cover">📖</div>`;
     return `
-      <div class="rt-home-review-item">
-        <div class="rt-home-review-who">
-          <div class="rt-home-review-avatar" style="background:${colour};">${init}</div>
-          <span class="rt-home-review-username">@${esc(username)}</span>
-          <span class="rt-home-review-action">reviewed a book</span>
-        </div>
-        <div class="rt-home-review-book">
-          ${coverHtml}
-          <div class="rt-home-review-meta">
-            <div class="rt-home-review-title">${title}</div>
-            ${author ? `<div class="rt-home-review-author">${author}</div>` : ''}
-            ${stars   ? `<div class="rt-home-review-stars">${stars}</div>` : ''}
-            ${ev.review_body ? `<div class="rt-home-review-body">${esc(ev.review_body)}</div>` : ''}
+      <div class="rt-profile-review-item" style="cursor:pointer;" onclick="openFriendReviewDetail(${idx})">
+        ${coverHtml}
+        <div class="rt-profile-review-body-wrap">
+          <div style="display:flex;align-items:center;gap:0.35rem;margin-bottom:4px;">
+            <div style="width:18px;height:18px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:700;color:#fff;flex-shrink:0;">${init}</div>
+            <span style="font-size:0.72rem;font-weight:600;color:var(--rt-navy);">@${esc(username)}</span>
           </div>
-        </div>
-        <div class="rt-home-review-actions">
-          <button class="rt-home-review-btn" type="button"
-            onclick="homeFeedAddToRead('${olKey}','${title}','${author}',${covId})">
-            ✓ Add to read
-          </button>
-          <button class="rt-home-review-btn rt-home-review-btn--primary" type="button"
-            onclick="homeFeedStartChat('${olKey}','${title}','${author}',${covId},'${uid}')">
-            💬 Chat
-          </button>
+          <div class="rt-profile-review-title">${esc(ev.book_title || 'Unknown book')}</div>
+          ${ev.book_author ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-bottom:3px;">${esc(ev.book_author)}</div>` : ''}
+          ${stars ? `<div class="rt-profile-review-stars">${stars}</div>` : ''}
+          ${ev.review_body ? `<div class="rt-profile-review-body">${esc(ev.review_body)}</div>` : ''}
         </div>
       </div>`;
   }).join('');
 }
 
-function homeFeedAddToRead(olKey, title, author, coverId) {
-  // Find existing book or create a TBR entry
-  let book = books.find(b => b.olKey === olKey);
-  if (book) {
-    // Already in library — just open it
-    openBookDetail(book.id);
-    return;
+function openFriendReviewDetail(idx) {
+  const ev = (window._feedEvents || [])[idx];
+  if (!ev) return;
+
+  // Build a minimal book-like object for fetchBookDetail
+  const fakeBook = { olKey: ev.book_ol_key || null, title: ev.book_title || '', author: ev.book_author || '' };
+
+  // Hero
+  const ph  = document.getElementById('rt-book-detail-cover-ph');
+  const img = document.getElementById('rt-book-detail-cover-img');
+  if (ev.cover_id) {
+    img.src = `https://covers.openlibrary.org/b/id/${ev.cover_id}-L.jpg`;
+    img.style.display = 'block'; ph.style.display = 'none';
+  } else {
+    img.style.display = 'none'; ph.style.display = 'flex';
   }
-  // Add as "read" (they're seeing a review, implying interest in logging it)
+  document.getElementById('rt-book-detail-title').textContent  = ev.book_title  || '';
+  document.getElementById('rt-book-detail-author').textContent = ev.book_author ? `by ${ev.book_author}` : '';
+  document.getElementById('rt-book-detail-year').textContent   = '';
+  document.getElementById('rt-book-detail-badge').textContent  = '';
+
+  // Hide own-review section
+  document.getElementById('rt-book-detail-user-section').style.display = 'none';
+
+  // Populate & show friend review section
+  const friendSection = document.getElementById('rt-book-detail-friend-section');
+  friendSection.style.display = 'block';
+
+  const socialFriends = socialState.friends || [];
+  const friend = socialFriends.find(f => f.userId === ev.user_id);
+  const username = friend?.username || ev.profiles?.username || 'friend';
+  const name     = friend?.displayName || ev.profiles?.display_name || username;
+  const colour   = avatarColour(ev.user_id);
+  const init     = avatarInitial(name);
+
+  document.getElementById('rt-book-detail-friend-avatar').style.background = colour;
+  document.getElementById('rt-book-detail-friend-avatar').textContent = init;
+  document.getElementById('rt-book-detail-friend-name').textContent = '@' + username;
+  document.getElementById('rt-book-detail-friend-stars').textContent = ev.rating
+    ? '★'.repeat(ev.rating) + '☆'.repeat(5 - ev.rating) : '';
+  document.getElementById('rt-book-detail-friend-body').textContent = ev.review_body || '';
+
+  // Blurb loading state
+  document.getElementById('rt-book-detail-blurb').innerHTML = `
+    <div class="rt-book-detail-blurb-loading">
+      <span></span><span></span><span></span>
+      <span style="margin-left:4px;">Loading…</span>
+    </div>`;
+  document.getElementById('rt-book-detail-subjects-section').style.display = 'none';
+
+  // Footer: Add to TBR + Start chat
+  const existing = books.find(b => b.olKey === ev.book_ol_key);
+  const footer   = document.getElementById('rt-book-detail-footer');
+  const olKey    = ev.book_ol_key  || '';
+  const title    = ev.book_title   || '';
+  const author   = ev.book_author  || '';
+  const coverId  = ev.cover_id     || null;
+  const userId   = ev.user_id;
+  if (existing) {
+    footer.innerHTML = `
+      <button class="rt-book-detail-action" disabled style="opacity:0.5;cursor:default;">✓ Already on your list</button>
+      <button class="rt-book-detail-action rt-book-detail-action--primary"
+        onclick="closeBookDetail();homeFeedStartChat('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId},'${esc(userId)}')">💬 Start chat</button>`;
+  } else {
+    footer.innerHTML = `
+      <button class="rt-book-detail-action" id="rt-friend-tbr-btn"
+        onclick="homeFeedAddToTBR('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId})">＋ Add to TBR</button>
+      <button class="rt-book-detail-action rt-book-detail-action--primary"
+        onclick="closeBookDetail();homeFeedStartChat('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId},'${esc(userId)}')">💬 Start chat</button>`;
+  }
+
+  // Open sheet
+  const overlay = document.getElementById('rt-book-detail-overlay');
+  const sheet   = document.getElementById('rt-book-detail-sheet');
+  overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+
+  // Fetch OL description
+  fetchBookDetail(fakeBook);
+}
+
+function homeFeedAddToTBR(olKey, title, author, coverId) {
+  const existing = books.find(b => b.olKey === olKey);
+  if (existing) { showFlash(`"${title}" is already in your library.`); return; }
   const newBook = {
-    id: Date.now(), title: title, author: author,
-    olKey: olKey || null, coverId: coverId ? parseInt(coverId) : null,
-    status: 'tbr', added: new Date().toISOString(), updatedAt: new Date().toISOString()
+    id: Date.now(), title, author,
+    olKey: olKey || null,
+    coverId: coverId ? parseInt(coverId) : null,
+    status: 'tbr',
+    added: new Date().toISOString(), updatedAt: new Date().toISOString()
   };
   books.push(newBook);
   save();
   if (currentUser) saveBookToCloud(newBook);
   renderTBR();
+  // Update button in-place
+  const btn = document.getElementById('rt-friend-tbr-btn');
+  if (btn) { btn.textContent = '✓ Added to your list'; btn.disabled = true; btn.style.opacity = '0.5'; btn.style.cursor = 'default'; }
   showFlash(`"${title}" added to your list.`);
 }
 
