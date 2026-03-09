@@ -2101,6 +2101,235 @@ permalink: /tools/reading-tracker/
 .rt-book-club-toast-btn--ghost {
   background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.75);
 }
+
+/* ─── V2.5 UI REFRESH ───────────────────────────────────────── */
+
+/* Tabbar icons (Stats + Notif) */
+.rt-tabbar-icons { display:flex; align-items:center; gap:0.25rem; margin-left:auto; }
+.rt-icon-btn {
+  background:none; border:none; cursor:pointer; color:var(--rt-t3);
+  width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+  border-radius:8px; transition:color 0.15s, background 0.15s; position:relative;
+}
+.rt-icon-btn:hover { color:var(--rt-navy); background:var(--rt-surface); }
+
+/* Notification dot */
+.rt-notif-dot {
+  position:absolute; top:6px; right:6px;
+  width:7px; height:7px; border-radius:50%;
+  background:var(--rt-amber); border:1.5px solid #fff;
+}
+.rt-notif-dot--nav { top:4px; right:4px; }
+.rt-notif-dot--inline {
+  position:relative; top:auto; right:auto;
+  display:inline-block; width:7px; height:7px;
+  margin-left:4px; vertical-align:middle;
+}
+
+/* Home welcome */
+.rt-home-welcome {
+  display:flex; align-items:baseline; gap:0.4rem;
+  margin-bottom:1rem; font-size:0.88rem; color:var(--rt-t2);
+}
+.rt-home-username { font-weight:700; color:var(--rt-navy); }
+
+/* Home notifications strip */
+.rt-home-notif-strip {
+  background:#fff; border-radius:var(--rt-r2);
+  box-shadow:var(--rt-s1); overflow:hidden;
+  margin-bottom:1rem;
+}
+.rt-home-notif-item {
+  display:flex; align-items:center; gap:0.75rem;
+  padding:0.85rem 1rem; cursor:pointer;
+  border-bottom:1px solid var(--rt-border); transition:background 0.15s;
+}
+.rt-home-notif-item:last-child { border-bottom:none; }
+.rt-home-notif-item:hover { background:var(--rt-surface); }
+.rt-home-notif-icon { font-size:1.1rem; flex-shrink:0; }
+.rt-home-notif-text { flex:1; font-size:0.83rem; font-weight:600; color:var(--rt-navy); }
+.rt-home-notif-arrow { color:var(--rt-amber); font-weight:700; }
+
+/* Profile hero card */
+.rt-profile-hero-card {
+  background:var(--rt-navy); border-radius:var(--rt-r1);
+  padding:1.5rem; color:#fff; box-shadow:var(--rt-s2);
+}
+.rt-profile-hero-top {
+  display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.25rem;
+}
+.rt-profile-avatar-lg {
+  width:58px; height:58px; border-radius:50%; flex-shrink:0;
+  background:rgba(255,255,255,0.15);
+  display:flex; align-items:center; justify-content:center;
+}
+.rt-profile-hero-info { flex:1; min-width:0; }
+.rt-profile-hero-name {
+  font-family:var(--rt-font-display); font-size:1.15rem; font-weight:700;
+  color:#fff; margin-bottom:2px;
+}
+.rt-profile-hero-username { font-size:0.8rem; color:rgba(255,255,255,0.55); }
+.rt-profile-hero-bio {
+  font-size:0.82rem; color:rgba(255,255,255,0.7); margin-top:0.4rem; line-height:1.55;
+}
+.rt-profile-stats {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem;
+}
+.rt-profile-hero-card .rt-profile-stats { margin-top:0; }
+.rt-profile-stat { text-align:center; }
+.rt-profile-stat-n { font-size:1.4rem; font-weight:700; color:#fff; line-height:1; }
+.rt-profile-stat-l { font-size:0.65rem; color:rgba(255,255,255,0.5); margin-top:2px; text-transform:uppercase; letter-spacing:0.06em; }
+
+/* Favourite books carousel */
+.rt-fav-books-carousel {
+  display:flex; gap:0.75rem; overflow-x:auto;
+  padding-bottom:0.5rem; scrollbar-width:none;
+}
+.rt-fav-books-carousel::-webkit-scrollbar { display:none; }
+.rt-fav-book-item {
+  flex-shrink:0; width:68px; cursor:pointer;
+}
+.rt-fav-book-cover {
+  width:68px; height:96px; border-radius:5px; object-fit:cover;
+  box-shadow:var(--rt-s1);
+}
+.rt-fav-book-cover--ph {
+  width:68px; height:96px; border-radius:5px;
+  background:var(--rt-surface); display:flex; align-items:center;
+  justify-content:center; font-size:1.5rem; box-shadow:var(--rt-s1);
+}
+.rt-fav-book-title {
+  font-size:0.65rem; color:var(--rt-t2); margin-top:0.3rem;
+  line-height:1.3; overflow:hidden;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+}
+
+/* Profile reviews list */
+.rt-profile-review-item {
+  padding:0.85rem 0; border-bottom:1px solid var(--rt-border);
+  cursor:pointer;
+}
+.rt-profile-review-item:last-child { border-bottom:none; }
+.rt-profile-review-title { font-size:0.85rem; font-weight:600; color:var(--rt-navy); margin-bottom:2px; }
+.rt-profile-review-stars { color:var(--rt-amber); font-size:0.75rem; margin-bottom:4px; }
+.rt-profile-review-body {
+  font-size:0.8rem; color:var(--rt-t2); line-height:1.55;
+  overflow:hidden; display:-webkit-box;
+  -webkit-line-clamp:3; -webkit-box-orient:vertical;
+}
+.rt-profile-review-date { font-size:0.68rem; color:var(--rt-t3); margin-top:4px; }
+
+/* Overlay panel (Stats, Notifications, Settings, Fav Books) */
+.rt-overlay-panel-bg {
+  position:fixed; inset:0; background:rgba(10,15,30,0.45);
+  z-index:1100; backdrop-filter:blur(2px);
+}
+.rt-overlay-panel {
+  position:fixed; top:0; right:0; bottom:0; width:min(420px, 100vw);
+  background:#fff; z-index:1101; display:flex; flex-direction:column;
+  box-shadow:-8px 0 40px rgba(26,39,68,0.18);
+  transform:translateX(100%); transition:transform 0.28s cubic-bezier(.4,0,.2,1);
+}
+.rt-overlay-panel.open { transform:translateX(0); }
+.rt-overlay-panel-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.1rem 1.25rem; border-bottom:1px solid var(--rt-border);
+  background:#fff; flex-shrink:0;
+}
+.rt-overlay-panel-title {
+  font-family:var(--rt-font-display); font-size:1.05rem;
+  font-weight:700; color:var(--rt-navy);
+}
+.rt-overlay-panel-body {
+  flex:1; overflow-y:auto; padding:1.25rem;
+}
+.rt-overlay-panel-footer {
+  padding:0.85rem 1.25rem; border-top:1px solid var(--rt-border);
+  display:flex; gap:0.5rem; background:#fff; flex-shrink:0;
+}
+
+/* Stats full panel */
+.rt-stats-full-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.5rem;
+}
+.rt-stats-full-card {
+  background:var(--rt-surface); border-radius:var(--rt-r2); padding:1rem;
+}
+.rt-stats-full-label { font-size:0.7rem; color:var(--rt-t3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.3rem; }
+.rt-stats-full-number { font-size:1.8rem; font-weight:700; color:var(--rt-navy); }
+.rt-stats-full-section { margin-bottom:1.5rem; }
+.rt-stats-full-section-title {
+  font-size:0.7rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:0.1em; color:var(--rt-t3); margin-bottom:0.75rem;
+}
+.rt-stats-author-row, .rt-stats-genre-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0.5rem 0; border-bottom:1px solid var(--rt-border);
+  font-size:0.85rem; color:var(--rt-navy);
+}
+.rt-stats-author-row:last-child, .rt-stats-genre-row:last-child { border-bottom:none; }
+.rt-stats-count { font-weight:700; color:var(--rt-amber); }
+
+/* Settings panel */
+.rt-settings-section { margin-bottom:1.25rem; padding-bottom:1.25rem; border-bottom:1px solid var(--rt-border); }
+.rt-settings-section:last-child { border-bottom:none; }
+.rt-settings-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--rt-t3); margin-bottom:0.4rem; }
+.rt-settings-value { font-size:0.88rem; color:var(--rt-navy); font-weight:500; }
+
+/* My List sub-tabs */
+.rt-mylist-tabs { display:flex; }
+
+/* Fav books picker */
+.rt-favbooks-picker-item {
+  display:flex; align-items:center; gap:0.75rem;
+  padding:0.65rem 0; border-bottom:1px solid var(--rt-border); cursor:pointer;
+}
+.rt-favbooks-picker-item:last-child { border-bottom:none; }
+.rt-favbooks-picker-check {
+  width:20px; height:20px; border-radius:4px; border:2px solid var(--rt-border-md);
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-size:0.75rem; transition:all 0.15s;
+}
+.rt-favbooks-picker-item.selected .rt-favbooks-picker-check {
+  background:var(--rt-amber); border-color:var(--rt-amber); color:#fff;
+}
+.rt-favbooks-picker-cover {
+  width:32px; height:46px; border-radius:3px; object-fit:cover; flex-shrink:0;
+}
+.rt-favbooks-picker-cover--ph {
+  width:32px; height:46px; border-radius:3px; background:var(--rt-surface);
+  display:flex; align-items:center; justify-content:center; font-size:0.9rem; flex-shrink:0;
+}
+.rt-favbooks-picker-title { font-size:0.83rem; font-weight:600; color:var(--rt-navy); }
+.rt-favbooks-picker-author { font-size:0.72rem; color:var(--rt-t3); }
+
+/* My List history cards — pencil edit icon */
+.rt-hist-card { position:relative; }
+.rt-hist-edit-btn {
+  position:absolute; top:0.5rem; right:2rem;
+  background:none; border:none; cursor:pointer; color:var(--rt-t3);
+  font-size:0.78rem; padding:0.2rem 0.4rem; border-radius:4px;
+  transition:color 0.15s;
+}
+.rt-hist-edit-btn:hover { color:var(--rt-amber); }
+
+/* Finish-book done step actions */
+.rt-done-actions {
+  display:flex; gap:0.65rem; margin-top:1.25rem; flex-wrap:wrap;
+  justify-content:center;
+}
+.rt-done-action-btn {
+  flex:1; min-width:120px; padding:0.6rem 1rem;
+  border-radius:var(--rt-r3); font-size:0.82rem; font-weight:600;
+  cursor:pointer; border:none; transition:background 0.15s;
+}
+.rt-done-action-btn--primary { background:var(--rt-amber); color:#fff; }
+.rt-done-action-btn--primary:hover { background:var(--rt-amber-lt); }
+.rt-done-action-btn--secondary {
+  background:var(--rt-surface); color:var(--rt-navy);
+  border:1.5px solid var(--rt-border-md);
+}
+.rt-done-action-btn--secondary:hover { background:var(--rt-cream-md); }
 </style>
 
 <!-- ══════════════════════════════════════════════
@@ -2120,26 +2349,35 @@ permalink: /tools/reading-tracker/
 <!-- DESKTOP TAB BAR (tablet + wide) -->
 <div class="rt-tabbar-wrap" id="rt-tabbar-wrap">
   <div class="rt-tabbar">
-    <button class="rt-tab active" data-tab="home"    onclick="switchTab('home')">
+    <button class="rt-tab active" data-tab="home" onclick="switchTab('home')">
       <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Home
     </button>
     <button class="rt-tab" data-tab="community" onclick="switchTab('community')">
-      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Friends
+      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Chat
     </button>
-    <button class="rt-tab" data-tab="tbr"    onclick="switchTab('tbr')">
+    <button class="rt-tab" data-tab="tbr" onclick="switchTab('tbr')">
       <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       My List
     </button>
-    <button class="rt-tab" data-tab="recs"   onclick="switchTab('recs')">
+    <button class="rt-tab" data-tab="recs" onclick="switchTab('recs')">
       <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       Discover
     </button>
     <button class="rt-tab" data-tab="account" onclick="switchTab('account')">
       <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
-      Account
+      Profile
     </button>
+    <div class="rt-tabbar-icons">
+      <button class="rt-icon-btn" id="rt-stats-btn" onclick="openStatsPanel()" title="Reading stats" type="button">
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><rect x="18" y="3" width="3" height="18" rx="1" fill="currentColor" opacity=".3"/><rect x="10.5" y="8" width="3" height="13" rx="1" fill="currentColor" opacity=".6"/><rect x="3" y="13" width="3" height="8" rx="1" fill="currentColor"/></svg>
+      </button>
+      <button class="rt-icon-btn" id="rt-notif-btn" onclick="openNotifPanel()" title="Notifications" type="button">
+        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="rt-notif-dot" id="rt-notif-dot" style="display:none;"></span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -2155,7 +2393,7 @@ permalink: /tools/reading-tracker/
     </button>
     <button class="rt-sidebar-item" data-tab="community" onclick="switchTab('community')">
       <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Friends
+      Chat
     </button>
     <button class="rt-sidebar-item" data-tab="tbr" onclick="switchTab('tbr')">
       <svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2166,10 +2404,17 @@ permalink: /tools/reading-tracker/
       Discover
     </button>
     <div class="rt-sidebar-divider"></div>
-    <div class="rt-sidebar-label">Account</div>
     <button class="rt-sidebar-item" data-tab="account" onclick="switchTab('account')">
       <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
-      Account
+      Profile
+    </button>
+    <button class="rt-sidebar-item" id="rt-sidebar-stats" onclick="openStatsPanel()" type="button">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="18" y="3" width="3" height="18" rx="1" fill="currentColor" opacity=".4"/><rect x="10.5" y="8" width="3" height="13" rx="1" fill="currentColor" opacity=".7"/><rect x="3" y="13" width="3" height="8" rx="1" fill="currentColor"/></svg>
+      Stats
+    </button>
+    <button class="rt-sidebar-item" id="rt-sidebar-notif" onclick="openNotifPanel()" type="button">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Notifications <span class="rt-notif-dot rt-notif-dot--inline" id="rt-sidebar-notif-dot" style="display:none;"></span>
     </button>
   </nav>
 
@@ -2182,6 +2427,7 @@ permalink: /tools/reading-tracker/
     <div class="rt-panel" id="rt-panel-home" data-tab="home">
       <div class="rt-panel-inner">
 
+        <!-- Sign-in CTA (logged out) -->
         <div class="rt-signin-cta" id="rt-signin-cta" style="display:none;">
           <div class="rt-signin-cta-text">
             <strong>Sync your reading list</strong>
@@ -2190,12 +2436,15 @@ permalink: /tools/reading-tracker/
           <button class="rt-signin-cta-btn" onclick="switchTab('account')" type="button">Sign up free →</button>
         </div>
 
-        <!-- Stats -->
+        <!-- Welcome + reading stats -->
         <div class="rt-home-section">
-          <h2 class="rt-section-heading">Your reading year</h2>
+          <div class="rt-home-welcome" id="rt-home-welcome">
+            <span id="rt-home-greeting">Welcome back</span>
+            <span class="rt-home-username" id="rt-home-username-display"></span>
+          </div>
           <div class="rt-stats-grid">
             <div class="rt-stat-card rt-stat-goal">
-              <div class="rt-stat-label">Goal</div>
+              <div class="rt-stat-label">Reading goal</div>
               <div class="rt-goal-display">
                 <span class="rt-goal-current" id="rt-goal-count">0</span>
                 <span class="rt-goal-sep">/</span>
@@ -2206,16 +2455,6 @@ permalink: /tools/reading-tracker/
                 <div class="rt-goal-bar"><div class="rt-goal-fill" id="rt-goal-fill" style="width:0%"></div></div>
                 <span class="rt-goal-pct" id="rt-goal-pct">0%</span>
               </div>
-            </div>
-            <div class="rt-stat-card">
-              <div class="rt-stat-label">This year</div>
-              <div class="rt-stat-number" id="rt-this-year">0</div>
-              <div class="rt-stat-sub" id="rt-year-label">2026</div>
-            </div>
-            <div class="rt-stat-card">
-              <div class="rt-stat-label">All time</div>
-              <div class="rt-stat-number" id="rt-total">0</div>
-              <div class="rt-stat-sub">books read</div>
             </div>
             <div class="rt-stat-card">
               <div class="rt-stat-label">Favourites</div>
@@ -2243,26 +2482,60 @@ permalink: /tools/reading-tracker/
           </div>
         </div>
 
-        <!-- Reading history -->
-        <div class="rt-home-section rt-card">
-          <div class="rt-home-section-header">
-            <h2 class="rt-section-heading" style="margin-bottom:0;">Reading history</h2>
-            <div style="display:flex;gap:0.5rem;align-items:center;">
-              <select class="rt-filter-select" id="rt-home-sort">
-                <option value="newest">Newest first</option>
-                <option value="rating-high">Top rated</option>
-                <option value="title">A–Z</option>
-              </select>
+        <!-- Notifications strip (logged in only) -->
+        <div id="rt-home-notif-strip" style="display:none;">
+          <div class="rt-home-notif-strip">
+            <div class="rt-home-notif-item" id="rt-home-notif-chats" style="display:none;" onclick="switchTab('community')">
+              <span class="rt-home-notif-icon">💬</span>
+              <span class="rt-home-notif-text" id="rt-home-notif-chats-text">Unread messages</span>
+              <span class="rt-home-notif-arrow">→</span>
+            </div>
+            <div class="rt-home-notif-item" id="rt-home-notif-recs" style="display:none;" onclick="switchTab('recs')">
+              <span class="rt-home-notif-icon">📚</span>
+              <span class="rt-home-notif-text" id="rt-home-notif-recs-text">New book recommendations</span>
+              <span class="rt-home-notif-arrow">→</span>
             </div>
           </div>
-          <div class="rt-status-tabs" style="margin:0 -1.25rem;padding:0 1.25rem;">
-            <button class="rt-status-tab active" data-status="read" onclick="setHomeFilter('read',this)">Finished</button>
-            <button class="rt-status-tab" data-status="dnf" onclick="setHomeFilter('dnf',this)">DNF</button>
+        </div>
+
+        <!-- Notifications empty state (logged out only) -->
+        <div id="rt-home-notif-loggedout" style="display:none;">
+          <div class="rt-home-section rt-card" style="text-align:center;padding:1.25rem 1.5rem;">
+            <div style="font-size:1.3rem;margin-bottom:0.4rem;">🔔</div>
+            <p style="font-size:0.85rem;color:var(--rt-t2);line-height:1.55;margin:0 0 0.75rem;"><strong>Log in</strong> to talk about books, get book recommendations, and store your reading history.</p>
+            <button class="rt-ghost-btn" onclick="switchTab('account')" type="button" style="margin:0 auto;">Sign in →</button>
           </div>
-          <div id="rt-history-list" style="margin-top:0.75rem;"></div>
-          <div class="rt-empty rt-empty--inline" id="rt-history-empty">
-            <p id="rt-history-empty-msg">No finished books yet. <button class="btn-text-link" onclick="openAddModal()">Log your first read →</button></p>
+        </div>
+
+        <!-- Friend activity feed -->
+        <div class="rt-home-section rt-card" id="rt-home-feed-card" style="display:none;">
+          <div class="rt-home-section-header" style="margin-bottom:0.85rem;">
+            <h2 class="rt-section-heading" style="margin-bottom:0;">Friends' reviews</h2>
           </div>
+          <div id="rt-home-feed-list">
+            <div class="rt-feed-empty">
+              <div class="rt-feed-empty-icon">📖</div>
+              <p>Add friends to see their reviews here.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feed empty state (logged out only) -->
+        <div id="rt-home-feed-loggedout" style="display:none;">
+          <div class="rt-home-section rt-card" style="text-align:center;padding:1.25rem 1.5rem;">
+            <div style="font-size:1.3rem;margin-bottom:0.4rem;">📖</div>
+            <p style="font-size:0.85rem;color:var(--rt-t2);line-height:1.55;margin:0;"><strong>Log in</strong> to talk about books, get book recommendations, and store your reading history.</p>
+          </div>
+        </div>
+
+        <!-- Hidden elements kept for JS compatibility -->
+        <div style="display:none;">
+          <select id="rt-home-sort"><option value="newest">Newest first</option><option value="rating-high">Top rated</option><option value="title">A–Z</option></select>
+          <div id="rt-history-list"></div>
+          <div id="rt-history-empty"><p id="rt-history-empty-msg"></p></div>
+          <span id="rt-this-year"></span>
+          <span id="rt-total"></span>
+          <span id="rt-year-label"></span>
         </div>
 
       </div>
@@ -2296,16 +2569,16 @@ permalink: /tools/reading-tracker/
           <!-- Sub-tabs: Friends | Chat -->
           <div class="rt-card" style="padding:0;overflow:hidden;">
             <div class="rt-community-tabs" style="padding:0 1.25rem;">
-              <button class="rt-community-tab active" id="rt-ctab-friends" onclick="switchCommunityTab('friends')">
-                Friends <span class="rt-community-tab-badge" id="rt-friends-count-badge" style="display:none;"></span>
-              </button>
-              <button class="rt-community-tab" id="rt-ctab-chat" onclick="switchCommunityTab('chat')">
+              <button class="rt-community-tab active" id="rt-ctab-chat" onclick="switchCommunityTab('chat')">
                 Chat
+              </button>
+              <button class="rt-community-tab" id="rt-ctab-friends" onclick="switchCommunityTab('friends')">
+                Friends <span class="rt-community-tab-badge" id="rt-friends-count-badge" style="display:none;"></span>
               </button>
             </div>
 
             <!-- Friends tab: search at top, list below -->
-            <div id="rt-community-friends-tab" style="padding:1rem 1.25rem 1.25rem;">
+            <div id="rt-community-friends-tab" style="display:none;padding:1rem 1.25rem 1.25rem;">
               <!-- Inline search -->
               <div class="rt-add-friend-form" style="margin-bottom:0.5rem;">
                 <input type="text" class="rt-add-friend-input" id="rt-add-friend-input" placeholder="Search by @username">
@@ -2323,7 +2596,7 @@ permalink: /tools/reading-tracker/
             </div>
 
             <!-- Chat tab (Phase 3) -->
-            <div id="rt-community-chat-tab" style="display:none;">
+            <div id="rt-community-chat-tab">
 
               <!-- View A: Chat list -->
               <div id="rt-chat-list-view">
@@ -2374,39 +2647,68 @@ permalink: /tools/reading-tracker/
     </div>
 
     <!-- ══════════════════════════════════
-         MY LIST (TBR)
+         MY LIST (TBR + History + DNF)
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-tbr" data-tab="tbr" style="display:none;">
       <div class="rt-panel-inner">
 
-        <!-- Header card -->
-        <div style="background:#fff;border-radius:18px;padding:1.25rem 1.5rem;box-shadow:0 4px 20px rgba(26,39,68,0.11);">
+        <!-- Header -->
+        <div class="rt-card" style="padding:1.25rem 1.5rem;">
           <div class="rt-tbr-header">
             <div>
               <h2 class="rt-section-heading">My List</h2>
-              <p class="rt-panel-sub">Your reading queue — save books you want to read, then hit "Start reading" when you're ready.</p>
+              <p class="rt-panel-sub">Your reading queue, history, and DNFs — all in one place.</p>
             </div>
             <button class="rt-submit-btn rt-tbr-header-add-btn" onclick="openAddModal('tbr')" type="button">+ Add book</button>
           </div>
         </div>
 
-        <!-- Book list card -->
-        <div style="background:#fff;border-radius:18px;padding:1.25rem 1.5rem;box-shadow:0 4px 20px rgba(26,39,68,0.11);">
-          <h3 style="font-family:var(--rt-font-display);font-size:1rem;font-weight:700;color:var(--rt-navy);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(26,39,68,0.08);">My to-read list</h3>
-          <div id="rt-tbr-list"></div>
-          <div class="rt-empty" id="rt-tbr-empty" style="display:none;">
-            <div class="rt-tbr-empty-icon">🔖</div>
-            <p class="rt-tbr-empty-title">Your list is empty</p>
-            <p class="rt-tbr-empty-sub">Save books you want to read next, or import your book list from Goodreads or Storygraph.</p>
-            <div class="rt-tbr-empty-actions">
-              <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
-              <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Goodreads</label>
-              <label for="rt-sg-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Storygraph</label>
+        <!-- Sub-tabs -->
+        <div class="rt-card" style="padding:0;overflow:hidden;">
+          <div class="rt-community-tabs" style="padding:0 1.25rem;" id="rt-mylist-tabs">
+            <button class="rt-community-tab active" id="rt-mltab-tbr" onclick="switchMyListTab('tbr')">To Read</button>
+            <button class="rt-community-tab" id="rt-mltab-history" onclick="switchMyListTab('history')">History</button>
+            <button class="rt-community-tab" id="rt-mltab-dnf" onclick="switchMyListTab('dnf')">DNF</button>
+          </div>
+
+          <!-- TBR sub-tab -->
+          <div id="rt-mylist-tbr-tab" style="padding:1rem 1.25rem 1.25rem;">
+            <div id="rt-tbr-list"></div>
+            <div class="rt-empty" id="rt-tbr-empty" style="display:none;">
+              <div class="rt-tbr-empty-icon">🔖</div>
+              <p class="rt-tbr-empty-title">Your list is empty</p>
+              <p class="rt-tbr-empty-sub">Save books you want to read next, or import from Goodreads or Storygraph.</p>
+              <div class="rt-tbr-empty-actions">
+                <button class="rt-submit-btn" onclick="openAddModal('tbr')" type="button" style="width:auto;padding:0.65rem 1.4rem;">+ Add your first book</button>
+                <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Goodreads</label>
+                <label for="rt-sg-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">📥 Storygraph</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- History sub-tab -->
+          <div id="rt-mylist-history-tab" style="display:none;padding:1rem 1.25rem 1.25rem;">
+            <div style="display:flex;justify-content:flex-end;margin-bottom:0.75rem;">
+              <select class="rt-filter-select" id="rt-mylist-sort">
+                <option value="newest">Newest first</option>
+                <option value="rating-high">Top rated</option>
+                <option value="title">A–Z</option>
+              </select>
+            </div>
+            <div id="rt-mylist-history-list"></div>
+            <div class="rt-empty rt-empty--inline" id="rt-mylist-history-empty" style="display:none;">
+              <p>No finished books yet. <button class="btn-text-link" onclick="openAddModal()">Log your first read →</button></p>
+            </div>
+          </div>
+
+          <!-- DNF sub-tab -->
+          <div id="rt-mylist-dnf-tab" style="display:none;padding:1rem 1.25rem 1.25rem;">
+            <div id="rt-mylist-dnf-list"></div>
+            <div class="rt-empty rt-empty--inline" id="rt-mylist-dnf-empty" style="display:none;">
+              <p style="color:var(--rt-t3);font-size:0.88rem;">No DNFs logged.</p>
             </div>
           </div>
         </div>
-
-        <!-- Import status shown via fixed toast at body level -->
 
       </div>
     </div>
@@ -2475,6 +2777,33 @@ permalink: /tools/reading-tracker/
         <!-- Legacy output (kept for compatibility) -->
         <div class="rt-ai-output" id="rt-ai-output" style="display:none;"></div>
         <p class="rt-ai-note" id="rt-ai-note" style="display:none;">Recommendations generated by Claude (Anthropic). Not affiliated with any retailer.</p>
+
+        <!-- Friend Recommendations section -->
+        <div style="margin-top:1.5rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.85rem;">
+            <h2 class="rt-section-heading" style="margin-bottom:0;">From friends</h2>
+          </div>
+
+          <!-- Logged out -->
+          <div id="rt-friend-recs-loggedout" style="display:none;">
+            <div class="rt-card" style="text-align:center;padding:1.5rem;border-radius:var(--rt-r2);">
+              <div style="font-size:1.4rem;margin-bottom:0.5rem;">📬</div>
+              <p style="font-size:0.85rem;color:var(--rt-t2);line-height:1.6;margin:0 0 0.85rem;"><strong>Log in</strong> to share and get recommendations from friends.</p>
+              <button class="rt-ghost-btn" onclick="switchTab('account')" type="button" style="margin:0 auto;">Sign in →</button>
+            </div>
+          </div>
+
+          <!-- Logged in — populated by JS -->
+          <div id="rt-friend-recs-list" style="display:none;flex-direction:column;gap:0.6rem;"></div>
+
+          <!-- Logged in — empty state -->
+          <div id="rt-friend-recs-empty" style="display:none;">
+            <div class="rt-card" style="text-align:center;padding:1.5rem;border-radius:var(--rt-r2);">
+              <div style="font-size:1.4rem;margin-bottom:0.5rem;">📚</div>
+              <p style="font-size:0.85rem;color:var(--rt-t2);line-height:1.6;margin:0;">No friend recommendations yet. Add friends and they can recommend books directly to you.</p>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -2548,55 +2877,68 @@ permalink: /tools/reading-tracker/
           </div>
         </div>
 
-        <!-- LOGGED IN -->
+        <!-- LOGGED IN — Profile page -->
         <div id="rt-auth-loggedin" style="display:none;">
           <div class="rt-panel-inner">
 
-            <!-- Combined profile + username card -->
+            <!-- Profile hero -->
+            <div class="rt-profile-hero-card">
+              <div class="rt-profile-hero-top">
+                <div class="rt-profile-avatar-lg" id="rt-profile-avatar-lg">
+                  <svg viewBox="0 0 24 24" fill="none" width="32" height="32"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="white" stroke-width="1.8"/></svg>
+                </div>
+                <div class="rt-profile-hero-info">
+                  <div class="rt-profile-hero-name" id="rt-profile-hero-name">—</div>
+                  <div class="rt-profile-hero-username" id="rt-profile-hero-username"></div>
+                  <div class="rt-profile-hero-bio" id="rt-profile-hero-bio" style="display:none;"></div>
+                </div>
+                <button class="rt-icon-btn" onclick="openAccountSettings()" title="Settings" type="button" style="margin-left:auto;flex-shrink:0;">
+                  <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+                </button>
+              </div>
+
+              <!-- Stats row -->
+              <div class="rt-profile-stats">
+                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
+                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-tbr">0</div><div class="rt-profile-stat-l">My List</div></div>
+                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-fav">0</div><div class="rt-profile-stat-l">5★</div></div>
+                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-dnf">0</div><div class="rt-profile-stat-l">DNF</div></div>
+              </div>
+            </div>
+
+            <!-- Favourite books carousel (top 3, manually set) -->
+            <div class="rt-card" id="rt-profile-favbooks-card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;">
+                <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);">Favourite books</div>
+                <button class="btn-text-link" style="font-size:0.75rem;" onclick="openFavBooksEditor()" type="button">Edit →</button>
+              </div>
+              <div class="rt-fav-books-carousel" id="rt-fav-books-carousel">
+                <div style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;text-align:center;padding:1rem 0;">
+                  Set your favourite books → tap Edit above
+                </div>
+              </div>
+            </div>
+
+            <!-- My reviews -->
             <div class="rt-card">
-              <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--rt-border);">
-                <div class="rt-profile-avatar">
-                  <svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="white" stroke-width="1.8"/></svg>
-                </div>
-                <div style="flex:1;min-width:0;">
-                  <div class="rt-profile-email" id="rt-auth-email"></div>
-                  <div class="rt-profile-joined" id="rt-profile-joined"></div>
-                </div>
-                <button class="rt-ghost-btn" onclick="signOut()" type="button" style="font-size:0.75rem;padding:0.35rem 0.75rem;flex-shrink:0;">Sign out</button>
+              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.85rem;">My reviews</div>
+              <div id="rt-profile-reviews-list">
+                <div class="rt-feed-empty"><div class="rt-feed-empty-icon">✍️</div><p>No public reviews yet — share one when you finish a book.</p></div>
               </div>
-
-              <!-- Username row inline -->
-              <div class="rt-username-row" id="rt-username-display-row">
-                <span class="rt-username-label">Username</span>
-                <span class="rt-username-value" id="rt-username-display">—</span>
-                <button class="rt-username-edit-btn" type="button" onclick="showUsernameEdit()">Edit</button>
-              </div>
-              <div class="rt-username-row" id="rt-username-edit-row" style="display:none;">
-                <span class="rt-username-label">Username</span>
-                <input class="rt-username-input" type="text" id="rt-username-input" placeholder="e.g. bookworm42" maxlength="30" autocomplete="off">
-                <button class="rt-username-edit-btn" type="button" id="rt-username-save-btn" onclick="saveUsername()">Save</button>
-                <button class="rt-username-edit-btn" type="button" onclick="cancelUsernameEdit()" style="color:var(--rt-t3);">✕</button>
-              </div>
-              <p id="rt-username-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;"></p>
             </div>
 
-            <!-- Stats -->
-            <div class="rt-profile-stats">
-              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
-              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-tbr">0</div><div class="rt-profile-stat-l">My List</div></div>
-              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-fav">0</div><div class="rt-profile-stat-l">5★ reads</div></div>
-              <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-dnf">0</div><div class="rt-profile-stat-l">DNF</div></div>
-            </div>
-
-            <!-- Activity feed -->
-            <div class="rt-card" id="rt-account-feed-card" style="display:none;">
-              <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.85rem;">Friends' activity</div>
-              <div id="rt-feed-list">
-                <div class="rt-feed-empty">
-                  <div class="rt-feed-empty-icon">📖</div>
-                  <p>Add friends to see their reading activity here.</p>
-                </div>
+            <!-- Hidden compat elements -->
+            <div style="display:none;">
+              <div id="rt-auth-email"></div>
+              <div id="rt-profile-joined"></div>
+              <div id="rt-username-display-row">
+                <span id="rt-username-display"></span>
+                <input id="rt-username-input" type="text">
+                <button id="rt-username-save-btn" onclick="saveUsername()"></button>
               </div>
+              <div id="rt-username-edit-row"></div>
+              <p id="rt-username-msg"></p>
+              <div id="rt-account-feed-card"><div id="rt-feed-list"></div></div>
             </div>
 
           </div>
@@ -2615,8 +2957,8 @@ permalink: /tools/reading-tracker/
     <span class="rt-nav-label">Home</span>
   </button>
   <button class="rt-nav-btn" data-tab="community" onclick="switchTab('community')">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="rt-nav-label">Friends</span>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="rt-nav-label">Chat</span>
   </button>
   <button class="rt-nav-btn" data-tab="tbr" onclick="switchTab('tbr')">
     <svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2628,9 +2970,125 @@ permalink: /tools/reading-tracker/
   </button>
   <button class="rt-nav-btn" data-tab="account" onclick="switchTab('account')">
     <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
-    <span class="rt-nav-label">Account</span>
+    <span class="rt-nav-label">Profile</span>
+  </button>
+  <button class="rt-nav-btn rt-nav-btn--bell" onclick="openNotifPanel()" type="button" style="position:relative;flex:0 0 52px;">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="rt-notif-dot rt-notif-dot--nav" id="rt-notif-dot-nav" style="display:none;"></span>
   </button>
 </nav>
+
+
+<!-- ══════════════════════════════════════════════
+     STATS PANEL OVERLAY
+══════════════════════════════════════════════ -->
+<div class="rt-overlay-panel-bg" id="rt-stats-overlay-bg" onclick="closeStatsPanel()" style="display:none;"></div>
+<div class="rt-overlay-panel" id="rt-stats-overlay" style="display:none;">
+  <div class="rt-overlay-panel-header">
+    <div class="rt-overlay-panel-title">Reading Stats</div>
+    <button class="rt-sheet-close" onclick="closeStatsPanel()" type="button">×</button>
+  </div>
+  <div class="rt-overlay-panel-body">
+    <div class="rt-stats-full-grid">
+      <div class="rt-stats-full-card">
+        <div class="rt-stats-full-label">Total books read</div>
+        <div class="rt-stats-full-number" id="rt-sf-total">0</div>
+      </div>
+      <div class="rt-stats-full-card">
+        <div class="rt-stats-full-label">This year</div>
+        <div class="rt-stats-full-number" id="rt-sf-year">0</div>
+      </div>
+      <div class="rt-stats-full-card">
+        <div class="rt-stats-full-label">Average rating</div>
+        <div class="rt-stats-full-number" id="rt-sf-avg-rating">—</div>
+      </div>
+      <div class="rt-stats-full-card">
+        <div class="rt-stats-full-label">5★ favourites</div>
+        <div class="rt-stats-full-number" id="rt-sf-favs">0</div>
+      </div>
+    </div>
+    <div class="rt-stats-full-section">
+      <div class="rt-stats-full-section-title">Genres (all time)</div>
+      <div id="rt-sf-genres-list"></div>
+    </div>
+    <div class="rt-stats-full-section">
+      <div class="rt-stats-full-section-title">Favourite authors</div>
+      <div id="rt-sf-authors-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     NOTIFICATIONS PANEL OVERLAY
+══════════════════════════════════════════════ -->
+<div class="rt-overlay-panel-bg" id="rt-notif-overlay-bg" onclick="closeNotifPanel()" style="display:none;"></div>
+<div class="rt-overlay-panel" id="rt-notif-overlay" style="display:none;">
+  <div class="rt-overlay-panel-header">
+    <div class="rt-overlay-panel-title">Notifications</div>
+    <button class="rt-sheet-close" onclick="closeNotifPanel()" type="button">×</button>
+  </div>
+  <div class="rt-overlay-panel-body" id="rt-notif-body">
+    <div class="rt-feed-empty"><div class="rt-feed-empty-icon">🔔</div><p>No notifications yet.</p></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ACCOUNT SETTINGS OVERLAY
+══════════════════════════════════════════════ -->
+<div class="rt-overlay-panel-bg" id="rt-settings-overlay-bg" onclick="closeAccountSettings()" style="display:none;"></div>
+<div class="rt-overlay-panel" id="rt-settings-overlay" style="display:none;">
+  <div class="rt-overlay-panel-header">
+    <div class="rt-overlay-panel-title">Account Settings</div>
+    <button class="rt-sheet-close" onclick="closeAccountSettings()" type="button">×</button>
+  </div>
+  <div class="rt-overlay-panel-body">
+    <div class="rt-settings-section">
+      <div class="rt-settings-label">Email</div>
+      <div class="rt-settings-value" id="rt-settings-email">—</div>
+    </div>
+    <div class="rt-settings-section">
+      <div class="rt-settings-label">Username</div>
+      <div class="rt-username-row" id="rt-settings-username-display-row">
+        <span class="rt-username-value" id="rt-settings-username-display">—</span>
+        <button class="rt-username-edit-btn" type="button" onclick="showSettingsUsernameEdit()">Edit</button>
+      </div>
+      <div class="rt-username-row" id="rt-settings-username-edit-row" style="display:none;">
+        <input class="rt-username-input" type="text" id="rt-settings-username-input" placeholder="e.g. bookworm42" maxlength="30" autocomplete="off">
+        <button class="rt-username-edit-btn" type="button" onclick="saveSettingsUsername()">Save</button>
+        <button class="rt-username-edit-btn" type="button" onclick="cancelSettingsUsernameEdit()" style="color:var(--rt-t3);">✕</button>
+      </div>
+      <p id="rt-settings-username-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;"></p>
+    </div>
+    <div class="rt-settings-section">
+      <div class="rt-settings-label">Bio <span style="font-weight:400;color:var(--rt-t3);font-size:0.8em;">(shown on your profile)</span></div>
+      <textarea id="rt-settings-bio" rows="3" placeholder="A short bio — genres you love, reading goals…" style="width:100%;box-sizing:border-box;border:1.5px solid var(--rt-border-md);border-radius:var(--rt-r3);padding:0.6rem 0.8rem;font-family:var(--rt-font-body);font-size:0.85rem;color:var(--rt-navy);background:var(--rt-cream);resize:vertical;margin-top:0.4rem;"></textarea>
+      <button class="rt-submit-btn" onclick="saveSettingsBio()" type="button" style="margin-top:0.6rem;max-width:160px;">Save bio</button>
+      <p id="rt-settings-bio-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;"></p>
+    </div>
+    <div class="rt-settings-section" style="border-top:1px solid var(--rt-border);padding-top:1.25rem;margin-top:0.5rem;">
+      <button class="rt-ghost-btn" onclick="signOut()" type="button" style="color:#7f1d1d;">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     FAVOURITE BOOKS EDITOR OVERLAY
+══════════════════════════════════════════════ -->
+<div class="rt-overlay-panel-bg" id="rt-favbooks-overlay-bg" onclick="closeFavBooksEditor()" style="display:none;"></div>
+<div class="rt-overlay-panel" id="rt-favbooks-overlay" style="display:none;">
+  <div class="rt-overlay-panel-header">
+    <div class="rt-overlay-panel-title">Favourite Books</div>
+    <button class="rt-sheet-close" onclick="closeFavBooksEditor()" type="button">×</button>
+  </div>
+  <div class="rt-overlay-panel-body">
+    <p style="font-size:0.83rem;color:var(--rt-t3);margin-bottom:1rem;line-height:1.6;">Choose up to 10 books from your 5★ reads. The first 3 display as a carousel on your profile.</p>
+    <div id="rt-favbooks-picker-list"></div>
+  </div>
+  <div class="rt-overlay-panel-footer">
+    <button class="rt-sheet-btn rt-sheet-btn--secondary" onclick="closeFavBooksEditor()" type="button">Cancel</button>
+    <button class="rt-sheet-btn rt-sheet-btn--primary" onclick="saveFavBooks()" type="button">Save →</button>
+  </div>
+</div>
 
 <!-- SYNC STATUS INDICATOR -->
 <div id="rt-sync-status" data-state="idle" aria-live="polite"></div>
@@ -2969,6 +3427,16 @@ permalink: /tools/reading-tracker/
             <div id="rt-done-public-badge" style="display:none;">
               <span class="rt-done-public-badge">✦ Review shared to your feed</span>
             </div>
+            <!-- Post-finish actions -->
+            <div class="rt-done-actions" id="rt-done-actions">
+              <button class="rt-done-action-btn rt-done-action-btn--primary" id="rt-done-recommend-btn" type="button" onclick="doneRecommend()">
+                📚 Recommend to a friend
+              </button>
+              <button class="rt-done-action-btn rt-done-action-btn--secondary" id="rt-done-chat-btn" type="button" onclick="doneStartChat()">
+                💬 Start a chat
+              </button>
+            </div>
+            <button class="btn-text-link" style="margin-top:0.75rem;font-size:0.78rem;color:var(--rt-t3);" onclick="closeModal()" type="button">Close</button>
           </div>
         </div>
 
@@ -2980,7 +3448,11 @@ permalink: /tools/reading-tracker/
             <div id="rt-view-rating" style="margin-bottom:0.85rem;"></div>
             <div id="rt-view-date" style="font-size:0.78rem;color:var(--rt-t3);margin-bottom:1rem;"></div>
             <div id="rt-view-review-wrap" style="display:none;margin-bottom:1rem;">
-              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--rt-amber);margin-bottom:0.5rem;">✦ Shared review</div>
+              <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--rt-amber);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem;">✦ Shared review
+                <button type="button" onclick="showEditMode()" title="Edit review" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;color:#9aa3bb;">
+                  <svg viewBox="0 0 24 24" fill="none" width="13" height="13"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
               <div id="rt-view-review" style="font-size:0.92rem;color:var(--rt-t1);line-height:1.65;"></div>
             </div>
             <div id="rt-view-notes-wrap" style="display:none;">
@@ -3396,6 +3868,8 @@ document.addEventListener('visibilitychange', () => {
 
 // ── Community sub-tab switch ──────────────────────────────────
 function switchCommunityTab(tab) {
+  // Default to chat tab if none specified
+  if (!tab) tab = 'chat';
   document.getElementById('rt-community-friends-tab').style.display = tab === 'friends' ? 'block' : 'none';
   document.getElementById('rt-community-chat-tab').style.display    = tab === 'chat'    ? 'block' : 'none';
   document.getElementById('rt-ctab-friends').classList.toggle('active', tab === 'friends');
@@ -4626,6 +5100,13 @@ function renderGenreChart() {
 // TAB SWITCHING
 // ─────────────────────────────────────────────────────────────
 function switchTab(name) {
+  // When navigating to community, default to chat sub-tab
+  if (name === 'community') {
+    setTimeout(() => {
+      if (currentUser && !chatState._loaded) loadChatList();
+      switchCommunityTab('chat');
+    }, 0);
+  }
   // Panels
   document.querySelectorAll('.rt-panel').forEach(p => {
     p.style.display = p.dataset.tab === name ? 'block' : 'none';
@@ -5328,11 +5809,21 @@ function showReadMode() {
   document.getElementById('rt-view-mode').style.display = 'block';
   document.getElementById('rt-edit-mode').style.display = 'none';
   const footer = document.getElementById('rt-sheet-footer');
-  footer.innerHTML = `
-    <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-close" type="button">Close</button>
-    <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-edit-btn" type="button">✏️ Edit</button>`;
+  const book = books.find(b => String(b.id) === String(sheetBookId));
+  const isFinished = book && book.status === 'read';
+  footer.innerHTML = isFinished
+    ? `<button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-close" type="button">Close</button>
+       <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-rec-btn" type="button">📚 Recommend</button>
+       <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-chat-btn" type="button">💬 Start chat</button>`
+    : `<button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-close" type="button">Close</button>
+       <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-edit-btn" type="button"><svg viewBox="0 0 24 24" fill="none" width="14" height="14" style="vertical-align:-1px;margin-right:3px;"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Edit</button>`;
   document.getElementById('rt-view-close').onclick = closeModal;
-  document.getElementById('rt-view-edit-btn').onclick = showEditMode;
+  if (isFinished) {
+    document.getElementById('rt-view-rec-btn').onclick = () => { closeModal(); if (sheetBookId) openRecommendSheet(sheetBookId); };
+    document.getElementById('rt-view-chat-btn').onclick = doneStartChat;
+  } else {
+    document.getElementById('rt-view-edit-btn').onclick = showEditMode;
+  }
 }
 
 function updateEditConditionalFields(status) {
@@ -6439,6 +6930,598 @@ document.getElementById('rt-install-btn').addEventListener('click', async functi
   }, {passive: true});
 })();
 
+
+// ═══════════════════════════════════════════════════════════════
+// V2.5 — STATS, NOTIFICATIONS, PROFILE, MY LIST, HOME FEED
+// ═══════════════════════════════════════════════════════════════
+
+// ── My List sub-tabs ──────────────────────────────────────────
+function switchMyListTab(tab) {
+  ['tbr','history','dnf'].forEach(t => {
+    document.getElementById('rt-mylist-' + t + '-tab').style.display = t === tab ? 'block' : 'none';
+    document.getElementById('rt-mltab-' + t).classList.toggle('active', t === tab);
+  });
+  if (tab === 'history') renderMyListHistory();
+  if (tab === 'dnf')     renderMyListDNF();
+}
+
+function renderMyListHistory() {
+  const sort = document.getElementById('rt-mylist-sort')?.value || 'newest';
+  let list = getBooks('read').sort((a,b) => {
+    if (sort === 'newest') {
+      const aD = a.date || a.added || null, bD = b.date || b.added || null;
+      if (!aD && !bD) return 0; if (!aD) return 1; if (!bD) return -1;
+      return new Date(bD) - new Date(aD);
+    }
+    if (sort === 'rating-high') return (b.rating||0) - (a.rating||0);
+    if (sort === 'title') return a.title.localeCompare(b.title);
+    return 0;
+  });
+  const el    = document.getElementById('rt-mylist-history-list');
+  const empty = document.getElementById('rt-mylist-history-empty');
+  if (!el) return;
+  empty.style.display = list.length ? 'none' : 'flex';
+  if (!list.length) { el.innerHTML = ''; return; }
+  el.innerHTML = list.map((b, idx) => {
+    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
+    const phClass  = `rt-hist-cover--ph rt-hist-cover--ph-${idx % 6}`;
+    const stars    = b.rating ? `<span class="rt-book-stars">${'★'.repeat(b.rating)}${'☆'.repeat(5-b.rating)}</span>` : '';
+    const date     = b.date   ? `<span class="rt-book-date">${fmtDate(b.date)}</span>` : '';
+    const reviewSnip = b.reviewBody ? `<div class="rt-hist-notes" style="font-style:normal;">"${esc(b.reviewBody.slice(0,100))}${b.reviewBody.length>100?'…':''}"</div>` : '';
+    return `
+    <div class="rt-hist-card" data-id="${b.id}" data-action="open-book-detail" style="cursor:pointer;">
+      <button class="rt-hist-delete" data-id="${b.id}" data-action="remove-hist" title="Remove" type="button">×</button>
+      <div class="rt-hist-card-inner">
+        ${coverUrl
+          ? `<img src="${coverUrl}" class="rt-hist-cover" alt="" loading="lazy">`
+          : `<div class="${phClass}">📖</div>`}
+        <div class="rt-hist-body">
+          <div class="rt-book-title">${esc(b.title)}</div>
+          ${b.author ? `<div class="rt-book-author">${esc(b.author)}</div>` : ''}
+          <div class="rt-hist-meta">${stars}${date}</div>
+          ${reviewSnip}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderMyListDNF() {
+  const list  = getBooks('dnf');
+  const el    = document.getElementById('rt-mylist-dnf-list');
+  const empty = document.getElementById('rt-mylist-dnf-empty');
+  if (!el) return;
+  empty.style.display = list.length ? 'none' : 'flex';
+  if (!list.length) { el.innerHTML = ''; return; }
+  el.innerHTML = list.map((b, idx) => {
+    const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
+    const phClass  = `rt-hist-cover--ph rt-hist-cover--ph-${idx % 6}`;
+    const date     = b.date ? `<span class="rt-book-date">${fmtDate(b.date)}</span>` : '';
+    return `
+    <div class="rt-hist-card rt-hist-card--dnf" data-id="${b.id}" data-action="open-book-detail">
+      <button class="rt-hist-delete" data-id="${b.id}" data-action="remove-hist" title="Remove" type="button">×</button>
+      <div class="rt-hist-card-inner">
+        ${coverUrl ? `<img src="${coverUrl}" class="rt-hist-cover" alt="" loading="lazy">` : `<div class="${phClass}">📖</div>`}
+        <div class="rt-hist-body">
+          <div class="rt-book-title">${esc(b.title)} <span class="rt-dnf-label">DNF</span></div>
+          ${b.author ? `<div class="rt-book-author">${esc(b.author)}</div>` : ''}
+          <div class="rt-hist-meta">${date}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Wire up My List clicks
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('[data-action="open-book-detail"]');
+  const rec  = e.target.closest('[data-action="rec-book"]');
+  const chat = e.target.closest('[data-action="chat-book"]');
+  const edit = e.target.closest('[data-action="edit-book"]');
+  const del  = e.target.closest('[data-action="remove-hist"]');
+  if (!card && !rec && !chat && !edit && !del) return;
+  // Only handle if we're inside the My List panel
+  const panel = e.target.closest('#rt-panel-tbr');
+  if (!panel) return;
+  if (del) {
+    e.stopPropagation();
+    if (!confirm('Remove this book from your history?')) return;
+    const book = books.find(b => String(b.id) === String(del.dataset.id));
+    if (book) deleteBookFromCloud(book);
+    books = books.filter(b => String(b.id) !== String(del.dataset.id));
+    save(); renderMyListHistory(); renderMyListDNF(); updateStats(); renderGenreChart();
+    return;
+  }
+  if (edit) { e.stopPropagation(); openEditSheet(edit.dataset.id); return; }
+  if (rec)  { e.stopPropagation(); openRecommendSheet(rec.dataset.id); return; }
+  if (chat) {
+    e.stopPropagation();
+    const book = books.find(b => String(b.id) === String(chat.dataset.id));
+    if (book) startOrOpenChat(book.olKey, book.title, book.author, book.coverId);
+    return;
+  }
+  if (card) { openBookDetail(card.dataset.id); }
+});
+
+document.getElementById('rt-mylist-sort')?.addEventListener('change', renderMyListHistory);
+
+// ── Stats panel ───────────────────────────────────────────────
+function openStatsPanel() {
+  renderStatsPanel();
+  document.getElementById('rt-stats-overlay-bg').style.display = 'block';
+  requestAnimationFrame(() => document.getElementById('rt-stats-overlay').classList.add('open'));
+}
+function closeStatsPanel() {
+  document.getElementById('rt-stats-overlay').classList.remove('open');
+  setTimeout(() => { document.getElementById('rt-stats-overlay-bg').style.display = 'none'; }, 280);
+}
+function renderStatsPanel() {
+  const read = getBooks('read');
+  const year = new Date().getFullYear();
+  const thisYear = read.filter(b => b.date && b.date.startsWith(year));
+  const rated = read.filter(b => b.rating);
+  const avgRating = rated.length
+    ? (rated.reduce((s,b) => s + b.rating, 0) / rated.length).toFixed(1)
+    : '—';
+
+  document.getElementById('rt-sf-total').textContent    = read.length;
+  document.getElementById('rt-sf-year').textContent     = thisYear.length;
+  document.getElementById('rt-sf-avg-rating').textContent = avgRating;
+  document.getElementById('rt-sf-favs').textContent     = read.filter(b => b.rating === 5).length;
+
+  // Genres
+  const genreMap = {};
+  read.forEach(b => { if (b.genre) genreMap[b.genre] = (genreMap[b.genre]||0) + 1; });
+  const genres = Object.entries(genreMap).sort((a,b) => b[1]-a[1]);
+  document.getElementById('rt-sf-genres-list').innerHTML = genres.length
+    ? genres.map(([g,n]) => `<div class="rt-stats-genre-row"><span>${esc(g)}</span><span class="rt-stats-count">${n}</span></div>`).join('')
+    : '<p style="font-size:0.83rem;color:var(--rt-t3);">Log books with genres to see breakdown.</p>';
+
+  // Authors
+  const authMap = {};
+  read.forEach(b => { if (b.author) authMap[b.author] = (authMap[b.author]||0) + 1; });
+  const authors = Object.entries(authMap).sort((a,b) => b[1]-a[1]).slice(0,10);
+  document.getElementById('rt-sf-authors-list').innerHTML = authors.length
+    ? authors.map(([a,n]) => `<div class="rt-stats-author-row"><span>${esc(a)}</span><span class="rt-stats-count">${n} book${n>1?'s':''}</span></div>`).join('')
+    : '<p style="font-size:0.83rem;color:var(--rt-t3);">Finish some books to see favourite authors.</p>';
+}
+
+// ── Notifications panel ───────────────────────────────────────
+let _notifState = { unreadChats: 0, newRecs: 0 };
+
+function openNotifPanel() {
+  renderNotifPanel();
+  document.getElementById('rt-notif-overlay-bg').style.display = 'block';
+  requestAnimationFrame(() => document.getElementById('rt-notif-overlay').classList.add('open'));
+}
+function closeNotifPanel() {
+  document.getElementById('rt-notif-overlay').classList.remove('open');
+  setTimeout(() => { document.getElementById('rt-notif-overlay-bg').style.display = 'none'; }, 280);
+}
+function renderNotifPanel() {
+  const body = document.getElementById('rt-notif-body');
+  const items = [];
+  if (_notifState.unreadChats > 0) {
+    items.push(`<div class="rt-home-notif-item" onclick="closeNotifPanel();switchTab('community');">
+      <span class="rt-home-notif-icon">💬</span>
+      <span class="rt-home-notif-text">${_notifState.unreadChats} unread message${_notifState.unreadChats>1?'s':''}</span>
+      <span class="rt-home-notif-arrow">→</span></div>`);
+  }
+  if (_notifState.newRecs > 0) {
+    items.push(`<div class="rt-home-notif-item" onclick="closeNotifPanel();switchTab('recs');">
+      <span class="rt-home-notif-icon">📚</span>
+      <span class="rt-home-notif-text">${_notifState.newRecs} new book recommendation${_notifState.newRecs>1?'s':''}</span>
+      <span class="rt-home-notif-arrow">→</span></div>`);
+  }
+  // Friend reviews from feed
+  const feedItems = (socialState.feed || []).filter(f => f.event_type === 'review').slice(0,5);
+  feedItems.forEach(f => {
+    const name = socialState.friends.find(fr => fr.userId === f.user_id)?.displayName || 'A friend';
+    items.push(`<div class="rt-home-notif-item" onclick="closeNotifPanel();switchTab('home');">
+      <span class="rt-home-notif-icon">✍️</span>
+      <span class="rt-home-notif-text">${esc(name)} reviewed ${esc(f.book_title||'a book')}</span>
+      <span class="rt-home-notif-arrow">→</span></div>`);
+  });
+  if (!items.length) {
+    body.innerHTML = '<div class="rt-feed-empty"><div class="rt-feed-empty-icon">🔔</div><p>No notifications yet.</p></div>';
+  } else {
+    body.innerHTML = '<div class="rt-home-notif-strip" style="margin:0;">' + items.join('') + '</div>';
+  }
+}
+function updateNotifDot() {
+  const hasNotif = _notifState.unreadChats > 0 || _notifState.newRecs > 0;
+  ['rt-notif-dot','rt-notif-dot-nav','rt-sidebar-notif-dot'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = hasNotif ? 'block' : 'none';
+  });
+}
+
+// ── Account Settings overlay ──────────────────────────────────
+function openAccountSettings() {
+  const el = document.getElementById('rt-settings-email');
+  if (el && currentUser) el.textContent = currentUser.email || '—';
+  // Sync username
+  const uDisplay = document.getElementById('rt-settings-username-display');
+  const uInput   = document.getElementById('rt-settings-username-input');
+  const srcVal   = document.getElementById('rt-username-display')?.textContent || '';
+  if (uDisplay) uDisplay.textContent = srcVal;
+  if (uInput)   uInput.value = srcVal === '—' ? '' : srcVal;
+  // Sync bio
+  const bioInput = document.getElementById('rt-settings-bio');
+  if (bioInput && socialState._myBio) bioInput.value = socialState._myBio;
+  document.getElementById('rt-settings-overlay-bg').style.display = 'block';
+  requestAnimationFrame(() => document.getElementById('rt-settings-overlay').classList.add('open'));
+}
+function closeAccountSettings() {
+  document.getElementById('rt-settings-overlay').classList.remove('open');
+  setTimeout(() => { document.getElementById('rt-settings-overlay-bg').style.display = 'none'; }, 280);
+}
+function showSettingsUsernameEdit() {
+  document.getElementById('rt-settings-username-display-row').style.display = 'none';
+  document.getElementById('rt-settings-username-edit-row').style.display = 'flex';
+  document.getElementById('rt-settings-username-input').focus();
+}
+function cancelSettingsUsernameEdit() {
+  document.getElementById('rt-settings-username-display-row').style.display = 'flex';
+  document.getElementById('rt-settings-username-edit-row').style.display = 'none';
+}
+async function saveSettingsUsername() {
+  const input = document.getElementById('rt-settings-username-input');
+  const msg   = document.getElementById('rt-settings-username-msg');
+  const val   = input.value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
+  if (!val || val.length < 3) { showMsg(msg, 'Username must be at least 3 characters.', 'error'); return; }
+  try {
+    const { error } = await sb.from('profiles').upsert({ id: currentUser.id, username: val }, { onConflict: 'id' });
+    if (error) throw error;
+    socialState._myUsername = val;
+    document.getElementById('rt-settings-username-display').textContent = val;
+    document.getElementById('rt-username-display').textContent = val;
+    renderProfilePage();
+    cancelSettingsUsernameEdit();
+    showMsg(msg, 'Username saved!', 'success');
+  } catch(e) {
+    showMsg(msg, e.message?.includes('unique') ? 'Username already taken.' : 'Could not save — try again.', 'error');
+  }
+}
+async function saveSettingsBio() {
+  const bio = document.getElementById('rt-settings-bio').value.trim().slice(0, 300);
+  const msg = document.getElementById('rt-settings-bio-msg');
+  try {
+    const { error } = await sb.from('profiles').upsert({ id: currentUser.id, bio }, { onConflict: 'id' });
+    if (error) throw error;
+    socialState._myBio = bio;
+    renderProfilePage();
+    showMsg(msg, 'Bio saved!', 'success');
+  } catch(e) {
+    showMsg(msg, 'Could not save bio.', 'error');
+  }
+}
+function showMsg(el, text, type) {
+  if (!el) return;
+  el.textContent = text;
+  el.style.display = 'block';
+  el.style.color = type === 'error' ? '#991b1b' : '#065f46';
+  setTimeout(() => { el.style.display = 'none'; }, 3000);
+}
+
+// ── Profile page ──────────────────────────────────────────────
+function renderProfilePage() {
+  if (!currentUser) return;
+  const username = socialState._myUsername || '';
+  const bio      = socialState._myBio      || '';
+  const nameEl   = document.getElementById('rt-profile-hero-name');
+  const userEl   = document.getElementById('rt-profile-hero-username');
+  const bioEl    = document.getElementById('rt-profile-hero-bio');
+  const homeUser = document.getElementById('rt-home-username-display');
+  if (nameEl)   nameEl.textContent  = username || currentUser.email?.split('@')[0] || 'Reader';
+  if (userEl)   userEl.textContent  = username ? `@${username}` : '';
+  if (bioEl) {
+    bioEl.textContent    = bio;
+    bioEl.style.display  = bio ? 'block' : 'none';
+  }
+  if (homeUser) homeUser.textContent = username ? `@${username}` : '';
+
+  // Avatar initials on profile
+  const avEl = document.getElementById('rt-profile-avatar-lg');
+  if (avEl && username) {
+    avEl.textContent  = username[0].toUpperCase();
+    avEl.style.background = avatarColour(currentUser.id);
+    avEl.style.color = '#fff';
+    avEl.style.fontSize = '1.4rem';
+    avEl.style.fontWeight = '700';
+  }
+
+  // My reviews
+  renderProfileReviews();
+  renderFavBooksCarousel();
+}
+
+function renderProfileReviews() {
+  const reviews = books.filter(b => b.reviewPublic && b.reviewBody).sort((a,b) => new Date(b.date||b.added||0) - new Date(a.date||a.added||0));
+  const el = document.getElementById('rt-profile-reviews-list');
+  if (!el) return;
+  if (!reviews.length) {
+    el.innerHTML = '<div class="rt-feed-empty"><div class="rt-feed-empty-icon">✍️</div><p>No public reviews yet.</p></div>';
+    return;
+  }
+  el.innerHTML = reviews.map(b => {
+    const stars = b.rating ? '★'.repeat(b.rating) + '☆'.repeat(5-b.rating) : '';
+    return `<div class="rt-profile-review-item" onclick="openBookDetail('${b.id}')">
+      <div class="rt-profile-review-title">${esc(b.title)}</div>
+      ${stars ? `<div class="rt-profile-review-stars">${stars}</div>` : ''}
+      <div class="rt-profile-review-body">${esc(b.reviewBody)}</div>
+      ${b.date ? `<div class="rt-profile-review-date">${fmtDate(b.date)}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ── Favourite books ───────────────────────────────────────────
+let _favBookIds = [];  // ordered list of up to 10 book ids
+
+function renderFavBooksCarousel() {
+  const el = document.getElementById('rt-fav-books-carousel');
+  if (!el) return;
+  const favBooks = _favBookIds.map(id => books.find(b => String(b.id) === String(id))).filter(Boolean);
+  if (!favBooks.length) {
+    el.innerHTML = '<div style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;text-align:center;padding:1rem 0;">Set your favourite books → tap Edit above</div>';
+    return;
+  }
+  el.innerHTML = favBooks.map(b => {
+    const url = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-M.jpg` : '';
+    return `<div class="rt-fav-book-item" onclick="openBookDetail('${b.id}')">
+      ${url ? `<img src="${url}" class="rt-fav-book-cover" alt="">` : `<div class="rt-fav-book-cover--ph">📖</div>`}
+      <div class="rt-fav-book-title">${esc(b.title)}</div>
+    </div>`;
+  }).join('');
+}
+
+function openFavBooksEditor() {
+  const fiveStars = books.filter(b => b.rating === 5 && b.status === 'read');
+  const el = document.getElementById('rt-favbooks-picker-list');
+  if (!el) return;
+  el.innerHTML = fiveStars.map(b => {
+    const selected = _favBookIds.includes(String(b.id));
+    const url = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+    return `<div class="rt-favbooks-picker-item ${selected ? 'selected' : ''}" data-id="${b.id}" onclick="toggleFavBook(this,'${b.id}')">
+      <div class="rt-favbooks-picker-check">${selected ? '✓' : ''}</div>
+      ${url ? `<img src="${url}" class="rt-favbooks-picker-cover" alt="">` : `<div class="rt-favbooks-picker-cover--ph">📖</div>`}
+      <div>
+        <div class="rt-favbooks-picker-title">${esc(b.title)}</div>
+        ${b.author ? `<div class="rt-favbooks-picker-author">${esc(b.author)}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('') || '<p style="font-size:0.83rem;color:var(--rt-t3);">Rate some books 5★ first.</p>';
+  document.getElementById('rt-favbooks-overlay-bg').style.display = 'block';
+  requestAnimationFrame(() => document.getElementById('rt-favbooks-overlay').classList.add('open'));
+}
+function toggleFavBook(el, id) {
+  const idx = _favBookIds.indexOf(String(id));
+  if (idx >= 0) {
+    _favBookIds.splice(idx, 1);
+    el.classList.remove('selected');
+    el.querySelector('.rt-favbooks-picker-check').textContent = '';
+  } else {
+    if (_favBookIds.length >= 10) { showFlash('Maximum 10 favourite books.'); return; }
+    _favBookIds.push(String(id));
+    el.classList.add('selected');
+    el.querySelector('.rt-favbooks-picker-check').textContent = '✓';
+  }
+}
+function closeFavBooksEditor() {
+  document.getElementById('rt-favbooks-overlay').classList.remove('open');
+  setTimeout(() => { document.getElementById('rt-favbooks-overlay-bg').style.display = 'none'; }, 280);
+}
+async function saveFavBooks() {
+  if (!currentUser) return;
+  try {
+    await sb.from('profiles').upsert(
+      { id: currentUser.id, top_book_ids: _favBookIds },
+      { onConflict: 'id' }
+    );
+    renderFavBooksCarousel();
+    closeFavBooksEditor();
+    showFlash('Favourite books saved!');
+  } catch(e) {
+    console.error('[Profile] saveFavBooks:', e);
+    showFlash('Could not save — check your connection.');
+  }
+}
+
+// ── Home feed (friend reviews) ────────────────────────────────
+function renderHomeFeed() {
+  const el = document.getElementById('rt-home-feed-list');
+  const card = document.getElementById('rt-home-feed-card');
+  if (!el || !card) return;
+
+  const reviewEvents = (socialState.feed || [])
+    .filter(f => f.event_type === 'review' || (f.book_title && f.book_author));
+
+  const feedLoggedOut = document.getElementById('rt-home-feed-loggedout');
+  const notifLoggedOut = document.getElementById('rt-home-notif-loggedout');
+  if (!currentUser || !socialState._loaded) {
+    card.style.display = 'none';
+    if (feedLoggedOut) feedLoggedOut.style.display = 'block';
+    if (notifLoggedOut) notifLoggedOut.style.display = 'block';
+    return;
+  }
+  card.style.display = 'block';
+  if (feedLoggedOut) feedLoggedOut.style.display = 'none';
+  if (notifLoggedOut) notifLoggedOut.style.display = 'none';
+
+  if (!reviewEvents.length) {
+    el.innerHTML = '<div class="rt-feed-empty"><div class="rt-feed-empty-icon">📖</div><p>Add friends to see their reviews here.</p></div>';
+    return;
+  }
+
+  const profileMap = {};
+  (socialState.friends || []).forEach(f => { profileMap[f.userId] = f; });
+
+  el.innerHTML = reviewEvents.slice(0,10).map(ev => {
+    const friend = profileMap[ev.user_id];
+    const name   = friend?.displayName || friend?.username || 'A friend';
+    const colour = avatarColour(ev.user_id);
+    const init   = avatarInitial(name);
+    const coverUrl = ev.cover_id
+      ? `https://covers.openlibrary.org/b/id/${ev.cover_id}-S.jpg`
+      : ev.book_ol_key
+        ? `https://covers.openlibrary.org/b/olid/${ev.book_ol_key.replace('/works/','')}-S.jpg`
+        : '';
+    return `
+      <div class="rt-feed-item" style="cursor:pointer;" onclick="openHomeFeedBook('${esc(ev.book_ol_key||'')}','${esc(ev.book_title||'')}','${esc(ev.book_author||'')}',${ev.cover_id||null},'${esc(ev.user_id)}')">
+        <div class="rt-feed-avatar" style="background:${colour};">${init}</div>
+        <div class="rt-feed-body" style="flex:1;min-width:0;">
+          <div class="rt-feed-who"><strong>${esc(name)}</strong> reviewed a book</div>
+          <div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.3rem;">
+            ${coverUrl ? `<img src="${coverUrl}" style="width:24px;height:34px;border-radius:2px;object-fit:cover;" alt="">` : ''}
+            <div class="rt-feed-book-title" style="font-size:0.82rem;">${esc(ev.book_title||'a book')}</div>
+          </div>
+        </div>
+        <button class="rt-done-action-btn rt-done-action-btn--secondary" style="padding:0.25rem 0.55rem;font-size:0.7rem;min-width:0;flex-shrink:0;" type="button"
+          onclick="event.stopPropagation();openHomeFeedChat('${esc(ev.book_ol_key||'')}','${esc(ev.book_title||'')}','${esc(ev.book_author||'')}',${ev.cover_id||null},'${esc(ev.user_id)}')">
+          💬
+        </button>
+      </div>`;
+  }).join('');
+}
+
+function openHomeFeedBook(olKey, title, author, coverId, friendId) {
+  // Open book detail if we have this book, else open friend profile
+  const book = books.find(b => b.olKey === olKey);
+  if (book) openBookDetail(book.id);
+}
+
+function openHomeFeedChat(olKey, title, author, coverId, friendId) {
+  if (!olKey) { showFlash('Cannot start chat — book has no Open Library ID.'); return; }
+  startOrOpenChat(olKey, title, author, coverId ? parseInt(coverId) : null, [friendId]);
+}
+
+// ── Home notifications strip ──────────────────────────────────
+function updateHomeNotifStrip() {
+  const strip = document.getElementById('rt-home-notif-strip');
+  if (!strip || !currentUser) return;
+  const unreadChats = chatState.chats.reduce((s,c) => s + (c.unread||0), 0);
+  const newRecs     = (socialState.recs||[]).filter(r => r.status === 'pending').length;
+  _notifState.unreadChats = unreadChats;
+  _notifState.newRecs     = newRecs;
+  const chatsEl = document.getElementById('rt-home-notif-chats');
+  const recsEl  = document.getElementById('rt-home-notif-recs');
+  if (chatsEl) {
+    chatsEl.style.display = unreadChats > 0 ? 'flex' : 'none';
+    const t = document.getElementById('rt-home-notif-chats-text');
+    if (t) t.textContent = `${unreadChats} unread message${unreadChats > 1 ? 's' : ''}`;
+  }
+  if (recsEl) {
+    recsEl.style.display = newRecs > 0 ? 'flex' : 'none';
+    const t = document.getElementById('rt-home-notif-recs-text');
+    if (t) t.textContent = `${newRecs} new book recommendation${newRecs > 1 ? 's' : ''}`;
+  }
+  strip.style.display = (unreadChats > 0 || newRecs > 0) ? 'block' : 'none';
+  updateNotifDot();
+}
+
+// ── Finish-book done screen actions ──────────────────────────
+function doneRecommend() {
+  closeModal();
+  if (sheetBookId) openRecommendSheet(sheetBookId);
+}
+function doneStartChat() {
+  const book = books.find(b => String(b.id) === String(sheetBookId));
+  if (!book) { closeModal(); return; }
+  closeModal();
+  if (!book.olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
+  // Find friends who have read or are reading this book
+  const friendsWithBook = socialState.friends.filter(f => {
+    // We don't have per-friend book data locally — just start chat with all friends as option
+    return true;
+  }).map(f => f.userId);
+  startOrOpenChat(book.olKey, book.title, book.author, book.coverId, friendsWithBook);
+}
+
+// ── Hook profile rendering into auth flow ─────────────────────
+// Called after loadUsernameDisplay resolves
+const _origLoadUsername = loadUsernameDisplay;
+loadUsernameDisplay = async function() {
+  await _origLoadUsername();
+  // Also load bio from profiles
+  if (currentUser) {
+    try {
+      const { data } = await sb.from('profiles').select('bio, top_book_ids').eq('id', currentUser.id).maybeSingle();
+      if (data?.bio)           socialState._myBio      = data.bio;
+      if (data?.top_book_ids)  _favBookIds = data.top_book_ids || [];
+    } catch(e) {}
+    renderProfilePage();
+  }
+};
+
+// Refresh home feed when social data loads
+const _origRenderSocial = typeof renderSocialUI === 'function' ? renderSocialUI : null;
+// Hook into loadSocialData completion via socialState
+const _origLoadSocial = loadSocialData;
+loadSocialData = async function() {
+  await _origLoadSocial();
+  renderHomeFeed();
+  updateHomeNotifStrip();
+  renderFriendRecsDiscover();
+};
+
+function renderFriendRecsDiscover() {
+  const loggedOut = document.getElementById('rt-friend-recs-loggedout');
+  const list      = document.getElementById('rt-friend-recs-list');
+  const empty     = document.getElementById('rt-friend-recs-empty');
+  if (!loggedOut || !list || !empty) return;
+
+  if (!currentUser) {
+    loggedOut.style.display = 'block';
+    list.style.display      = 'none';
+    empty.style.display     = 'none';
+    return;
+  }
+  loggedOut.style.display = 'none';
+
+  const pending = (socialState.recs || []).filter(r => r.status === 'pending');
+  if (!pending.length) {
+    list.style.display  = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  list.style.display  = 'flex';
+  empty.style.display = 'none';
+
+  list.innerHTML = pending.map(r => {
+    const name = r.profiles?.display_name || r.profiles?.username || 'A friend';
+    const colour = avatarColour(r.from_user_id);
+    const init   = avatarInitial(name);
+    const coverHtml = r.cover_id
+      ? `<img src="https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg" style="width:36px;height:50px;border-radius:4px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
+      : `<div style="width:36px;height:50px;border-radius:4px;background:var(--rt-cream-md);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📚</div>`;
+    const msg = r.message ? `<div style="font-size:0.75rem;color:var(--rt-t3);font-style:italic;margin-top:0.2rem;">"${esc(r.message.slice(0,80))}${r.message.length>80?'…':''}"</div>` : '';
+    return `<div class="rt-card" style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;border-radius:var(--rt-r3);">
+      ${coverHtml}
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:0.82rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(r.book_title||'Unknown book')}</div>
+        <div style="font-size:0.75rem;color:var(--rt-t3);margin-top:0.1rem;">from <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:14px;height:14px;border-radius:50%;background:${colour};display:inline-flex;align-items:center;justify-content:center;font-size:0.5rem;color:#fff;font-weight:700;">${init}</span>${esc(name)}</span></div>
+        ${msg}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0;">
+        <button class="rt-done-action-btn rt-done-action-btn--primary" style="padding:0.3rem 0.7rem;font-size:0.72rem;min-width:0;" onclick="acceptRecToTBR('${r.id}','${esc(r.book_ol_key||'')}','${esc(r.message||'')}')">+ Add</button>
+        <button class="rt-done-action-btn rt-done-action-btn--secondary" style="padding:0.3rem 0.7rem;font-size:0.72rem;min-width:0;" onclick="dismissRec('${r.id}')">Dismiss</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Dismiss a friend rec
+async function dismissRec(recId) {
+  try {
+    await sb.from('book_recommendations').update({ status: 'dismissed' }).eq('id', recId);
+    socialState.recs = socialState.recs.filter(r => r.id !== recId);
+    renderFriendRecsDiscover();
+    updateHomeNotifStrip();
+    updateNotifDot();
+  } catch(e) { showFlash('Could not dismiss recommendation.'); }
+}
+
+
 // ─────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────
@@ -7043,6 +8126,7 @@ sb.auth.onAuthStateChange((event, session) => {
       _realtimeChannel = null;
     }
     renderAuthUI();
+    renderFriendRecsDiscover();
   }
 });
 </script>
