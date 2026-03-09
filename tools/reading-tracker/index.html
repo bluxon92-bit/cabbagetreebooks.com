@@ -2049,7 +2049,20 @@ permalink: /tools/reading-tracker/
 
   /* Chat list: no padding hacks needed */
   #rt-chat-list { padding-bottom: 0; }
-  #rt-chat-list-view { padding-bottom: 0; }
+
+  /* Chat list view: flex column so invite strip pins to bottom, list scrolls above */
+  #rt-chat-list-view {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 160px); /* same as thread view: 52px header + 44px tabs + 64px nav */
+  }
+  #rt-chat-list-view #rt-chat-list {
+    flex: 1;
+    overflow-y: auto;
+  }
+  #rt-chat-list-view #rt-invite-strip-inline {
+    flex-shrink: 0;
+  }
 
   /* Chat thread: full-height flex column so input stays above nav
      52px header + 44px tab bar + 64px bottom nav = 160px */
@@ -2170,12 +2183,13 @@ permalink: /tools/reading-tracker/
 /* Invite strip — inline at bottom of chat list */
 .rt-invite-strip {
   background: var(--rt-navy);
-  padding: 0.7rem 1.25rem;
+  padding: 0.85rem 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   flex-shrink: 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 .rt-invite-strip-copy {
   flex: 1; min-width: 0;
@@ -2380,6 +2394,12 @@ permalink: /tools/reading-tracker/
 }
 
 /* ── Home feed review cards ──────────────────────────────── */
+/* ── Hide Jekyll site header & nav when reading tracker is embedded ── */
+.site-header, header.site-header, #site-header, #masthead,
+.site-nav, nav.site-nav, .main-nav, .global-nav, .navbar, .page-header {
+  display: none !important;
+}
+
 .rt-home-review-item {
   padding: 0.9rem 0;
   border-bottom: 1px solid var(--rt-border);
@@ -2483,6 +2503,22 @@ permalink: /tools/reading-tracker/
      Approx: sidebar sticky already handles viewport; thread card
      should not grow past viewport height.
      44px site tabbar + ~48px community tab bar + ~48px thread header */
+
+  /* Desktop chat list view: same pinned-strip treatment */
+  #rt-chat-list-view {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 180px);
+    min-height: 300px;
+  }
+  #rt-chat-list-view #rt-chat-list {
+    flex: 1;
+    overflow-y: auto;
+  }
+  #rt-chat-list-view #rt-invite-strip-inline {
+    flex-shrink: 0;
+  }
+
   #rt-chat-thread-view {
     display: flex;
     flex-direction: column;
@@ -2970,7 +3006,7 @@ permalink: /tools/reading-tracker/
                   </div>
                 </div>
                 <!-- Invite strip — inline at bottom of chat list -->
-                <div class="rt-invite-strip" id="rt-invite-strip-inline" style="display:none;">
+                <div class="rt-invite-strip" id="rt-invite-strip-inline" style="display:flex;">
                   <div class="rt-invite-strip-copy">
                     <div class="rt-invite-strip-title">Books are better shared.</div>
                     <div class="rt-invite-strip-sub">Invite friends to recommend and chat about your favourite stories.</div>
@@ -3087,12 +3123,7 @@ permalink: /tools/reading-tracker/
     <div class="rt-panel" id="rt-panel-recs" data-tab="recs" style="display:none;">
       <div class="rt-panel-inner">
         <div class="rt-recs-header">
-          <div>
-            <div class="section-label" style="margin-bottom:0.4rem;">Powered by Claude</div>
-            <h2 class="rt-section-heading" style="margin-bottom:0.3rem;">What should I read next?</h2>
-            <p class="rt-panel-sub">Claude reads your full history — ratings, DNFs, genres, notes — and recommends books matched to your actual taste.</p>
-          </div>
-          <div class="rt-ai-badge">AI</div>
+          <h2 class="rt-section-heading" style="margin-bottom:0;">What should I read next?</h2>
         </div>
 
         <!-- Logged out: locked -->
@@ -3659,6 +3690,24 @@ permalink: /tools/reading-tracker/
           <textarea id="rt-notes" rows="3" placeholder="What did you think?"></textarea>
         </div>
       </div>
+      <div id="rt-add-review-row" style="display:none;margin-bottom:1.1rem;">
+        <div class="rt-share-toggle-row" style="border-radius:var(--rt-r3);">
+          <div class="rt-share-toggle-text">
+            <strong>Share a review</strong>
+            <span>Friends can see this</span>
+          </div>
+          <label class="rt-toggle-switch" aria-label="Share review publicly">
+            <input type="checkbox" id="rt-add-share-check">
+            <div class="rt-toggle-track"></div>
+          </label>
+        </div>
+        <div id="rt-add-review-public-wrap" style="display:none;margin-top:0.65rem;">
+          <div class="rt-review-field">
+            <label for="rt-add-review-text">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public)</span></label>
+            <textarea id="rt-add-review-text" rows="3" placeholder="Write something others would find useful…"></textarea>
+          </div>
+        </div>
+      </div>
       <div style="display:flex;align-items:center;gap:0.65rem;flex-wrap:wrap;padding:0.85rem 1rem;background:var(--rt-cream);border-radius:var(--rt-r3);border:1.5px dashed var(--rt-border-md);margin-bottom:1.25rem;">
         <span style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);">📥 Import your book list from Goodreads or Storygraph</span>
         <label for="rt-csv-file" class="rt-ghost-btn" style="cursor:pointer;display:inline-flex;align-items:center;">Goodreads CSV</label>
@@ -3807,6 +3856,16 @@ permalink: /tools/reading-tracker/
         <div id="rt-book-detail-friend-body" style="font-size:0.88rem;color:var(--rt-t2);line-height:1.65;font-style:italic;"></div>
       </div>
 
+      <!-- Recommended by (shown when opened from recs) -->
+      <div class="rt-book-detail-section" id="rt-book-detail-rec-section" style="display:none;">
+        <div class="rt-book-detail-section-label" style="margin-bottom:0.55rem;">Recommended by</div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+          <div id="rt-book-detail-rec-avatar" style="width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;flex-shrink:0;"></div>
+          <span id="rt-book-detail-rec-name" style="font-size:0.8rem;font-weight:600;color:var(--rt-navy);"></span>
+        </div>
+        <div id="rt-book-detail-rec-message" style="font-size:0.88rem;color:var(--rt-t2);line-height:1.65;font-style:italic;"></div>
+      </div>
+
       <!-- User's rating/review (shown for read/dnf books) -->
       <div class="rt-book-detail-section" id="rt-book-detail-user-section" style="display:none;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.35rem;">
@@ -3918,7 +3977,7 @@ permalink: /tools/reading-tracker/
               <div class="rt-toggle-track"></div>
             </label>
           </div>
-          <div class="rt-review-public-wrap visible" id="rt-review-public-wrap">
+          <div class="rt-review-public-wrap" id="rt-review-public-wrap">
             <div class="rt-review-field" style="margin-bottom:0.25rem;">
               <label for="rt-sheet-review">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public)</span></label>
               <textarea id="rt-sheet-review" rows="3" placeholder="Write something others would find useful…"></textarea>
@@ -4331,6 +4390,25 @@ async function loadSocialData() {
     const friendAndSelf = [...new Set([currentUser.id, ...friendIds])];
 
     // Step 2: fetch feed for self + friends via RPC (bypasses RLS which only allows own rows)
+    // Helper: fetch own events, trying new columns first then falling back if not migrated yet
+    async function fetchOwnFeedEvents() {
+      // Try with review_body + rating columns (requires migration)
+      const { data: full, error: fullErr } = await sb.from('feed_events')
+        .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, review_body, rating, created_at')
+        .eq('user_id', currentUser.id)
+        .order('created_at', { ascending: false })
+        .limit(40);
+      if (!fullErr) return full || [];
+      // Columns not migrated yet — fall back to base columns
+      console.warn('[Feed] review_body/rating columns missing — run migration SQL. Showing feed without review text.');
+      const { data: base } = await sb.from('feed_events')
+        .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, created_at')
+        .eq('user_id', currentUser.id)
+        .order('created_at', { ascending: false })
+        .limit(40);
+      return base || [];
+    }
+
     let feedData = [];
     if (friendIds.length > 0) {
       // Try RPC first (needs SECURITY DEFINER function in Supabase)
@@ -4341,26 +4419,14 @@ async function loadSocialData() {
       if (!rpcFeedErr && Array.isArray(rpcFeed)) {
         feedData = rpcFeed;
       } else {
-        // Fallback: own events only (friends' events blocked by RLS until RPC is created)
-        const { data: ownFeed } = await sb.from('feed_events')
-          .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, review_body, rating, created_at')
-          .eq('user_id', currentUser.id)
-          .order('created_at', { ascending: false })
-          .limit(40);
-        feedData = ownFeed || [];
+        feedData = await fetchOwnFeedEvents();
         if (rpcFeedErr && rpcFeedErr.code !== 'PGRST202') {
-          // Only log if it's not a "function not found" error — that's expected until SQL is run
           console.warn('[Social] feed_events RPC unavailable, showing own events only:', rpcFeedErr.message);
         }
       }
     } else {
       // No friends yet — just own events
-      const { data: ownFeed } = await sb.from('feed_events')
-        .select('id, user_id, event_type, book_ol_key, book_title, book_author, cover_id, review_body, rating, created_at')
-        .eq('user_id', currentUser.id)
-        .order('created_at', { ascending: false })
-        .limit(40);
-      feedData = ownFeed || [];
+      feedData = await fetchOwnFeedEvents();
     }
 
     // Step 3: batch-fetch profiles via RPC (bypasses own-only RLS)
@@ -6159,9 +6225,14 @@ document.addEventListener('keydown', function(e) {
 document.querySelectorAll('input[name="rt-status"]').forEach(radio => {
   radio.addEventListener('change', function() {
     const isRead = this.value === 'read';
-    document.getElementById('rt-date-field').style.display  = isRead ? 'flex' : 'none';
-    document.getElementById('rt-rating-row').style.display  = isRead ? 'flex' : 'none';
-    document.getElementById('rt-notes-row').style.display   = isRead ? 'flex' : 'none';
+    document.getElementById('rt-date-field').style.display    = isRead ? 'flex' : 'none';
+    document.getElementById('rt-rating-row').style.display    = isRead ? 'flex' : 'none';
+    document.getElementById('rt-notes-row').style.display     = isRead ? 'flex' : 'none';
+    document.getElementById('rt-add-review-row').style.display = isRead ? 'block' : 'none';
+    if (!isRead) {
+      document.getElementById('rt-add-share-check').checked = false;
+      document.getElementById('rt-add-review-public-wrap').style.display = 'none';
+    }
   });
 });
 
@@ -6226,6 +6297,8 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   }
 
   // No duplicate — proceed normally
+  const isPublicAdd  = status === 'read' && document.getElementById('rt-add-share-check').checked;
+  const reviewAddTxt = isPublicAdd ? (document.getElementById('rt-add-review-text').value.trim() || null) : null;
   const book = {
     id:          uid(), title,
     author:      document.getElementById('rt-author').value.trim(),
@@ -6233,6 +6306,8 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
     status,
     rating:      status === 'read' ? addRating || null : null,
     notes:       status === 'read' ? document.getElementById('rt-notes').value.trim() || null : null,
+    reviewBody:  reviewAddTxt,
+    isPublic:    isPublicAdd,
     date:        status === 'read' ? (document.getElementById('rt-date').value || new Date().toISOString().split('T')[0]) : null,
     dateStarted: status === 'reading' ? new Date().toISOString().split('T')[0] : null,
     added:       new Date().toISOString(),
@@ -6242,14 +6317,18 @@ document.getElementById('rt-add-btn').addEventListener('click', function() {
   };
   books.unshift(book); save();
   saveBookToCloud(book);
+  if (status === 'read' && isPublicAdd) _writeFeedEvent(book, 'posted_review');
   if (status === 'reading') handleBookClubTrigger(book);
-  ['rt-title','rt-author','rt-notes'].forEach(id => document.getElementById(id).value = '');
+  ['rt-title','rt-author','rt-notes','rt-add-review-text'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('rt-ol-cover-id').value = '';
   document.getElementById('rt-ol-key').value = '';
   document.getElementById('rt-genre').value = '';
   document.querySelector('input[name="rt-status"][value="reading"]').checked = true;
   document.getElementById('rt-rating-row').style.display = 'none';
   document.getElementById('rt-notes-row').style.display  = 'none';
+  document.getElementById('rt-add-review-row').style.display = 'none';
+  document.getElementById('rt-add-share-check').checked  = false;
+  document.getElementById('rt-add-review-public-wrap').style.display = 'none';
   setAddStars(0);
   updateStats(); renderHomeReading(); renderHistory();
   if (status === 'tbr') renderTBR();
@@ -6521,8 +6600,8 @@ function openModal(bookId) {          // called from existing "Finished?" button
   document.getElementById('rt-sheet-notes').value  = '';
   document.getElementById('rt-sheet-review').value = '';
   document.getElementById('rt-sheet-genre').value  = book.genre || '';
-  document.getElementById('rt-share-check').checked = true;
-  document.getElementById('rt-review-public-wrap').classList.add('visible');
+  document.getElementById('rt-share-check').checked = false;
+  document.getElementById('rt-review-public-wrap').classList.remove('visible');
 
   goToStep(0);
 
@@ -6605,6 +6684,9 @@ document.getElementById('rt-dnf-check').addEventListener('change', function() {
 // Share toggle — show/hide public review field
 document.getElementById('rt-share-check').addEventListener('change', function() {
   document.getElementById('rt-review-public-wrap').classList.toggle('visible', this.checked);
+});
+document.getElementById('rt-add-share-check').addEventListener('change', function() {
+  document.getElementById('rt-add-review-public-wrap').style.display = this.checked ? 'block' : 'none';
 });
 document.getElementById('rt-share-check-edit').addEventListener('change', function() {
   document.getElementById('rt-review-public-wrap-edit').classList.toggle('visible', this.checked);
@@ -7018,9 +7100,11 @@ function closeBookDetail() {
   overlay.classList.remove('open');
   document.body.style.overflow = '';
   detailBookId = null;
-  // Always reset friend review section so it doesn't bleed into own-book opens
+  // Always reset contextual sections so they don't bleed into own-book opens
   const fs = document.getElementById('rt-book-detail-friend-section');
   if (fs) fs.style.display = 'none';
+  const rs = document.getElementById('rt-book-detail-rec-section');
+  if (rs) rs.style.display = 'none';
 }
 
 document.getElementById('rt-book-detail-footer').addEventListener('click', function(e) {
@@ -8388,7 +8472,7 @@ function openFavBooksEditor() {
   const overlay = document.getElementById('rt-favbooks-overlay');
   if (bg) bg.style.display = 'block';
   if (overlay) {
-    overlay.style.display = 'block';
+    overlay.style.display = 'flex';  // must be flex for header/body/footer layout to work
     document.body.style.overflow = 'hidden'; // prevent page scroll-through
     requestAnimationFrame(() => overlay.classList.add('open'));
   }
@@ -8458,27 +8542,25 @@ function renderHomeFeed() {
   if (recsCard && recsList) {
     recsCard.style.display = pendingRecs.length ? 'block' : 'none';
     if (pendingRecs.length) {
-      recsList.innerHTML = pendingRecs.slice(0, 5).map(r => {
-        const name  = r.profiles?.display_name || r.profiles?.username || 'A friend';
+      window._pendingRecs = pendingRecs; // stash for modal opener
+      recsList.innerHTML = pendingRecs.slice(0, 5).map((r, idx) => {
+        const name   = r.profiles?.display_name || r.profiles?.username || 'A friend';
         const colour = avatarColour(r.from_user_id);
         const init   = avatarInitial(name);
         const coverHtml = r.cover_id
-          ? `<img src="https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg" style="width:36px;height:50px;border-radius:4px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
-          : `<div style="width:36px;height:50px;border-radius:4px;background:var(--rt-surface);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">📚</div>`;
+          ? `<div class="rt-profile-review-cover"><img src="https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📚'"></div>`
+          : `<div class="rt-profile-review-cover">📚</div>`;
         return `
-          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0;border-bottom:1px solid var(--rt-border);">
+          <div class="rt-profile-review-item" style="cursor:pointer;" onclick="openRecDetail(${idx})">
             ${coverHtml}
-            <div style="flex:1;min-width:0;">
-              <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(r.book_title || r.book_ol_key || 'A book')}</div>
-              ${r.book_author ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-top:1px;">${esc(r.book_author)}</div>` : ''}
-              <div style="font-size:0.72rem;color:var(--rt-t3);margin-top:2px;">from <span style="display:inline-flex;align-items:center;gap:0.25rem;"><span style="width:13px;height:13px;border-radius:50%;background:${colour};display:inline-flex;align-items:center;justify-content:center;font-size:0.48rem;color:#fff;font-weight:700;">${init}</span>${esc(name)}</span></div>
-              ${r.message ? `<div style="font-size:0.7rem;color:var(--rt-t3);font-style:italic;margin-top:2px;">"${esc(r.message.slice(0,60))}${r.message.length>60?'…':''}"</div>` : ''}
-            </div>
-            <div style="display:flex;flex-direction:column;gap:0.35rem;flex-shrink:0;">
-              <button class="rt-done-action-btn rt-done-action-btn--primary" style="padding:0.3rem 0.65rem;font-size:0.72rem;min-width:0;"
-                onclick="acceptRecToTBR('${r.id}','${esc(r.book_ol_key||'')}','${esc(r.message||'')}','${esc(r.book_title||'')}','${esc(r.book_author||'')}',${r.cover_id||null})">+ Add</button>
-              <button class="rt-done-action-btn rt-done-action-btn--secondary" style="padding:0.3rem 0.65rem;font-size:0.72rem;min-width:0;"
-                onclick="dismissRec('${r.id}')">Dismiss</button>
+            <div class="rt-profile-review-body-wrap">
+              <div class="rt-profile-review-title">${esc(r.book_title || r.book_ol_key || 'A book')}</div>
+              ${r.book_author ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-bottom:3px;">${esc(r.book_author)}</div>` : ''}
+              <div style="display:flex;align-items:center;gap:0.3rem;margin-top:2px;">
+                <div style="width:14px;height:14px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:0.48rem;font-weight:700;color:#fff;flex-shrink:0;">${init}</div>
+                <span style="font-size:0.72rem;color:var(--rt-t3);">from ${esc(name)}</span>
+              </div>
+              ${r.message ? `<div style="font-size:0.72rem;color:var(--rt-t2);font-style:italic;margin-top:3px;">"${esc(r.message.slice(0,60))}${r.message.length>60?'…':''}"</div>` : ''}
             </div>
           </div>`;
       }).join('');
@@ -8508,9 +8590,10 @@ function renderHomeFeed() {
     const colour   = avatarColour(ev.user_id);
     const init     = avatarInitial(name);
     const stars    = ev.rating ? '★'.repeat(ev.rating) + '☆'.repeat(5 - ev.rating) : '';
-    const coverUrl = ev.cover_id
-      ? `https://covers.openlibrary.org/b/id/${ev.cover_id}-S.jpg`
-      : '';
+    // cover_id may be null on old events — fall back to local books array by olKey
+    const localBook = ev.book_ol_key ? books.find(b => b.olKey === ev.book_ol_key) : null;
+    const coverId   = ev.cover_id || localBook?.coverId || null;
+    const coverUrl  = coverId ? `https://covers.openlibrary.org/b/id/${coverId}-S.jpg` : '';
     const coverHtml = coverUrl
       ? `<div class="rt-profile-review-cover"><img src="${coverUrl}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📖'"></div>`
       : `<div class="rt-profile-review-cover">📖</div>`;
@@ -8535,25 +8618,20 @@ function openFriendReviewDetail(idx) {
   const ev = (window._feedEvents || [])[idx];
   if (!ev) return;
 
+  // cover_id and review_body may be null on old events — patch from local books if possible
+  const localBook = ev.book_ol_key ? books.find(b => b.olKey === ev.book_ol_key) : null;
+  const resolvedCoverId    = ev.cover_id    || localBook?.coverId    || null;
+  const resolvedReviewBody = ev.review_body || (localBook?.userId === ev.user_id ? localBook?.reviewBody : null) || null;
+  const resolvedRating     = ev.rating      || null;
+
   // Build a minimal book-like object for fetchBookDetail
   const fakeBook = { olKey: ev.book_ol_key || null, title: ev.book_title || '', author: ev.book_author || '' };
 
-  // Hero cover — try cover_id first, fallback to olKey cover, then placeholder
+  // Hero
   const ph  = document.getElementById('rt-book-detail-cover-ph');
   const img = document.getElementById('rt-book-detail-cover-img');
-  const olCoverUrl = ev.book_ol_key
-    ? `https://covers.openlibrary.org/b/olid/${ev.book_ol_key.replace('/works/', '')}-L.jpg`
-    : '';
-  if (ev.cover_id) {
-    img.src = `https://covers.openlibrary.org/b/id/${ev.cover_id}-L.jpg`;
-    img.onerror = () => {
-      if (olCoverUrl) { img.src = olCoverUrl; img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex'; }; }
-      else { img.style.display = 'none'; ph.style.display = 'flex'; }
-    };
-    img.style.display = 'block'; ph.style.display = 'none';
-  } else if (olCoverUrl) {
-    img.src = olCoverUrl;
-    img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex'; };
+  if (resolvedCoverId) {
+    img.src = `https://covers.openlibrary.org/b/id/${resolvedCoverId}-L.jpg`;
     img.style.display = 'block'; ph.style.display = 'none';
   } else {
     img.style.display = 'none'; ph.style.display = 'flex';
@@ -8580,32 +8658,9 @@ function openFriendReviewDetail(idx) {
   document.getElementById('rt-book-detail-friend-avatar').style.background = colour;
   document.getElementById('rt-book-detail-friend-avatar').textContent = init;
   document.getElementById('rt-book-detail-friend-name').textContent = '@' + username;
-  document.getElementById('rt-book-detail-friend-stars').textContent = ev.rating
-    ? '★'.repeat(ev.rating) + '☆'.repeat(5 - ev.rating) : '';
-  document.getElementById('rt-book-detail-friend-body').textContent = ev.review_body || '';
-
-  // If feed event lacks review_body/rating (old events pre-migration), fetch live from reading_entries
-  if ((!ev.review_body && !ev.rating) && ev.book_ol_key && currentUser) {
-    (async () => {
-      try {
-        const { data } = await sb.from('reading_entries')
-          .select('review_body, review_is_public, rating')
-          .eq('user_id', ev.user_id)
-          .eq('ol_key',  ev.book_ol_key)
-          .eq('review_is_public', true)
-          .maybeSingle();
-        if (data) {
-          if (data.rating) {
-            document.getElementById('rt-book-detail-friend-stars').textContent =
-              '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
-          }
-          if (data.review_body) {
-            document.getElementById('rt-book-detail-friend-body').textContent = data.review_body;
-          }
-        }
-      } catch(e) { /* non-fatal */ }
-    })();
-  }
+  document.getElementById('rt-book-detail-friend-stars').textContent = resolvedRating
+    ? '★'.repeat(resolvedRating) + '☆'.repeat(5 - resolvedRating) : '';
+  document.getElementById('rt-book-detail-friend-body').textContent = resolvedReviewBody || '';
 
   // Blurb loading state
   document.getElementById('rt-book-detail-blurb').innerHTML = `
@@ -8615,25 +8670,29 @@ function openFriendReviewDetail(idx) {
     </div>`;
   document.getElementById('rt-book-detail-subjects-section').style.display = 'none';
 
-  // Footer: Add to TBR + Start chat
-  const existing = books.find(b => b.olKey === ev.book_ol_key);
-  const footer   = document.getElementById('rt-book-detail-footer');
-  const olKey    = ev.book_ol_key  || '';
-  const title    = ev.book_title   || '';
-  const author   = ev.book_author  || '';
-  const coverId  = ev.cover_id     || null;
-  const userId   = ev.user_id;
+  // Footer: Add to TBR + Start/Go to chat
+  const existing     = books.find(b => b.olKey === ev.book_ol_key);
+  const footer       = document.getElementById('rt-book-detail-footer');
+  const olKey        = ev.book_ol_key  || '';
+  const title        = ev.book_title   || '';
+  const author       = ev.book_author  || '';
+  const coverId      = resolvedCoverId;
+  const userId       = ev.user_id;
+  const existingChat = olKey ? chatState.chats.find(c => c.bookOlKey === olKey) : null;
+  const chatBtn      = existingChat
+    ? `<button class="rt-book-detail-action rt-book-detail-action--primary"
+         onclick="closeBookDetail();goToChat('${esc(existingChat.id)}')">→ Go to chat</button>`
+    : `<button class="rt-book-detail-action rt-book-detail-action--primary"
+         onclick="closeBookDetail();homeFeedStartChat('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId},'${esc(userId)}')">💬 Start chat</button>`;
   if (existing) {
     footer.innerHTML = `
       <button class="rt-book-detail-action" disabled style="opacity:0.5;cursor:default;">✓ Already on your list</button>
-      <button class="rt-book-detail-action rt-book-detail-action--primary"
-        onclick="closeBookDetail();homeFeedStartChat('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId},'${esc(userId)}')">💬 Start chat</button>`;
+      ${chatBtn}`;
   } else {
     footer.innerHTML = `
       <button class="rt-book-detail-action" id="rt-friend-tbr-btn"
         onclick="homeFeedAddToTBR('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId})">＋ Add to TBR</button>
-      <button class="rt-book-detail-action rt-book-detail-action--primary"
-        onclick="closeBookDetail();homeFeedStartChat('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId},'${esc(userId)}')">💬 Start chat</button>`;
+      ${chatBtn}`;
   }
 
   // Open sheet
@@ -8677,6 +8736,105 @@ function homeFeedStartChat(olKey, title, author, coverId, friendId) {
       if (found) openChatThread(found.id);
     }
   });
+}
+
+function openRecDetail(idx) {
+  const r = (window._pendingRecs || [])[idx];
+  if (!r) return;
+
+  const name   = r.profiles?.display_name || r.profiles?.username || 'A friend';
+  const colour = avatarColour(r.from_user_id);
+  const init   = avatarInitial(name);
+
+  // Hero
+  const ph  = document.getElementById('rt-book-detail-cover-ph');
+  const img = document.getElementById('rt-book-detail-cover-img');
+  if (r.cover_id) {
+    img.src = `https://covers.openlibrary.org/b/id/${r.cover_id}-L.jpg`;
+    img.style.display = 'block'; ph.style.display = 'none';
+  } else {
+    img.style.display = 'none'; ph.style.display = 'flex';
+  }
+  document.getElementById('rt-book-detail-title').textContent  = r.book_title  || '';
+  document.getElementById('rt-book-detail-author').textContent = r.book_author ? `by ${r.book_author}` : '';
+  document.getElementById('rt-book-detail-year').textContent   = '';
+  const existing = books.find(b => b.olKey === r.book_ol_key);
+  document.getElementById('rt-book-detail-badge').textContent  = existing
+    ? ({ reading: '📖 Currently reading', read: '✓ Read', tbr: '🔖 On your list', dnf: 'Did not finish' }[existing.status] || '') : '';
+
+  // Hide own-review section, hide friend-review section
+  document.getElementById('rt-book-detail-user-section').style.display   = 'none';
+  document.getElementById('rt-book-detail-friend-section').style.display = 'none';
+
+  // Show rec section
+  const recSection = document.getElementById('rt-book-detail-rec-section');
+  recSection.style.display = 'block';
+  document.getElementById('rt-book-detail-rec-avatar').style.background = colour;
+  document.getElementById('rt-book-detail-rec-avatar').textContent = init;
+  document.getElementById('rt-book-detail-rec-name').textContent    = name;
+  document.getElementById('rt-book-detail-rec-message').textContent  = r.message || '';
+
+  // Blurb
+  document.getElementById('rt-book-detail-blurb').innerHTML = `
+    <div class="rt-book-detail-blurb-loading">
+      <span></span><span></span><span></span>
+      <span style="margin-left:4px;">Loading…</span>
+    </div>`;
+  document.getElementById('rt-book-detail-subjects-section').style.display = 'none';
+
+  // Footer — TBR + smart chat button
+  const footer   = document.getElementById('rt-book-detail-footer');
+  const olKey    = r.book_ol_key  || '';
+  const title    = r.book_title   || '';
+  const author   = r.book_author  || '';
+  const coverId  = r.cover_id     || null;
+  const recId    = r.id;
+  const fromId   = r.from_user_id;
+  const existingChat = olKey ? chatState.chats.find(c => c.bookOlKey === olKey) : null;
+
+  const chatBtn = existingChat
+    ? `<button class="rt-book-detail-action rt-book-detail-action--primary"
+         onclick="closeBookDetail();goToChat('${esc(existingChat.id)}')">→ Go to chat</button>`
+    : `<button class="rt-book-detail-action rt-book-detail-action--primary"
+         onclick="closeBookDetail();homeFeedStartChat('${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId},'${esc(fromId)}')">💬 Start chat</button>`;
+
+  if (existing) {
+    footer.innerHTML = `
+      <button class="rt-book-detail-action" disabled style="opacity:0.5;cursor:default;">✓ Already on your list</button>
+      ${chatBtn}`;
+  } else {
+    footer.innerHTML = `
+      <button class="rt-book-detail-action" id="rt-rec-detail-tbr-btn"
+        onclick="recDetailAddToTBR('${esc(recId)}','${esc(olKey)}','${esc(title)}','${esc(author)}',${coverId})">＋ Add to TBR</button>
+      ${chatBtn}`;
+  }
+
+  // Open sheet
+  const overlay = document.getElementById('rt-book-detail-overlay');
+  const sheet   = document.getElementById('rt-book-detail-sheet');
+  overlay.classList.add('open');
+  requestAnimationFrame(() => sheet.classList.add('open'));
+  document.body.style.overflow = 'hidden';
+
+  // Fetch OL description
+  fetchBookDetail({ olKey, title, author });
+}
+
+function recDetailAddToTBR(recId, olKey, title, author, coverId) {
+  acceptRecToTBR(recId, olKey, '', title, author, coverId).then(() => {
+    // Update button in-place
+    const btn = document.getElementById('rt-rec-detail-tbr-btn');
+    if (btn) { btn.textContent = '✓ Added to your list'; btn.disabled = true; btn.style.opacity = '0.5'; btn.style.cursor = 'default'; }
+    // Refresh _pendingRecs stash since acceptRecToTBR removes the rec
+    window._pendingRecs = (socialState.recs || []).filter(r => r.status === 'pending');
+  });
+}
+
+function goToChat(chatId) {
+  switchCommunityTab('chat');
+  switchTab('community');
+  const found = chatState.chats.find(c => c.id === chatId);
+  if (found) openChatThread(found.id);
 }
 
 // ── Home notifications strip ──────────────────────────────────
@@ -8892,26 +9050,28 @@ function renderFriendRecsDiscover() {
   list.style.display  = 'flex';
   empty.style.display = 'none';
 
-  list.innerHTML = pending.map(r => {
-    const name = r.profiles?.display_name || r.profiles?.username || 'A friend';
+  window._pendingRecs = pending; // stash for modal opener (shared with home recs)
+
+  list.innerHTML = pending.map((r, idx) => {
+    const name   = r.profiles?.display_name || r.profiles?.username || 'A friend';
     const colour = avatarColour(r.from_user_id);
     const init   = avatarInitial(name);
     const coverHtml = r.cover_id
-      ? `<img src="https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg" style="width:36px;height:50px;border-radius:4px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
-      : `<div style="width:36px;height:50px;border-radius:4px;background:var(--rt-cream-md);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📚</div>`;
-    const msg = r.message ? `<div style="font-size:0.75rem;color:var(--rt-t3);font-style:italic;margin-top:0.2rem;">"${esc(r.message.slice(0,80))}${r.message.length>80?'…':''}"</div>` : '';
-    return `<div class="rt-card" style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;border-radius:var(--rt-r3);">
-      ${coverHtml}
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:0.82rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(r.book_title||'Unknown book')}</div>
-        <div style="font-size:0.75rem;color:var(--rt-t3);margin-top:0.1rem;">from <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:14px;height:14px;border-radius:50%;background:${colour};display:inline-flex;align-items:center;justify-content:center;font-size:0.5rem;color:#fff;font-weight:700;">${init}</span>${esc(name)}</span></div>
-        ${msg}
-      </div>
-      <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0;">
-        <button class="rt-done-action-btn rt-done-action-btn--primary" style="padding:0.3rem 0.7rem;font-size:0.72rem;min-width:0;" onclick="acceptRecToTBR('${r.id}','${esc(r.book_ol_key||'')}','${esc(r.message||'')}','${esc(r.book_title||'')}','${esc(r.book_author||'')}',${r.cover_id||null})">+ Add</button>
-        <button class="rt-done-action-btn rt-done-action-btn--secondary" style="padding:0.3rem 0.7rem;font-size:0.72rem;min-width:0;" onclick="dismissRec('${r.id}')">Dismiss</button>
-      </div>
-    </div>`;
+      ? `<div class="rt-profile-review-cover"><img src="https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📚'"></div>`
+      : `<div class="rt-profile-review-cover">📚</div>`;
+    return `
+      <div class="rt-profile-review-item" style="cursor:pointer;" onclick="openRecDetail(${idx})">
+        ${coverHtml}
+        <div class="rt-profile-review-body-wrap">
+          <div class="rt-profile-review-title">${esc(r.book_title || 'Unknown book')}</div>
+          ${r.book_author ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-bottom:3px;">${esc(r.book_author)}</div>` : ''}
+          <div style="display:flex;align-items:center;gap:0.3rem;margin-top:2px;">
+            <div style="width:14px;height:14px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:0.48rem;font-weight:700;color:#fff;flex-shrink:0;">${init}</div>
+            <span style="font-size:0.72rem;color:var(--rt-t3);">from ${esc(name)}</span>
+          </div>
+          ${r.message ? `<div style="font-size:0.72rem;color:var(--rt-t2);font-style:italic;margin-top:3px;">"${esc(r.message.slice(0,80))}${r.message.length>80?'…':''}"</div>` : ''}
+        </div>
+      </div>`;
   }).join('');
 }
 
