@@ -215,7 +215,7 @@ permalink: /tools/reading-tracker/
   box-shadow: var(--rt-s1);
 }
 .rt-stat-goal   { grid-column: 1 / -1; background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid)); }
-.rt-stat-card--genre { grid-column: span 2; }
+.rt-stat-card--genre { grid-column: span 1; }
 .rt-stat-label  { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rt-t3); margin-bottom: 0.3rem; font-weight: 500; }
 .rt-stat-goal .rt-stat-label { color: rgba(255,255,255,0.45); }
 .rt-stat-number { font-family: var(--rt-font-display); font-size: 2rem; font-weight: 700; color: var(--rt-navy); line-height: 1; }
@@ -1157,6 +1157,8 @@ permalink: /tools/reading-tracker/
 
 /* ── BOTTOM NAV (mobile only, hidden on desktop) ── */
 .rt-bottom-nav { display: none; }
+/* Mobile header — hidden by default, shown in mobile media query */
+.rt-mobile-header { display: none; }
 /* Sidebar hidden by default — only shown via desktop media query below */
 .rt-sidebar { display: none; }
 
@@ -1226,7 +1228,7 @@ permalink: /tools/reading-tracker/
 /* ── Genre breakdown chart ── */
 /* ── Genre pie chart — lives inside a stat card ── */
 .rt-stat-card--genre {
-  grid-column: span 2;   /* same row as This Year + All Time + Favourites */
+  grid-column: span 2;
   display: flex; flex-direction: column;
 }
 .rt-genre-pie-wrap {
@@ -1257,6 +1259,34 @@ permalink: /tools/reading-tracker/
   .rt-tabbar-wrap { display: none; }
   .rt-sidebar     { display: none; }
 
+  /* Mobile top header */
+  .rt-mobile-header {
+    display: flex; align-items: center; justify-content: space-between;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 201;
+    height: 52px; padding: 0 1rem;
+    background: var(--rt-white); border-bottom: 1px solid var(--rt-border);
+    box-shadow: 0 2px 10px rgba(26,39,68,0.07);
+  }
+  .rt-mobile-header-left { display: flex; align-items: center; }
+  .rt-mobile-header-right { display: flex; align-items: center; gap: 0.25rem; }
+  .rt-mobile-header-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--rt-navy); position: relative;
+    transition: background var(--rt-fast);
+  }
+  .rt-mobile-header-btn:hover { background: var(--rt-surface); }
+  .rt-mobile-header-btn svg { width: 20px; height: 20px; }
+  .rt-mobile-header-profile-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--rt-navy); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.02em;
+    cursor: pointer; border: none;
+    font-family: var(--rt-font-body);
+  }
+
   .rt-bottom-nav {
     display: flex; position: fixed; bottom: 0; left: 0; right: 0;
     z-index: 200; background: var(--rt-white);
@@ -1276,11 +1306,12 @@ permalink: /tools/reading-tracker/
   .rt-nav-icon { font-size: 1.1rem; line-height: 1; }
   .rt-nav-label { font-size: 0.55rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
 
-  .rt-app { padding-bottom: 64px; }
+  .rt-app { padding-bottom: 64px; padding-top: 52px; }
   .rt-panels { padding: 0 1rem; }
   .rt-stats-grid { grid-template-columns: 1fr 1fr; }
   .rt-stat-goal { grid-column: 1 / -1; }
   .rt-stat-card--genre { grid-column: span 1; }
+  .rt-stat-card--mobile-hide { display: none; }
   .rt-form-row--2 { grid-template-columns: 1fr; }
   .rt-form-card { padding: 1.1rem; }
   .rt-reading-card-actions { flex-direction: row; width: auto; justify-content: flex-end; }
@@ -1300,6 +1331,7 @@ permalink: /tools/reading-tracker/
 @media (min-width: 701px) and (max-width: 1023px) {
   /* Tablet: show desktop tab bar, hide bottom nav */
   .rt-sidebar { display: none; }
+  .rt-mobile-header { display: none; }
   .rt-app { padding-bottom: 2rem; }
 }
 
@@ -2207,9 +2239,16 @@ permalink: /tools/reading-tracker/
 /* Profile reviews list */
 .rt-profile-review-item {
   padding:0.85rem 0; border-bottom:1px solid var(--rt-border);
-  cursor:pointer;
+  cursor:pointer; display:flex; gap:0.75rem; align-items:flex-start;
 }
 .rt-profile-review-item:last-child { border-bottom:none; }
+.rt-profile-review-cover {
+  width:40px; height:56px; border-radius:4px; object-fit:cover; flex-shrink:0;
+  background:var(--rt-cream-md); display:flex; align-items:center; justify-content:center;
+  font-size:1rem;
+}
+.rt-profile-review-cover img { width:100%; height:100%; object-fit:cover; border-radius:4px; }
+.rt-profile-review-body-wrap { flex:1; min-width:0; }
 .rt-profile-review-title { font-size:0.85rem; font-weight:600; color:var(--rt-navy); margin-bottom:2px; }
 .rt-profile-review-stars { color:var(--rt-amber); font-size:0.75rem; margin-bottom:4px; }
 .rt-profile-review-body {
@@ -2248,27 +2287,91 @@ permalink: /tools/reading-tracker/
   display:flex; gap:0.5rem; background:#fff; flex-shrink:0;
 }
 
-/* Stats full panel */
-.rt-stats-full-grid {
-  display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.5rem;
+/* ── STATS PAGE ──────────────────────────────────────────────── */
+.rt-stats-page { display:flex; flex-direction:column; gap:1.25rem; }
+
+/* Hero number cards */
+.rt-stats-kpi-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:0.75rem;
 }
-.rt-stats-full-card {
-  background:var(--rt-surface); border-radius:var(--rt-r2); padding:1rem;
+.rt-stats-kpi {
+  background:var(--rt-white); border-radius:var(--rt-r2);
+  padding:1rem 1.1rem; box-shadow:var(--rt-s1);
+  display:flex; flex-direction:column; gap:0.2rem;
 }
-.rt-stats-full-label { font-size:0.7rem; color:var(--rt-t3); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.3rem; }
-.rt-stats-full-number { font-size:1.8rem; font-weight:700; color:var(--rt-navy); }
-.rt-stats-full-section { margin-bottom:1.5rem; }
-.rt-stats-full-section-title {
-  font-size:0.7rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:0.1em; color:var(--rt-t3); margin-bottom:0.75rem;
+.rt-stats-kpi--accent {
+  background:linear-gradient(135deg,var(--rt-navy),var(--rt-navy-mid)); color:#fff;
 }
-.rt-stats-author-row, .rt-stats-genre-row {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0.5rem 0; border-bottom:1px solid var(--rt-border);
-  font-size:0.85rem; color:var(--rt-navy);
+.rt-stats-kpi-label {
+  font-size:0.58rem; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--rt-t3);
 }
-.rt-stats-author-row:last-child, .rt-stats-genre-row:last-child { border-bottom:none; }
-.rt-stats-count { font-weight:700; color:var(--rt-amber); }
+.rt-stats-kpi--accent .rt-stats-kpi-label { color:rgba(255,255,255,0.45); }
+.rt-stats-kpi-value {
+  font-family:var(--rt-font-display); font-size:2rem;
+  font-weight:700; color:var(--rt-navy); line-height:1.05;
+}
+.rt-stats-kpi--accent .rt-stats-kpi-value { color:var(--rt-amber-lt); }
+.rt-stats-kpi-sub { font-size:0.65rem; color:var(--rt-t3); }
+.rt-stats-kpi--accent .rt-stats-kpi-sub { color:rgba(255,255,255,0.35); }
+
+/* Reading goal on stats page */
+.rt-stats-goal-card {
+  background:linear-gradient(135deg,var(--rt-navy),var(--rt-navy-mid));
+  border-radius:var(--rt-r2); padding:1.25rem 1.5rem; box-shadow:var(--rt-s2);
+}
+.rt-stats-goal-row { display:flex; align-items:baseline; gap:0.5rem; margin-bottom:0.65rem; flex-wrap:wrap; }
+.rt-stats-goal-num { font-family:var(--rt-font-display); font-size:2.6rem; font-weight:700; color:var(--rt-amber-lt); line-height:1; }
+.rt-stats-goal-sep { font-size:1.4rem; color:rgba(255,255,255,0.25); }
+.rt-stats-goal-target { font-family:var(--rt-font-display); font-size:1.8rem; font-weight:700; color:rgba(255,255,255,0.55); line-height:1; }
+.rt-stats-goal-unit { font-size:0.72rem; color:rgba(255,255,255,0.35); margin-left:0.25rem; }
+.rt-stats-goal-bar-wrap { display:flex; align-items:center; gap:0.75rem; }
+.rt-stats-goal-bar { flex:1; height:6px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden; }
+.rt-stats-goal-fill { height:100%; background:var(--rt-amber-lt); border-radius:99px; transition:width 0.6s cubic-bezier(.4,0,.2,1); }
+.rt-stats-goal-pct { font-size:0.7rem; font-weight:700; color:var(--rt-amber-lt); min-width:2.5rem; text-align:right; }
+.rt-stats-goal-label { font-size:0.58rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:0.5rem; }
+
+/* Chart card */
+.rt-stats-chart-card {
+  background:var(--rt-white); border-radius:var(--rt-r2); padding:1.25rem 1.5rem; box-shadow:var(--rt-s1);
+}
+.rt-stats-chart-title {
+  font-size:0.6rem; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--rt-t3); margin-bottom:1rem;
+}
+
+/* Pie chart — larger version for stats page */
+.rt-stats-pie-wrap { display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
+.rt-stats-pie-legend { display:flex; flex-direction:column; gap:0.4rem; flex:1; min-width:120px; }
+.rt-stats-pie-legend-item { display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--rt-t1); }
+.rt-stats-pie-legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.rt-stats-pie-legend-name { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.rt-stats-pie-legend-pct { font-weight:700; color:var(--rt-t3); font-size:0.72rem; }
+
+/* Bar chart for authors */
+.rt-stats-bar-list { display:flex; flex-direction:column; gap:0.65rem; }
+.rt-stats-bar-row { display:flex; align-items:center; gap:0.75rem; }
+.rt-stats-bar-label { font-size:0.8rem; color:var(--rt-t1); min-width:0; flex:0 0 140px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.rt-stats-bar-track { flex:1; height:10px; background:var(--rt-surface); border-radius:99px; overflow:hidden; }
+.rt-stats-bar-fill { height:100%; border-radius:99px; background:var(--rt-navy); transition:width 0.6s cubic-bezier(.4,0,.2,1); }
+.rt-stats-bar-count { font-size:0.75rem; font-weight:700; color:var(--rt-amber); min-width:1.5rem; text-align:right; }
+
+/* Empty state */
+.rt-stats-empty { text-align:center; padding:2rem 1rem; color:var(--rt-t3); font-size:0.85rem; }
+.rt-stats-empty-icon { font-size:1.8rem; margin-bottom:0.5rem; }
+
+/* Responsive */
+@media (max-width:700px) {
+  .rt-stats-kpi-grid { grid-template-columns:1fr 1fr; }
+  .rt-stats-bar-label { flex:0 0 100px; font-size:0.72rem; }
+}
+@media (max-width:400px) {
+  .rt-stats-kpi-grid { grid-template-columns:1fr 1fr; }
+}
+
+/* Stats full panel — legacy compat */
+.rt-stats-full-grid { display:none; }
+.rt-stats-full-section { display:none; }
 
 /* Settings panel */
 .rt-settings-section { margin-bottom:1.25rem; padding-bottom:1.25rem; border-bottom:1px solid var(--rt-border); }
@@ -2370,7 +2473,7 @@ permalink: /tools/reading-tracker/
       Profile
     </button>
     <div class="rt-tabbar-icons">
-      <button class="rt-icon-btn" id="rt-stats-btn" onclick="openStatsPanel()" title="Reading stats" type="button">
+      <button class="rt-icon-btn" id="rt-stats-btn" data-tab="stats" onclick="openStatsPanel()" title="Reading stats" type="button">
         <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><rect x="18" y="3" width="3" height="18" rx="1" fill="currentColor" opacity=".3"/><rect x="10.5" y="8" width="3" height="13" rx="1" fill="currentColor" opacity=".6"/><rect x="3" y="13" width="3" height="8" rx="1" fill="currentColor"/></svg>
       </button>
       <button class="rt-icon-btn" id="rt-notif-btn" onclick="openNotifPanel()" title="Notifications" type="button">
@@ -2408,7 +2511,7 @@ permalink: /tools/reading-tracker/
       <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
       Profile
     </button>
-    <button class="rt-sidebar-item" id="rt-sidebar-stats" onclick="openStatsPanel()" type="button">
+    <button class="rt-sidebar-item" id="rt-sidebar-stats" data-tab="stats" onclick="openStatsPanel()" type="button">
       <svg viewBox="0 0 24 24" fill="none"><rect x="18" y="3" width="3" height="18" rx="1" fill="currentColor" opacity=".4"/><rect x="10.5" y="8" width="3" height="13" rx="1" fill="currentColor" opacity=".7"/><rect x="3" y="13" width="3" height="8" rx="1" fill="currentColor"/></svg>
       Stats
     </button>
@@ -2456,10 +2559,20 @@ permalink: /tools/reading-tracker/
                 <span class="rt-goal-pct" id="rt-goal-pct">0%</span>
               </div>
             </div>
+            <div class="rt-stat-card rt-stat-card--mobile-hide">
+              <div class="rt-stat-label">This year</div>
+              <div class="rt-stat-number" id="rt-this-year">0</div>
+              <div class="rt-stat-sub" id="rt-year-label">books read</div>
+            </div>
             <div class="rt-stat-card">
               <div class="rt-stat-label">Favourites</div>
               <div class="rt-stat-number" id="rt-favourites">0</div>
               <div class="rt-stat-sub">5★ reads</div>
+            </div>
+            <div class="rt-stat-card rt-stat-card--mobile-hide">
+              <div class="rt-stat-label">All time</div>
+              <div class="rt-stat-number" id="rt-total">0</div>
+              <div class="rt-stat-sub">books read</div>
             </div>
             <div class="rt-stat-card rt-stat-card--genre">
               <div class="rt-stat-label">Genres this year</div>
@@ -2482,18 +2595,16 @@ permalink: /tools/reading-tracker/
           </div>
         </div>
 
-        <!-- Notifications strip (logged in only) -->
+        <!-- Notifications strip (always visible when logged in) -->
         <div id="rt-home-notif-strip" style="display:none;">
-          <div class="rt-home-notif-strip">
-            <div class="rt-home-notif-item" id="rt-home-notif-chats" style="display:none;" onclick="switchTab('community')">
+          <div class="rt-home-notif-strip" style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:var(--rt-r2);overflow:hidden;border:1px solid var(--rt-border);">
+            <div class="rt-home-notif-item rt-home-notif-item--col" id="rt-home-notif-chats" onclick="switchTab('community')" style="display:flex;border-right:1px solid var(--rt-border);border-bottom:none;">
               <span class="rt-home-notif-icon">💬</span>
-              <span class="rt-home-notif-text" id="rt-home-notif-chats-text">Unread messages</span>
-              <span class="rt-home-notif-arrow">→</span>
+              <span class="rt-home-notif-text" id="rt-home-notif-chats-text">No new messages</span>
             </div>
-            <div class="rt-home-notif-item" id="rt-home-notif-recs" style="display:none;" onclick="switchTab('recs')">
+            <div class="rt-home-notif-item rt-home-notif-item--col" id="rt-home-notif-recs" onclick="switchTab('recs')" style="display:flex;border-bottom:none;">
               <span class="rt-home-notif-icon">📚</span>
-              <span class="rt-home-notif-text" id="rt-home-notif-recs-text">New book recommendations</span>
-              <span class="rt-home-notif-arrow">→</span>
+              <span class="rt-home-notif-text" id="rt-home-notif-recs-text">No new recommendations</span>
             </div>
           </div>
         </div>
@@ -2502,8 +2613,7 @@ permalink: /tools/reading-tracker/
         <div id="rt-home-notif-loggedout" style="display:none;">
           <div class="rt-home-section rt-card" style="text-align:center;padding:1.25rem 1.5rem;">
             <div style="font-size:1.3rem;margin-bottom:0.4rem;">🔔</div>
-            <p style="font-size:0.85rem;color:var(--rt-t2);line-height:1.55;margin:0 0 0.75rem;"><strong>Log in</strong> to talk about books, get book recommendations, and store your reading history.</p>
-            <button class="rt-ghost-btn" onclick="switchTab('account')" type="button" style="margin:0 auto;">Sign in →</button>
+            <p style="font-size:0.85rem;color:var(--rt-t2);line-height:1.55;margin:0;"><strong>Log in</strong> to talk about books, get book recommendations, and store your reading history.</p>
           </div>
         </div>
 
@@ -2533,9 +2643,6 @@ permalink: /tools/reading-tracker/
           <select id="rt-home-sort"><option value="newest">Newest first</option><option value="rating-high">Top rated</option><option value="title">A–Z</option></select>
           <div id="rt-history-list"></div>
           <div id="rt-history-empty"><p id="rt-history-empty-msg"></p></div>
-          <span id="rt-this-year"></span>
-          <span id="rt-total"></span>
-          <span id="rt-year-label"></span>
         </div>
 
       </div>
@@ -2809,6 +2916,84 @@ permalink: /tools/reading-tracker/
     </div>
 
     <!-- ══════════════════════════════════
+         STATS
+    ══════════════════════════════════ -->
+    <div class="rt-panel" id="rt-panel-stats" data-tab="stats" style="display:none;">
+      <div class="rt-panel-inner">
+        <div>
+          <h2 class="rt-section-heading" style="margin-bottom:0.2rem;">Reading Stats</h2>
+          <p class="rt-panel-sub" style="margin:0;">Your full reading history at a glance.</p>
+        </div>
+
+        <div class="rt-stats-page">
+
+          <!-- Reading Goal -->
+          <div class="rt-stats-goal-card">
+            <div class="rt-stats-goal-label">Reading goal <span id="rt-sf-goal-year" style="color:rgba(255,255,255,0.25);"></span></div>
+            <div class="rt-stats-goal-row">
+              <span class="rt-stats-goal-num" id="rt-sf-goal-count">0</span>
+              <span class="rt-stats-goal-sep">/</span>
+              <span class="rt-stats-goal-target" id="rt-sf-goal-target">12</span>
+              <span class="rt-stats-goal-unit">books this year</span>
+            </div>
+            <div class="rt-stats-goal-bar-wrap">
+              <div class="rt-stats-goal-bar"><div class="rt-stats-goal-fill" id="rt-sf-goal-fill" style="width:0%"></div></div>
+              <span class="rt-stats-goal-pct" id="rt-sf-goal-pct">0%</span>
+            </div>
+          </div>
+
+          <!-- KPI cards -->
+          <div class="rt-stats-kpi-grid">
+            <div class="rt-stats-kpi">
+              <div class="rt-stats-kpi-label">This year</div>
+              <div class="rt-stats-kpi-value" id="rt-sf-year">0</div>
+              <div class="rt-stats-kpi-sub">books read</div>
+            </div>
+            <div class="rt-stats-kpi">
+              <div class="rt-stats-kpi-label">All time</div>
+              <div class="rt-stats-kpi-value" id="rt-sf-total">0</div>
+              <div class="rt-stats-kpi-sub">books read</div>
+            </div>
+            <div class="rt-stats-kpi">
+              <div class="rt-stats-kpi-label">Avg. rating</div>
+              <div class="rt-stats-kpi-value" id="rt-sf-avg-rating">—</div>
+              <div class="rt-stats-kpi-sub">out of 5 stars</div>
+            </div>
+            <div class="rt-stats-kpi">
+              <div class="rt-stats-kpi-label">5★ favourites</div>
+              <div class="rt-stats-kpi-value" id="rt-sf-favs">0</div>
+              <div class="rt-stats-kpi-sub">all time</div>
+            </div>
+          </div>
+
+          <!-- Genre pie chart -->
+          <div class="rt-stats-chart-card">
+            <div class="rt-stats-chart-title">Genres — all time</div>
+            <div id="rt-sf-genre-chart">
+              <div class="rt-stats-empty"><div class="rt-stats-empty-icon">📚</div><p>Log books with genres to see your breakdown.</p></div>
+            </div>
+          </div>
+
+          <!-- Authors bar chart -->
+          <div class="rt-stats-chart-card">
+            <div class="rt-stats-chart-title">Favourite authors — top 5</div>
+            <div id="rt-sf-authors-chart">
+              <div class="rt-stats-empty"><div class="rt-stats-empty-icon">✍️</div><p>Finish some books to see your favourite authors.</p></div>
+            </div>
+          </div>
+
+        </div><!-- /rt-stats-page -->
+
+        <!-- Legacy IDs kept for JS compat -->
+        <div style="display:none;">
+          <div id="rt-sf-genres-list"></div>
+          <div id="rt-sf-authors-list"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
          ACCOUNT
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-account" data-tab="account" style="display:none;">
@@ -2951,6 +3136,25 @@ permalink: /tools/reading-tracker/
 </div><!-- /rt-app -->
 
 <!-- MOBILE BOTTOM NAV -->
+<!-- MOBILE TOP HEADER (shown only on mobile via CSS) -->
+<header class="rt-mobile-header" id="rt-mobile-header">
+  <div class="rt-mobile-header-left">
+    <button class="rt-mobile-header-profile-avatar" id="rt-mobile-avatar-btn" onclick="openAccountSettings()" type="button" title="Account settings" aria-label="Account settings">
+      <svg id="rt-mobile-avatar-icon" viewBox="0 0 24 24" fill="none" width="17" height="17" style="display:block;"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+      <span id="rt-mobile-avatar-init" style="display:none;font-size:0.7rem;font-weight:700;letter-spacing:0.02em;"></span>
+    </button>
+  </div>
+  <div class="rt-mobile-header-right">
+    <button class="rt-mobile-header-btn" onclick="openStatsPanel()" type="button" title="Reading stats" aria-label="Reading stats">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="18" y="3" width="3" height="18" rx="1" fill="currentColor" opacity=".3"/><rect x="10.5" y="8" width="3" height="13" rx="1" fill="currentColor" opacity=".6"/><rect x="3" y="13" width="3" height="8" rx="1" fill="currentColor"/></svg>
+    </button>
+    <button class="rt-mobile-header-btn" onclick="openNotifPanel()" type="button" title="Notifications" aria-label="Notifications" style="position:relative;">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="rt-notif-dot rt-notif-dot--nav" id="rt-notif-dot-nav" style="display:none;position:absolute;top:6px;right:6px;"></span>
+    </button>
+  </div>
+</header>
+
 <nav class="rt-bottom-nav" id="rt-bottom-nav" aria-label="Main navigation">
   <button class="rt-nav-btn active" data-tab="home" onclick="switchTab('home')">
     <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2972,63 +3176,27 @@ permalink: /tools/reading-tracker/
     <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
     <span class="rt-nav-label">Profile</span>
   </button>
-  <button class="rt-nav-btn rt-nav-btn--bell" onclick="openNotifPanel()" type="button" style="position:relative;flex:0 0 52px;">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span class="rt-notif-dot rt-notif-dot--nav" id="rt-notif-dot-nav" style="display:none;"></span>
-  </button>
 </nav>
 
 
 <!-- ══════════════════════════════════════════════
      STATS PANEL OVERLAY
 ══════════════════════════════════════════════ -->
-<div class="rt-overlay-panel-bg" id="rt-stats-overlay-bg" onclick="closeStatsPanel()" style="display:none;"></div>
-<div class="rt-overlay-panel" id="rt-stats-overlay" style="display:none;">
-  <div class="rt-overlay-panel-header">
-    <div class="rt-overlay-panel-title">Reading Stats</div>
-    <button class="rt-sheet-close" onclick="closeStatsPanel()" type="button">×</button>
-  </div>
-  <div class="rt-overlay-panel-body">
-    <div class="rt-stats-full-grid">
-      <div class="rt-stats-full-card">
-        <div class="rt-stats-full-label">Total books read</div>
-        <div class="rt-stats-full-number" id="rt-sf-total">0</div>
-      </div>
-      <div class="rt-stats-full-card">
-        <div class="rt-stats-full-label">This year</div>
-        <div class="rt-stats-full-number" id="rt-sf-year">0</div>
-      </div>
-      <div class="rt-stats-full-card">
-        <div class="rt-stats-full-label">Average rating</div>
-        <div class="rt-stats-full-number" id="rt-sf-avg-rating">—</div>
-      </div>
-      <div class="rt-stats-full-card">
-        <div class="rt-stats-full-label">5★ favourites</div>
-        <div class="rt-stats-full-number" id="rt-sf-favs">0</div>
-      </div>
-    </div>
-    <div class="rt-stats-full-section">
-      <div class="rt-stats-full-section-title">Genres (all time)</div>
-      <div id="rt-sf-genres-list"></div>
-    </div>
-    <div class="rt-stats-full-section">
-      <div class="rt-stats-full-section-title">Favourite authors</div>
-      <div id="rt-sf-authors-list"></div>
-    </div>
-  </div>
-</div>
+<!-- Stats overlay stubs kept for JS compat -->
+<div id="rt-stats-overlay-bg" style="display:none;"></div>
+<div id="rt-stats-overlay" style="display:none;"></div>
 
 <!-- ══════════════════════════════════════════════
-     NOTIFICATIONS PANEL OVERLAY
+     NOTIFICATIONS DROPDOWN
 ══════════════════════════════════════════════ -->
-<div class="rt-overlay-panel-bg" id="rt-notif-overlay-bg" onclick="closeNotifPanel()" style="display:none;"></div>
-<div class="rt-overlay-panel" id="rt-notif-overlay" style="display:none;">
-  <div class="rt-overlay-panel-header">
-    <div class="rt-overlay-panel-title">Notifications</div>
-    <button class="rt-sheet-close" onclick="closeNotifPanel()" type="button">×</button>
+<div id="rt-notif-dropdown-bg" onclick="closeNotifPanel()" style="display:none;position:fixed;inset:0;z-index:1099;"></div>
+<div id="rt-notif-dropdown" style="display:none;position:fixed;z-index:1100;background:#fff;border-radius:var(--rt-r2);box-shadow:var(--rt-s3);border:1px solid var(--rt-border);width:300px;overflow:hidden;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-bottom:1px solid var(--rt-border);background:var(--rt-navy);">
+    <span style="font-family:var(--rt-font-display);font-size:0.9rem;font-weight:700;color:#fff;">Notifications</span>
+    <button onclick="closeNotifPanel()" type="button" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.2rem;cursor:pointer;line-height:1;padding:0;">×</button>
   </div>
-  <div class="rt-overlay-panel-body" id="rt-notif-body">
-    <div class="rt-feed-empty"><div class="rt-feed-empty-icon">🔔</div><p>No notifications yet.</p></div>
+  <div id="rt-notif-body" style="max-height:320px;overflow-y:auto;">
+    <div class="rt-feed-empty" style="padding:1.5rem;"><div class="rt-feed-empty-icon">🔔</div><p>No notifications yet.</p></div>
   </div>
 </div>
 
@@ -3042,9 +3210,12 @@ permalink: /tools/reading-tracker/
     <button class="rt-sheet-close" onclick="closeAccountSettings()" type="button">×</button>
   </div>
   <div class="rt-overlay-panel-body">
-    <div class="rt-settings-section">
-      <div class="rt-settings-label">Email</div>
-      <div class="rt-settings-value" id="rt-settings-email">—</div>
+    <div class="rt-settings-section" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+      <div>
+        <div class="rt-settings-label">Email</div>
+        <div class="rt-settings-value" id="rt-settings-email">—</div>
+      </div>
+      <button class="rt-ghost-btn" onclick="signOut()" type="button" style="color:#7f1d1d;flex-shrink:0;font-size:0.8rem;padding:0.4rem 0.8rem;">Sign out</button>
     </div>
     <div class="rt-settings-section">
       <div class="rt-settings-label">Username</div>
@@ -3064,9 +3235,6 @@ permalink: /tools/reading-tracker/
       <textarea id="rt-settings-bio" rows="3" placeholder="A short bio — genres you love, reading goals…" style="width:100%;box-sizing:border-box;border:1.5px solid var(--rt-border-md);border-radius:var(--rt-r3);padding:0.6rem 0.8rem;font-family:var(--rt-font-body);font-size:0.85rem;color:var(--rt-navy);background:var(--rt-cream);resize:vertical;margin-top:0.4rem;"></textarea>
       <button class="rt-submit-btn" onclick="saveSettingsBio()" type="button" style="margin-top:0.6rem;max-width:160px;">Save bio</button>
       <p id="rt-settings-bio-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;"></p>
-    </div>
-    <div class="rt-settings-section" style="border-top:1px solid var(--rt-border);padding-top:1.25rem;margin-top:0.5rem;">
-      <button class="rt-ghost-btn" onclick="signOut()" type="button" style="color:#7f1d1d;">Sign out</button>
     </div>
   </div>
 </div>
@@ -3561,6 +3729,21 @@ permalink: /tools/reading-tracker/
   </div>
 </div>
 
+<!-- FRIEND PICKER OVERLAY (for starting chats) -->
+<div id="rt-friend-picker-overlay" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(10,16,35,0.55);backdrop-filter:blur(3px);display:none;align-items:flex-end;justify-content:center;" onclick="closeFriendPicker()">
+  <div onclick="event.stopPropagation()" style="background:var(--rt-white);border-radius:var(--rt-r1) var(--rt-r1) 0 0;width:100%;max-width:480px;padding:1.5rem 1.5rem max(1.5rem,env(safe-area-inset-bottom));box-shadow:var(--rt-s3);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+      <h3 style="font-family:var(--rt-font-display);font-size:1.1rem;font-weight:700;color:var(--rt-navy);margin:0;">Start a chat about</h3>
+      <button onclick="closeFriendPicker()" type="button" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--rt-t3);line-height:1;padding:0;">×</button>
+    </div>
+    <div id="rt-friend-picker-book" style="font-size:0.82rem;color:var(--rt-t2);margin-bottom:1rem;font-style:italic;"></div>
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Select friends to add</p>
+    <div id="rt-friend-picker-list" style="display:flex;flex-direction:column;gap:0.4rem;max-height:260px;overflow-y:auto;margin-bottom:1.1rem;"></div>
+    <div id="rt-friend-picker-empty" style="display:none;text-align:center;padding:1rem 0;font-size:0.85rem;color:var(--rt-t3);">Add friends first to start a book chat.</div>
+    <button id="rt-friend-picker-confirm" class="rt-submit-btn" type="button" onclick="confirmFriendPickerChat()" style="width:100%;">💬 Start chat</button>
+  </div>
+</div>
+
 <!-- PASSWORD RESET OVERLAY -->
 <div class="rt-reset-overlay" id="rt-reset-overlay" style="display:none;">
   <div class="rt-reset-modal">
@@ -3703,6 +3886,9 @@ function renderAuthUI() {
     loggedIn.style.display  = 'none';
     loggedOut.style.display = 'block';
   }
+  // Always update the notif strip visibility based on auth state
+  if (typeof updateHomeNotifStrip === 'function') updateHomeNotifStrip();
+  if (typeof renderHomeFeed === 'function') renderHomeFeed();
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -4226,6 +4412,17 @@ async function loadUsernameDisplay() {
     if (el) el.textContent = `@${username}`;
     socialState._myUsername    = username;
     socialState._myDisplayName = data?.display_name || null;
+    // Update mobile header avatar
+    const avatarInit = document.getElementById('rt-mobile-avatar-init');
+    const avatarIcon = document.getElementById('rt-mobile-avatar-icon');
+    if (avatarInit) {
+      const name = data?.display_name || username || '';
+      if (name) {
+        avatarInit.textContent = name.charAt(0).toUpperCase();
+        avatarInit.style.display = 'block';
+        if (avatarIcon) avatarIcon.style.display = 'none';
+      }
+    }
   } catch(e) { console.error('[Profile] loadUsernameDisplay:', e); }
 }
 
@@ -5119,7 +5316,8 @@ function switchTab(name) {
   document.querySelectorAll('.rt-nav-btn').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
 
   if (name === 'tbr') renderTBR();
-  if ((name === 'community' || name === 'account') && currentUser && !socialState._loaded) loadSocialData();
+  if (name === 'stats') renderStatsPanel();
+  if ((name === 'home' || name === 'community' || name === 'account') && currentUser && !socialState._loaded) loadSocialData();
   window.scrollTo({ top: document.querySelector('.rt-hero').offsetHeight, behavior: 'smooth' });
 }
 
@@ -5820,7 +6018,13 @@ function showReadMode() {
   document.getElementById('rt-view-close').onclick = closeModal;
   if (isFinished) {
     document.getElementById('rt-view-rec-btn').onclick = () => { closeModal(); if (sheetBookId) openRecommendSheet(sheetBookId); };
-    document.getElementById('rt-view-chat-btn').onclick = doneStartChat;
+    document.getElementById('rt-view-chat-btn').onclick = () => {
+      const book = books.find(b => String(b.id) === String(sheetBookId));
+      if (!book) { closeModal(); return; }
+      closeModal();
+      if (!book.olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
+      openFriendPickerForChat(book.olKey, book.title, book.author, book.coverId);
+    };
   } else {
     document.getElementById('rt-view-edit-btn').onclick = showEditMode;
   }
@@ -7048,42 +7252,101 @@ document.getElementById('rt-mylist-sort')?.addEventListener('change', renderMyLi
 // ── Stats panel ───────────────────────────────────────────────
 function openStatsPanel() {
   renderStatsPanel();
-  document.getElementById('rt-stats-overlay-bg').style.display = 'block';
-  requestAnimationFrame(() => document.getElementById('rt-stats-overlay').classList.add('open'));
-}
-function closeStatsPanel() {
-  document.getElementById('rt-stats-overlay').classList.remove('open');
-  setTimeout(() => { document.getElementById('rt-stats-overlay-bg').style.display = 'none'; }, 280);
+  switchTab('stats');
 }
 function renderStatsPanel() {
-  const read = getBooks('read');
-  const year = new Date().getFullYear();
-  const thisYear = read.filter(b => b.date && b.date.startsWith(year));
-  const rated = read.filter(b => b.rating);
+  const read    = getBooks('read');
+  const year    = new Date().getFullYear();
+  const thisYear = read.filter(b => b.date && b.date.startsWith(String(year)));
+  const rated   = read.filter(b => b.rating);
   const avgRating = rated.length
     ? (rated.reduce((s,b) => s + b.rating, 0) / rated.length).toFixed(1)
     : '—';
 
-  document.getElementById('rt-sf-total').textContent    = read.length;
-  document.getElementById('rt-sf-year').textContent     = thisYear.length;
-  document.getElementById('rt-sf-avg-rating').textContent = avgRating;
-  document.getElementById('rt-sf-favs').textContent     = read.filter(b => b.rating === 5).length;
+  // ── KPI cards ──
+  const sf = id => document.getElementById(id);
+  if (sf('rt-sf-total'))      sf('rt-sf-total').textContent      = read.length;
+  if (sf('rt-sf-year'))       sf('rt-sf-year').textContent       = thisYear.length;
+  if (sf('rt-sf-avg-rating')) sf('rt-sf-avg-rating').textContent = avgRating;
+  if (sf('rt-sf-favs'))       sf('rt-sf-favs').textContent       = read.filter(b => b.rating === 5).length;
 
-  // Genres
-  const genreMap = {};
-  read.forEach(b => { if (b.genre) genreMap[b.genre] = (genreMap[b.genre]||0) + 1; });
-  const genres = Object.entries(genreMap).sort((a,b) => b[1]-a[1]);
-  document.getElementById('rt-sf-genres-list').innerHTML = genres.length
-    ? genres.map(([g,n]) => `<div class="rt-stats-genre-row"><span>${esc(g)}</span><span class="rt-stats-count">${n}</span></div>`).join('')
-    : '<p style="font-size:0.83rem;color:var(--rt-t3);">Log books with genres to see breakdown.</p>';
+  // ── Reading goal ──
+  const goalTarget = parseInt(document.getElementById('rt-goal-target')?.value || 12, 10);
+  const goalCount  = thisYear.length;
+  const goalPct    = Math.min(100, Math.round((goalCount / Math.max(goalTarget,1)) * 100));
+  if (sf('rt-sf-goal-year'))   sf('rt-sf-goal-year').textContent   = year;
+  if (sf('rt-sf-goal-count'))  sf('rt-sf-goal-count').textContent  = goalCount;
+  if (sf('rt-sf-goal-target')) sf('rt-sf-goal-target').textContent = goalTarget;
+  if (sf('rt-sf-goal-pct'))    sf('rt-sf-goal-pct').textContent    = goalPct + '%';
+  if (sf('rt-sf-goal-fill'))   sf('rt-sf-goal-fill').style.width   = goalPct + '%';
 
-  // Authors
-  const authMap = {};
-  read.forEach(b => { if (b.author) authMap[b.author] = (authMap[b.author]||0) + 1; });
-  const authors = Object.entries(authMap).sort((a,b) => b[1]-a[1]).slice(0,10);
-  document.getElementById('rt-sf-authors-list').innerHTML = authors.length
-    ? authors.map(([a,n]) => `<div class="rt-stats-author-row"><span>${esc(a)}</span><span class="rt-stats-count">${n} book${n>1?'s':''}</span></div>`).join('')
-    : '<p style="font-size:0.83rem;color:var(--rt-t3);">Finish some books to see favourite authors.</p>';
+  // ── Genre pie chart (all time) ──
+  const genreEl = document.getElementById('rt-sf-genre-chart');
+  if (genreEl) {
+    const genreMap = {};
+    read.forEach(b => { if (b.genre) genreMap[b.genre] = (genreMap[b.genre]||0) + 1; });
+    const genres = Object.entries(genreMap).sort((a,b) => b[1]-a[1]).slice(0,8);
+    if (!genres.length) {
+      genreEl.innerHTML = '<div class="rt-stats-empty"><div class="rt-stats-empty-icon">📚</div><p>Log books with genres to see your breakdown.</p></div>';
+    } else {
+      const total = genres.reduce((s,[,n]) => s+n, 0);
+      const SIZE  = 120, R = 46, CX = SIZE/2, CY = SIZE/2;
+      let angle   = -Math.PI / 2;
+      const slices = genres.map(([,count], i) => {
+        const slice = (count/total)*2*Math.PI;
+        const x1 = CX + R*Math.cos(angle), y1 = CY + R*Math.sin(angle);
+        angle += slice;
+        const x2 = CX + R*Math.cos(angle), y2 = CY + R*Math.sin(angle);
+        const large = slice > Math.PI ? 1 : 0;
+        const colour = GENRE_COLOURS[i % GENRE_COLOURS.length];
+        if (genres.length === 1) return `<circle cx="${CX}" cy="${CY}" r="${R}" fill="${colour}"/>`;
+        return `<path d="M${CX},${CY} L${x1.toFixed(2)},${y1.toFixed(2)} A${R},${R} 0 ${large},1 ${x2.toFixed(2)},${y2.toFixed(2)} Z" fill="${colour}"/>`;
+      });
+      const svg = `<svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" style="flex-shrink:0;" aria-hidden="true">
+        ${slices.join('')}
+        <circle cx="${CX}" cy="${CY}" r="22" fill="white"/>
+        <text x="${CX}" y="${CY+1}" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="700" fill="#1a2744">${total}</text>
+        <text x="${CX}" y="${CY+10}" text-anchor="middle" dominant-baseline="middle" font-size="6" fill="#7a84a0">books</text>
+      </svg>`;
+      const legend = genres.map(([genre, count], i) => {
+        const pct = Math.round((count/total)*100);
+        return `<div class="rt-stats-pie-legend-item">
+          <div class="rt-stats-pie-legend-dot" style="background:${GENRE_COLOURS[i%GENRE_COLOURS.length]};"></div>
+          <span class="rt-stats-pie-legend-name" title="${esc(genre)}">${esc(genre)}</span>
+          <span class="rt-stats-pie-legend-pct">${pct}%</span>
+        </div>`;
+      }).join('');
+      genreEl.innerHTML = `<div class="rt-stats-pie-wrap">${svg}<div class="rt-stats-pie-legend">${legend}</div></div>`;
+    }
+  }
+
+  // ── Authors bar chart (top 5) ──
+  const authEl = document.getElementById('rt-sf-authors-chart');
+  if (authEl) {
+    const authMap = {};
+    read.forEach(b => { if (b.author) authMap[b.author] = (authMap[b.author]||0) + 1; });
+    const authors = Object.entries(authMap).sort((a,b) => b[1]-a[1]).slice(0,5);
+    if (!authors.length) {
+      authEl.innerHTML = '<div class="rt-stats-empty"><div class="rt-stats-empty-icon">✍️</div><p>Finish some books to see your favourite authors.</p></div>';
+    } else {
+      const max = authors[0][1];
+      const BAR_COLOURS = ['#1a2744','#c8891a','#2A6E69','#5c6bc0','#b43a3a'];
+      authEl.innerHTML = `<div class="rt-stats-bar-list">${
+        authors.map(([author, count], i) => `
+          <div class="rt-stats-bar-row">
+            <div class="rt-stats-bar-label" title="${esc(author)}">${esc(author)}</div>
+            <div class="rt-stats-bar-track">
+              <div class="rt-stats-bar-fill" style="width:${Math.round((count/max)*100)}%;background:${BAR_COLOURS[i]};"></div>
+            </div>
+            <div class="rt-stats-bar-count">${count}</div>
+          </div>`).join('')
+      }</div>`;
+    }
+  }
+
+  // Legacy compat IDs (hidden)
+  if (sf('rt-sf-genres-list'))  sf('rt-sf-genres-list').innerHTML  = '';
+  if (sf('rt-sf-authors-list')) sf('rt-sf-authors-list').innerHTML = '';
 }
 
 // ── Notifications panel ───────────────────────────────────────
@@ -7091,12 +7354,45 @@ let _notifState = { unreadChats: 0, newRecs: 0 };
 
 function openNotifPanel() {
   renderNotifPanel();
-  document.getElementById('rt-notif-overlay-bg').style.display = 'block';
-  requestAnimationFrame(() => document.getElementById('rt-notif-overlay').classList.add('open'));
+  // Position dropdown below whichever bell button was clicked
+  const dropdown = document.getElementById('rt-notif-dropdown');
+  const bg       = document.getElementById('rt-notif-dropdown-bg');
+  if (!dropdown || !bg) return;
+
+  // Find the visible bell button to anchor to
+  const bellBtns = [
+    document.getElementById('rt-notif-btn'),           // desktop tabbar
+    document.querySelector('.rt-mobile-header-btn[onclick="openNotifPanel()"]') // mobile header
+  ].filter(Boolean);
+  const bell = bellBtns.find(b => b.getBoundingClientRect().width > 0) || bellBtns[0];
+
+  if (bell) {
+    const rect = bell.getBoundingClientRect();
+    const isMobile = window.innerWidth <= 700;
+    if (isMobile) {
+      // On mobile: anchor below, inset from both edges
+      dropdown.style.right  = '0.75rem';
+      dropdown.style.left   = '0.75rem';
+      dropdown.style.top    = (rect.bottom + 6) + 'px';
+      dropdown.style.width  = 'auto';
+    } else {
+      // Desktop: anchor below bell, right-aligned
+      const right = window.innerWidth - rect.right;
+      dropdown.style.right  = right + 'px';
+      dropdown.style.left   = 'auto';
+      dropdown.style.top    = (rect.bottom + 6) + 'px';
+      dropdown.style.width  = '300px';
+    }
+  }
+
+  bg.style.display = 'block';
+  dropdown.style.display = 'block';
 }
 function closeNotifPanel() {
-  document.getElementById('rt-notif-overlay').classList.remove('open');
-  setTimeout(() => { document.getElementById('rt-notif-overlay-bg').style.display = 'none'; }, 280);
+  const dropdown = document.getElementById('rt-notif-dropdown');
+  const bg       = document.getElementById('rt-notif-dropdown-bg');
+  if (dropdown) dropdown.style.display = 'none';
+  if (bg)       bg.style.display = 'none';
 }
 function renderNotifPanel() {
   const body = document.getElementById('rt-notif-body');
@@ -7244,13 +7540,19 @@ function renderProfileReviews() {
     el.innerHTML = '<div class="rt-feed-empty"><div class="rt-feed-empty-icon">✍️</div><p>No public reviews yet.</p></div>';
     return;
   }
-  el.innerHTML = reviews.map(b => {
+  el.innerHTML = reviews.map((b, idx) => {
     const stars = b.rating ? '★'.repeat(b.rating) + '☆'.repeat(5-b.rating) : '';
+    const coverHtml = b.coverId
+      ? `<div class="rt-profile-review-cover"><img src="https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg" alt="" loading="lazy" onerror="this.parentElement.innerHTML='📖'"></div>`
+      : `<div class="rt-profile-review-cover">📖</div>`;
     return `<div class="rt-profile-review-item" onclick="openBookDetail('${b.id}')">
-      <div class="rt-profile-review-title">${esc(b.title)}</div>
-      ${stars ? `<div class="rt-profile-review-stars">${stars}</div>` : ''}
-      <div class="rt-profile-review-body">${esc(b.reviewBody)}</div>
-      ${b.date ? `<div class="rt-profile-review-date">${fmtDate(b.date)}</div>` : ''}
+      ${coverHtml}
+      <div class="rt-profile-review-body-wrap">
+        <div class="rt-profile-review-title">${esc(b.title)}</div>
+        ${stars ? `<div class="rt-profile-review-stars">${stars}</div>` : ''}
+        <div class="rt-profile-review-body">${esc(b.reviewBody)}</div>
+        ${b.date ? `<div class="rt-profile-review-date">${fmtDate(b.date)}</div>` : ''}
+      </div>
     </div>`;
   }).join('');
 }
@@ -7398,24 +7700,37 @@ function openHomeFeedChat(olKey, title, author, coverId, friendId) {
 // ── Home notifications strip ──────────────────────────────────
 function updateHomeNotifStrip() {
   const strip = document.getElementById('rt-home-notif-strip');
-  if (!strip || !currentUser) return;
+  if (!strip) return;
+  if (!currentUser) { strip.style.display = 'none'; return; }
+  strip.style.display = 'block';
+
   const unreadChats = chatState.chats.reduce((s,c) => s + (c.unread||0), 0);
   const newRecs     = (socialState.recs||[]).filter(r => r.status === 'pending').length;
   _notifState.unreadChats = unreadChats;
   _notifState.newRecs     = newRecs;
+
   const chatsEl = document.getElementById('rt-home-notif-chats');
   const recsEl  = document.getElementById('rt-home-notif-recs');
   if (chatsEl) {
-    chatsEl.style.display = unreadChats > 0 ? 'flex' : 'none';
     const t = document.getElementById('rt-home-notif-chats-text');
-    if (t) t.textContent = `${unreadChats} unread message${unreadChats > 1 ? 's' : ''}`;
+    if (unreadChats > 0) {
+      chatsEl.style.opacity = '1'; chatsEl.style.cursor = 'pointer';
+      if (t) t.textContent = `${unreadChats} unread message${unreadChats > 1 ? 's' : ''}`;
+    } else {
+      chatsEl.style.opacity = '0.55'; chatsEl.style.cursor = 'default';
+      if (t) t.textContent = 'No new messages';
+    }
   }
   if (recsEl) {
-    recsEl.style.display = newRecs > 0 ? 'flex' : 'none';
     const t = document.getElementById('rt-home-notif-recs-text');
-    if (t) t.textContent = `${newRecs} new book recommendation${newRecs > 1 ? 's' : ''}`;
+    if (newRecs > 0) {
+      recsEl.style.opacity = '1'; recsEl.style.cursor = 'pointer';
+      if (t) t.textContent = `${newRecs} new recommendation${newRecs > 1 ? 's' : ''}`;
+    } else {
+      recsEl.style.opacity = '0.55'; recsEl.style.cursor = 'default';
+      if (t) t.textContent = 'No new recommendations';
+    }
   }
-  strip.style.display = (unreadChats > 0 || newRecs > 0) ? 'block' : 'none';
   updateNotifDot();
 }
 
@@ -7424,17 +7739,95 @@ function doneRecommend() {
   closeModal();
   if (sheetBookId) openRecommendSheet(sheetBookId);
 }
+
+// ── Friend picker for starting chats ────────────────────────
+let _friendPickerBook = null; // { olKey, title, author, coverId }
+let _friendPickerSelected = new Set();
+
+function openFriendPickerForChat(olKey, title, author, coverId) {
+  if (!currentUser) { showFlash('Sign in to chat about books.'); return; }
+  if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
+  _friendPickerBook = { olKey, title, author, coverId };
+  _friendPickerSelected = new Set();
+
+  const overlay = document.getElementById('rt-friend-picker-overlay');
+  const bookEl  = document.getElementById('rt-friend-picker-book');
+  const listEl  = document.getElementById('rt-friend-picker-list');
+  const emptyEl = document.getElementById('rt-friend-picker-empty');
+  if (!overlay) return;
+
+  if (bookEl) bookEl.textContent = `"${title}"`;
+
+  const friends = socialState.friends || [];
+  if (!friends.length) {
+    listEl.innerHTML = '';
+    emptyEl.style.display = 'block';
+  } else {
+    emptyEl.style.display = 'none';
+    listEl.innerHTML = friends.map(f => {
+      const colour = avatarColour(f.userId);
+      const init   = avatarInitial(f.displayName);
+      return `<label style="display:flex;align-items:center;gap:0.75rem;padding:0.65rem 0.75rem;border-radius:var(--rt-r3);cursor:pointer;border:1.5px solid var(--rt-border);transition:border-color 0.15s;" id="rt-fp-friend-${f.userId}">
+        <input type="checkbox" value="${f.userId}" onchange="toggleFriendPickerSelection('${f.userId}', this.checked)" style="display:none;">
+        <div style="width:32px;height:32px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.72rem;font-weight:700;flex-shrink:0;">${init}</div>
+        <span style="font-size:0.88rem;font-weight:600;color:var(--rt-navy);flex:1;">${esc(f.displayName)}</span>
+        <span class="rt-fp-check-${f.userId}" style="color:var(--rt-amber);font-weight:700;display:none;">✓</span>
+      </label>`;
+    }).join('');
+  }
+
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function toggleFriendPickerSelection(userId, checked) {
+  const label = document.getElementById(`rt-fp-friend-${userId}`);
+  const check = document.querySelector(`.rt-fp-check-${userId}`);
+  if (checked) {
+    _friendPickerSelected.add(userId);
+    if (label) label.style.borderColor = 'var(--rt-amber)';
+    if (check) check.style.display = 'inline';
+  } else {
+    _friendPickerSelected.delete(userId);
+    if (label) label.style.borderColor = 'var(--rt-border)';
+    if (check) check.style.display = 'none';
+  }
+  // Toggle checkbox state by clicking the label (since input is hidden)
+  const inp = label?.querySelector('input');
+  if (inp) inp.checked = checked;
+}
+
+// Allow clicking anywhere on the label to toggle
+document.getElementById('rt-friend-picker-list')?.addEventListener('click', function(e) {
+  const label = e.target.closest('label[id^="rt-fp-friend-"]');
+  if (!label) return;
+  const inp = label.querySelector('input');
+  if (!inp) return;
+  inp.checked = !inp.checked;
+  const userId = inp.value;
+  toggleFriendPickerSelection(userId, inp.checked);
+});
+
+function closeFriendPicker() {
+  const overlay = document.getElementById('rt-friend-picker-overlay');
+  if (overlay) overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+async function confirmFriendPickerChat() {
+  if (!_friendPickerBook) return;
+  const { olKey, title, author, coverId } = _friendPickerBook;
+  const friendIds = [..._friendPickerSelected];
+  closeFriendPicker();
+  await startOrOpenChat(olKey, title, author, coverId, friendIds);
+}
+
 function doneStartChat() {
   const book = books.find(b => String(b.id) === String(sheetBookId));
   if (!book) { closeModal(); return; }
   closeModal();
   if (!book.olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
-  // Find friends who have read or are reading this book
-  const friendsWithBook = socialState.friends.filter(f => {
-    // We don't have per-friend book data locally — just start chat with all friends as option
-    return true;
-  }).map(f => f.userId);
-  startOrOpenChat(book.olKey, book.title, book.author, book.coverId, friendsWithBook);
+  openFriendPickerForChat(book.olKey, book.title, book.author, book.coverId);
 }
 
 // ── Hook profile rendering into auth flow ─────────────────────
@@ -8127,6 +8520,10 @@ sb.auth.onAuthStateChange((event, session) => {
     }
     renderAuthUI();
     renderFriendRecsDiscover();
+    const avatarInit = document.getElementById('rt-mobile-avatar-init');
+    const avatarIcon = document.getElementById('rt-mobile-avatar-icon');
+    if (avatarInit) { avatarInit.textContent = ''; avatarInit.style.display = 'none'; }
+    if (avatarIcon) avatarIcon.style.display = 'block';
   }
 });
 </script>
