@@ -2692,6 +2692,15 @@ permalink: /tools/reading-tracker/
         </div>
 
         <!-- Friend activity feed -->
+        <div class="rt-home-section rt-card" id="rt-home-recs-card" style="display:none;">
+          <div class="rt-home-section-header" style="margin-bottom:0.75rem;">
+            <h2 class="rt-section-heading" style="margin-bottom:0;">📚 From friends</h2>
+            <button class="rt-ghost-btn" onclick="switchTab('recs')" type="button" style="font-size:0.75rem;padding:0.2rem 0.5rem;">See all →</button>
+          </div>
+          <div id="rt-home-recs-list" style="display:flex;flex-direction:column;"></div>
+        </div>
+
+        <!-- Friend activity feed -->
         <div class="rt-home-section rt-card" id="rt-home-feed-card" style="display:none;">
           <div class="rt-home-section-header" style="margin-bottom:0.85rem;">
             <h2 class="rt-section-heading" style="margin-bottom:0;">Friends' reviews</h2>
@@ -4100,7 +4109,7 @@ async function loadSocialData() {
   if (!currentUser) return;
   try {
     // Step 1: fetch friendships and pending requests
-    const [friendsRes, pendingRes, recsRes] = await Promise.all([
+    const [friendsRes, pendingRes] = await Promise.all([
       sb.from('friendships')
         .select('id, requester_id, addressee_id, status')
         .or(`requester_id.eq.${currentUser.id},addressee_id.eq.${currentUser.id}`)
@@ -4108,20 +4117,38 @@ async function loadSocialData() {
       sb.from('friendships')
         .select('id, requester_id')
         .eq('addressee_id', currentUser.id)
-        .eq('status', 'pending'),
-      sb.from('book_recommendations')
-        .select('id, created_at, from_user_id, book_ol_key, book_title, book_author, cover_id, message')
-        .eq('to_user_id', currentUser.id)
         .eq('status', 'pending')
-        .order('created_at', { ascending: false })
     ]);
 
-    // Derive friend IDs — needed to filter the feed (fix: no longer fetches all users' events)
-    const friendIds     = (friendsRes.data || []).map(f =>
+    // Fetch recs separately so a column error doesn't kill the whole load
+    let recsData = [];
+    {
+      const { data, error } = await sb.from('book_recommendations')
+        .select('id, created_at, from_user_id, book_ol_key, book_title, book_author, cover_id, message, status')
+        .eq('to_user_id', currentUser.id)
+        .eq('status', 'pending')
+        .order('created_at', { ascending: false });
+      if (error) {
+        console.warn('[Social] recs full-select failed, trying minimal columns:', error.message);
+        // Migration not yet run — fall back to columns guaranteed to exist
+        const { data: fallback, error: err2 } = await sb.from('book_recommendations')
+          .select('id, created_at, from_user_id, book_ol_key, message, status')
+          .eq('to_user_id', currentUser.id)
+          .eq('status', 'pending')
+          .order('created_at', { ascending: false });
+        if (err2) console.error('[Social] recs fallback also failed:', err2.message);
+        else recsData = fallback || [];
+      } else {
+        recsData = data || [];
+      }
+    }
+
+    // Derive friend IDs — needed to filter the feed
+    const friendIds  = (friendsRes.data || []).map(f =>
       f.requester_id === currentUser.id ? f.addressee_id : f.requester_id
     );
-    const pendingIds    = (pendingRes.data || []).map(f => f.requester_id);
-    const recIds        = (recsRes.data   || []).map(r => r.from_user_id);
+    const pendingIds = (pendingRes.data || []).map(f => f.requester_id);
+    const recIds     = recsData.map(r => r.from_user_id);
     const friendAndSelf = [...new Set([currentUser.id, ...friendIds])];
 
     // Step 2: fetch feed for self + friends via RPC (bypasses RLS which only allows own rows)
@@ -4192,7 +4219,7 @@ async function loadSocialData() {
 
     // Attach profiles to feed and recs
     socialState.feed = feedData.map(e => ({ ...e, profiles: profileMap[e.user_id] || null }));
-    socialState.recs = (recsRes.data || []).map(r => ({ ...r, profiles: profileMap[r.from_user_id] || null }));
+    socialState.recs = recsData.map(r => ({ ...r, profiles: profileMap[r.from_user_id] || null }));
 
     socialState._loaded = true;
     renderCommunityUI();
@@ -5163,6 +5190,7 @@ async function acceptRecToTBR(recId, olKey, message, bookTitle, bookAuthor, cove
   socialState.recs = socialState.recs.filter(r => r.id !== recId);
   updateHomeNotifStrip();
   renderFriendRecsDiscover();
+  renderHomeFeed();
   showFlash(`✓ "${bookTitle || olKey}" added to My List!`);
 }
 
@@ -8190,36 +8218,73 @@ async function saveFavBooks() {
   }
 }
 
-// ── Home feed (friend reviews) ────────────────────────────────
+// ── Home feed (friend reviews + recs) ────────────────────────
 function renderHomeFeed() {
-  const el = document.getElementById('rt-home-feed-list');
-  const card = document.getElementById('rt-home-feed-card');
-  if (!el || !card) return;
+  const feedEl  = document.getElementById('rt-home-feed-list');
+  const feedCard = document.getElementById('rt-home-feed-card');
+  const recsCard = document.getElementById('rt-home-recs-card');
+  const recsList = document.getElementById('rt-home-recs-list');
+  if (!feedEl || !feedCard) return;
 
+  const feedLoggedOut  = document.getElementById('rt-home-feed-loggedout');
+  const notifLoggedOut = document.getElementById('rt-home-notif-loggedout');
+
+  if (!currentUser || !socialState._loaded) {
+    feedCard.style.display = 'none';
+    if (recsCard)       recsCard.style.display       = 'none';
+    if (feedLoggedOut)  feedLoggedOut.style.display   = 'block';
+    if (notifLoggedOut) notifLoggedOut.style.display  = 'block';
+    return;
+  }
+  if (feedLoggedOut)  feedLoggedOut.style.display  = 'none';
+  if (notifLoggedOut) notifLoggedOut.style.display = 'none';
+
+  // ── Recs card ──
+  const pendingRecs = (socialState.recs || []).filter(r => r.status === 'pending');
+  if (recsCard && recsList) {
+    recsCard.style.display = pendingRecs.length ? 'block' : 'none';
+    if (pendingRecs.length) {
+      recsList.innerHTML = pendingRecs.slice(0, 5).map(r => {
+        const name  = r.profiles?.display_name || r.profiles?.username || 'A friend';
+        const colour = avatarColour(r.from_user_id);
+        const init   = avatarInitial(name);
+        const coverHtml = r.cover_id
+          ? `<img src="https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg" style="width:36px;height:50px;border-radius:4px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
+          : `<div style="width:36px;height:50px;border-radius:4px;background:var(--rt-surface);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">📚</div>`;
+        return `
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0;border-bottom:1px solid var(--rt-border);">
+            ${coverHtml}
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(r.book_title || r.book_ol_key || 'A book')}</div>
+              ${r.book_author ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-top:1px;">${esc(r.book_author)}</div>` : ''}
+              <div style="font-size:0.72rem;color:var(--rt-t3);margin-top:2px;">from <span style="display:inline-flex;align-items:center;gap:0.25rem;"><span style="width:13px;height:13px;border-radius:50%;background:${colour};display:inline-flex;align-items:center;justify-content:center;font-size:0.48rem;color:#fff;font-weight:700;">${init}</span>${esc(name)}</span></div>
+              ${r.message ? `<div style="font-size:0.7rem;color:var(--rt-t3);font-style:italic;margin-top:2px;">"${esc(r.message.slice(0,60))}${r.message.length>60?'…':''}"</div>` : ''}
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.35rem;flex-shrink:0;">
+              <button class="rt-done-action-btn rt-done-action-btn--primary" style="padding:0.3rem 0.65rem;font-size:0.72rem;min-width:0;"
+                onclick="acceptRecToTBR('${r.id}','${esc(r.book_ol_key||'')}','${esc(r.message||'')}','${esc(r.book_title||'')}','${esc(r.book_author||'')}',${r.cover_id||null})">+ Add</button>
+              <button class="rt-done-action-btn rt-done-action-btn--secondary" style="padding:0.3rem 0.65rem;font-size:0.72rem;min-width:0;"
+                onclick="dismissRec('${r.id}')">Dismiss</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+  }
+
+  // ── Friends activity feed ──
   const reviewEvents = (socialState.feed || [])
     .filter(f => f.event_type === 'review' || (f.book_title && f.book_author));
 
-  const feedLoggedOut = document.getElementById('rt-home-feed-loggedout');
-  const notifLoggedOut = document.getElementById('rt-home-notif-loggedout');
-  if (!currentUser || !socialState._loaded) {
-    card.style.display = 'none';
-    if (feedLoggedOut) feedLoggedOut.style.display = 'block';
-    if (notifLoggedOut) notifLoggedOut.style.display = 'block';
-    return;
-  }
-  card.style.display = 'block';
-  if (feedLoggedOut) feedLoggedOut.style.display = 'none';
-  if (notifLoggedOut) notifLoggedOut.style.display = 'none';
-
+  feedCard.style.display = 'block';
   if (!reviewEvents.length) {
-    el.innerHTML = '<div class="rt-feed-empty"><div class="rt-feed-empty-icon">📖</div><p>Add friends to see their reviews here.</p></div>';
+    feedEl.innerHTML = '<div class="rt-feed-empty"><div class="rt-feed-empty-icon">📖</div><p>Add friends to see their reviews here.</p></div>';
     return;
   }
 
   const profileMap = {};
   (socialState.friends || []).forEach(f => { profileMap[f.userId] = f; });
 
-  el.innerHTML = reviewEvents.slice(0,10).map(ev => {
+  feedEl.innerHTML = reviewEvents.slice(0,10).map(ev => {
     const friend = profileMap[ev.user_id];
     const name   = friend?.displayName || friend?.username || 'A friend';
     const colour = avatarColour(ev.user_id);
@@ -8502,6 +8567,7 @@ async function dismissRec(recId) {
     await sb.from('book_recommendations').update({ status: 'dismissed' }).eq('id', recId);
     socialState.recs = socialState.recs.filter(r => r.id !== recId);
     renderFriendRecsDiscover();
+    renderHomeFeed();
     updateHomeNotifStrip();
     updateNotifDot();
   } catch(e) { showFlash('Could not dismiss recommendation.'); }
