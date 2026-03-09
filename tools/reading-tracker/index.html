@@ -2040,10 +2040,10 @@ permalink: /tools/reading-tracker/
   }
   #rt-community-loggedin > .rt-panel-inner { padding:0; }
 
-  /* Sticky Chat/Friends tab bar */
+  /* Sticky Chat/Friends tab bar — sticks below the sticky mobile header */
   .rt-community-tab-bar {
     position: sticky;
-    top: 0;
+    top: 52px; /* mobile header height */
     z-index: 90;
   }
 
@@ -2377,7 +2377,56 @@ permalink: /tools/reading-tracker/
   display:flex; gap:0.5rem; background:#fff; flex-shrink:0;
 }
 
-/* ── STATS PAGE ──────────────────────────────────────────────── */
+/* ══ Desktop community + global panel width fixes ════════════ */
+
+/* All panels fill available width */
+.rt-panel-inner { width: 100%; }
+
+/* Community panel: strip extra gap/padding on desktop too */
+@media (min-width:701px) {
+  #rt-panel-community .rt-panel-inner { gap: 0; padding: 0; }
+  #rt-community-loggedin > .rt-panel-inner { padding: 0; gap: 0; }
+
+  /* Community card fills full panel width on desktop */
+  #rt-panel-community .rt-card {
+    border-radius: var(--rt-r2);
+    border: 1px solid var(--rt-border);
+    box-shadow: var(--rt-s1);
+  }
+
+  /* Sticky Chat/Friends tab bar on desktop — below site tabbar */
+  .rt-community-tab-bar {
+    position: sticky;
+    top: 44px;
+    z-index: 90;
+  }
+
+  /* Desktop chat thread: constrained height so messages scroll
+     and input stays pinned at the bottom.
+     Approx: sidebar sticky already handles viewport; thread card
+     should not grow past viewport height.
+     44px site tabbar + ~48px community tab bar + ~48px thread header */
+  #rt-chat-thread-view {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 180px);
+    min-height: 400px;
+    overflow: hidden;
+  }
+  #rt-chat-thread-view .rt-chat-thread {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+  }
+  #rt-chat-thread-view .rt-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+  }
+  #rt-chat-thread-view .rt-chat-input-row {
+    flex-shrink: 0;
+  }
+}
 .rt-stats-page { display:flex; flex-direction:column; gap:1.25rem; }
 
 /* Hero number cards */
@@ -8970,8 +9019,9 @@ function renderThread(prepend) {
   }
 
   // Scroll to bottom on first load or new message; preserve position on prepend
+  // rAF ensures the browser has painted new content before we measure scrollHeight
   if (!prepend || wasAtBottom) {
-    el.scrollTop = el.scrollHeight;
+    requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
   }
 }
 
