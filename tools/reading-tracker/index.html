@@ -2039,9 +2039,39 @@ permalink: /tools/reading-tracker/
     box-shadow:none;
   }
   #rt-community-loggedin > .rt-panel-inner { padding:0; }
-  /* Extra bottom padding so chat list clears the fixed invite banner */
-  #rt-chat-list { padding-bottom: 0.5rem; }
-  #rt-chat-list-view { padding-bottom: 80px; } /* invite strip height */
+
+  /* Sticky Chat/Friends tab bar */
+  .rt-community-tab-bar {
+    position: sticky;
+    top: 52px;
+    z-index: 90;
+  }
+
+  /* Chat list: no padding hacks needed */
+  #rt-chat-list { padding-bottom: 0; }
+  #rt-chat-list-view { padding-bottom: 0; }
+
+  /* Chat thread: full-height flex column so input stays above nav
+     52px header + 44px tab bar + 64px bottom nav = 160px */
+  #rt-chat-thread-view {
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - 160px);
+    overflow: hidden;
+  }
+  #rt-chat-thread-view .rt-chat-thread {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+  }
+  #rt-chat-thread-view .rt-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+  }
+  #rt-chat-thread-view .rt-chat-input-row {
+    flex-shrink: 0;
+  }
 }
 .rt-chat-thread-header {
   display:flex; align-items:center; gap:0.75rem;
@@ -2137,50 +2167,43 @@ permalink: /tools/reading-tracker/
 .rt-chat-empty-text { font-size:0.83rem; color:var(--rt-t3); line-height:1.6; }
 
 /* Invite strip — sticky bottom of chat list view */
+/* Invite strip — inline at bottom of chat list */
 .rt-invite-strip {
-  background:var(--rt-navy);
-  padding:0.75rem 1.25rem;
+  background: var(--rt-navy);
+  padding: 0.7rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+.rt-invite-strip-copy {
+  flex: 1; min-width: 0;
 }
 .rt-invite-strip-title {
-  font-size:0.75rem; font-weight:700; color:#fff; margin-bottom:0.2rem;
+  font-size: 0.78rem; font-weight: 700; color: #fff; margin-bottom: 0.15rem;
 }
 .rt-invite-strip-sub {
-  font-size:0.68rem; color:rgba(255,255,255,0.5); margin-bottom:0.6rem; line-height:1.45;
-}
-.rt-invite-strip-row {
-  display:flex; gap:0.5rem; align-items:center;
-}
-.rt-invite-strip-field {
-  flex:1; font-size:0.7rem; color:rgba(255,255,255,0.6);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  background:rgba(255,255,255,0.08); border-radius:6px;
-  padding:0.4rem 0.65rem; border:1px solid rgba(255,255,255,0.12);
+  font-size: 0.68rem; color: rgba(255,255,255,0.55); line-height: 1.45;
 }
 .rt-invite-strip-btn {
-  background:var(--rt-amber); color:#fff; border:none; border-radius:6px;
-  padding:0.4rem 0.85rem; font-size:0.72rem; font-weight:700; cursor:pointer;
-  white-space:nowrap; flex-shrink:0;
+  background: var(--rt-amber); color: #fff; border: none; border-radius: 8px;
+  padding: 0.5rem 1rem; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+  white-space: nowrap; flex-shrink: 0;
+  transition: background 0.15s;
 }
-.rt-invite-strip-btn:hover { background:var(--rt-amber-lt); }
-/* On mobile: fixed above the bottom nav bar */
-@media (max-width:700px) {
+.rt-invite-strip-btn:hover { background: var(--rt-amber-lt); }
+/* Hide the old URL field (kept in DOM for JS compat) */
+.rt-invite-strip-row { display: none !important; }
+.rt-invite-strip-field { display: none !important; }
+/* Desktop inline strip */
+.rt-invite-strip--desktop-only { display: none; }
+@media (min-width: 701px) {
+  .rt-invite-strip--desktop-only { display: flex; }
   .rt-invite-strip {
-    position:fixed; bottom:64px; left:0; right:0; z-index:199;
-    border-top:1px solid rgba(255,255,255,0.08);
-    display:none; /* shown by JS when community/chat tab is active */
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0 0 var(--rt-r2) var(--rt-r2);
   }
-  .rt-invite-strip.visible { display:block; }
-}
-/* On desktop: inside the panel as a card-like section */
-@media (min-width:701px) {
-  .rt-invite-strip {
-    border-top:1px solid var(--rt-border);
-    border-radius:0 0 var(--rt-r2) var(--rt-r2);
-  }
-}
-/* The inline desktop strip is hidden on mobile (fixed bar takes over) */
-@media (max-width:700px) {
-  .rt-invite-strip--desktop-only { display:none !important; }
 }
 .rt-book-club-toast {
   position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
@@ -2756,8 +2779,8 @@ permalink: /tools/reading-tracker/
             <div class="rt-pending-requests" id="rt-pending-requests-list"></div>
           </div>
 
-          <!-- Sub-tabs: Friends | Chat -->
-          <div class="rt-card" style="padding:0;overflow:hidden;">
+          <!-- Sub-tabs: sticky bar -->
+          <div class="rt-community-tab-bar rt-card" style="padding:0;overflow:hidden;">
             <div class="rt-community-tabs" style="padding:0 1.25rem;">
               <button class="rt-community-tab active" id="rt-ctab-chat" onclick="switchCommunityTab('chat')">
                 Chat
@@ -2766,6 +2789,10 @@ permalink: /tools/reading-tracker/
                 Friends <span class="rt-community-tab-badge" id="rt-friends-count-badge" style="display:none;"></span>
               </button>
             </div>
+          </div>
+
+          <!-- Tab content card -->
+          <div class="rt-card" style="padding:0;overflow:hidden;">
 
             <!-- Friends tab: search at top, list below -->
             <div id="rt-community-friends-tab" style="display:none;padding:1rem 1.25rem 1.25rem;">
@@ -2785,7 +2812,7 @@ permalink: /tools/reading-tracker/
               </div>
             </div>
 
-            <!-- Chat tab (Phase 3) -->
+            <!-- Chat tab -->
             <div id="rt-community-chat-tab">
 
               <!-- View A: Chat list -->
@@ -2796,14 +2823,15 @@ permalink: /tools/reading-tracker/
                     <p class="rt-chat-empty-text">No book chats yet.<br>Start reading a book a friend is also reading — you'll be able to start a chat.</p>
                   </div>
                 </div>
-                <!-- Desktop-only invite strip (mobile uses the global fixed bar) -->
-                <div class="rt-invite-strip rt-invite-strip--desktop-only">
-                  <div class="rt-invite-strip-title">Invite a friend</div>
-                  <div class="rt-invite-strip-sub">Share this link — anyone can send you a friend request.</div>
-                  <div class="rt-invite-strip-row">
-                    <div class="rt-invite-strip-field" id="rt-invite-link-field-desktop">Generating…</div>
-                    <button class="rt-invite-strip-btn" id="rt-invite-copy-btn-desktop" type="button">Copy invite</button>
+                <!-- Invite strip — inline at bottom of chat list -->
+                <div class="rt-invite-strip" id="rt-invite-strip-inline" style="display:none;">
+                  <div class="rt-invite-strip-copy">
+                    <div class="rt-invite-strip-title">Books are better shared.</div>
+                    <div class="rt-invite-strip-sub">Invite friends to recommend and chat about your favourite stories.</div>
                   </div>
+                  <button class="rt-invite-strip-btn" id="rt-invite-copy-btn-desktop" type="button">Copy link</button>
+                  <!-- Hidden field kept for JS compat -->
+                  <div style="display:none;"><div id="rt-invite-link-field-desktop"></div></div>
                 </div>
               </div>
 
@@ -2833,7 +2861,7 @@ permalink: /tools/reading-tracker/
               </div>
 
             </div>
-          </div><!-- /card -->
+          </div><!-- /tab content card -->
 
           </div><!-- /rt-panel-inner -->
         </div><!-- /loggedin -->
@@ -3307,13 +3335,16 @@ permalink: /tools/reading-tracker/
   </div>
 </header>
 
-<!-- INVITE STRIP — fixed above mobile nav, shown when community tab is active -->
-<div class="rt-invite-strip" id="rt-invite-strip-global">
-  <div class="rt-invite-strip-title">Invite a friend</div>
-  <div class="rt-invite-strip-sub">Share this link — anyone can send you a friend request.</div>
-  <div class="rt-invite-strip-row">
-    <div class="rt-invite-strip-field" id="rt-invite-link-field">Generating…</div>
-    <button class="rt-invite-strip-btn" id="rt-invite-copy-btn" type="button">Copy invite</button>
+<!-- INVITE STRIP — inline at bottom of chat list, shown on community tab -->
+<div class="rt-invite-strip" id="rt-invite-strip-global" style="display:none;">
+  <div class="rt-invite-strip-copy">
+    <div class="rt-invite-strip-title">Books are better shared.</div>
+    <div class="rt-invite-strip-sub">Invite friends to recommend and chat about your favourite stories.</div>
+  </div>
+  <button class="rt-invite-strip-btn" id="rt-invite-copy-btn" type="button">Copy link</button>
+  <!-- Hidden field kept for JS compat -->
+  <div class="rt-invite-strip-row" style="display:none;">
+    <div class="rt-invite-strip-field" id="rt-invite-link-field"></div>
   </div>
 </div>
 
@@ -4314,6 +4345,12 @@ function switchCommunityTab(tab) {
   document.getElementById('rt-community-chat-tab').style.display    = tab === 'chat'    ? 'block' : 'none';
   document.getElementById('rt-ctab-friends').classList.toggle('active', tab === 'friends');
   document.getElementById('rt-ctab-chat').classList.toggle('active',    tab === 'chat');
+  // Invite strip only shows on chat tab (not friends tab, and not when thread is open)
+  const inviteInline = document.getElementById('rt-invite-strip-inline');
+  const threadOpen = chatState.activeChat != null;
+  if (inviteInline && currentUser) {
+    inviteInline.style.display = (tab === 'chat' && !threadOpen) ? 'flex' : 'none';
+  }
 }
 
 // ── Main community render ─────────────────────────────────────
@@ -4616,27 +4653,30 @@ function generateInviteLink() {
   const base = window.location.origin + window.location.pathname;
   const link = `${base}?invite=${currentUser.id}`;
 
-  function wireField(fieldId, btnId) {
-    const field = document.getElementById(fieldId);
-    const btn   = document.getElementById(btnId);
-    if (field) field.textContent = link;
-    if (btn) {
-      btn.onclick = function() {
-        const username = socialState._myUsername || '';
-        const inviteMsg = `Come read with me on LitLoop! 📚 Track books, chat about stories, and share recommendations. Create your free account and add me${username ? ` @${username}` : ''}: ${link}`;
-        navigator.clipboard?.writeText(inviteMsg).then(() => {
-          btn.textContent = '✓ Copied!';
-          setTimeout(() => btn.textContent = 'Copy invite', 2000);
-        }).catch(() => {
-          btn.textContent = '✓ Copied!';
-          setTimeout(() => btn.textContent = 'Copy invite', 2000);
-        });
-      };
-    }
+  function wireBtn(btnId) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    btn.onclick = function() {
+      const username = socialState._myUsername || '';
+      const inviteMsg = `Come read with me on LitLoop! 📚 Track books, chat about stories, and share recommendations. Create your free account and add me${username ? ` @${username}` : ''}: ${link}`;
+      navigator.clipboard?.writeText(inviteMsg).then(() => {
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = 'Copy link', 2000);
+      }).catch(() => {
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = 'Copy link', 2000);
+      });
+    };
   }
 
-  wireField('rt-invite-link-field', 'rt-invite-copy-btn');               // mobile fixed bar
-  wireField('rt-invite-link-field-desktop', 'rt-invite-copy-btn-desktop'); // desktop inline
+  // Wire both the global (now hidden/compat) and the inline strip button
+  wireBtn('rt-invite-copy-btn');
+  wireBtn('rt-invite-copy-btn-desktop');
+  // Keep hidden fields populated for any JS that reads them
+  const f1 = document.getElementById('rt-invite-link-field');
+  const f2 = document.getElementById('rt-invite-link-field-desktop');
+  if (f1) f1.textContent = link;
+  if (f2) f2.textContent = link;
 }
 
 // Handle ?invite=<userId> on load — send friend request automatically
@@ -5723,9 +5763,12 @@ function renderGenreChart() {
 // TAB SWITCHING
 // ─────────────────────────────────────────────────────────────
 function switchTab(name) {
-  // Show/hide the fixed mobile invite strip — only on community tab
+  // Show/hide the inline invite strip — only on community tab, chat sub-tab
+  const inviteInline = document.getElementById('rt-invite-strip-inline');
+  if (inviteInline) inviteInline.style.display = 'none'; // will be set by switchCommunityTab
+  // Hide legacy global strip (no longer used as fixed bar)
   const inviteGlobal = document.getElementById('rt-invite-strip-global');
-  if (inviteGlobal) inviteGlobal.classList.toggle('visible', name === 'community' && !!currentUser);
+  if (inviteGlobal) inviteGlobal.style.display = 'none';
 
   // When navigating to community, default to chat sub-tab
   if (name === 'community') {
@@ -8748,10 +8791,14 @@ async function openChatThread(chatId) {
 
   // Switch views
   document.getElementById('rt-chat-list-view').style.display   = 'none';
-  document.getElementById('rt-chat-thread-view').style.display = 'block';
+  document.getElementById('rt-chat-thread-view').style.display = 'flex'; // flex for height layout
   document.getElementById('rt-chat-thread-title').textContent  = chat.bookTitle;
   document.getElementById('rt-chat-messages').innerHTML =
     '<div style="padding:1rem;text-align:center;color:var(--rt-t3);font-size:0.8rem;">Loading…</div>';
+
+  // Hide invite strip while in thread
+  const inviteInline = document.getElementById('rt-invite-strip-inline');
+  if (inviteInline) inviteInline.style.display = 'none';
 
   // Populate participants strip
   renderParticipantsStrip(chatId);
@@ -8769,6 +8816,9 @@ function closeChatThread() {
     chatState._realtimeCh = null;
   }
   chatState.activeChat = null;
+  // Restore invite strip
+  const inviteInline = document.getElementById('rt-invite-strip-inline');
+  if (inviteInline && currentUser) inviteInline.style.display = 'flex';
   // Refresh list to clear unread badge
   loadChatList();
 }
