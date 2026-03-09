@@ -107,7 +107,7 @@ permalink: /tools/reading-tracker/
   background: var(--rt-white);
   border-bottom: 1px solid var(--rt-border);
   position: sticky;
-  top: 68px; /* below site header */
+  top: 0; /* standalone — no site header above */
   z-index: 90;
   box-shadow: var(--rt-s1);
 }
@@ -146,7 +146,7 @@ permalink: /tools/reading-tracker/
   padding-bottom: 2rem;
 }
 .rt-panels { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
-.rt-panel { padding: 1.75rem 0; }
+.rt-panel { padding: 0.5rem 0 1.75rem; }
 .rt-panel-inner { display: flex; flex-direction: column; gap: 1.5rem; max-width: 960px; }
 
 /* ── SECTION HEADINGS ── */
@@ -205,7 +205,7 @@ permalink: /tools/reading-tracker/
 /* ── STATS GRID ── */
 .rt-stats-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
 }
 .rt-stat-card {
@@ -215,7 +215,7 @@ permalink: /tools/reading-tracker/
   box-shadow: var(--rt-s1);
 }
 .rt-stat-goal   { grid-column: 1 / -1; background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid)); }
-.rt-stat-card--genre { grid-column: span 1; }
+.rt-stat-card--genre { grid-column: span 2; }
 .rt-stat-label  { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rt-t3); margin-bottom: 0.3rem; font-weight: 500; }
 .rt-stat-goal .rt-stat-label { color: rgba(255,255,255,0.45); }
 .rt-stat-number { font-family: var(--rt-font-display); font-size: 2rem; font-weight: 700; color: var(--rt-navy); line-height: 1; }
@@ -1179,9 +1179,9 @@ permalink: /tools/reading-tracker/
   .rt-sidebar {
     display: flex; flex-direction: column;
     background: var(--rt-white); border-right: 1px solid var(--rt-border);
-    height: calc(100vh - 68px);
+    height: calc(100vh - 44px);
     padding: 1.5rem 0;
-    position: sticky; top: 68px;
+    position: sticky; top: 44px;
     overflow-y: auto;
   }
   .rt-sidebar-label {
@@ -1228,7 +1228,6 @@ permalink: /tools/reading-tracker/
 /* ── Genre breakdown chart ── */
 /* ── Genre pie chart — lives inside a stat card ── */
 .rt-stat-card--genre {
-  grid-column: span 2;
   display: flex; flex-direction: column;
 }
 .rt-genre-pie-wrap {
@@ -2472,6 +2471,10 @@ permalink: /tools/reading-tracker/
       <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
       Profile
     </button>
+    <button class="rt-tab" data-tab="settings" onclick="switchTab('settings')">
+      <svg class="rt-tab-icon" viewBox="0 0 24 24" fill="none" width="16" height="16"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+      Settings
+    </button>
     <div class="rt-tabbar-icons">
       <button class="rt-icon-btn" id="rt-stats-btn" data-tab="stats" onclick="openStatsPanel()" title="Reading stats" type="button">
         <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><rect x="18" y="3" width="3" height="18" rx="1" fill="currentColor" opacity=".3"/><rect x="10.5" y="8" width="3" height="13" rx="1" fill="currentColor" opacity=".6"/><rect x="3" y="13" width="3" height="8" rx="1" fill="currentColor"/></svg>
@@ -2510,6 +2513,10 @@ permalink: /tools/reading-tracker/
     <button class="rt-sidebar-item" data-tab="account" onclick="switchTab('account')">
       <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/></svg>
       Profile
+    </button>
+    <button class="rt-sidebar-item" data-tab="settings" onclick="switchTab('settings')">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
+      Settings
     </button>
     <button class="rt-sidebar-item" id="rt-sidebar-stats" data-tab="stats" onclick="openStatsPanel()" type="button">
       <svg viewBox="0 0 24 24" fill="none"><rect x="18" y="3" width="3" height="18" rx="1" fill="currentColor" opacity=".4"/><rect x="10.5" y="8" width="3" height="13" rx="1" fill="currentColor" opacity=".7"/><rect x="3" y="13" width="3" height="8" rx="1" fill="currentColor"/></svg>
@@ -2994,6 +3001,67 @@ permalink: /tools/reading-tracker/
     </div>
 
     <!-- ══════════════════════════════════
+         SETTINGS
+    ══════════════════════════════════ -->
+    <div class="rt-panel" id="rt-panel-settings" data-tab="settings" style="display:none;">
+      <div class="rt-panel-inner">
+        <div>
+          <h2 class="rt-section-heading" style="margin-bottom:0.2rem;">Account Settings</h2>
+          <p class="rt-panel-sub" style="margin:0;">Manage your account and profile.</p>
+        </div>
+
+        <div class="rt-card" style="padding:0;" id="rt-settings-panel-loggedout" style="display:none;">
+          <div style="padding:2rem;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:0.75rem;">🔑</div>
+            <p style="font-size:0.9rem;color:var(--rt-t2);line-height:1.6;margin-bottom:1.25rem;">Sign in to manage your account settings.</p>
+            <button class="rt-submit-btn" onclick="switchTab('account')" type="button" style="max-width:220px;margin:0 auto;">Sign in →</button>
+          </div>
+        </div>
+
+        <div id="rt-settings-panel-loggedin">
+          <!-- Email + sign out -->
+          <div class="rt-card" style="padding:1.25rem 1.5rem;">
+            <div class="rt-settings-section" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+              <div>
+                <div class="rt-settings-label">Email</div>
+                <div class="rt-settings-value" id="rt-settings-panel-email">—</div>
+              </div>
+              <button class="rt-ghost-btn" onclick="signOut()" type="button" style="color:#7f1d1d;flex-shrink:0;font-size:0.8rem;padding:0.4rem 0.8rem;">Sign out</button>
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div class="rt-card" style="padding:1.25rem 1.5rem;margin-top:0.75rem;">
+            <div class="rt-settings-section" style="border-bottom:none;padding-bottom:0;margin-bottom:0;">
+              <div class="rt-settings-label">Username</div>
+              <div class="rt-username-row" id="rt-settings-panel-username-display-row">
+                <span class="rt-username-value" id="rt-settings-panel-username-display">—</span>
+                <button class="rt-username-edit-btn" type="button" onclick="showSettingsPanelUsernameEdit()">Edit</button>
+              </div>
+              <div class="rt-username-row" id="rt-settings-panel-username-edit-row" style="display:none;">
+                <input class="rt-username-input" type="text" id="rt-settings-panel-username-input" placeholder="e.g. bookworm42" maxlength="30" autocomplete="off">
+                <button class="rt-username-edit-btn" type="button" onclick="saveSettingsPanelUsername()">Save</button>
+                <button class="rt-username-edit-btn" type="button" onclick="cancelSettingsPanelUsernameEdit()" style="color:var(--rt-t3);">✕</button>
+              </div>
+              <p id="rt-settings-panel-username-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;"></p>
+            </div>
+          </div>
+
+          <!-- Bio -->
+          <div class="rt-card" style="padding:1.25rem 1.5rem;margin-top:0.75rem;">
+            <div class="rt-settings-section" style="border-bottom:none;padding-bottom:0;margin-bottom:0;">
+              <div class="rt-settings-label">Bio <span style="font-weight:400;color:var(--rt-t3);font-size:0.8em;">(shown on your profile)</span></div>
+              <textarea id="rt-settings-panel-bio" rows="4" placeholder="A short bio — genres you love, reading goals…" style="width:100%;box-sizing:border-box;border:1.5px solid var(--rt-border-md);border-radius:var(--rt-r3);padding:0.6rem 0.8rem;font-family:var(--rt-font-body);font-size:0.85rem;color:var(--rt-navy);background:var(--rt-cream);resize:vertical;margin-top:0.4rem;"></textarea>
+              <button class="rt-submit-btn" onclick="saveSettingsPanelBio()" type="button" style="margin-top:0.75rem;max-width:160px;">Save bio</button>
+              <p id="rt-settings-panel-bio-msg" style="display:none;font-size:0.75rem;margin-top:0.35rem;"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════
          ACCOUNT
     ══════════════════════════════════ -->
     <div class="rt-panel" id="rt-panel-account" data-tab="account" style="display:none;">
@@ -3077,7 +3145,7 @@ permalink: /tools/reading-tracker/
                   <div class="rt-profile-hero-username" id="rt-profile-hero-username"></div>
                   <div class="rt-profile-hero-bio" id="rt-profile-hero-bio" style="display:none;"></div>
                 </div>
-                <button class="rt-icon-btn" onclick="openAccountSettings()" title="Settings" type="button" style="margin-left:auto;flex-shrink:0;">
+                <button class="rt-icon-btn" onclick="switchTab('settings')" title="Settings" type="button" style="margin-left:auto;flex-shrink:0;">
                   <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="1.8"/></svg>
                 </button>
               </div>
@@ -3139,7 +3207,7 @@ permalink: /tools/reading-tracker/
 <!-- MOBILE TOP HEADER (shown only on mobile via CSS) -->
 <header class="rt-mobile-header" id="rt-mobile-header">
   <div class="rt-mobile-header-left">
-    <button class="rt-mobile-header-profile-avatar" id="rt-mobile-avatar-btn" onclick="openAccountSettings()" type="button" title="Account settings" aria-label="Account settings">
+    <button class="rt-mobile-header-profile-avatar" id="rt-mobile-avatar-btn" onclick="switchTab('settings')" type="button" title="Account settings" aria-label="Account settings">
       <svg id="rt-mobile-avatar-icon" viewBox="0 0 24 24" fill="none" width="17" height="17" style="display:block;"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
       <span id="rt-mobile-avatar-init" style="display:none;font-size:0.7rem;font-weight:700;letter-spacing:0.02em;"></span>
     </button>
@@ -3463,10 +3531,19 @@ permalink: /tools/reading-tracker/
     <!-- Body -->
     <div class="rt-book-detail-body" id="rt-book-detail-body">
 
-      <!-- User's rating/review (shown for read books) -->
+      <!-- User's rating/review (shown for read/dnf books) -->
       <div class="rt-book-detail-section" id="rt-book-detail-user-section" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.35rem;">
+          <div class="rt-book-detail-section-label" style="margin-bottom:0;">My review</div>
+          <button id="rt-book-detail-edit-btn" type="button" title="Edit review & notes"
+            style="background:none;border:none;cursor:pointer;padding:4px;color:#9aa3bb;display:flex;align-items:center;gap:0.3rem;font-size:0.72rem;color:var(--rt-t3);">
+            <svg viewBox="0 0 24 24" fill="none" width="13" height="13"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Edit
+          </button>
+        </div>
         <div class="rt-book-detail-stars" id="rt-book-detail-user-stars"></div>
         <div class="rt-book-detail-review" id="rt-book-detail-user-review" style="display:none;"></div>
+        <div id="rt-book-detail-no-review" style="display:none;font-size:0.8rem;color:var(--rt-t3);font-style:italic;margin-top:0.2rem;">No review yet — tap Edit to add one.</div>
       </div>
 
       <!-- Blurb from Open Library -->
@@ -5317,6 +5394,7 @@ function switchTab(name) {
 
   if (name === 'tbr') renderTBR();
   if (name === 'stats') renderStatsPanel();
+  if (name === 'settings') renderSettingsPanel();
   if ((name === 'home' || name === 'community' || name === 'account') && currentUser && !socialState._loaded) loadSocialData();
   window.scrollTo({ top: document.querySelector('.rt-hero').offsetHeight, behavior: 'smooth' });
 }
@@ -6299,12 +6377,17 @@ function openBookDetail(bookId) {
     userStars.textContent = book.rating
       ? '★'.repeat(book.rating) + '☆'.repeat(5 - book.rating)
       : '';
+    const noReview = document.getElementById('rt-book-detail-no-review');
     if (book.reviewBody) {
       userReview.textContent = book.reviewBody;
       userReview.style.display = 'block';
+      if (noReview) noReview.style.display = 'none';
     } else {
       userReview.style.display = 'none';
+      if (noReview) noReview.style.display = 'block';
     }
+    const editBtn = document.getElementById('rt-book-detail-edit-btn');
+    if (editBtn) editBtn.onclick = () => { closeBookDetail(); openEditSheet(bookId); };
   } else {
     userSection.style.display = 'none';
   }
@@ -6334,25 +6417,20 @@ function openBookDetail(bookId) {
 function renderBookDetailFooter(book) {
   const footer = document.getElementById('rt-book-detail-footer');
   const hasFriends = currentUser && socialState.friends.length > 0;
-  const recBtn = hasFriends
-    ? `<button class="rt-book-detail-action rt-book-detail-action--amber" data-action="recommend" data-book-id="${esc(String(book.id))}">📚 Recommend</button>`
-    : '';
+  const recBtn = `<button class="rt-book-detail-action rt-book-detail-action--amber" data-action="recommend" data-book-id="${esc(String(book.id))}">📚 Recommend</button>`;
+  const chatBtn = `<button class="rt-book-detail-action rt-book-detail-action--primary" onclick="closeBookDetail();openFriendPickerForChat('${esc(book.olKey||'')}','${esc(book.title||'')}','${esc(book.author||'')}','${book.coverId||''}')">💬 Start chat</button>`;
 
   if (book.status === 'tbr') {
     footer.innerHTML = `
       <button class="rt-book-detail-action rt-book-detail-action--primary" onclick="closeBookDetail();openEditSheet('${book.id}')">📖 Start reading</button>
-      ${recBtn}
-      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail()">Close</button>`;
+      ${recBtn}`;
   } else if (book.status === 'reading') {
     footer.innerHTML = `
       <button class="rt-book-detail-action rt-book-detail-action--primary" onclick="closeBookDetail();openModal('${book.id}')">✓ Mark finished</button>
-      ${recBtn}
-      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail();openEditSheet('${book.id}')">✏️ Edit</button>`;
+      ${recBtn}`;
   } else {
-    footer.innerHTML = `
-      ${recBtn}
-      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail();openEditSheet('${book.id}')">✏️ Edit notes</button>
-      <button class="rt-book-detail-action rt-book-detail-action--secondary" onclick="closeBookDetail()">Close</button>`;
+    // read or dnf — edit pencil is in the header, so just Recommend + Start Chat
+    footer.innerHTML = `${recBtn}${chatBtn}`;
   }
 }
 
@@ -7498,6 +7576,75 @@ function showMsg(el, text, type) {
   el.style.display = 'block';
   el.style.color = type === 'error' ? '#991b1b' : '#065f46';
   setTimeout(() => { el.style.display = 'none'; }, 3000);
+}
+
+// ── Settings panel (full tab) ─────────────────────────────────
+function renderSettingsPanel() {
+  const loggedIn  = document.getElementById('rt-settings-panel-loggedin');
+  const loggedOut = document.getElementById('rt-settings-panel-loggedout');
+  if (!currentUser) {
+    if (loggedIn)  loggedIn.style.display  = 'none';
+    if (loggedOut) loggedOut.style.display = 'block';
+    return;
+  }
+  if (loggedIn)  loggedIn.style.display  = 'block';
+  if (loggedOut) loggedOut.style.display = 'none';
+  const emailEl = document.getElementById('rt-settings-panel-email');
+  if (emailEl) emailEl.textContent = currentUser.email || '—';
+  const uDisplay = document.getElementById('rt-settings-panel-username-display');
+  const uInput   = document.getElementById('rt-settings-panel-username-input');
+  const curUsername = socialState._myUsername || document.getElementById('rt-username-display')?.textContent || '—';
+  if (uDisplay) uDisplay.textContent = curUsername;
+  if (uInput)   uInput.value = curUsername === '—' ? '' : curUsername;
+  const bioInput = document.getElementById('rt-settings-panel-bio');
+  if (bioInput) bioInput.value = socialState._myBio || '';
+}
+function showSettingsPanelUsernameEdit() {
+  document.getElementById('rt-settings-panel-username-display-row').style.display = 'none';
+  document.getElementById('rt-settings-panel-username-edit-row').style.display = 'flex';
+  document.getElementById('rt-settings-panel-username-input').focus();
+}
+function cancelSettingsPanelUsernameEdit() {
+  document.getElementById('rt-settings-panel-username-display-row').style.display = 'flex';
+  document.getElementById('rt-settings-panel-username-edit-row').style.display = 'none';
+}
+async function saveSettingsPanelUsername() {
+  const input = document.getElementById('rt-settings-panel-username-input');
+  const msg   = document.getElementById('rt-settings-panel-username-msg');
+  const val   = input.value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
+  if (!val || val.length < 3) { showMsg(msg, 'Username must be at least 3 characters.', 'error'); return; }
+  try {
+    const { error } = await sb.from('profiles').upsert({ id: currentUser.id, username: val }, { onConflict: 'id' });
+    if (error) throw error;
+    socialState._myUsername = val;
+    document.getElementById('rt-settings-panel-username-display').textContent = val;
+    const oldDisplay = document.getElementById('rt-username-display');
+    if (oldDisplay) oldDisplay.textContent = val;
+    // Also sync overlay IDs if still used elsewhere
+    const ovDisplay = document.getElementById('rt-settings-username-display');
+    if (ovDisplay) ovDisplay.textContent = val;
+    renderProfilePage();
+    cancelSettingsPanelUsernameEdit();
+    showMsg(msg, 'Username saved!', 'success');
+  } catch(e) {
+    showMsg(msg, e.message?.includes('unique') ? 'Username already taken.' : 'Could not save — try again.', 'error');
+  }
+}
+async function saveSettingsPanelBio() {
+  const bio = (document.getElementById('rt-settings-panel-bio')?.value || '').trim().slice(0, 300);
+  const msg = document.getElementById('rt-settings-panel-bio-msg');
+  try {
+    const { error } = await sb.from('profiles').upsert({ id: currentUser.id, bio }, { onConflict: 'id' });
+    if (error) throw error;
+    socialState._myBio = bio;
+    renderProfilePage();
+    // Sync overlay bio too
+    const ovBio = document.getElementById('rt-settings-bio');
+    if (ovBio) ovBio.value = bio;
+    showMsg(msg, 'Bio saved!', 'success');
+  } catch(e) {
+    showMsg(msg, 'Could not save bio.', 'error');
+  }
 }
 
 // ── Profile page ──────────────────────────────────────────────
