@@ -3918,7 +3918,7 @@ permalink: /tools/reading-tracker/
               <div class="rt-toggle-track"></div>
             </label>
           </div>
-          <div class="rt-review-public-wrap" id="rt-review-public-wrap">
+          <div class="rt-review-public-wrap visible" id="rt-review-public-wrap">
             <div class="rt-review-field" style="margin-bottom:0.25rem;">
               <label for="rt-sheet-review">Your review <span style="font-weight:400;color:var(--rt-t3);font-size:0.85em;text-transform:none;letter-spacing:0;">(public)</span></label>
               <textarea id="rt-sheet-review" rows="3" placeholder="Write something others would find useful…"></textarea>
@@ -6521,8 +6521,8 @@ function openModal(bookId) {          // called from existing "Finished?" button
   document.getElementById('rt-sheet-notes').value  = '';
   document.getElementById('rt-sheet-review').value = '';
   document.getElementById('rt-sheet-genre').value  = book.genre || '';
-  document.getElementById('rt-share-check').checked = false;
-  document.getElementById('rt-review-public-wrap').classList.remove('visible');
+  document.getElementById('rt-share-check').checked = true;
+  document.getElementById('rt-review-public-wrap').classList.add('visible');
 
   goToStep(0);
 
@@ -8538,11 +8538,22 @@ function openFriendReviewDetail(idx) {
   // Build a minimal book-like object for fetchBookDetail
   const fakeBook = { olKey: ev.book_ol_key || null, title: ev.book_title || '', author: ev.book_author || '' };
 
-  // Hero
+  // Hero cover — try cover_id first, fallback to olKey cover, then placeholder
   const ph  = document.getElementById('rt-book-detail-cover-ph');
   const img = document.getElementById('rt-book-detail-cover-img');
+  const olCoverUrl = ev.book_ol_key
+    ? `https://covers.openlibrary.org/b/olid/${ev.book_ol_key.replace('/works/', '')}-L.jpg`
+    : '';
   if (ev.cover_id) {
     img.src = `https://covers.openlibrary.org/b/id/${ev.cover_id}-L.jpg`;
+    img.onerror = () => {
+      if (olCoverUrl) { img.src = olCoverUrl; img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex'; }; }
+      else { img.style.display = 'none'; ph.style.display = 'flex'; }
+    };
+    img.style.display = 'block'; ph.style.display = 'none';
+  } else if (olCoverUrl) {
+    img.src = olCoverUrl;
+    img.onerror = () => { img.style.display = 'none'; ph.style.display = 'flex'; };
     img.style.display = 'block'; ph.style.display = 'none';
   } else {
     img.style.display = 'none'; ph.style.display = 'flex';
@@ -8572,6 +8583,29 @@ function openFriendReviewDetail(idx) {
   document.getElementById('rt-book-detail-friend-stars').textContent = ev.rating
     ? '★'.repeat(ev.rating) + '☆'.repeat(5 - ev.rating) : '';
   document.getElementById('rt-book-detail-friend-body').textContent = ev.review_body || '';
+
+  // If feed event lacks review_body/rating (old events pre-migration), fetch live from reading_entries
+  if ((!ev.review_body && !ev.rating) && ev.book_ol_key && currentUser) {
+    (async () => {
+      try {
+        const { data } = await sb.from('reading_entries')
+          .select('review_body, review_is_public, rating')
+          .eq('user_id', ev.user_id)
+          .eq('ol_key',  ev.book_ol_key)
+          .eq('review_is_public', true)
+          .maybeSingle();
+        if (data) {
+          if (data.rating) {
+            document.getElementById('rt-book-detail-friend-stars').textContent =
+              '★'.repeat(data.rating) + '☆'.repeat(5 - data.rating);
+          }
+          if (data.review_body) {
+            document.getElementById('rt-book-detail-friend-body').textContent = data.review_body;
+          }
+        }
+      } catch(e) { /* non-fatal */ }
+    })();
+  }
 
   // Blurb loading state
   document.getElementById('rt-book-detail-blurb').innerHTML = `
