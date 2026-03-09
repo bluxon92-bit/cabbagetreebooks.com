@@ -81,7 +81,7 @@ permalink: /tools/reading-tracker/
   pointer-events: none;
 }
 .rt-hero-inner {
-  max-width: 860px;
+  max-width: 1100px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -112,7 +112,7 @@ permalink: /tools/reading-tracker/
   box-shadow: var(--rt-s1);
 }
 .rt-tabbar {
-  max-width: 860px;
+  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   padding: 0 1.5rem;
@@ -145,7 +145,7 @@ permalink: /tools/reading-tracker/
   min-height: 60vh;
   padding-bottom: 2rem;
 }
-.rt-panels { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+.rt-panels { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
 .rt-panel { padding: 0.5rem 0 1.75rem; }
 .rt-panel-inner { display: flex; flex-direction: column; gap: 1.5rem; max-width: 960px; }
 
@@ -215,7 +215,7 @@ permalink: /tools/reading-tracker/
   box-shadow: var(--rt-s1);
 }
 .rt-stat-goal   { grid-column: 1 / -1; background: linear-gradient(135deg, var(--rt-navy), var(--rt-navy-mid)); }
-.rt-stat-card--genre { grid-column: span 2; }
+.rt-stat-card--genre { grid-column: span 1; }
 .rt-stat-label  { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rt-t3); margin-bottom: 0.3rem; font-weight: 500; }
 .rt-stat-goal .rt-stat-label { color: rgba(255,255,255,0.45); }
 .rt-stat-number { font-family: var(--rt-font-display); font-size: 2rem; font-weight: 700; color: var(--rt-navy); line-height: 1; }
@@ -1141,7 +1141,7 @@ permalink: /tools/reading-tracker/
 /* ── INSTALL STRIP ── */
 .rt-install-strip { background: var(--rt-navy); padding: 0.85rem 2rem; }
 .rt-install-strip-inner {
-  max-width: 860px; margin: 0 auto; display: flex; align-items: center;
+  max-width: 1100px; margin: 0 auto; display: flex; align-items: center;
   justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
   font-size: 0.8rem; color: rgba(255,255,255,0.7);
 }
@@ -3150,12 +3150,16 @@ permalink: /tools/reading-tracker/
                 </button>
               </div>
 
-              <!-- Stats row -->
-              <div class="rt-profile-stats">
-                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-read">0</div><div class="rt-profile-stat-l">Read</div></div>
-                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-tbr">0</div><div class="rt-profile-stat-l">My List</div></div>
-                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-fav">0</div><div class="rt-profile-stat-l">5★</div></div>
-                <div class="rt-profile-stat"><div class="rt-profile-stat-n" id="rt-profile-dnf">0</div><div class="rt-profile-stat-l">DNF</div></div>
+              <!-- Currently reading + recent books carousel -->
+              <div id="rt-profile-reading-row" style="margin-top:1rem;">
+                <div id="rt-profile-currently-reading" style="display:none;margin-bottom:0.75rem;">
+                  <div style="font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.5rem;">Currently reading</div>
+                  <div id="rt-profile-current-book" style="display:flex;align-items:center;gap:0.65rem;"></div>
+                </div>
+                <div id="rt-profile-recent-books-wrap" style="display:none;">
+                  <div style="font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.5rem;">Recent reads</div>
+                  <div id="rt-profile-recent-carousel" style="display:flex;gap:0.5rem;overflow-x:auto;padding-bottom:0.25rem;scrollbar-width:none;"></div>
+                </div>
               </div>
             </div>
 
@@ -3317,7 +3321,7 @@ permalink: /tools/reading-tracker/
     <button class="rt-sheet-close" onclick="closeFavBooksEditor()" type="button">×</button>
   </div>
   <div class="rt-overlay-panel-body">
-    <p style="font-size:0.83rem;color:var(--rt-t3);margin-bottom:1rem;line-height:1.6;">Choose up to 10 books from your 5★ reads. The first 3 display as a carousel on your profile.</p>
+    <p style="font-size:0.83rem;color:var(--rt-t3);margin-bottom:1rem;line-height:1.6;">Choose up to 10 books from your reading history to feature on your profile.</p>
     <div id="rt-favbooks-picker-list"></div>
   </div>
   <div class="rt-overlay-panel-footer">
@@ -3488,13 +3492,13 @@ permalink: /tools/reading-tracker/
     <div class="rt-sheet-handle"></div>
     <div class="rt-sheet-header">
       <div class="rt-sheet-book-info">
-        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.2rem;">Recommend to a friend</div>
+        <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.2rem;">Recommend to friends</div>
         <div class="rt-sheet-book-title" id="rt-rec-sheet-title"></div>
       </div>
       <button class="rt-sheet-close" id="rt-recommend-close" type="button">×</button>
     </div>
     <div style="flex:1;overflow-y:auto;padding:1.25rem;">
-      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Choose a friend</div>
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Choose friends</div>
       <div id="rt-rec-friends-list" style="margin-bottom:1.1rem;display:flex;flex-direction:column;gap:0.5rem;"></div>
       <div class="rt-review-field">
         <label for="rt-rec-note">Add a note <span style="font-weight:400;color:var(--rt-t3);text-transform:none;letter-spacing:0;font-size:0.85em;">(optional)</span></label>
@@ -3815,9 +3819,13 @@ permalink: /tools/reading-tracker/
     </div>
     <div id="rt-friend-picker-book" style="font-size:0.82rem;color:var(--rt-t2);margin-bottom:1rem;font-style:italic;"></div>
     <p style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Select friends to add</p>
-    <div id="rt-friend-picker-list" style="display:flex;flex-direction:column;gap:0.4rem;max-height:260px;overflow-y:auto;margin-bottom:1.1rem;"></div>
+    <div id="rt-friend-picker-list" style="display:flex;flex-direction:column;gap:0.4rem;max-height:200px;overflow-y:auto;margin-bottom:1rem;"></div>
     <div id="rt-friend-picker-empty" style="display:none;text-align:center;padding:1rem 0;font-size:0.85rem;color:var(--rt-t3);">Add friends first to start a book chat.</div>
-    <button id="rt-friend-picker-confirm" class="rt-submit-btn" type="button" onclick="confirmFriendPickerChat()" style="width:100%;">💬 Start chat</button>
+    <div style="margin-bottom:1rem;">
+      <label style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--rt-t3);display:block;margin-bottom:0.4rem;">Your first message <span style="font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+      <textarea id="rt-friend-picker-msg" rows="2" placeholder="What do you want to say about this book?" style="width:100%;box-sizing:border-box;border:1.5px solid var(--rt-border-md);border-radius:var(--rt-r3);padding:0.6rem 0.8rem;font-family:var(--rt-font-body);font-size:0.85rem;color:var(--rt-navy);background:var(--rt-cream);resize:none;"></textarea>
+    </div>
+    <button id="rt-friend-picker-confirm" class="rt-submit-btn" type="button" onclick="confirmFriendPickerChat()" style="width:100%;">💬 Send &amp; go back</button>
   </div>
 </div>
 
@@ -4740,15 +4748,18 @@ async function confirmRemoveFriend(friendshipId, name) {
 // ── Recommend sheet ───────────────────────────────────────────
 let _recBookId = null;
 
-function openRecommendSheet(bookId) {
+let _recFromDoneSlide = false; // true when opened from the finish done-slide
+
+function openRecommendSheet(bookId, fromDoneSlide = false) {
   const book = books.find(b => String(b.id) === String(bookId));
   if (!book) return;
   _recBookId = bookId;
+  _recFromDoneSlide = fromDoneSlide;
 
   document.getElementById('rt-rec-sheet-title').textContent = book.title;
   document.getElementById('rt-rec-note').value = '';
 
-  // Populate friend picker
+  // Populate friend picker — multi-select checkboxes
   const list = document.getElementById('rt-rec-friends-list');
   if (!socialState.friends.length) {
     list.innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);">Add friends first to recommend books to them.</p>';
@@ -4756,28 +4767,31 @@ function openRecommendSheet(bookId) {
     list.innerHTML = socialState.friends.map(f => {
       const colour = avatarColour(f.userId);
       return `
-        <label style="display:flex;align-items:center;gap:0.65rem;padding:0.6rem;border:1.5px solid var(--rt-border-md);border-radius:var(--rt-r3);cursor:pointer;transition:border-color var(--rt-fast);" class="rt-rec-friend-option">
-          <input type="radio" name="rt-rec-friend" value="${f.userId}" style="display:none;">
+        <label style="display:flex;align-items:center;gap:0.65rem;padding:0.6rem;border:1.5px solid var(--rt-border-md);border-radius:var(--rt-r3);cursor:pointer;transition:border-color var(--rt-fast);" class="rt-rec-friend-option" data-userid="${f.userId}">
+          <input type="checkbox" name="rt-rec-friend" value="${f.userId}" style="display:none;">
           <div style="width:32px;height:32px;border-radius:50%;background:${colour};display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:#fff;flex-shrink:0;">${avatarInitial(f.displayName)}</div>
           <div style="flex:1;">
             <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);">${esc(f.displayName)}</div>
             ${f.username ? `<div style="font-size:0.72rem;color:var(--rt-t3);">@${esc(f.username)}</div>` : ''}
           </div>
-          <div class="rt-rec-check" style="width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-border-md);flex-shrink:0;"></div>
+          <div class="rt-rec-check" style="width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-border-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;"></div>
         </label>`;
     }).join('');
 
-    // Highlight selected radio
     list.querySelectorAll('.rt-rec-friend-option').forEach(opt => {
       opt.addEventListener('click', function() {
-        const radio = this.querySelector('input[type=radio]');
-        radio.checked = true;
-        list.querySelectorAll('.rt-rec-friend-option').forEach(o => {
-          o.style.borderColor = '';
-          o.querySelector('.rt-rec-check').style.cssText = 'width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-border-md);flex-shrink:0;';
-        });
-        this.style.borderColor = 'var(--rt-navy)';
-        this.querySelector('.rt-rec-check').style.cssText = 'width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-navy);background:var(--rt-navy);flex-shrink:0;';
+        const radio = this.querySelector('input[type=checkbox]');
+        radio.checked = !radio.checked;
+        const check = this.querySelector('.rt-rec-check');
+        if (radio.checked) {
+          this.style.borderColor = 'var(--rt-navy)';
+          check.style.cssText = 'width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-navy);background:var(--rt-navy);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700;';
+          check.textContent = '✓';
+        } else {
+          this.style.borderColor = '';
+          check.style.cssText = 'width:18px;height:18px;border-radius:50%;border:2px solid var(--rt-border-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;';
+          check.textContent = '';
+        }
       });
     });
   }
@@ -4802,38 +4816,51 @@ document.getElementById('rt-recommend-overlay').addEventListener('click', e => {
 });
 
 document.getElementById('rt-rec-send-btn').addEventListener('click', async function() {
-  const book       = books.find(b => String(b.id) === String(_recBookId));
-  const recipientId = document.querySelector('input[name="rt-rec-friend"]:checked')?.value;
-  if (!book || !recipientId) {
-    showFlash('Please select a friend first.');
+  const book = books.find(b => String(b.id) === String(_recBookId));
+  const recipientIds = [...document.querySelectorAll('input[name="rt-rec-friend"]:checked')].map(i => i.value);
+  if (!book || !recipientIds.length) {
+    showFlash('Please select at least one friend.');
     return;
   }
-  const note  = document.getElementById('rt-rec-note').value.trim() || null;
-  const btn   = this;
+  const note = document.getElementById('rt-rec-note').value.trim() || null;
+  const btn  = this;
   btn.disabled = true; btn.textContent = 'Sending…';
 
   if (!book.olKey) {
-    showFlash('This book needs an Open Library key to be recommended. Open the book detail panel first to load it.');
+    showFlash('This book needs an Open Library key. Open the book detail first.');
     btn.disabled = false; btn.textContent = 'Send recommendation →';
     return;
   }
-  const { error } = await sb.from('book_recommendations').insert({
+
+  const inserts = recipientIds.map(rid => ({
     from_user_id: currentUser.id,
-    to_user_id:   recipientId,
-    book_ol_key:  book.olKey || null,
+    to_user_id:   rid,
+    book_ol_key:  book.olKey,
     message:      note,
     status:       'pending'
-  });
+  }));
+  const { error } = await sb.from('book_recommendations').insert(inserts);
 
   btn.disabled = false; btn.textContent = 'Send recommendation →';
   if (error) {
     showFlash('Could not send recommendation — try again.');
     console.error('[Social] sendRec:', error);
-  } else {
-    closeRecommendSheet();
-    const friend = socialState.friends.find(f => f.userId === recipientId);
-    showFlash(`📚 Recommended "${book.title}" to ${friend?.displayName || 'your friend'}!`);
+    return;
   }
+
+  const names = recipientIds.map(rid => {
+    const f = socialState.friends.find(f => f.userId === rid);
+    return f?.displayName || 'friend';
+  });
+  const nameStr = names.length === 1 ? names[0] : names.slice(0,-1).join(', ') + ' & ' + names.at(-1);
+  showFlash(`📚 Recommended to ${nameStr}!`);
+
+  // Close rec sheet — if triggered from done slide, stay on done slide; otherwise close modal
+  closeRecommendSheet();
+  if (!_recFromDoneSlide) {
+    // was opened from book detail view — nothing more to do
+  }
+  // If from done slide, the finish modal is still open behind — do nothing more, user sees done slide
 });
 
 // ── Accept rec → TBR ─────────────────────────────────────────
@@ -6084,24 +6111,39 @@ editStarsEl.addEventListener('mouseleave', () =>
 function showReadMode() {
   document.getElementById('rt-view-mode').style.display = 'block';
   document.getElementById('rt-edit-mode').style.display = 'none';
-  const footer = document.getElementById('rt-sheet-footer');
   const book = books.find(b => String(b.id) === String(sheetBookId));
-  const isFinished = book && book.status === 'read';
+
+  // Re-populate view content so saved edits are reflected
+  if (book) {
+    const stars = book.rating ? '★'.repeat(book.rating) + '☆'.repeat(5 - book.rating) : '';
+    document.getElementById('rt-view-rating').innerHTML = stars
+      ? `<span style="font-size:1.6rem;color:var(--rt-amber);letter-spacing:2px;">${stars}</span>`
+      : `<span style="font-size:0.82rem;color:var(--rt-t3);">No rating yet</span>`;
+    document.getElementById('rt-view-date').textContent = book.date ? `Finished ${fmtDate(book.date)}` : '';
+    const reviewWrap = document.getElementById('rt-view-review-wrap');
+    document.getElementById('rt-view-review').textContent = book.reviewBody || '';
+    reviewWrap.style.display = book.reviewBody ? 'block' : 'none';
+    const notesWrap = document.getElementById('rt-view-notes-wrap');
+    document.getElementById('rt-view-notes').textContent = book.notes || '';
+    notesWrap.style.display = book.notes ? 'block' : 'none';
+    const isEmpty = !book.rating && !book.notes && !book.reviewBody;
+    document.getElementById('rt-view-empty').style.display = isEmpty ? 'block' : 'none';
+  }
+
+  const isFinished = book && (book.status === 'read' || book.status === 'dnf');
+  const footer = document.getElementById('rt-sheet-footer');
   footer.innerHTML = isFinished
-    ? `<button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-close" type="button">Close</button>
-       <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-rec-btn" type="button">📚 Recommend</button>
+    ? `<button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-rec-btn" type="button">📚 Recommend</button>
        <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-chat-btn" type="button">💬 Start chat</button>`
-    : `<button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-view-close" type="button">Close</button>
-       <button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-edit-btn" type="button"><svg viewBox="0 0 24 24" fill="none" width="14" height="14" style="vertical-align:-1px;margin-right:3px;"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Edit</button>`;
-  document.getElementById('rt-view-close').onclick = closeModal;
+    : `<button class="rt-sheet-btn rt-sheet-btn--primary" id="rt-view-edit-btn" type="button"><svg viewBox="0 0 24 24" fill="none" width="14" height="14" style="vertical-align:-1px;margin-right:3px;"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Edit</button>`;
   if (isFinished) {
     document.getElementById('rt-view-rec-btn').onclick = () => { closeModal(); if (sheetBookId) openRecommendSheet(sheetBookId); };
     document.getElementById('rt-view-chat-btn').onclick = () => {
-      const book = books.find(b => String(b.id) === String(sheetBookId));
-      if (!book) { closeModal(); return; }
+      const b = books.find(b => String(b.id) === String(sheetBookId));
+      if (!b) { closeModal(); return; }
       closeModal();
-      if (!book.olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
-      openFriendPickerForChat(book.olKey, book.title, book.author, book.coverId);
+      if (!b.olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
+      openFriendPickerForChat(b.olKey, b.title, b.author, b.coverId);
     };
   } else {
     document.getElementById('rt-view-edit-btn').onclick = showEditMode;
@@ -6122,17 +6164,14 @@ document.getElementById('rt-edit-status-select').addEventListener('change', func
 function showEditMode() {
   document.getElementById('rt-view-mode').style.display = 'none';
   document.getElementById('rt-edit-mode').style.display = 'block';
-  // For finished/DNF books the status row is hidden, so always show all fields
-  const statusRow = document.getElementById('rt-edit-status-row');
-  if (statusRow.style.display === 'none') {
-    document.getElementById('rt-edit-finished-fields').style.display = 'block';
-    document.getElementById('rt-edit-notes-fields').style.display    = 'block';
-  }
+  // Always show all fields — review, notes and genre should never be hidden
+  document.getElementById('rt-edit-finished-fields').style.display = 'block';
+  document.getElementById('rt-edit-notes-fields').style.display    = 'block';
   const footer = document.getElementById('rt-sheet-footer');
   footer.innerHTML = `
-    <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-edit-cancel" type="button">Cancel</button>
+    <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-edit-cancel" type="button">← Back</button>
     <button class="rt-sheet-btn rt-sheet-btn--primary"   id="rt-edit-save"   type="button">Save changes</button>`;
-  document.getElementById('rt-edit-cancel').onclick = closeModal;
+  document.getElementById('rt-edit-cancel').onclick = showReadMode;
   document.getElementById('rt-edit-save').onclick   = saveEdits;
 }
 
@@ -6207,7 +6246,7 @@ function openEditSheet(bookId) {
   sheet.classList.add('rt-sheet--edit');
   document.getElementById('rt-sheet-slides').style.transform = 'translateX(-300%)';
 
-  // Open in read mode by default (edit mode for TBR/reading)
+  // For read/DNF books open in view mode; TBR/reading go straight to edit
   if (isTbrOrReading) {
     updateEditConditionalFields(book.status);
     showEditMode();
@@ -6288,6 +6327,11 @@ function commitFinish(status) {
 
   save();
   saveBookToCloud(book);
+
+  // Immediately update UI so book leaves "Currently reading" without a refresh
+  renderHomeReading();
+  renderHistory();
+  updateStats();
 
   // Populate step 3
   const ph  = document.getElementById('rt-done-cover-ph');
@@ -7319,7 +7363,9 @@ document.addEventListener('click', function(e) {
   if (chat) {
     e.stopPropagation();
     const book = books.find(b => String(b.id) === String(chat.dataset.id));
-    if (book) startOrOpenChat(book.olKey, book.title, book.author, book.coverId);
+    if (book) startOrOpenChat(book.olKey, book.title, book.author, book.coverId).then(chatId => {
+      if (chatId) { switchCommunityTab('chat'); switchTab('community'); const found = chatState.chats.find(c => c.id === chatId); if (found) openChatThread(found.id); }
+    });
     return;
   }
   if (card) { openBookDetail(card.dataset.id); }
@@ -7437,9 +7483,10 @@ function openNotifPanel() {
   const bg       = document.getElementById('rt-notif-dropdown-bg');
   if (!dropdown || !bg) return;
 
-  // Find the visible bell button to anchor to
+  // Find the visible bell/notif button to anchor to
   const bellBtns = [
     document.getElementById('rt-notif-btn'),           // desktop tabbar
+    document.getElementById('rt-sidebar-notif'),        // desktop sidebar
     document.querySelector('.rt-mobile-header-btn[onclick="openNotifPanel()"]') // mobile header
   ].filter(Boolean);
   const bell = bellBtns.find(b => b.getBoundingClientRect().width > 0) || bellBtns[0];
@@ -7447,14 +7494,20 @@ function openNotifPanel() {
   if (bell) {
     const rect = bell.getBoundingClientRect();
     const isMobile = window.innerWidth <= 700;
+    const isSidebar = bell.id === 'rt-sidebar-notif';
     if (isMobile) {
-      // On mobile: anchor below, inset from both edges
       dropdown.style.right  = '0.75rem';
       dropdown.style.left   = '0.75rem';
       dropdown.style.top    = (rect.bottom + 6) + 'px';
       dropdown.style.width  = 'auto';
+    } else if (isSidebar) {
+      // Anchor to the right of the sidebar item
+      dropdown.style.left   = (rect.right + 8) + 'px';
+      dropdown.style.right  = 'auto';
+      dropdown.style.top    = rect.top + 'px';
+      dropdown.style.width  = '300px';
     } else {
-      // Desktop: anchor below bell, right-aligned
+      // Desktop tabbar bell — anchor below, right-aligned
       const right = window.innerWidth - rect.right;
       dropdown.style.right  = right + 'px';
       dropdown.style.left   = 'auto';
@@ -7674,6 +7727,46 @@ function renderProfilePage() {
     avEl.style.fontWeight = '700';
   }
 
+  // Currently reading + recent reads carousel in hero
+  const currentlyReading = books.filter(b => b.status === 'reading')
+    .sort((a,b) => new Date(b.dateStarted||b.added||0) - new Date(a.dateStarted||a.added||0))[0];
+  const recentRead = books.filter(b => b.status === 'read')
+    .sort((a,b) => new Date(b.date||0) - new Date(a.date||0)).slice(0,8);
+
+  const crWrap = document.getElementById('rt-profile-currently-reading');
+  const crBook = document.getElementById('rt-profile-current-book');
+  if (crWrap && crBook) {
+    if (currentlyReading) {
+      const coverUrl = currentlyReading.coverId
+        ? `https://covers.openlibrary.org/b/id/${currentlyReading.coverId}-S.jpg` : '';
+      crBook.innerHTML = coverUrl
+        ? `<img src="${coverUrl}" style="width:36px;height:50px;border-radius:4px;object-fit:cover;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.3);" alt="">`
+        : `<div style="width:36px;height:50px;border-radius:4px;background:rgba(255,255,255,0.12);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;">📖</div>`;
+      crBook.innerHTML += `<div><div style="font-size:0.85rem;font-weight:600;color:#fff;line-height:1.3;">${esc(currentlyReading.title)}</div>${currentlyReading.author?`<div style="font-size:0.72rem;color:rgba(255,255,255,0.55);margin-top:2px;">${esc(currentlyReading.author)}</div>`:''}</div>`;
+      crWrap.style.display = 'block';
+    } else {
+      crWrap.style.display = 'none';
+    }
+  }
+
+  const recentWrap     = document.getElementById('rt-profile-recent-books-wrap');
+  const recentCarousel = document.getElementById('rt-profile-recent-carousel');
+  if (recentWrap && recentCarousel) {
+    if (recentRead.length) {
+      recentCarousel.innerHTML = recentRead.map(b => {
+        const url = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+        return `<div onclick="openBookDetail('${b.id}')" style="flex-shrink:0;cursor:pointer;" title="${esc(b.title)}">
+          ${url
+            ? `<img src="${url}" style="width:40px;height:56px;border-radius:4px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.3);" alt="" loading="lazy">`
+            : `<div style="width:40px;height:56px;border-radius:4px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:0.9rem;">📖</div>`}
+        </div>`;
+      }).join('');
+      recentWrap.style.display = 'block';
+    } else {
+      recentWrap.style.display = 'none';
+    }
+  }
+
   // My reviews
   renderProfileReviews();
   renderFavBooksCarousel();
@@ -7725,23 +7818,30 @@ function renderFavBooksCarousel() {
 }
 
 function openFavBooksEditor() {
-  const fiveStars = books.filter(b => b.rating === 5 && b.status === 'read');
+  const allRead = books.filter(b => b.status === 'read')
+    .sort((a,b) => new Date(b.date||0) - new Date(a.date||0));
   const el = document.getElementById('rt-favbooks-picker-list');
   if (!el) return;
-  el.innerHTML = fiveStars.map(b => {
+  el.innerHTML = allRead.map(b => {
     const selected = _favBookIds.includes(String(b.id));
     const url = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+    const stars = b.rating ? `<span style="font-size:0.65rem;color:var(--rt-amber);">${'★'.repeat(b.rating)}</span>` : '';
     return `<div class="rt-favbooks-picker-item ${selected ? 'selected' : ''}" data-id="${b.id}" onclick="toggleFavBook(this,'${b.id}')">
       <div class="rt-favbooks-picker-check">${selected ? '✓' : ''}</div>
       ${url ? `<img src="${url}" class="rt-favbooks-picker-cover" alt="">` : `<div class="rt-favbooks-picker-cover--ph">📖</div>`}
       <div>
         <div class="rt-favbooks-picker-title">${esc(b.title)}</div>
-        ${b.author ? `<div class="rt-favbooks-picker-author">${esc(b.author)}</div>` : ''}
+        <div class="rt-favbooks-picker-author">${b.author ? esc(b.author) : ''}${stars ? ' ' + stars : ''}</div>
       </div>
     </div>`;
-  }).join('') || '<p style="font-size:0.83rem;color:var(--rt-t3);">Rate some books 5★ first.</p>';
-  document.getElementById('rt-favbooks-overlay-bg').style.display = 'block';
-  requestAnimationFrame(() => document.getElementById('rt-favbooks-overlay').classList.add('open'));
+  }).join('') || '<p style="font-size:0.83rem;color:var(--rt-t3);">Finish some books to build your favourites list.</p>';
+  const bg = document.getElementById('rt-favbooks-overlay-bg');
+  const overlay = document.getElementById('rt-favbooks-overlay');
+  if (bg) bg.style.display = 'block';
+  if (overlay) {
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => overlay.classList.add('open'));
+  }
 }
 function toggleFavBook(el, id) {
   const idx = _favBookIds.indexOf(String(id));
@@ -7841,7 +7941,9 @@ function openHomeFeedBook(olKey, title, author, coverId, friendId) {
 
 function openHomeFeedChat(olKey, title, author, coverId, friendId) {
   if (!olKey) { showFlash('Cannot start chat — book has no Open Library ID.'); return; }
-  startOrOpenChat(olKey, title, author, coverId ? parseInt(coverId) : null, [friendId]);
+  startOrOpenChat(olKey, title, author, coverId ? parseInt(coverId) : null, [friendId]).then(chatId => {
+    if (chatId) { switchCommunityTab('chat'); switchTab('community'); const found = chatState.chats.find(c => c.id === chatId); if (found) openChatThread(found.id); }
+  });
 }
 
 // ── Home notifications strip ──────────────────────────────────
@@ -7883,27 +7985,33 @@ function updateHomeNotifStrip() {
 
 // ── Finish-book done screen actions ──────────────────────────
 function doneRecommend() {
-  closeModal();
-  if (sheetBookId) openRecommendSheet(sheetBookId);
+  if (sheetBookId) openRecommendSheet(sheetBookId, true);
 }
 
 // ── Friend picker for starting chats ────────────────────────
 let _friendPickerBook = null; // { olKey, title, author, coverId }
 let _friendPickerSelected = new Set();
 
-function openFriendPickerForChat(olKey, title, author, coverId) {
+let _friendPickerFromDoneSlide = false;
+
+function openFriendPickerForChat(olKey, title, author, coverId, fromDoneSlide = false) {
   if (!currentUser) { showFlash('Sign in to chat about books.'); return; }
   if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
   _friendPickerBook = { olKey, title, author, coverId };
   _friendPickerSelected = new Set();
+  _friendPickerFromDoneSlide = fromDoneSlide;
 
   const overlay = document.getElementById('rt-friend-picker-overlay');
   const bookEl  = document.getElementById('rt-friend-picker-book');
   const listEl  = document.getElementById('rt-friend-picker-list');
   const emptyEl = document.getElementById('rt-friend-picker-empty');
+  const msgEl   = document.getElementById('rt-friend-picker-msg');
+  const confirmBtn = document.getElementById('rt-friend-picker-confirm');
   if (!overlay) return;
 
   if (bookEl) bookEl.textContent = `"${title}"`;
+  if (msgEl) msgEl.value = '';
+  if (confirmBtn) confirmBtn.textContent = fromDoneSlide ? '💬 Send & go back' : '💬 Start chat';
 
   const friends = socialState.friends || [];
   if (!friends.length) {
@@ -7965,16 +8073,34 @@ async function confirmFriendPickerChat() {
   if (!_friendPickerBook) return;
   const { olKey, title, author, coverId } = _friendPickerBook;
   const friendIds = [..._friendPickerSelected];
+  if (!friendIds.length) { showFlash('Select at least one friend.'); return; }
+
+  const btn = document.getElementById('rt-friend-picker-confirm');
+  if (btn) { btn.disabled = true; btn.textContent = 'Starting…'; }
+
+  const firstMessage = document.getElementById('rt-friend-picker-msg')?.value.trim() || null;
+
+  // Start or open the chat
+  const chatId = await startOrOpenChat(olKey, title, author, coverId, friendIds, firstMessage);
+
+  if (btn) { btn.disabled = false; btn.textContent = _friendPickerFromDoneSlide ? '💬 Send & go back' : '💬 Start chat'; }
+
   closeFriendPicker();
-  await startOrOpenChat(olKey, title, author, coverId, friendIds);
+
+  if (_friendPickerFromDoneSlide) {
+    // Stay on done slide — flash confirmation
+    showFlash('Chat started! Tap Done when you\'re ready.');
+  } else {
+    // Navigate to chat tab
+    if (chatId) switchTab('community');
+  }
 }
 
 function doneStartChat() {
   const book = books.find(b => String(b.id) === String(sheetBookId));
   if (!book) { closeModal(); return; }
-  closeModal();
   if (!book.olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
-  openFriendPickerForChat(book.olKey, book.title, book.author, book.coverId);
+  openFriendPickerForChat(book.olKey, book.title, book.author, book.coverId, true);
 }
 
 // ── Hook profile rendering into auth flow ─────────────────────
@@ -8498,13 +8624,11 @@ function subscribeToChatThread(chatId) {
 }
 
 // ── Start or open a chat for a book ───────────────────────────
-async function startOrOpenChat(olKey, title, author, coverId, friendIds) {
-  if (!currentUser) { showFlash('Sign in to chat about books.'); return; }
-  if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return; }
+async function startOrOpenChat(olKey, title, author, coverId, friendIds, firstMessage = null) {
+  if (!currentUser) { showFlash('Sign in to chat about books.'); return null; }
+  if (!olKey) { showFlash('This book needs an Open Library ID to start a chat.'); return null; }
 
   try {
-    // Single RPC handles upsert of book_chats, adds current user + any co-reading
-    // friends as participants. Runs SECURITY DEFINER so RLS doesn't interfere.
     const { data: chatId, error: rpcErr } = await sb.rpc('start_or_join_chat', {
       p_ol_key:     olKey,
       p_title:      title      || null,
@@ -8515,16 +8639,23 @@ async function startOrOpenChat(olKey, title, author, coverId, friendIds) {
     if (rpcErr) throw rpcErr;
     if (!chatId) throw new Error('No chat id returned');
 
-    // Reload chat list and open thread
+    // Send first message if provided
+    if (firstMessage) {
+      await sb.from('chat_messages').insert({
+        chat_id: chatId,
+        user_id: currentUser.id,
+        body:    firstMessage
+      });
+    }
+
+    // Reload chat list (but only navigate if not staying on done slide)
     await loadChatList();
-    switchCommunityTab('chat');
-    switchTab('community');
-    const found = chatState.chats.find(c => c.id === chatId || c.bookOlKey === olKey);
-    if (found) openChatThread(found.id);
+    return chatId;
 
   } catch(e) {
     console.error('[Chat] startOrOpenChat:', e);
     showFlash('Could not open chat — please try again.');
+    return null;
   }
 }
 
@@ -8601,7 +8732,9 @@ function showBookClubToast(book, friendsReading, hasExistingChat) {
   // Attach click directly so friendIds array passes without HTML serialisation
   document.getElementById('rt-book-club-start-btn').onclick = function() {
     dismissBookClubToast();
-    startOrOpenChat(book.olKey, book.title, book.author || null, book.coverId || null, friendIds);
+    startOrOpenChat(book.olKey, book.title, book.author || null, book.coverId || null, friendIds).then(chatId => {
+      if (chatId) { switchCommunityTab('chat'); switchTab('community'); const found = chatState.chats.find(c => c.id === chatId); if (found) openChatThread(found.id); }
+    });
   };
 
   // Auto-dismiss after 12 seconds
