@@ -2030,11 +2030,11 @@ permalink: /tools/reading-tracker/
 }
 
 /* Thread view */
-.rt-chat-thread { display:flex; flex-direction:column; height:100%; }
+.rt-chat-thread { display:flex; flex-direction:column; height:calc(100vh - 200px); min-height:400px; }
 .rt-chat-thread-header {
   display:flex; align-items:center; gap:0.75rem;
-  padding:0.85rem 1.25rem; border-bottom:1px solid var(--rt-border);
-  background:#fff; position:sticky; top:0; z-index:2;
+  padding:0.75rem 1.25rem; border-bottom:1px solid var(--rt-border);
+  background:#fff; flex-shrink:0;
 }
 .rt-chat-thread-back {
   background:none; border:none; cursor:pointer; color:var(--rt-amber);
@@ -2044,10 +2044,20 @@ permalink: /tools/reading-tracker/
   font-size:0.85rem; font-weight:700; color:var(--rt-navy);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1;
 }
+.rt-chat-participants-strip {
+  display:flex; align-items:center; gap:0.35rem; flex-wrap:wrap;
+  padding:0.5rem 1.25rem; border-bottom:1px solid var(--rt-border);
+  background:var(--rt-cream); flex-shrink:0; font-size:0.72rem; color:var(--rt-t3);
+}
+.rt-chat-participants-strip strong { color:var(--rt-navy); }
+.rt-chat-participant-av {
+  width:22px; height:22px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:0.58rem; font-weight:700; color:#fff; flex-shrink:0;
+}
 .rt-chat-messages {
   flex:1; overflow-y:auto; padding:1rem 1.25rem;
   display:flex; flex-direction:column; gap:0.75rem;
-  min-height:200px; max-height:340px;
 }
 .rt-chat-bubble-wrap {
   display:flex; gap:0.5rem; align-items:flex-end;
@@ -2114,8 +2124,32 @@ permalink: /tools/reading-tracker/
 .rt-chat-empty-icon { font-size:2rem; margin-bottom:0.5rem; }
 .rt-chat-empty-text { font-size:0.83rem; color:var(--rt-t3); line-height:1.6; }
 
-/* Book club toast */
-.rt-book-club-toast {
+/* Invite strip — sticky bottom of chat list view */
+.rt-invite-strip {
+  border-top:1px solid var(--rt-border); background:var(--rt-navy);
+  padding:0.85rem 1.25rem;
+}
+.rt-invite-strip-title {
+  font-size:0.75rem; font-weight:700; color:#fff; margin-bottom:0.2rem;
+}
+.rt-invite-strip-sub {
+  font-size:0.68rem; color:rgba(255,255,255,0.5); margin-bottom:0.6rem; line-height:1.45;
+}
+.rt-invite-strip-row {
+  display:flex; gap:0.5rem; align-items:center;
+}
+.rt-invite-strip-field {
+  flex:1; font-size:0.7rem; color:rgba(255,255,255,0.6);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  background:rgba(255,255,255,0.08); border-radius:6px;
+  padding:0.4rem 0.65rem; border:1px solid rgba(255,255,255,0.12);
+}
+.rt-invite-strip-btn {
+  background:var(--rt-amber); color:#fff; border:none; border-radius:6px;
+  padding:0.4rem 0.85rem; font-size:0.72rem; font-weight:700; cursor:pointer;
+  white-space:nowrap; flex-shrink:0;
+}
+.rt-invite-strip-btn:hover { background:var(--rt-amber-lt); }
   position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
   background:var(--rt-navy); color:#fff; border-radius:12px;
   padding:0.85rem 1.25rem; font-size:0.83rem; z-index:9999;
@@ -2713,11 +2747,20 @@ permalink: /tools/reading-tracker/
             <div id="rt-community-chat-tab">
 
               <!-- View A: Chat list -->
-              <div id="rt-chat-list-view">
+              <div id="rt-chat-list-view" style="display:flex;flex-direction:column;">
                 <div class="rt-chat-list" id="rt-chat-list">
                   <div class="rt-chat-empty" id="rt-chat-empty">
                     <div class="rt-chat-empty-icon">💬</div>
                     <p class="rt-chat-empty-text">No book chats yet.<br>Start reading a book a friend is also reading — you'll be able to start a chat.</p>
+                  </div>
+                </div>
+                <!-- Invite strip — sticky below chat list -->
+                <div class="rt-invite-strip">
+                  <div class="rt-invite-strip-title">Invite a friend</div>
+                  <div class="rt-invite-strip-sub">Share this link — anyone can send you a friend request.</div>
+                  <div class="rt-invite-strip-row">
+                    <div class="rt-invite-strip-field" id="rt-invite-link-field">Generating…</div>
+                    <button class="rt-invite-strip-btn" id="rt-invite-copy-btn" type="button">Copy invite</button>
                   </div>
                 </div>
               </div>
@@ -2728,6 +2771,11 @@ permalink: /tools/reading-tracker/
                   <div class="rt-chat-thread-header">
                     <button class="rt-chat-thread-back" onclick="closeChatThread()" type="button">← Back</button>
                     <div class="rt-chat-thread-title" id="rt-chat-thread-title">Chat</div>
+                    <button class="rt-chat-thread-add-btn" id="rt-chat-thread-add-btn" onclick="addFriendToCurrentChat()" type="button" title="Add friend to chat" style="background:none;border:1px solid var(--rt-border);border-radius:8px;padding:0.25rem 0.6rem;font-size:0.72rem;color:var(--rt-t2);cursor:pointer;flex-shrink:0;">+ Add</button>
+                  </div>
+                  <!-- Participants strip -->
+                  <div class="rt-chat-participants-strip" id="rt-chat-participants-strip">
+                    <span id="rt-chat-participants-text" style="font-size:0.72rem;color:var(--rt-t3);">Loading…</span>
                   </div>
                   <div class="rt-chat-messages" id="rt-chat-messages">
                     <div class="rt-chat-load-earlier" id="rt-chat-load-earlier" style="display:none;">
@@ -2743,17 +2791,7 @@ permalink: /tools/reading-tracker/
               </div>
 
             </div>
-          </div>
-
-          <!-- Invite link at bottom, lower visual weight -->
-          <div class="rt-invite-box">
-            <div class="rt-invite-box-title">Invite a friend</div>
-            <div class="rt-invite-box-sub">Share this link — anyone who opens it can send you a friend request.</div>
-            <div class="rt-invite-link-row">
-              <div class="rt-invite-link-field" id="rt-invite-link-field">Generating…</div>
-              <button class="rt-invite-copy-btn" id="rt-invite-copy-btn" type="button">Copy</button>
-            </div>
-          </div>
+          </div><!-- /card -->
 
           </div><!-- /rt-panel-inner -->
         </div><!-- /loggedin -->
@@ -3232,9 +3270,10 @@ permalink: /tools/reading-tracker/
     <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span class="rt-nav-label">Home</span>
   </button>
-  <button class="rt-nav-btn" data-tab="community" onclick="switchTab('community')">
+  <button class="rt-nav-btn" data-tab="community" onclick="switchTab('community')" style="position:relative;">
     <svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span class="rt-nav-label">Chat</span>
+    <span id="rt-chat-nav-dot" style="display:none;position:absolute;top:6px;right:12px;width:8px;height:8px;border-radius:50%;background:#e53e3e;border:1.5px solid #fff;"></span>
   </button>
   <button class="rt-nav-btn" data-tab="tbr" onclick="switchTab('tbr')">
     <svg viewBox="0 0 24 24" fill="none"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3449,7 +3488,13 @@ permalink: /tools/reading-tracker/
       <button class="rt-friend-profile-close" id="rt-friend-profile-close" type="button">×</button>
       <div class="rt-friend-profile-av" id="rt-fp-avatar"></div>
       <div class="rt-friend-profile-name" id="rt-fp-name"></div>
-      <div class="rt-friend-profile-username" id="rt-fp-username"></div>
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.2rem;">
+        <div class="rt-friend-profile-username" id="rt-fp-username" style="margin-top:0;"></div>
+        <button id="rt-fp-view-profile-btn" onclick="" type="button"
+          style="display:none;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:0.15rem 0.55rem;font-size:0.65rem;color:rgba(255,255,255,0.75);cursor:pointer;line-height:1.5;">
+          View profile ↗
+        </button>
+      </div>
       <div class="rt-friend-profile-stats">
         <div class="rt-friend-profile-stat">
           <div class="rt-friend-profile-stat-n" id="rt-fp-read-count">—</div>
@@ -3461,21 +3506,28 @@ permalink: /tools/reading-tracker/
         </div>
       </div>
     </div>
-    <!-- Mutual reads carousel -->
-    <div class="rt-mutual-carousel-wrap" id="rt-fp-mutual-wrap" style="display:none;">
-      <div class="rt-mutual-carousel-label">Books you've both read</div>
-      <div class="rt-mutual-carousel" id="rt-fp-mutual-carousel"></div>
-    </div>
-    <!-- Friend's current reads + recs from this friend -->
-    <div style="flex:1;overflow-y:auto;padding:1rem 1.25rem;">
-      <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.75rem;">Currently reading</div>
-      <div id="rt-fp-currently-reading">
-        <p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>
-      </div>
-      <div id="rt-fp-recs-from-friend" style="display:none;margin-top:1.25rem;">
-        <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.75rem;">Recommended to you</div>
+    <div style="flex:1;overflow-y:auto;padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1.25rem;">
+
+      <!-- Recs from friend — shown FIRST if present -->
+      <div id="rt-fp-recs-from-friend" style="display:none;">
+        <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-amber);margin-bottom:0.6rem;">📚 Recommended to you</div>
         <div id="rt-fp-recs-from-friend-list"></div>
       </div>
+
+      <!-- Mutual reads -->
+      <div class="rt-mutual-carousel-wrap" id="rt-fp-mutual-wrap" style="display:none;margin:0;border-radius:var(--rt-r2);overflow:hidden;">
+        <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Books you've both read</div>
+        <div class="rt-mutual-carousel" id="rt-fp-mutual-carousel"></div>
+      </div>
+
+      <!-- Currently reading -->
+      <div>
+        <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Currently reading</div>
+        <div id="rt-fp-currently-reading">
+          <p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>
+        </div>
+      </div>
+
     </div>
     <div class="rt-sheet-footer" style="gap:0.5rem;">
       <button class="rt-sheet-btn rt-sheet-btn--secondary" id="rt-fp-close-btn" type="button">Close</button>
@@ -4014,7 +4066,7 @@ async function loadSocialData() {
         .eq('addressee_id', currentUser.id)
         .eq('status', 'pending'),
       sb.from('book_recommendations')
-        .select('id, created_at, from_user_id, book_ol_key, message')
+        .select('id, created_at, from_user_id, book_ol_key, book_title, book_author, cover_id, message')
         .eq('to_user_id', currentUser.id)
         .eq('status', 'pending')
         .order('created_at', { ascending: false })
@@ -4101,6 +4153,8 @@ async function loadSocialData() {
     socialState._loaded = true;
     renderCommunityUI();
     renderFriendBadgeOnTBR();
+    if (typeof updateHomeNotifStrip === 'function')   updateHomeNotifStrip();
+    if (typeof renderFriendRecsDiscover === 'function') renderFriendRecsDiscover();
 
   } catch(e) {
     console.error('[Social] loadSocialData:', e);
@@ -4487,14 +4541,14 @@ function generateInviteLink() {
   if (field) field.textContent = link;
   if (btn) {
     btn.onclick = function() {
-      navigator.clipboard?.writeText(link).then(() => {
+      const username = socialState._myUsername || '';
+      const inviteMsg = `Come read with me on LitLoop! 📚 Track books, chat about stories, and share recommendations. Create your free account and add me${username ? ` @${username}` : ''}: ${link}`;
+      navigator.clipboard?.writeText(inviteMsg).then(() => {
         btn.textContent = '✓ Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 2000);
+        setTimeout(() => btn.textContent = 'Copy invite', 2000);
       }).catch(() => {
-        field.select?.();
-        document.execCommand('copy');
         btn.textContent = '✓ Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 2000);
+        setTimeout(() => btn.textContent = 'Copy invite', 2000);
       });
     };
   }
@@ -4634,6 +4688,21 @@ async function openFriendProfile(userId) {
   const _fpRecsWrap = document.getElementById('rt-fp-recs-from-friend');
   if (_fpRecsWrap) _fpRecsWrap.style.display = 'none';
 
+  // Wire "View profile" button — navigates to profile tab scoped to this friend (future)
+  // For now we close the modal and switch to profile, noting the friend's username
+  const profileBtn = document.getElementById('rt-fp-view-profile-btn');
+  if (profileBtn) {
+    if (friend.username) {
+      profileBtn.style.display = 'inline-block';
+      profileBtn.onclick = () => {
+        closeFriendProfile();
+        showFlash(`@${friend.username}'s profile coming soon!`);
+      };
+    } else {
+      profileBtn.style.display = 'none';
+    }
+  }
+
   // Wire footer buttons
   document.getElementById('rt-fp-close-btn').onclick  = closeFriendProfile;
   document.getElementById('rt-fp-remove-btn').onclick = () => confirmRemoveFriend(friend.friendshipId, friend.displayName);
@@ -4663,10 +4732,10 @@ async function openFriendProfile(userId) {
       entries = directData || [];
     }
 
-    // Also fetch recs this friend sent to me
+    // Fetch recs this friend sent to me (with full book info)
     const { data: recsFromFriend } = await sb
       .from('book_recommendations')
-      .select('id, book_ol_key, message, status, created_at')
+      .select('id, book_ol_key, book_title, book_author, cover_id, message, status, created_at')
       .eq('from_user_id', userId)
       .eq('to_user_id', currentUser.id)
       .order('created_at', { ascending: false });
@@ -4685,52 +4754,64 @@ async function openFriendProfile(userId) {
     document.getElementById('rt-fp-read-count').textContent    = readBooks.length;
     document.getElementById('rt-fp-reading-count').textContent = readingBooks.length;
 
-    // Currently reading
+    // Helper: render a clickable book row
+    function fpBookRow(b, actionLabel, onclickExpr) {
+      const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+      return `
+        <div style="display:flex;align-items:center;gap:0.65rem;padding:0.5rem 0;border-bottom:1px solid var(--rt-border);cursor:pointer;" onclick="${onclickExpr}">
+          ${coverUrl
+            ? `<img src="${coverUrl}" style="width:28px;height:40px;border-radius:3px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
+            : `<div style="width:28px;height:40px;border-radius:3px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;">📖</div>`}
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(b.title)}</div>
+            ${b.author ? `<div style="font-size:0.72rem;color:var(--rt-t3);">${esc(b.author)}</div>` : ''}
+          </div>
+          ${actionLabel ? `<span style="font-size:0.68rem;font-weight:700;color:var(--rt-amber);white-space:nowrap;flex-shrink:0;">${actionLabel}</span>` : ''}
+        </div>`;
+    }
+
+    // Currently reading — clickable: opens book action menu
     const crEl = document.getElementById('rt-fp-currently-reading');
     if (readingBooks.length) {
       crEl.innerHTML = readingBooks.map(b => {
-        const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
-        return `
-          <div style="display:flex;align-items:center;gap:0.65rem;padding:0.5rem 0;border-bottom:1px solid var(--rt-border);">
-            ${coverUrl
-              ? `<img src="${coverUrl}" style="width:28px;height:40px;border-radius:3px;object-fit:cover;flex-shrink:0;" alt="">`
-              : `<div style="width:28px;height:40px;border-radius:3px;background:var(--rt-surface);flex-shrink:0;"></div>`}
-            <div>
-              <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);">${esc(b.title)}</div>
-              ${b.author ? `<div style="font-size:0.72rem;color:var(--rt-t3);">${esc(b.author)}</div>` : ''}
-            </div>
-          </div>`;
+        // Clicking opens a mini action: Add to TBR or Start chat
+        const olKey  = b.olKey  ? JSON.stringify(b.olKey)  : 'null';
+        const title  = JSON.stringify(b.title);
+        const author = JSON.stringify(b.author || '');
+        const cid    = b.coverId ? JSON.stringify(String(b.coverId)) : 'null';
+        const onclick = `fpBookAction(${olKey},${title},${author},${cid})`;
+        return fpBookRow(b, '+ Add / Chat', onclick);
       }).join('');
     } else {
       crEl.innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>';
     }
 
-    // Recommendations from this friend to me
+    // Recs from this friend — shown at top with proper title/cover, accept adds to TBR
     const pendingRecs = (recsFromFriend || []).filter(r => r.status === 'pending');
     const recWrap = document.getElementById('rt-fp-recs-from-friend');
     if (recWrap) {
       if (pendingRecs.length) {
         recWrap.style.display = 'block';
         document.getElementById('rt-fp-recs-from-friend-list').innerHTML = pendingRecs.map(r => {
+          const title  = r.book_title  || r.book_ol_key || 'A book';
+          const author = r.book_author || '';
           const coverUrl = r.cover_id
             ? `https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg`
             : r.book_ol_key
               ? `https://covers.openlibrary.org/b/olid/${r.book_ol_key.replace('/works/','')}-S.jpg`
               : '';
           return `
-            <div class="rt-feed-book-chip rt-rec-accept-chip" style="margin-bottom:0.5rem;cursor:pointer;"
-              data-rec-id="${esc(r.id)}"
-              data-ol-key="${esc(r.book_ol_key||'')}"
-              data-message="${esc(r.message||'')}">
+            <div style="display:flex;align-items:center;gap:0.65rem;padding:0.6rem 0.75rem;border-radius:10px;background:var(--rt-cream);margin-bottom:0.4rem;cursor:pointer;"
+              onclick="fpRecAction('${esc(r.id)}','${esc(r.book_ol_key||'')}','${esc(title)}','${esc(author)}')">
               ${coverUrl
-                ? `<img src="${coverUrl}" class="rt-feed-book-thumb" alt="" onerror="this.style.display='none'">`
-                : `<div class="rt-feed-book-thumb--ph">📚</div>`}
-              <div style="min-width:0;flex:1;">
-                <div class="rt-feed-book-title">${esc(r.book_title || r.book_ol_key || 'A book')}</div>
-                ${r.book_author ? `<div style="font-size:0.68rem;color:var(--rt-t3);">${esc(r.book_author)}</div>` : ''}
+                ? `<img src="${coverUrl}" style="width:28px;height:40px;border-radius:3px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
+                : `<div style="width:28px;height:40px;border-radius:3px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;">📚</div>`}
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(title)}</div>
+                ${author ? `<div style="font-size:0.72rem;color:var(--rt-t3);">${esc(author)}</div>` : ''}
                 ${r.message ? `<div style="font-size:0.68rem;color:var(--rt-t3);font-style:italic;margin-top:2px;">"${esc(r.message.slice(0,60))}"</div>` : ''}
               </div>
-              <span style="font-size:0.68rem;font-weight:700;color:var(--rt-teal);margin-left:auto;white-space:nowrap;flex-shrink:0;">+ Add to list</span>
+              <span style="font-size:0.68rem;font-weight:700;color:var(--rt-amber);white-space:nowrap;flex-shrink:0;">+ Add</span>
             </div>`;
         }).join('');
       } else {
@@ -4738,15 +4819,17 @@ async function openFriendProfile(userId) {
       }
     }
 
-    // Mutual reads
+    // Mutual reads — clickable to view book detail
     const myReadTitles = new Set(getBooks('read').map(b => b.title.toLowerCase()));
     const mutual = readBooks.filter(b => myReadTitles.has(b.title.toLowerCase()));
     if (mutual.length) {
       const carousel = document.getElementById('rt-fp-mutual-carousel');
       carousel.innerHTML = mutual.slice(0, 12).map(b => {
         const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+        const myBook = books.find(mb => mb.title.toLowerCase() === b.title.toLowerCase());
+        const onclick = myBook ? `closeFriendProfile();openBookDetail('${myBook.id}')` : '';
         return `
-          <div class="rt-mutual-book" title="${esc(b.title)}">
+          <div class="rt-mutual-book" title="${esc(b.title)}" ${onclick ? `onclick="${onclick}" style="cursor:pointer;"` : ''}>
             ${coverUrl
               ? `<img src="${coverUrl}" alt="${esc(b.title)}">`
               : `<div class="rt-mutual-book-ph">📖</div>`}
@@ -4762,6 +4845,67 @@ async function openFriendProfile(userId) {
     document.getElementById('rt-fp-currently-reading').innerHTML =
       '<p style="font-size:0.83rem;color:#991b1b;">Could not load data \u2014 check your connection.</p>';
   }
+}
+
+// Friend card action: clicking a currently-reading book shows add/chat options
+function fpBookAction(olKey, title, author, coverId) {
+  const covidNum = coverId ? parseInt(coverId) : null;
+  const actions = [
+    { label: '🔖 Add to my list', fn: () => {
+        if (!currentUser) { showFlash('Sign in to add books.'); return; }
+        const exists = books.find(b => b.olKey === olKey || b.title.toLowerCase() === title.toLowerCase());
+        if (exists) { showFlash(`Already on your list!`); return; }
+        const newBook = { id: Date.now(), title, author, coverId: covidNum, olKey, status: 'tbr', added: new Date().toISOString() };
+        books.push(newBook); save(); renderTBR(); updateStats();
+        SyncQueue.enqueue('upsert_entry', newBook);
+        showFlash(`Added "${title}" to your list!`);
+      }
+    },
+    { label: '💬 Start book chat', fn: () => {
+        if (!olKey) { showFlash('This book needs an Open Library key to chat.'); return; }
+        closeFriendProfile();
+        openFriendPickerForChat(olKey, title, author, covidNum);
+      }
+    }
+  ];
+  // Simple bottom action sheet via flash-style choices
+  const existing = document.getElementById('rt-fp-action-menu');
+  if (existing) existing.remove();
+  const menu = document.createElement('div');
+  menu.id = 'rt-fp-action-menu';
+  menu.style.cssText = 'position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-end;';
+  menu.innerHTML = `
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);" onclick="document.getElementById('rt-fp-action-menu').remove()"></div>
+    <div style="position:relative;width:100%;background:#fff;border-radius:16px 16px 0 0;padding:1rem 1.25rem 1.5rem;box-shadow:0 -4px 20px rgba(0,0,0,0.15);">
+      <div style="font-size:0.78rem;font-weight:700;color:var(--rt-navy);margin-bottom:0.75rem;">${esc(title)}</div>
+      ${actions.map((a, i) => `<button onclick="window._fpAction(${i})" type="button"
+        style="display:block;width:100%;text-align:left;padding:0.75rem 0;border:none;background:none;font-size:0.9rem;color:var(--rt-navy);cursor:pointer;border-bottom:1px solid var(--rt-border);">${a.label}</button>`).join('')}
+      <button onclick="document.getElementById('rt-fp-action-menu').remove()" type="button"
+        style="display:block;width:100%;text-align:center;padding:0.75rem 0;border:none;background:none;font-size:0.85rem;color:var(--rt-t3);cursor:pointer;margin-top:0.25rem;">Cancel</button>
+    </div>`;
+  window._fpAction = (i) => { menu.remove(); actions[i].fn(); };
+  document.body.appendChild(menu);
+}
+
+// Friend card: clicking a rec chip accepts it (adds to TBR)
+async function fpRecAction(recId, olKey, title, author) {
+  try {
+    await sb.from('book_recommendations').update({ status: 'accepted' }).eq('id', recId);
+    // Also add to local TBR if not already there
+    const exists = books.find(b => b.olKey === olKey || b.title.toLowerCase() === title.toLowerCase());
+    if (!exists && title) {
+      const newBook = { id: Date.now(), title, author, olKey: olKey || null, coverId: null, status: 'tbr', added: new Date().toISOString() };
+      books.push(newBook); save(); renderTBR(); updateStats();
+      SyncQueue.enqueue('upsert_entry', newBook);
+    }
+    // Remove from recs state
+    socialState.recs = socialState.recs.filter(r => r.id !== recId);
+    updateHomeNotifStrip();
+    // Hide the rec chip in the modal
+    const chip = document.querySelector(`[onclick*="${recId}"]`);
+    if (chip) { chip.style.opacity = '0.4'; chip.style.pointerEvents = 'none'; const label = chip.querySelector('span[style*="amber"]'); if (label) label.textContent = '✓ Added'; }
+    showFlash(`"${title}" added to your list!`);
+  } catch(e) { showFlash('Could not accept recommendation.'); }
 }
 
 function closeFriendProfile() {
@@ -7634,11 +7778,15 @@ function renderNotifPanel() {
   }
 }
 function updateNotifDot() {
-  const hasNotif = _notifState.unreadChats > 0 || _notifState.newRecs > 0;
+  const hasNotif    = _notifState.unreadChats > 0 || _notifState.newRecs > 0;
+  const hasUnreadChat = _notifState.unreadChats > 0;
   ['rt-notif-dot','rt-notif-dot-nav','rt-sidebar-notif-dot'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = hasNotif ? 'block' : 'none';
   });
+  // Red dot on chat nav tab
+  const chatDot = document.getElementById('rt-chat-nav-dot');
+  if (chatDot) chatDot.style.display = hasUnreadChat ? 'block' : 'none';
 }
 
 // ── Account Settings overlay ──────────────────────────────────
@@ -8451,6 +8599,9 @@ async function openChatThread(chatId) {
   document.getElementById('rt-chat-messages').innerHTML =
     '<div style="padding:1rem;text-align:center;color:var(--rt-t3);font-size:0.8rem;">Loading…</div>';
 
+  // Populate participants strip
+  renderParticipantsStrip(chatId);
+
   await fetchMessages(chatId, false);
   markChatRead(chatId);
   subscribeToChatThread(chatId);
@@ -8466,6 +8617,39 @@ function closeChatThread() {
   chatState.activeChat = null;
   // Refresh list to clear unread badge
   loadChatList();
+}
+
+async function renderParticipantsStrip(chatId) {
+  const stripEl = document.getElementById('rt-chat-participants-strip');
+  const textEl  = document.getElementById('rt-chat-participants-text');
+  if (!stripEl || !textEl) return;
+  try {
+    const { data: rows } = await sb
+      .from('chat_participants')
+      .select('user_id')
+      .eq('chat_id', chatId);
+    const profileMap = chatProfileMap();
+    const names = (rows || []).map(r => {
+      if (r.user_id === currentUser.id) return 'You';
+      const p = profileMap[r.user_id];
+      return p ? (p.displayName || p.username || 'Friend') : 'Friend';
+    });
+    const avatarsHtml = (rows || []).map(r => {
+      const p = profileMap[r.user_id];
+      const name = r.user_id === currentUser.id ? (socialState._myDisplayName || 'You') : (p?.displayName || p?.username || '?');
+      const colour = avatarColour(r.user_id);
+      return `<span class="rt-chat-participant-av" style="background:${colour};" title="${esc(name)}">${avatarInitial(name)}</span>`;
+    }).join('');
+    textEl.innerHTML = `${avatarsHtml} <span style="margin-left:0.25rem;">${names.join(', ')}</span>`;
+  } catch(e) {
+    textEl.textContent = '';
+  }
+}
+
+function addFriendToCurrentChat() {
+  if (!chatState.activeChat) return;
+  const c = chatState.activeChat;
+  openFriendPickerForChat(c.bookOlKey, c.bookTitle, c.bookAuthor, c.coverId);
 }
 
 async function fetchMessages(chatId, prepend) {
