@@ -2029,8 +2029,20 @@ permalink: /tools/reading-tracker/
   display:inline-block;
 }
 
-/* Thread view */
-.rt-chat-thread { display:flex; flex-direction:column; height:calc(100vh - 200px); min-height:400px; }
+/* Community panel: full-screen card on mobile */
+@media (max-width:700px) {
+  #rt-panel-community .rt-panel-inner { gap:0; }
+  #rt-panel-community .rt-card {
+    border-radius:0;
+    border-left:none;
+    border-right:none;
+    box-shadow:none;
+  }
+  #rt-community-loggedin > .rt-panel-inner { padding:0; }
+  /* Extra bottom padding so chat list clears the fixed invite banner */
+  #rt-chat-list { padding-bottom: 0.5rem; }
+  #rt-chat-list-view { padding-bottom: 80px; } /* invite strip height */
+}
 .rt-chat-thread-header {
   display:flex; align-items:center; gap:0.75rem;
   padding:0.75rem 1.25rem; border-bottom:1px solid var(--rt-border);
@@ -2126,8 +2138,8 @@ permalink: /tools/reading-tracker/
 
 /* Invite strip — sticky bottom of chat list view */
 .rt-invite-strip {
-  border-top:1px solid var(--rt-border); background:var(--rt-navy);
-  padding:0.85rem 1.25rem;
+  background:var(--rt-navy);
+  padding:0.75rem 1.25rem;
 }
 .rt-invite-strip-title {
   font-size:0.75rem; font-weight:700; color:#fff; margin-bottom:0.2rem;
@@ -2150,6 +2162,27 @@ permalink: /tools/reading-tracker/
   white-space:nowrap; flex-shrink:0;
 }
 .rt-invite-strip-btn:hover { background:var(--rt-amber-lt); }
+/* On mobile: fixed above the bottom nav bar */
+@media (max-width:700px) {
+  .rt-invite-strip {
+    position:fixed; bottom:64px; left:0; right:0; z-index:199;
+    border-top:1px solid rgba(255,255,255,0.08);
+    display:none; /* shown by JS when community/chat tab is active */
+  }
+  .rt-invite-strip.visible { display:block; }
+}
+/* On desktop: inside the panel as a card-like section */
+@media (min-width:701px) {
+  .rt-invite-strip {
+    border-top:1px solid var(--rt-border);
+    border-radius:0 0 var(--rt-r2) var(--rt-r2);
+  }
+}
+/* The inline desktop strip is hidden on mobile (fixed bar takes over) */
+@media (max-width:700px) {
+  .rt-invite-strip--desktop-only { display:none !important; }
+}
+.rt-book-club-toast {
   position:fixed; bottom:80px; left:50%; transform:translateX(-50%);
   background:var(--rt-navy); color:#fff; border-radius:12px;
   padding:0.85rem 1.25rem; font-size:0.83rem; z-index:9999;
@@ -2754,13 +2787,13 @@ permalink: /tools/reading-tracker/
                     <p class="rt-chat-empty-text">No book chats yet.<br>Start reading a book a friend is also reading — you'll be able to start a chat.</p>
                   </div>
                 </div>
-                <!-- Invite strip — sticky below chat list -->
-                <div class="rt-invite-strip">
+                <!-- Desktop-only invite strip (mobile uses the global fixed bar) -->
+                <div class="rt-invite-strip rt-invite-strip--desktop-only">
                   <div class="rt-invite-strip-title">Invite a friend</div>
                   <div class="rt-invite-strip-sub">Share this link — anyone can send you a friend request.</div>
                   <div class="rt-invite-strip-row">
-                    <div class="rt-invite-strip-field" id="rt-invite-link-field">Generating…</div>
-                    <button class="rt-invite-strip-btn" id="rt-invite-copy-btn" type="button">Copy invite</button>
+                    <div class="rt-invite-strip-field" id="rt-invite-link-field-desktop">Generating…</div>
+                    <button class="rt-invite-strip-btn" id="rt-invite-copy-btn-desktop" type="button">Copy invite</button>
                   </div>
                 </div>
               </div>
@@ -3265,6 +3298,16 @@ permalink: /tools/reading-tracker/
   </div>
 </header>
 
+<!-- INVITE STRIP — fixed above mobile nav, shown when community tab is active -->
+<div class="rt-invite-strip" id="rt-invite-strip-global">
+  <div class="rt-invite-strip-title">Invite a friend</div>
+  <div class="rt-invite-strip-sub">Share this link — anyone can send you a friend request.</div>
+  <div class="rt-invite-strip-row">
+    <div class="rt-invite-strip-field" id="rt-invite-link-field">Generating…</div>
+    <button class="rt-invite-strip-btn" id="rt-invite-copy-btn" type="button">Copy invite</button>
+  </div>
+</div>
+
 <nav class="rt-bottom-nav" id="rt-bottom-nav" aria-label="Main navigation">
   <button class="rt-nav-btn active" data-tab="home" onclick="switchTab('home')">
     <svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3514,10 +3557,10 @@ permalink: /tools/reading-tracker/
         <div id="rt-fp-recs-from-friend-list"></div>
       </div>
 
-      <!-- Mutual reads -->
-      <div class="rt-mutual-carousel-wrap" id="rt-fp-mutual-wrap" style="display:none;margin:0;border-radius:var(--rt-r2);overflow:hidden;">
+      <!-- Mutual reads — row layout with chat button -->
+      <div id="rt-fp-mutual-wrap" style="display:none;">
         <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--rt-t3);margin-bottom:0.6rem;">Books you've both read</div>
-        <div class="rt-mutual-carousel" id="rt-fp-mutual-carousel"></div>
+        <div id="rt-fp-mutual-list" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
       </div>
 
       <!-- Currently reading -->
@@ -4543,25 +4586,30 @@ async function declineFriendRequest(friendshipId) {
 // ── Invite link ───────────────────────────────────────────────
 function generateInviteLink() {
   if (!currentUser) return;
-  // Use user ID as invite token (simple v1 — no separate invites table needed)
   const base = window.location.origin + window.location.pathname;
   const link = `${base}?invite=${currentUser.id}`;
-  const field = document.getElementById('rt-invite-link-field');
-  const btn   = document.getElementById('rt-invite-copy-btn');
-  if (field) field.textContent = link;
-  if (btn) {
-    btn.onclick = function() {
-      const username = socialState._myUsername || '';
-      const inviteMsg = `Come read with me on LitLoop! 📚 Track books, chat about stories, and share recommendations. Create your free account and add me${username ? ` @${username}` : ''}: ${link}`;
-      navigator.clipboard?.writeText(inviteMsg).then(() => {
-        btn.textContent = '✓ Copied!';
-        setTimeout(() => btn.textContent = 'Copy invite', 2000);
-      }).catch(() => {
-        btn.textContent = '✓ Copied!';
-        setTimeout(() => btn.textContent = 'Copy invite', 2000);
-      });
-    };
+
+  function wireField(fieldId, btnId) {
+    const field = document.getElementById(fieldId);
+    const btn   = document.getElementById(btnId);
+    if (field) field.textContent = link;
+    if (btn) {
+      btn.onclick = function() {
+        const username = socialState._myUsername || '';
+        const inviteMsg = `Come read with me on LitLoop! 📚 Track books, chat about stories, and share recommendations. Create your free account and add me${username ? ` @${username}` : ''}: ${link}`;
+        navigator.clipboard?.writeText(inviteMsg).then(() => {
+          btn.textContent = '✓ Copied!';
+          setTimeout(() => btn.textContent = 'Copy invite', 2000);
+        }).catch(() => {
+          btn.textContent = '✓ Copied!';
+          setTimeout(() => btn.textContent = 'Copy invite', 2000);
+        });
+      };
+    }
   }
+
+  wireField('rt-invite-link-field', 'rt-invite-copy-btn');               // mobile fixed bar
+  wireField('rt-invite-link-field-desktop', 'rt-invite-copy-btn-desktop'); // desktop inline
 }
 
 // Handle ?invite=<userId> on load — send friend request automatically
@@ -4764,64 +4812,47 @@ async function openFriendProfile(userId) {
     document.getElementById('rt-fp-read-count').textContent    = readBooks.length;
     document.getElementById('rt-fp-reading-count').textContent = readingBooks.length;
 
-    // Helper: render a clickable book row
-    function fpBookRow(b, actionLabel, onclickExpr) {
+    // ── Helper: render a book row with cover, title/author, and action button ──
+    function fpBookRow(b, btnLabel, btnStyle, onclickExpr) {
       const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
       return `
-        <div style="display:flex;align-items:center;gap:0.65rem;padding:0.5rem 0;border-bottom:1px solid var(--rt-border);cursor:pointer;" onclick="${onclickExpr}">
+        <div style="display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0;border-bottom:1px solid var(--rt-border);">
           ${coverUrl
-            ? `<img src="${coverUrl}" style="width:28px;height:40px;border-radius:3px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
-            : `<div style="width:28px;height:40px;border-radius:3px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;">📖</div>`}
+            ? `<img src="${coverUrl}" style="width:32px;height:46px;border-radius:4px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
+            : `<div style="width:32px;height:46px;border-radius:4px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.85rem;">📖</div>`}
           <div style="flex:1;min-width:0;">
             <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(b.title)}</div>
-            ${b.author ? `<div style="font-size:0.72rem;color:var(--rt-t3);">${esc(b.author)}</div>` : ''}
+            ${b.author ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-top:1px;">${esc(b.author)}</div>` : ''}
           </div>
-          ${actionLabel ? `<span style="font-size:0.68rem;font-weight:700;color:var(--rt-amber);white-space:nowrap;flex-shrink:0;">${actionLabel}</span>` : ''}
+          <button type="button" onclick="${onclickExpr}" style="flex-shrink:0;${btnStyle}">${btnLabel}</button>
         </div>`;
     }
 
-    // Currently reading — clickable: opens book action menu
-    const crEl = document.getElementById('rt-fp-currently-reading');
-    if (readingBooks.length) {
-      crEl.innerHTML = readingBooks.map(b => {
-        // Clicking opens a mini action: Add to TBR or Start chat
-        const olKey  = b.olKey  ? JSON.stringify(b.olKey)  : 'null';
-        const title  = JSON.stringify(b.title);
-        const author = JSON.stringify(b.author || '');
-        const cid    = b.coverId ? JSON.stringify(String(b.coverId)) : 'null';
-        const onclick = `fpBookAction(${olKey},${title},${author},${cid})`;
-        return fpBookRow(b, '+ Add / Chat', onclick);
-      }).join('');
-    } else {
-      crEl.innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>';
-    }
-
-    // Recs from this friend — shown at top with proper title/cover, accept adds to TBR
+    // ── Recs from this friend ──
     const pendingRecs = (recsFromFriend || []).filter(r => r.status === 'pending');
     const recWrap = document.getElementById('rt-fp-recs-from-friend');
     if (recWrap) {
       if (pendingRecs.length) {
         recWrap.style.display = 'block';
         document.getElementById('rt-fp-recs-from-friend-list').innerHTML = pendingRecs.map(r => {
-          const title  = r.book_title  || r.book_ol_key || 'A book';
-          const author = r.book_author || '';
+          const rTitle  = r.book_title  || r.book_ol_key || 'A book';
+          const rAuthor = r.book_author || '';
           const coverUrl = r.cover_id
             ? `https://covers.openlibrary.org/b/id/${r.cover_id}-S.jpg`
-            : r.book_ol_key
-              ? `https://covers.openlibrary.org/b/olid/${r.book_ol_key.replace('/works/','')}-S.jpg`
-              : '';
+            : r.book_ol_key ? `https://covers.openlibrary.org/b/olid/${r.book_ol_key.replace('/works/','')}-S.jpg` : '';
           return `
-            <div style="display:flex;align-items:center;gap:0.65rem;padding:0.6rem 0.75rem;border-radius:10px;background:var(--rt-cream);margin-bottom:0.4rem;cursor:pointer;"
-              onclick="fpRecAction('${esc(r.id)}','${esc(r.book_ol_key||'')}','${esc(title)}','${esc(author)}',${r.cover_id||null})">
-              ${coverUrl
-                ? `<img src="${coverUrl}" style="width:28px;height:40px;border-radius:3px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
-                : `<div style="width:28px;height:40px;border-radius:3px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.8rem;">📚</div>`}
+            <div style="display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;border-radius:10px;background:rgba(200,137,26,0.08);border:1px solid rgba(200,137,26,0.2);margin-bottom:0.4rem;">
+              ${coverUrl ? `<img src="${coverUrl}" style="width:32px;height:46px;border-radius:4px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">` : `<div style="width:32px;height:46px;border-radius:4px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.85rem;">📚</div>`}
               <div style="flex:1;min-width:0;">
-                <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(title)}</div>
-                ${author ? `<div style="font-size:0.72rem;color:var(--rt-t3);">${esc(author)}</div>` : ''}
-                ${r.message ? `<div style="font-size:0.68rem;color:var(--rt-t3);font-style:italic;margin-top:2px;">"${esc(r.message.slice(0,60))}"</div>` : ''}
+                <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(rTitle)}</div>
+                ${rAuthor ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-top:1px;">${esc(rAuthor)}</div>` : ''}
+                ${r.message ? `<div style="font-size:0.68rem;color:var(--rt-t3);font-style:italic;margin-top:3px;">"${esc(r.message.slice(0,60))}"</div>` : ''}
               </div>
-              <span style="font-size:0.68rem;font-weight:700;color:var(--rt-amber);white-space:nowrap;flex-shrink:0;">+ Add</span>
+              <button type="button"
+                onclick="fpRecAction('${esc(r.id)}','${esc(r.book_ol_key||'')}','${esc(rTitle)}','${esc(rAuthor)}',${r.cover_id||null})"
+                style="flex-shrink:0;background:var(--rt-amber);color:#fff;border:none;border-radius:8px;padding:0.3rem 0.75rem;font-size:0.72rem;font-weight:700;cursor:pointer;">
+                + Add
+              </button>
             </div>`;
         }).join('');
       } else {
@@ -4829,23 +4860,68 @@ async function openFriendProfile(userId) {
       }
     }
 
-    // Mutual reads — clickable to view book detail
+    // ── Mutual reads — row layout with smart Start/View chat button ──
     const myReadTitles = new Set(getBooks('read').map(b => b.title.toLowerCase()));
     const mutual = readBooks.filter(b => myReadTitles.has(b.title.toLowerCase()));
-    if (mutual.length) {
-      const carousel = document.getElementById('rt-fp-mutual-carousel');
-      carousel.innerHTML = mutual.slice(0, 12).map(b => {
-        const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+    const mutualWrap = document.getElementById('rt-fp-mutual-wrap');
+    const mutualList = document.getElementById('rt-fp-mutual-list');
+    if (mutual.length && mutualList) {
+      mutualList.innerHTML = mutual.slice(0, 10).map(b => {
         const myBook = books.find(mb => mb.title.toLowerCase() === b.title.toLowerCase());
-        const onclick = myBook ? `closeFriendProfile();openBookDetail('${myBook.id}')` : '';
+        const existingChat = b.olKey ? chatState.chats.find(c => c.bookOlKey === b.olKey) : null;
+        const btnLabel = existingChat ? '💬 View chat' : '💬 Start chat';
+        const btnStyle = `background:${existingChat ? 'var(--rt-navy)' : 'var(--rt-amber)'};color:#fff;border:none;border-radius:8px;padding:0.3rem 0.75rem;font-size:0.72rem;font-weight:700;cursor:pointer;`;
+        const bOlKey = JSON.stringify(b.olKey || null);
+        const bTitle = JSON.stringify(b.title);
+        const bAuthor = JSON.stringify(b.author || '');
+        const bCover = b.coverId ? JSON.stringify(String(b.coverId)) : 'null';
+        const onclickExpr = existingChat
+          ? `closeFriendProfile();switchCommunityTab('chat');switchTab('community');openChatThread('${existingChat.id}')`
+          : `closeFriendProfile();openFriendPickerForChat(${bOlKey},${bTitle},${bAuthor},${bCover ? parseInt(b.coverId) : null})`;
+        return fpBookRow(b, btnLabel, btnStyle, onclickExpr);
+      }).join('');
+      if (mutualWrap) mutualWrap.style.display = 'block';
+    } else if (mutualWrap) {
+      mutualWrap.style.display = 'none';
+    }
+
+    // ── Currently reading — Add to TBR + Start/View chat ──
+    const crEl = document.getElementById('rt-fp-currently-reading');
+    if (readingBooks.length) {
+      crEl.innerHTML = readingBooks.map(b => {
+        const existingChat = b.olKey ? chatState.chats.find(c => c.bookOlKey === b.olKey) : null;
+        const btnLabel = existingChat ? '💬 View chat' : '💬 Start chat';
+        const btnStyle = `background:${existingChat ? 'var(--rt-navy)' : 'var(--rt-amber)'};color:#fff;border:none;border-radius:8px;padding:0.3rem 0.75rem;font-size:0.72rem;font-weight:700;cursor:pointer;`;
+        const bOlKey = JSON.stringify(b.olKey || null);
+        const bTitle = JSON.stringify(b.title);
+        const bAuthor = JSON.stringify(b.author || '');
+        const onclickExpr = existingChat
+          ? `closeFriendProfile();switchCommunityTab('chat');switchTab('community');openChatThread('${existingChat.id}')`
+          : `closeFriendProfile();openFriendPickerForChat(${bOlKey},${bTitle},${bAuthor},${b.coverId||null})`;
+        const coverUrl = b.coverId ? `https://covers.openlibrary.org/b/id/${b.coverId}-S.jpg` : '';
+        // Two-button row: Add to TBR + Start/View chat
+        const alreadyOnList = books.find(mb => mb.olKey === b.olKey || mb.title.toLowerCase() === b.title.toLowerCase());
         return `
-          <div class="rt-mutual-book" title="${esc(b.title)}" ${onclick ? `onclick="${onclick}" style="cursor:pointer;"` : ''}>
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0;border-bottom:1px solid var(--rt-border);">
             ${coverUrl
-              ? `<img src="${coverUrl}" alt="${esc(b.title)}">`
-              : `<div class="rt-mutual-book-ph">📖</div>`}
+              ? `<img src="${coverUrl}" style="width:32px;height:46px;border-radius:4px;object-fit:cover;flex-shrink:0;" alt="" onerror="this.style.display='none'">`
+              : `<div style="width:32px;height:46px;border-radius:4px;background:var(--rt-surface);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.85rem;">📖</div>`}
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.85rem;font-weight:600;color:var(--rt-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${esc(b.title)}</div>
+              ${b.author ? `<div style="font-size:0.72rem;color:var(--rt-t3);margin-top:1px;">${esc(b.author)}</div>` : ''}
+            </div>
+            <div style="display:flex;gap:0.4rem;flex-shrink:0;">
+              ${!alreadyOnList ? `<button type="button"
+                onclick="fpAddToTBR(${bOlKey},${bTitle},${bAuthor},${b.coverId||null})"
+                style="background:var(--rt-cream-md,#e8e5de);color:var(--rt-navy);border:none;border-radius:8px;padding:0.3rem 0.6rem;font-size:0.7rem;font-weight:600;cursor:pointer;">
+                + TBR
+              </button>` : ''}
+              <button type="button" onclick="${onclickExpr}" style="${btnStyle}">${btnLabel}</button>
+            </div>
           </div>`;
       }).join('');
-      document.getElementById('rt-fp-mutual-wrap').style.display = 'block';
+    } else {
+      crEl.innerHTML = '<p style="font-size:0.83rem;color:var(--rt-t3);font-style:italic;">Nothing in progress.</p>';
     }
 
   } catch(e) {
@@ -4853,48 +4929,19 @@ async function openFriendProfile(userId) {
     document.getElementById('rt-fp-read-count').textContent    = '—';
     document.getElementById('rt-fp-reading-count').textContent = '—';
     document.getElementById('rt-fp-currently-reading').innerHTML =
-      '<p style="font-size:0.83rem;color:#991b1b;">Could not load data \u2014 check your connection.</p>';
+      '<p style="font-size:0.83rem;color:#991b1b;">Could not load data — check your connection.</p>';
   }
 }
 
-// Friend card action: clicking a currently-reading book shows add/chat options
-function fpBookAction(olKey, title, author, coverId) {
-  const covidNum = coverId ? parseInt(coverId) : null;
-  const actions = [
-    { label: '🔖 Add to my list', fn: () => {
-        if (!currentUser) { showFlash('Sign in to add books.'); return; }
-        const exists = books.find(b => b.olKey === olKey || b.title.toLowerCase() === title.toLowerCase());
-        if (exists) { showFlash(`Already on your list!`); return; }
-        const newBook = { id: Date.now(), title, author, coverId: covidNum, olKey, status: 'tbr', added: new Date().toISOString() };
-        books.push(newBook); save(); renderTBR(); updateStats();
-        SyncQueue.enqueue('upsert_entry', newBook);
-        showFlash(`Added "${title}" to your list!`);
-      }
-    },
-    { label: '💬 Start book chat', fn: () => {
-        if (!olKey) { showFlash('This book needs an Open Library key to chat.'); return; }
-        closeFriendProfile();
-        openFriendPickerForChat(olKey, title, author, covidNum);
-      }
-    }
-  ];
-  // Simple bottom action sheet via flash-style choices
-  const existing = document.getElementById('rt-fp-action-menu');
-  if (existing) existing.remove();
-  const menu = document.createElement('div');
-  menu.id = 'rt-fp-action-menu';
-  menu.style.cssText = 'position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-end;';
-  menu.innerHTML = `
-    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);" onclick="document.getElementById('rt-fp-action-menu').remove()"></div>
-    <div style="position:relative;width:100%;background:#fff;border-radius:16px 16px 0 0;padding:1rem 1.25rem 1.5rem;box-shadow:0 -4px 20px rgba(0,0,0,0.15);">
-      <div style="font-size:0.78rem;font-weight:700;color:var(--rt-navy);margin-bottom:0.75rem;">${esc(title)}</div>
-      ${actions.map((a, i) => `<button onclick="window._fpAction(${i})" type="button"
-        style="display:block;width:100%;text-align:left;padding:0.75rem 0;border:none;background:none;font-size:0.9rem;color:var(--rt-navy);cursor:pointer;border-bottom:1px solid var(--rt-border);">${a.label}</button>`).join('')}
-      <button onclick="document.getElementById('rt-fp-action-menu').remove()" type="button"
-        style="display:block;width:100%;text-align:center;padding:0.75rem 0;border:none;background:none;font-size:0.85rem;color:var(--rt-t3);cursor:pointer;margin-top:0.25rem;">Cancel</button>
-    </div>`;
-  window._fpAction = (i) => { menu.remove(); actions[i].fn(); };
-  document.body.appendChild(menu);
+// Friend card: Add a currently-reading book directly to TBR
+function fpAddToTBR(olKey, title, author, coverId) {
+  if (!currentUser) { showFlash('Sign in to add books.'); return; }
+  const exists = books.find(b => (olKey && b.olKey === olKey) || b.title.toLowerCase() === (title||'').toLowerCase());
+  if (exists) { showFlash('Already on your list!'); return; }
+  const newBook = { id: Date.now(), title, author: author||'', coverId: coverId ? parseInt(coverId) : null, olKey: olKey||null, status: 'tbr', added: new Date().toISOString() };
+  books.push(newBook); save(); renderTBR(); updateStats();
+  SyncQueue.enqueue('upsert_entry', newBook);
+  showFlash(`"${title}" added to your list!`);
 }
 
 // Friend card: clicking a rec chip accepts it (adds to TBR)
@@ -5038,7 +5085,22 @@ document.getElementById('rt-rec-send-btn').addEventListener('click', async funct
     message:      note,
     status:       'pending'
   }));
-  const { error } = await sb.from('book_recommendations').insert(inserts);
+
+  let { error } = await sb.from('book_recommendations').insert(inserts);
+
+  // If 400, the extended columns (book_title/book_author/cover_id) may not exist yet —
+  // fall back to the original minimal schema so the rec still sends.
+  if (error && error.code === 'PGRST204' || (error && error.message?.includes('column'))) {
+    const minimalInserts = recipientIds.map(rid => ({
+      from_user_id: currentUser.id,
+      to_user_id:   rid,
+      book_ol_key:  book.olKey,
+      message:      note,
+      status:       'pending'
+    }));
+    ({ error } = await sb.from('book_recommendations').insert(minimalInserts));
+    if (!error) console.warn('[Social] sendRec: used minimal schema — run migration to add book_title/book_author/cover_id columns');
+  }
 
   btn.disabled = false; btn.textContent = 'Send recommendation →';
   if (error) {
@@ -5633,6 +5695,10 @@ function renderGenreChart() {
 // TAB SWITCHING
 // ─────────────────────────────────────────────────────────────
 function switchTab(name) {
+  // Show/hide the fixed mobile invite strip — only on community tab
+  const inviteGlobal = document.getElementById('rt-invite-strip-global');
+  if (inviteGlobal) inviteGlobal.classList.toggle('visible', name === 'community' && !!currentUser);
+
   // When navigating to community, default to chat sub-tab
   if (name === 'community') {
     setTimeout(() => {
